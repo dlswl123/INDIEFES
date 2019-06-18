@@ -24,6 +24,14 @@ drop table user_info;
 
 drop table account_grade;
 
+drop table board_info;
+
+drop table reply_info;
+
+drop table board_file;
+
+drop table board_cate;
+
 
 drop sequence seq_art;
 
@@ -34,6 +42,10 @@ drop sequence seq_team;
 drop sequence seq_member;
 
 drop sequence seq_bank;
+
+drop sequence seq_board;
+
+drop sequence seq_reply;
 
 
 
@@ -81,7 +93,7 @@ create table art_info(
     reg_art	date	default sysdate,
     liked_count	number	default 0,
     good_count	number	default 0,
-    deleted	varchar2(5)	default 'X' check (deleted in('X','O'))
+    upload_check	number	default 0
 );
 
 create table music_info(
@@ -92,7 +104,7 @@ create table music_info(
     heard_count	number	default 0,
     price	number	default 100,
     pay_count	number	default 0,
-    deleted	varchar2(5)	default 'X' check (deleted in('X','O')),
+    upload_check	number	default 0,
     file_path	varchar2(100)	not null
 );
 
@@ -144,6 +156,42 @@ create table play_list(
     play_index	number	default 0
 );
 
+create table board_cate(
+    board_cate_number	number	primary key,
+    board_cate_name	varchar2(50)	not null
+);
+
+create table board_info(
+    board_number	number	primary key,
+    board_cate_number	number	references board_cate(board_cate_number),
+    subject	varchar2(100)	not null,
+    user_id	varchar2(50)	references user_info(user_id),
+    content	varchar2(1000),
+    reg_date	date	default sysdate,
+    lately_date	date,	
+    view_count	number	default 0,
+    like_count	number	default 0,
+    reply_count	number	default 0,
+    file_path	varchar2(100)	
+);
+
+create table reply_info(
+    reply_number	number	primary key,
+    board_number	number	references board_info(board_number),
+    user_id	varchar2(50)	references user_info(user_id),
+    content	varchar2(500)	not null,
+    reg_date	date	default sysdate,
+    late_date	date,	
+    like_count	number	default 0
+);
+
+create table board_file(
+    board_number	number	references board_info(board_number),
+    file_path	varchar2(100)	primary key
+);
+
+
+
 
 create sequence seq_art;
 
@@ -154,6 +202,10 @@ create sequence seq_team;
 create sequence seq_member;
 
 create sequence seq_bank;
+
+create sequence seq_board;
+
+create sequence seq_reply;
 
 
 
@@ -167,3 +219,7 @@ insert into bank_cate values (20, '기업');
 insert into bank_cate values (30, '농협');
 insert into bank_cate values (40, '신한');
 insert into bank_cate values (50, '하나');
+
+insert into board_cate values (10, '자유');
+insert into board_cate values (20, '토론');
+insert into board_cate values (30, '추천');
