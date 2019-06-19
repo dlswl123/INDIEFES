@@ -228,3 +228,14 @@ insert into bank_cate values (50, '하나');
 insert into board_cate values (10, '자유');
 insert into board_cate values (20, '토론');
 insert into board_cate values (30, '추천');
+
+insert into user_info values ('admin', '1234', '관리자', '오성', 'admin@email.com', '1991-01-01', 'F', sysdate, 0, 0, 'X', 'X', 'X');
+insert into user_info values ('dlswl', '1234', '스태프인지', '오인지', 'dlswl@email.com', '1992-01-01', 'F', sysdate, 0, 1, 'X', 'X', 'X');
+insert into user_info values ('guswjd', '1234', '스태프현정', '김현정', 'guswjd@email.com', '1991-01-01', 'F', sysdate, 0, 1, 'X', 'X', 'X');
+insert into user_info values ('xotjd', '1234', '스태프태성', '정태성', 'xotjd@email.com', '1987-01-01', 'M', sysdate, 0, 1, 'X', 'X', 'X');
+insert into user_info values ('rkdtlr', '1234', '스태프강식', '윤강식', 'rkdtlr@email.com', '1988-01-01', 'M', sysdate, 0, 1, 'X', 'X', 'X');
+insert into user_info values ('wndls', '1234', '스태프주인', '박주인', 'wndls@email.com', '1983-01-01', 'M', sysdate, 0, 1, 'X', 'X', 'X');
+insert into user_info values ('indie1', '1234', '첫인디', '인디이름1', 'indie1@email.com', '1990-01-01', 'F', sysdate, 0, 2, 'X', 'O', 'X');
+insert into user_info values ('indie2', '1234', '두인디', '인디이름2', 'indie2@email.com', '1989-10-01', 'M', sysdate, 0, 2, 'X', 'O', 'X');
+insert into user_info values ('user1', '1234', '유저1', '유저이름1', 'user1@email.com', '1981-11-10', 'F', sysdate, 0, 3, 'X', 'X', 'X');
+insert into user_info values ('user2', '1234', '유저2', '유저이름2', 'user2@email.com', '2010-01-01', 'M', sysdate, 0, 3, 'X', 'X', 'X');
