@@ -15,4 +15,7 @@
 		values (#{file_path}, seq_board.currval)
 	</insert>
 	
+	<select id="art_read">
+		select * 
+	</select>
 </mapper>

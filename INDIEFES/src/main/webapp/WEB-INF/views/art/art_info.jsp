@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>앨범정보 - INDIEFES</title>
 <style>
 	th {
     height: 100px;
@@ -23,38 +22,58 @@
 
 <script>
 $(document).ready(function() {
+	// 듣기버튼
 	$("#btnListen").click(function() {
 		
 	});
+	
+	// 담기버튼
 	$("#btnPut").click(function() {
 		
 	});
+	
+	// 다운버튼
 	$("#btnDown").click(function() {
 		
 	});
+	
+	// 모두듣기버튼
 	$("#btnAllListen").click(function() {
 		
 	});
+	
+	// 모두담기버튼
 	$("#btnAllPut").click(function() {
 		
 	});
+	
+	// 뮤지션 전용 - 음악추가 버튼
 	$("#btnMusicAdd").click(function() {
 		
 	});
-	$("#btn").click(function() {
+	
+	// 뮤지션 전용 - 완료버튼
+	$("#btnSuccess").click(function() {
 		
 	});
-	$("#btn").click(function() {
+	
+	// 뮤지션 전용 - 취소버튼
+	$("#btnCancel").click(function() {
 		
 	});
+	
+	// 운영자 전용 - 승인
 	$("#btnAppro").click(function() {
 		
 	});
+	
+	// 운영자 전용 - 반려
 	$("#btnReturn").click(function() {
 		
 	});
 });
 </script>
+
 </head>
 <body>
 <h1>앨범 정보</h1>
@@ -90,8 +109,8 @@ $(document).ready(function() {
 <%-- 					</c:when> --%>
 <%-- 					<c:when test="${userVo.user_level == 2}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnMusicAdd">음악추가</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnSuccese">완료</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnCancle">취소</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnSuccess">완료</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnCancel">취소</button>
 <%-- 					</c:when> --%>
 <%-- 					<c:otherwise> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnAppro">승인</button>

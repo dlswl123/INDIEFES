@@ -4,17 +4,17 @@ import java.sql.Date;
 
 public class art_infoVo {
 	
-	private int art_number;
-	private String art_genre;
-	private String user_id;
-	private int team_number;
-	private String art_title;
-	private String art_cover;
-	private String art_pr;
-	Date reg_art;
-	private int liked_count;
-	private int good_count;
-	private int deleted;
+	private int art_number; // 뮤지션 분류코드
+	private String art_genre; // 앨범 장르
+	private String user_id; // 유저아이디
+	private int team_number; // 뮤지션 넘버
+	private String art_title; // 앨범명
+	private String art_cover; // 앨범 이미지
+	private String art_pr; // 앨범 설명
+	Date reg_art; // 앨범 등록일
+	private int liked_count; // 좋아요
+	private int good_count; // 추천
+	private int upload_check; // 업로드 확인
 	
 	public int getArt_number() {
 		return art_number;
@@ -76,18 +76,18 @@ public class art_infoVo {
 	public void setGood_count(int good_count) {
 		this.good_count = good_count;
 	}
-	public int getDeleted() {
-		return deleted;
+	public int getUpload_check() {
+		return upload_check;
 	}
-	public void setDeleted(int deleted) {
-		this.deleted = deleted;
+	public void setUpload_check(int upload_check) {
+		this.upload_check = upload_check;
 	}
 	@Override
 	public String toString() {
 		return "art_infoVo [art_number=" + art_number + ", art_genre=" + art_genre + ", user_id=" + user_id
 				+ ", team_number=" + team_number + ", art_title=" + art_title + ", art_cover=" + art_cover + ", art_pr="
 				+ art_pr + ", reg_art=" + reg_art + ", liked_count=" + liked_count + ", good_count=" + good_count
-				+ ", deleted=" + deleted + "]";
+				+ ", upload_check=" + upload_check + "]";
 	}
-
+	
 }
