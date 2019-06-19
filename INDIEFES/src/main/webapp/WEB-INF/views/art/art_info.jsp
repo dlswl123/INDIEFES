@@ -123,10 +123,6 @@ $(document).ready(function() {
 								<td>1</td>
 								<td class="song_name">곡</td>
 								<td>아티스트블라블라</td>
-<!-- 								<td><input type="button" value="듣기"></td> -->
-<!-- 								<td><input type="button" value="담기"></td> -->
-<!-- 								<td><input type="button" value="가사"></td> -->
-<!-- 								<td><input type="button" value="다운"></td> -->
 								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-plus-square"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="far fa-list-alt"></i></span></td>
