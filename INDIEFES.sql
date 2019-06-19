@@ -107,6 +107,11 @@ create table music_info(
     upload_check	number	default 0,
     file_path	varchar2(100)	not null
 );
+                                           
+create table music_lyrics(
+    music_number	number	references music_info(music_number),
+    lyrics	varchar2(4000)
+);
 
 create table bank_cate(
     bank_index	number	primary key,
