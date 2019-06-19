@@ -1,6 +1,6 @@
 package com.kh.jij.domain;
 
-public class indie_teamVo {
+public class IndieTeamVo {
 
 	private int team_number;
 	private String art_team;

@@ -1,6 +1,6 @@
 package com.kh.jij.domain;
 
-public class music_infoVo {
+public class MusicInfoVo {
 
 	private int art_number;
 	private int music_number;

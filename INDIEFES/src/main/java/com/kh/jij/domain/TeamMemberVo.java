@@ -1,6 +1,6 @@
 package com.kh.jij.domain;
 
-public class team_memberVo {
+public class TeamMemberVo {
 
 	private int member_number;
 	private int team_number;

@@ -1,6 +1,6 @@
 package com.kh.jij.domain;
 
-public class music_lyrics {
+public class Music_lyrics {
 
 	private int music_number;
 	private String lyrics;

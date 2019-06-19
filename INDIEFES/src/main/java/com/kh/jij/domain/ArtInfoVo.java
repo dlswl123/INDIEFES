@@ -2,7 +2,7 @@ package com.kh.jij.domain;
 
 import java.sql.Date;
 
-public class art_infoVo {
+public class ArtInfoVo {
 	
 	private int art_number; // 뮤지션 분류코드
 	private String art_genre; // 앨범 장르
