@@ -28,6 +28,8 @@
 	<context:component-scan base-package="com.kh.indiefes" />
 	<context:component-scan base-package="com.kh.ts.controller" />
 	<context:component-scan base-package="com.kh.ij.controller" />
+	<context:component-scan base-package="com.kh.ts.persistence" />
+	<context:component-scan base-package="com.kh.ts.service" />
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
