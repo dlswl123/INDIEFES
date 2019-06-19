@@ -80,11 +80,9 @@ $(document).ready(function(){
 });
 </script>
 
-<h1>글쓰기<h1>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<!-- form action 속성 생략시 현재 경로(board/regist)가 액션 -->
+			<h1>글쓰기<h1>
 			<form role="form" method="post" id="registForm">
 				<div class="form-group">
 					<label for="subject">제목</label>
@@ -92,7 +90,7 @@ $(document).ready(function(){
 						name="subject" />
 				</div>
 			<div class="form-group">
-				<label for="user_id">회원</label>
+				<label for="user_id">작성자</label>
 				<input type="text" class="form-control" id="user_id"
 					name="user_id" value="${BoardVo.user_id}"/>
 			</div>
@@ -105,7 +103,6 @@ $(document).ready(function(){
 					<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
 				</form>
 			</div>
-		</div>
-	</div>	
 
+<%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

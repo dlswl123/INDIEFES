@@ -36,5 +36,12 @@ public class BoardDaoImpl implements IBoardDao {
 		List<BoardVo> list = sqlSession.selectList(Namespace + ".selectAll");
 		return list;
 	}
+	// 조회수
+	@Override
+	public void updateViewcnt(int board_number) throws Exception {
+		sqlSession.update(Namespace + ".updateViewcnt",board_number);
+		System.out.println("BoardDaoImpl, updateViewcnt 실행됨" );
+		
+	}
 	
 }

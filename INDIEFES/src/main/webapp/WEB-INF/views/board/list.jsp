@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
 <script>
-$(document).ready(function(){
+$(document).ready(function() {
 	var message = "${message}";
 	console.log("message:" + message);
 	
@@ -19,13 +19,26 @@ $(document).ready(function(){
 		console.log("regist");
 		location.href="/indiefes/board/regist";
 		
-	});
-});
+	// 제목클릭
+	$(".click_subject").click(function(e){
+			e.preventDefault(); // 브라우저기능막기, a -링크 기능막기 
+			var board_number = $(this).attr("data-board_number");
+			$("input[name=board_number]").val(board_number);
+			console.log("제목클릭" + board_number);
+			
+			var href = $(this).attr("href");
+			$("#pageForm").attr("action",href).submit();
+			
+		}); // $(".click_subject")
+	}); // $("#btnRegist").click
+}); // $(document)
 </script>
-<h1>Indiefes 게시판</h1>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
+<form id="pageForm" action="/board/list">
+	<input type="hidden" name="board_number" 
+				value="${param.board_number}">
+</form>
+		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+		<h1>Indiefes 게시판</h1>
 		  <input type="button" class="btn btn-danger"
 		  		value="글쓰기" id="btnRegist">
 			<table class="table">
@@ -41,17 +54,30 @@ $(document).ready(function(){
 				<tbody>
 				<c:forEach items="${list}" var="boardVo">
 					<tr>
+						<!-- 글번호 -->
 						<td>${boardVo.board_number}</td>
-						<td>${boardVo.subject}</td>
+						<td>
+							<a href="/indiefes/board/read?board_number=${boardVo.board_number}">
+							<!-- class="click_subject" 
+							data-board_number="${boardVo.board_number}" -->
+							${boardVo.subject}</a>
+							<span style="color: red;">[${ boardVo.reply_count }]</span>
+							<c:if test="${boardVo.view_count >= 10 }">
+							<img src="../../../resources/bg_images/heart_fill.png" width="15">
+							<!-- 조회수 10 이상표시<span style="color: red;">hot</span> -->
+							</c:if>
+						</td>		
+						<!-- 회원 -->
 						<td>${boardVo.user_id}</td>
-						<td>${boardVo.reg_date}</td>
-						<td>${boardVo.view_count}</td>
+						<!-- 작성일 -->
+						<td><fmt:formatDate value="${boardVo.reg_date}"
+							pattern="yyyy/mm/dd HH:mm/ss"/></td>
+							<td>${boardVo.view_count}</td>
 					</tr>
 				</c:forEach>
 				</tbody>
 			</table>
 		</div>
-	</div>
-</div>
 
+<%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

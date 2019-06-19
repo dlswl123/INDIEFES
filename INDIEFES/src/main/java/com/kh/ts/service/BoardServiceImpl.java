@@ -36,5 +36,10 @@ public class BoardServiceImpl implements IBoardService {
 		List<BoardVo> list = boardDao.selectAll();
 		return list;
 	}
+	// 조회수
+	public void updateViewcnt(int board_number) throws Exception {
+		boardDao.updateViewcnt(board_number);
+		System.out.println("BoardServiceImp, updateViewcnt 실행됨");
+	}
 	
 }

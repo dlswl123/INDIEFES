@@ -22,5 +22,12 @@
 		select * 
 		from board_info
 	</select>
+	
+	<!-- 조회수증가 -->
+	<update id="updateViewcnt">
+		update board_info set
+			view_count = view_count+1
+		where board_number = #{board_number}
+	</update>
 
 </mapper>
