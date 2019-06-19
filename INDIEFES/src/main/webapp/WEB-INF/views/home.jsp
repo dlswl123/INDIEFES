@@ -51,9 +51,9 @@ body, html {
 		<div class="col-md-2">
 			<div class="sidebar" style="position:fixed;background-color:#ffff88;width:100%;height:100%;">
 				<aside id="sidebar">
-					<section id="signin"><h1>로그인폼</h1></section>
-				    <section id="boardList"><h1><a herf="/indiefes/board/list">자유게시판</a></h1></section>
-				    <section id="widget_2"><h1>링크2</h1></section>
+					<section id="login"><h1><a href="/indiefes/user/login">로그인폼</a></h1></section>
+				    <section id="boardList"><h1><a href="/indiefes/board/list">자유게시판</a></h1></section>
+				    <section id="artInfo"><h1><a href="/indiefes/art/art_info">앨범정보</a></h1></section>
 				    <section id="widget_3"><h1>링크3</h1></section>
 				    <section id="player"><h1>플레이어</h1></section>
 				</aside>
