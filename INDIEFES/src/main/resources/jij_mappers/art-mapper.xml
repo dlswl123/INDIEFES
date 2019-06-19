@@ -5,7 +5,7 @@
 <mapper namespace="art">
 	<!-- 앨범정보입력 -->
 	<insert id="insert">
-		insert into tbl_board(art_number, art_genre, user_id, team_number,art_title,art_cover,art_pr)
+		insert into art_info (art_number, art_genre, user_id, team_number,art_title,art_cover,art_pr)
 		values (seq_art.nextval,#{art_genre},#{user_id},#{team_number},#{art_title},#{art_cover},#{art_pr})
 	</insert>
 	

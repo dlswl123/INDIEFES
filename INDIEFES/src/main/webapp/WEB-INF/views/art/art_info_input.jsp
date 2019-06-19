@@ -77,18 +77,14 @@ $(document).ready(function() {
 	
 	// 작성완료 버튼
 	$("#btnSubmit").click(function() {
-		var upDiv = $("#uploadedList > div"); // 업로드 목록 div
-		upDiv.each(function(index) { // 각각의 div에 대해서
-			var filename = $(this).attr("data-filename"); // data-filename 속성의 값
-			console.log("div, filename:" + filename);
-			// <input type="hidden"> 을 만들어서 폼에 붙이고
-			var hiddenInput = "<input type='hidden' name='files[" + index + "]'"
-						    + " value='"+ filename + "'>";
-			$("#registForm").append(hiddenInput);
-		});
-		
+		var file = $("#art_cover").val().split("\\");
+		var art_cover = file[file.length-1]
+		$("input[name=art_cover]").val(art_cover);
+		var art_genre = $("#art_genre").val();
+		$("input[name=art_genre]").val(art_genre);
+		console.log($("input[name=art_cover]").val());
 		// 폼을 전송
-		$("#registForm").submit();
+		$("#art_info_input").submit();
 	});
 });
 </script>
@@ -98,7 +94,9 @@ $(document).ready(function() {
 	<div class="row">
 		<div class="col-md-12">
 			<!-- form action 속성 생략시 현재 경로(board/regist)가 액션 -->
-			<form role="form" method="post" id="registForm">
+			<form role="form" method="post" id="art_info_input">
+			<input type="hidden" name="art_genre" value="">
+			<input type="hidden" name="art_cover" value="">
 			<div class="col-md-2">
 				<div class="form-group">
 						<h3>앨범 이미지</h3>
