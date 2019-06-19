@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("art/*")
 public class ArtController {
 
-	
+	// 앨범정보 폼
 	@RequestMapping(value="/art_info", method=RequestMethod.GET)
 	public void ArtInfo() {
 		
