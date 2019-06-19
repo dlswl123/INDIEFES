@@ -84,7 +84,7 @@ create table team_member(
 
 create table art_info(
     art_number	number	primary key,
-    art_genre	varchar2(10),
+    art_genre	varchar2(50),
     user_id	varchar2(50)	references user_info(user_id),
     team_number	number	references indie_team(team_number),
     art_title	varchar2(100)	not null,
