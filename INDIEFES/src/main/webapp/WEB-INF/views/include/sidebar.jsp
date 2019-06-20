@@ -5,6 +5,11 @@
 <div class="col-md-2">
 	<div class="sidebar" style="position:fixed;background-color:rgba(0,0,0,0.7);width:100%;height:100%;">
 		<aside id="sidebar">
+			<section id="home">
+				<h1><a href="/indiefes/">
+					<font style="color:#ffffff;">INDIEFES</font>
+				</a></h1>
+			</section>
 			<section id="login">
 				<h1><a href="/indiefes/user/login">
 					<font style="color:#ffffff;">로그인폼</font>
@@ -27,7 +32,12 @@
 		    </section>
 		    <section id="player">
 			    <h1>
-			    	<font style="color:#ffffff;">플레이어</font>
+				    <script type="text/javascript">
+						function musicPlayer() {
+							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=720,scrollbars=NO,titlebar=no,resizable=no");
+						}
+					</script>
+			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font style="color:#ffffff;">플레이어</font></a>
 			    </h1>
 		    </section>
 		</aside>
