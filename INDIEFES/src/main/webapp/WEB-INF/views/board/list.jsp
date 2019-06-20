@@ -14,7 +14,7 @@ $(document).ready(function() {
 		alert("글이 성공적으로 삭제되었습니다")
 	}
 	
-	// 글쓰기
+	// 글쓰기버튼
 	$("#btnRegist").click(function(){
 		console.log("regist");
 		location.href="/indiefes/board/regist";
@@ -33,9 +33,10 @@ $(document).ready(function() {
 	}); // $("#btnRegist").click
 }); // $(document)
 </script>
+
 <form id="pageForm" action="/board/list">
 	<input type="hidden" name="board_number" 
-				value="${param.board_number}">
+			value="${param.board_number}">
 </form>
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 		<h1>Indiefes 게시판</h1>
@@ -64,7 +65,7 @@ $(document).ready(function() {
 							<span style="color: red;">[${ boardVo.reply_count }]</span>
 							<c:if test="${boardVo.view_count >= 10 }">
 							<img src="../../../resources/bg_images/heart_fill.png" width="15">
-							<!-- 조회수 10 이상표시<span style="color: red;">hot</span> -->
+							<span style="color: red;">hot</span>
 							</c:if>
 						</td>		
 						<!-- 회원 -->

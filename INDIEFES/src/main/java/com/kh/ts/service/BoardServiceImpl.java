@@ -27,19 +27,25 @@ public class BoardServiceImpl implements IBoardService {
 	// 글조회
 	@Override
 	public BoardVo select(int board_number) throws Exception {
-		BoardVo vo = boardDao.select(board_number);
+		BoardVo vo = boardDao.select(board_number); // select
 		return vo;
 	}
 	// 글목록
 	@Override
 	public List<BoardVo> selectAll() throws Exception {
-		List<BoardVo> list = boardDao.selectAll();
+		List<BoardVo> list = boardDao.selectAll(); // selectAll
 		return list;
 	}
 	// 조회수
+	@Override
 	public void updateViewcnt(int board_number) throws Exception {
-		boardDao.updateViewcnt(board_number);
+		boardDao.updateViewcnt(board_number); // updateViewcent
 		System.out.println("BoardServiceImp, updateViewcnt 실행됨");
+	}
+	// 글수정
+	@Override
+	public void update(BoardVo vo) throws Exception {
+		boardDao.update(vo); // update
 	}
 	
 }

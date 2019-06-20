@@ -5,18 +5,26 @@
 <%@ include file="../include/header.jsp" %>
 <script>
 $(document).ready(function(){
+	// 글수정버튼
+	$("#btnUpdate").click(function(){
+//		console.log(btnUpdate);
+		location.href = "/indiefes/board/update?board_number=${boardVo.board_number}";
+	});
+	// 목록보기버튼
+	$("#btnList").click(function(){
+//		console.log(btnList);
+		location.href = "/indiefes/board/list";
+	});
 	
-	
-});
+}); // $(document).ready
 </script>
 <form id="pageForm" action="board/list">
 	<input type="hidden" name=board_number
-	 			value="${param.board_number}">
-</form>	 			
-<h1>글조회</h1>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
+	 		value="${param.board_number}">
+</form>	 		
+
+<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+			<h1>글조회</h1>
 			<form role="form" method="post">
 				<div class="form-group">
 					<label for="subject">글제목</label>
@@ -44,15 +52,15 @@ $(document).ready(function(){
 						value="${boardVo.reg_date}" readonly/>
 				</div>
 				</form>
-			</div>
-		</div>
 			<div class="row">
 				<div class="col-md-12">
 					<input type="button" class="btn btn-success" value="글수정" id="btnUpdate"/>
 					<input type="button" class="btn btn-danger" value="글삭제" id="btnDelete"/>
 					<input type="button" class="btn btn-warning" value="목록보기" id="btnList"/>
 					
-		 </div>
-	</div>
-</div>
+				</div> <!-- class="col-md-12"-->
+		 	</div> <!-- class="row"> -->
+		</div> <!-- class="col-md-10" -->
+	
+<%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

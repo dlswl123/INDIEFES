@@ -13,4 +13,6 @@ public interface IBoardService {
 	public List<BoardVo> selectAll() throws Exception;
 	// 조회수
 	public void updateViewcnt(int board_number) throws Exception;
+	// 글수정
+	public void update(BoardVo vo) throws Exception;
 }
