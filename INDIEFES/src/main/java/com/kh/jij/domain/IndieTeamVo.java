@@ -25,5 +25,5 @@ public class IndieTeamVo {
 	public String toString() {
 		return "indie_teamVo [team_number=" + team_number + ", art_team=" + art_team + "]";
 	}
-
+	
 }
