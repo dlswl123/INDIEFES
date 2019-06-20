@@ -25,18 +25,15 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kh.indiefes" />
-	<context:component-scan base-package="com.kh.ts.controller" />
-	<context:component-scan base-package="com.kh.ij.controller" />
-	<context:component-scan base-package="com.kh.ks.controller" />
+	<context:component-scan base-package="com.kh.*" />
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
 	<!-- 업로드 경로 : H:/upload -->
 	<!-- String upliadPath = new String("H:/upload"); -->
-<!-- 	<beans:bean class="java.lang.String" id="uploadPath"> -->
-<!-- 		<beans:constructor-arg value="\\192.168.0.127\shared\upload_team1" /> -->
-<!-- 	</beans:bean> -->
+	<beans:bean class="java.lang.String" id="uploadPath">
+		<beans:constructor-arg value="\\192.168.0.127\shared\upload_team1" />
+	</beans:bean>
 	
 <!-- 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
 	<!-- 10 * 1024 * 1024 : 10MB -->

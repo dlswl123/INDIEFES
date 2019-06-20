@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<!-- 글쓰기 -->
+	<insert id="insert">
+		insert into board_info(board_number, board_cate_number, subject, user_id, content)
+		values(seq_board.nextval, 10, #{subject}, #{user_id}, #{content})
+	</insert>
+
+	<!-- 글조회 -->
+	<select id="select" resultType="BoardVo">
+		select *
+		from board_info
+		where board_number=#{board_number}
+	</select>
+	
+	<!-- 글목록 -->
+	<select id="selectAll" resultType="BoardVo">
+		select * 
+		from board_info
+	</select>
+	
+	<!-- 조회수증가 -->
+	<update id="updateViewcnt">
+		update board_info set
+			view_count = view_count+1
+		where board_number = #{board_number}
+	</update>
+
+</mapper>
