@@ -15,7 +15,9 @@
 </head>
 <body>
 	<h1>로그인 성공</h1>
-	${userInfoVo}
+	${userInfoVo}<br>
+	${userInfoVo.user_id}<br>
+	${userInfoVo.user_nick}
 	
 	<div class="row">
 	
