@@ -1,70 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<title>팀생성</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
-<body>
+<%@ include file="../include/header.jsp" %>
 <script>
 $(document).ready(function() {
 	
 	// 작성완료 버튼
-	$("#btnSubmit").click(function() {
-		var upDiv = $("#uploadedList > div"); // 업로드 목록 div
-		upDiv.each(function(index) { // 각각의 div에 대해서
-			var filename = $(this).attr("data-filename"); // data-filename 속성의 값
-			console.log("div, filename:" + filename);
-			// <input type="hidden"> 을 만들어서 폼에 붙이고
-			var hiddenInput = "<input type='hidden' name='files[" + index + "]'"
-						    + " value='"+ filename + "'>";
-			$("#registForm").append(hiddenInput);
-		});
+	$("#btnTeam").click(function() {
 		
 		// 폼을 전송
-		$("#registForm").submit();
+		$("#team1").submit();
+	});
+	$("#btnMember").click(function() {
+		var team_number = $("#team_number").val();
+		location.href = "/indiefes/art/team_member_input?team_number="+team_number;
 	});
 });
 </script>
 <!-- localhost/board/regist -->
 <br><br><br><br><br><br><br>
-<h1>팀생성</h1>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
+<h1 style="color: #ffffff;">팀생성</h1>
+	<div class="col-md-12">
+		<div class="col-md-10">
 			<!-- form action 속성 생략시 현재 경로(board/regist)가 액션 -->
-			<form role="form" method="post" id="registForm">
+			<form role="form" method="post" id="team1">
+			<input type="hidden" name="team_level" value="0">
 				<div class="form-group">
-					<label for="title">팀이름</label>
-					<input type="text" class="form-control" id="title"
-						name="title" />
+					<label for="art_team" style="color: #ffffff;">팀이름</label>
+					<input type="text" class="form-control" id="art_team"
+						name="art_team" />
 				</div>
-				<input type="button" id="btnSubmit" 
+				<input type="button" id="btnTeam" 
 					class="btn btn-success" value="작성완료"/>
 				<a href="">
 				<input type="button" class="btn btn-danger" value="작성취소"/></a> 
 			</form>
 		</div>
+<%@ include file="../include/sidebar.jsp" %>
 <br><br><br><br><br><br><br>
-<h1>팀가입</h1>		
-		<div class="col-md-12">
+<h1 style="color: #ffffff;">팀가입</h1>		
+		<div class="col-md-10">
 			<!-- form action 속성 생략시 현재 경로(board/regist)가 액션 -->
-			<form role="form" method="post" id="registForm">
+			<form role="form" method="post" >
 				<div class="form-group">
-					<label for="title">팀번호</label>
-					<input type="number" class="form-control" id="title"
-						name="title" />
+					<label for="team_number" style="color: #ffffff;">팀번호</label>
+					<input type="number" class="form-control" id="team_number"
+						name="team_number" />
 				</div>
-				<input type="button" id="btnSubmit" 
+				<input type="button" id="btnMember" 
 					class="btn btn-success" value="작성완료"/>
 				<a href="">
 				<input type="button" class="btn btn-danger" value="작성취소"/></a> 
 			</form>
 		</div>
 	</div>
-</div>
-</body>
-</html>
+<%@ include file="../include/footer.jsp" %>

@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.TeamMemberVo;
 
 @Repository
 public class ArtInfoDaoImpl implements IArtInfoDao {
@@ -20,10 +22,16 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	public void insert(ArtInfoVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
+	
+	@Override
+	public void teamInsert(IndieTeamVo vo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".teamInsert", vo);
+	}
 
 	@Override
-	public void attach(String file_path) throws Exception {
-		sqlSession.insert(NAMESPACE + ".attach", file_path);
+	public void teamInput(TeamMemberVo vo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".memberInsert", vo);
+		
 	}
 
 	@Override
@@ -36,5 +44,6 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	public void music_read(int art_number) throws Exception {
 		sqlSession.selectOne(NAMESPACE + ".music_read", art_number);
 	}
+
 
 }

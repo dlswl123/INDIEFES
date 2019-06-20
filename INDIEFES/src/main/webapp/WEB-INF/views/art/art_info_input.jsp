@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<title>앨범정보입력</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-</head>
-<body>
+<%@ include file="../include/header.jsp" %>    
 <script>
 $.fn.setPreview = function(opt){
     "use strict"
@@ -89,9 +80,7 @@ $(document).ready(function() {
 });
 </script>
 <!-- localhost/board/regist -->
-<h1>앨범정보입력</h1>
-<div class="container-fluid">
-	<div class="row">
+<h1 style="color: #ffffff;">앨범정보입력</h1>
 		<div class="col-md-12">
 			<!-- form action 속성 생략시 현재 경로(board/regist)가 액션 -->
 			<form role="form" method="post" id="art_info_input">
@@ -99,21 +88,21 @@ $(document).ready(function() {
 			<input type="hidden" name="art_cover" value="">
 			<div class="col-md-2">
 				<div class="form-group">
-						<h3>앨범 이미지</h3>
+						<h3 style="color: #ffffff;">앨범 이미지</h3>
 						<input type="file" id="art_cover" accept=".jpg, .jpeg, .png"/>
 						<br>
 						<img id="img_preview" style="display:none;"/>	
 				</div>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-8">
 				<div class="form-group">
-						<label for="art_title">앨범제목</label>
+						<label for="art_title" style="color: #ffffff;">앨범제목</label>
 						<input type="text" class="form-control" id="art_title"
 							name="art_title" />
 				</div>
 <!-- 발라드 댄스 랩/힙합 R&B/Soul 재즈 록/메탈 트로트 포크/블루스 기타 -->
 				<div class="form-group">
-					<label for="art_genre">장르</label>
+					<label for="art_genre" style="color: #ffffff;">장르</label>
 					<select id="art_genre">
 						<option value="발라드">발라드</option>
 						<option value="댄스">댄스</option>
@@ -126,7 +115,7 @@ $(document).ready(function() {
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="art_pr">앨범 소개</label>
+					<label for="art_pr" style="color: #ffffff;">앨범 소개</label>
 					<textarea rows="10" cols="80" id="art_pr"
 						class="form-control" name="art_pr"></textarea>
 				</div>
@@ -137,8 +126,6 @@ $(document).ready(function() {
 				<a href="/board/list">
 				<input type="button" class="btn btn-danger" value="작성취소"/></a> 
 			</form>
+<%@ include file="../include/sidebar.jsp" %>
 		</div>
-	</div>
-</div>
-</body>
-</html>
+<%@ include file="../include/footer.jsp" %>

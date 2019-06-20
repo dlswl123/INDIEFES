@@ -5,6 +5,7 @@ public class TeamMemberVo {
 	private int member_number;
 	private int team_number;
 	private String user_id;
+	private int team_level;
 	
 	public int getMember_number() {
 		return member_number;
@@ -24,10 +25,16 @@ public class TeamMemberVo {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
+	public int getTeam_level() {
+		return team_level;
+	}
+	public void setTeam_level(int team_level) {
+		this.team_level = team_level;
+	}
 	@Override
 	public String toString() {
-		return "team_memberVo [member_number=" + member_number + ", team_number=" + team_number + ", user_id=" + user_id
-				+ "]";
+		return "TeamMemberVo [member_number=" + member_number + ", team_number=" + team_number + ", user_id=" + user_id
+				+ ", team_level=" + team_level + "]";
 	}
 	
 }

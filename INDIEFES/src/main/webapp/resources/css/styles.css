@@ -1,0 +1,245 @@
+/*
+    MINIMusic Player
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: url(../images/G.png);
+/*   background-color: #000000; */
+}
+
+header h2 {
+  color: #000000;
+  text-align: center;
+}
+
+/* 뮤직플레이어 스타일 시트 */
+.MusicPlayer {
+  margin: 50px auto 0;
+  width: 440px;
+  padding-bottom: 50px;
+}
+/* 플레이어 */
+.player {
+  background: url(../images/DJ.png) no-repeat;
+  height: 288px;
+  position: relative;
+  width: 440px;
+  z-index: 2;
+}
+.title,
+.artist {
+  font-family: verdana;
+  left: 207px;
+  position: absolute;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.title {
+  background-color: rgba( 0, 0, 0, 0.5 );
+  color: #00ff00;
+  font-size: 14px;
+  font-weight: bold;
+  top: 57px;
+}
+.artist {
+  background-color: rgba( 0, 0, 0, 0.5 );
+  color: #00ff00;
+  font-size: 12px;
+  top: 74px;
+}
+.pl {
+  background: url(../images/playlist.png) no-repeat;
+  cursor: pointer;
+  height: 40px;
+  left: 390px;
+  position: absolute;
+  top: 20px;
+  width: 39px;
+}
+.pl:hover {
+  top: 21px;
+}
+.cover {
+  border-radius: 5px 5px 5px 5px;
+  height: 94px;
+  left: 60px;
+  position: absolute;
+  top: 98px;
+  width: 94px;
+}
+.controls {
+  cursor: pointer;
+  left: 0px;
+  position: absolute;
+  top: 132px;
+  left: 162px;
+}
+.controls .play,
+.controls .pause {
+  width: 60px;
+  height: 60px;
+  margin: 0 5px 0px 5px;
+}
+.controls .play,
+.controls .pause,
+.controls .rew,
+.controls .fwd,
+.controls .stop {
+  text-indent: -10000px;
+  border: none;
+  float: left;
+}
+.controls .rew,
+.controls .fwd,
+.controls .stop {
+  width: 50px;
+  height: 50px;
+  margin: 5px 5px 5px 5px;
+}
+.controls .play {
+  background: url(../images/play.png) no-repeat;
+}
+.controls .pause {
+  background: url(../images/pause.png) no-repeat;
+  display: none;
+}
+.controls .rew {
+  background: url(../images/rewind.png) no-repeat;
+}
+.controls .fwd {
+  background: url(../images/next.png) no-repeat;
+}
+.controls .stop {
+  background: url(../images/stop.png) no-repeat;
+}
+.hidden {
+  display: none;
+}
+.controls .visible {
+  display: block;
+}
+.volume {
+  height: 11px;
+  left: 270px;
+  position: absolute;
+  top: 210px;
+  width: 140px;
+}
+.mute .volume-btn {
+  background: url(../images/volume-off.png) no-repeat;
+}
+.volume-btn {
+  background: url(../images/volume-up.png) no-repeat;
+  height: 20px;
+  width: 20px;
+  float: left;
+  position: relative;
+  top: -4px;
+}
+.volume-adjust {
+  height: 11px;
+  position: relative;
+  width: 80%;
+  background: #fff;
+  float: right;
+}
+.volume-adjust > div > div {
+  height: 11px;
+  background: #00ff00;
+}
+/* 플레이상태바 */
+.progressbar {
+  background-color: #fff;
+  cursor: pointer;
+  z-index: 1;
+  right: 6.875em; /* 110 */
+  height: 15px;
+  left: 0px;
+  position: absolute;
+  width: 90%;
+  top: 238px;
+  margin: 0px 5%;
+}
+.novolume .progressbar {
+  right: 4.375em; /* 70 */
+}
+.progressbar div {
+  width: 0%;
+  height: 15px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.bar-loaded {
+  background-color: #f1f1f1;
+  z-index: 1;
+}
+.bar-played {
+  background: #00ff00;
+  z-index: 2;
+}
+.timeHolder {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  bottom: 10px;
+  position: absolute;
+  margin: 0px 5%;
+  width: 90%;
+}
+.time-current,
+.time-duration,
+.time-separator {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  float: left;
+}
+.volume .ui-slider-handle {
+  background: url("../images/spr.png") no-repeat scroll -201px -188px
+    rgba(0, 0, 0, 0);
+  height: 13px;
+  width: 13px;
+}
+.playlist {
+  background-color: rgba( 0, 0, 0, 0.5 );
+/*   background: none; */
+/*   background-color: #fff; */
+  list-style-type: none;
+  margin: 0px 0 0 0px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  position: relative;
+  width: 440px;
+  z-index: 1;
+  margin: 1px auto;
+}
+.playlist li,
+.playlist div {
+  color: #151b48;
+  cursor: pointer;
+  margin: 0 0 5px 0px;
+}
+.playlist li > a,
+/* 리스트 폰트 */
+.playlist div > a {
+  color: #00ff00;
+  text-decoration: none;
+  margin: 0 0 0 15px;
+}
+.playlist li.active,
+.playlist div.active {
+  background-color: rgba( 255, 100, 255, 0.3 );
+  font-weight: bold;
+}
+.slick-dots {
+  bottom: 5px !important;
+}
+.slick-dots li button:before {
+  font-size: 8px !important;
+}

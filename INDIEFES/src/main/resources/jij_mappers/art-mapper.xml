@@ -9,10 +9,18 @@
 		values (seq_art.nextval,#{art_genre},#{user_id},#{team_number},#{art_title},#{art_cover},#{art_pr})
 	</insert>
 	
-	<!-- 첨부파일 경로 추가 -->
-	<insert id="attach">
-		insert into tbl_file(file_path, bno)
-		values (#{file_path}, seq_board.currval)
+	<insert id="teamInsert">
+		insert into indie_team (team_number, art_team)
+		values (seq_team.nextval,#{art_team})
+	</insert>
+	<insert id="memberInsert">
+	insert into team_member (member_number, team_number,user_id,team_level)
+	<if test = "team_level == 0">
+		values (seq_member.nextval,seq_team.currval,#{user_id},#{team_level})
+	</if>
+	<if test = "team_level == 1">
+		values (seq_member.nextval,#{team_number},#{user_id},#{team_level})
+	</if>
 	</insert>
 	
 <!-- 	앨범정보 읽기 -->
