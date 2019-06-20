@@ -6,10 +6,9 @@
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div>
 				<h1>
-					Hello world!  
+					INDIEFES 
 				</h1>
 				
-				<P>  The time on the server is ${serverTime}. </P>
 				<section style="background-color:rgba(255,255,255,0.7);">
 					section
 					<article style="background-color:rgba(255,255,255,0.7);">
