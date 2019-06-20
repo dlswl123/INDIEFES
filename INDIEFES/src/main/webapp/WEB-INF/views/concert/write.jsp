@@ -21,17 +21,19 @@ $(document).ready(function() {
 		<article style="padding:20px;">
 			<form>
 				<div class="form-group">
-					<label id="subject">공연제목</label>
+					<label id="subject">공연 제목</label>
 					<input type="text" class="form-control" name="subject" id="subject" />
 					
-					<label id="content">공연내용</label>
+					<label id="content">공연 내용</label>
 					<textarea class="form-control" rows="10" cols="50" name="content" id="subject"
 					style="resize:none;">
 					</textarea>
 					
-					<label id="map">지도</label>
+					<label id="concerthall">공연장 위치</label>
 					<div id="map" style="width:100%;height:500px;"></div>
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=913777d8d62e9dada9a5b7e3656cdba2"></script>
+					 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=913777d8d62e9dada9a5b7e3656cdba2&libraries=services,clusterer,drawing"></script>
+<!-- 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=913777d8d62e9dada9a5b7e3656cdba2"></script> -->
 					<script>
 						var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 						var options = { //지도를 생성할 때 필요한 기본 옵션
