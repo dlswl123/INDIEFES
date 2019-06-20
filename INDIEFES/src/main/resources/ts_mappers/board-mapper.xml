@@ -29,5 +29,14 @@
 			view_count = view_count+1
 		where board_number = #{board_number}
 	</update>
+	
+	<!-- 글수정 -->
+	<update id="update">
+		update board_info set
+			subject = #{subject},
+			user_id = #{user_id},
+			content = #{content}
+		where board_number = #{board_number}
+	</update>
 
 </mapper>

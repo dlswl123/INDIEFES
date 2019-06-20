@@ -1,6 +1,6 @@
 package com.kh.jij.domain;
 
-public class Music_lyrics {
+public class MusicLyricsVo {
 
 	private int music_number;
 	private String lyrics;
@@ -25,5 +25,4 @@ public class Music_lyrics {
 	public String toString() {
 		return "music_lyrics [music_number=" + music_number + ", lyrics=" + lyrics + "]";
 	}
-
 }

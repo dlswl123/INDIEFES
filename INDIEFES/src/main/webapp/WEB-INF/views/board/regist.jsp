@@ -13,12 +13,14 @@
 </style> 
 
 <script>
-$(window).unload(function(){
-	return "unload";
-});
 
 $(document).ready(function(){
 	
+	// 목록보기 버튼
+	$("#btnList").click(function(){
+		console.log("btnList");
+		location.href="/indiefes/board/list"
+	});
 
 	$("#fileDrop").on("drop", function(e) {
 		e.preventDefault();
@@ -29,6 +31,8 @@ $(document).ready(function(){
 		formData.append("file", file); // <input type="text" name="file">
 		
 		var url = "/upload/uploadAjax";
+	
+	
 		
 	$.ajax({
 		"url" : url,
@@ -61,7 +65,7 @@ $(document).ready(function(){
 		}); // $.ajax()
 	});		// $("#fileDrop")
 	
-	// 작성완료버튼
+	// 작성완료 버튼
 	$("#btnSubmit").click(function(){
 		var upDiv = $("#uploadedList > div"); // 업로드 목록 div
 		upDiv.each(function(index){ // 각각의 div에 대해서
@@ -77,7 +81,7 @@ $(document).ready(function(){
 		$("#registForm").submit();
 		
 	}); // $("#btnSubmit").click(function()
-});
+}); // $(document).ready
 </script>
 
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
@@ -99,8 +103,8 @@ $(document).ready(function(){
 					<textarea rows="10" cols="80" id="content"
 						class="form-control" name="content"></textarea>	
 					</div>
-					
 					<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
+					<input type="button" id="btnList" class="btn btn-warning" value="목록보기"/>
 				</form>
 			</div>
 

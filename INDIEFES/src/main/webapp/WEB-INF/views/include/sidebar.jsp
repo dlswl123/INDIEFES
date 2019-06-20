@@ -32,7 +32,12 @@
 		    </section>
 		    <section id="player">
 			    <h1>
-			    	<font style="color:#ffffff;">플레이어</font>
+				    <script type="text/javascript">
+						function musicPlayer() {
+							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=720,scrollbars=NO,titlebar=no,resizable=no");
+						}
+					</script>
+			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font style="color:#ffffff;">플레이어</font></a>
 			    </h1>
 		    </section>
 		</aside>
