@@ -49,5 +49,9 @@ public class BoardDaoImpl implements IBoardDao {
 		sqlSession.update(Namespace + ".update",vo);
 		
 	}
-	
+	// ±€ªË¡¶
+	@Override
+	public void delete(int board_number) throws Exception {
+		sqlSession.delete(Namespace + ".delete",board_number);		
+	}
 }

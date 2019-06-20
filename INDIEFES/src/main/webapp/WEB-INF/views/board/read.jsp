@@ -5,7 +5,7 @@
 <%@ include file="../include/header.jsp" %>
 <script>
 $(document).ready(function(){
-	// 글수정버튼
+	// 수정하기버튼
 	$("#btnUpdate").click(function(){
 //		console.log(btnUpdate);
 		location.href = "/indiefes/board/update?board_number=${boardVo.board_number}";
@@ -14,6 +14,11 @@ $(document).ready(function(){
 	$("#btnList").click(function(){
 //		console.log(btnList);
 		location.href = "/indiefes/board/list";
+	});
+	// 삭제하기버튼
+	$("#btnDelete").click(function(){
+//		console.log(btnDelete);
+		location.href = "/indiefes/board/delete?board_number=${boardVo.board_number}";
 	});
 	
 }); // $(document).ready
@@ -54,8 +59,8 @@ $(document).ready(function(){
 				</form>
 			<div class="row">
 				<div class="col-md-12">
-					<input type="button" class="btn btn-success" value="글수정" id="btnUpdate"/>
-					<input type="button" class="btn btn-danger" value="글삭제" id="btnDelete"/>
+					<input type="button" class="btn btn-success" value="수정하기" id="btnUpdate"/>
+					<input type="button" class="btn btn-danger" value="삭제하기" id="btnDelete"/>
 					<input type="button" class="btn btn-warning" value="목록보기" id="btnList"/>
 					
 				</div> <!-- class="col-md-12"-->

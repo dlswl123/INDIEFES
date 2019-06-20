@@ -47,5 +47,9 @@ public class BoardServiceImpl implements IBoardService {
 	public void update(BoardVo vo) throws Exception {
 		boardDao.update(vo); // update
 	}
-	
+	// ±€ªË¡¶
+	@Override
+	public void delete(int board_number) throws Exception {
+		boardDao.delete(board_number); // delete
+	}
 }

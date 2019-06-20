@@ -33,7 +33,6 @@ $(document).ready(function() {
 	}); // $("#btnRegist").click
 }); // $(document)
 </script>
-
 <form id="pageForm" action="/board/list">
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">
@@ -71,9 +70,13 @@ $(document).ready(function() {
 						<!-- 회원 -->
 						<td>${boardVo.user_id}</td>
 						<!-- 작성일 -->
-						<td><fmt:formatDate value="${boardVo.reg_date}"
-							pattern="yyyy/mm/dd HH:mm/ss"/></td>
-							<td>${boardVo.view_count}</td>
+						<td>
+						<%-- <fmt:formatDate value=" --%>
+						${boardVo.reg_date}
+
+						<!-- pattern="yyyy/mm/dd HH:mm/ss"/> -->
+						</td>
+						<td>${boardVo.view_count}</td>
 					</tr>
 				</c:forEach>
 				</tbody>

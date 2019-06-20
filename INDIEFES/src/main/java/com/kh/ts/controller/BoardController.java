@@ -38,10 +38,19 @@ public class BoardController {
 	
 	// 글조회
 	@RequestMapping(value="/read", method = RequestMethod.GET)
-	public void read(@RequestParam("board_number")int board_number, Model model) throws Exception {
+	public void read(@RequestParam("board_number")int board_number, Model model, HttpSession session)throws Exception {
 		System.out.println("BoardController, read, board_number:" + board_number);
-		boardService.updateViewcnt(board_number);
 		BoardVo boardVo = boardService.select(board_number);
+		// 해당글 작성 아이디
+		String user_id = boardVo.getUser_id();
+		// 로그인 아이디
+		String login_id = "xotjd";
+		System.out.println("user_id:" + user_id);
+		System.out.println("login_id:" + login_id);
+		if (! user_id.equals(login_id)) {
+			System.out.println("update 실행");
+			boardService.updateViewcnt(board_number);
+		}
 		model.addAttribute("boardVo", boardVo);
 	}
 	
@@ -55,7 +64,7 @@ public class BoardController {
 	
 	// 글쓰기처리 - /indiefes/board/regist(Post 요청)
 	@RequestMapping(value="/regist", method=RequestMethod.POST)
-	public String registPost(BoardVo boardVo, RedirectAttributes rttr, HttpSession session) throws Exception {
+	public String registPost(BoardVo boardVo, RedirectAttributes rttr, HttpSession session)throws Exception {
 		System.out.println("boardVo:" + boardVo);
 		System.out.println("BoardController, registPost, boardVo:" + boardVo);
 		boardService.insert(boardVo);
@@ -66,17 +75,34 @@ public class BoardController {
 	
 	// 글수정 폼 - /indiefes/board/update(GET 요청)
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public void updateGet(@RequestParam("board_number")int board_number, Model model) throws Exception {
+	public void updateGet(@RequestParam("board_number")int board_number, Model model)throws Exception {
 		BoardVo boardVo = boardService.select(board_number);
 		model.addAttribute("boardVo", boardVo);
 	}
 	
 	// 글수정처리 - /indiefes/board/update(Post 요청)
 	@RequestMapping(value="/update", method= RequestMethod.POST)
-	public String updatePost(BoardVo boardVo, RedirectAttributes rttr) throws Exception {
+	public String updatePost(BoardVo boardVo, RedirectAttributes rttr)throws Exception {
 		boardService.update(boardVo);
 		rttr.addAttribute("message", "success_update");
 		
 		return "redirect:/board/read?board_number=" + boardVo.getBoard_number();
+	}
+	// 글삭제 폼 - /indiefes/board/update(GET 요청)
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
+	public void deleteGet(int board_number, Model model)throws Exception {
+		
+	}
+	// 글삭제처리 - /indiefes/board/delete(Post 요청)
+	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
+	public String deletePost(@RequestParam("board_number")int board_number,
+			RedirectAttributes rttr)throws Exception {
+		try {
+			boardService.delete(board_number);
+			rttr.addAttribute("mesage", "success_delete");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/board/list?board_number=" + board_number;
 	}
 }

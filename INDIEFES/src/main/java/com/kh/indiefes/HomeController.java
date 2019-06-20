@@ -31,9 +31,11 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		model.addAttribute("serverTime", formattedDate );
+		logger.info("serverTime : {}", formattedDate);
 		
-		return "/user/login";
+//		model.addAttribute("serverTime", formattedDate );
+		
+		return "home";
 	}
 	
 }

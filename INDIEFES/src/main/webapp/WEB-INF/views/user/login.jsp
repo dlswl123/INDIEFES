@@ -1,34 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
+<%@ include file="../include/header.jsp" %>
 
-<html>
+	
 
-<head>
-
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-</head>
-
-<body>
-
-  <div class="container-fluid">
-  	
-	<div class="row" style="margin-top:75px">
-		<div class="col-md-4">
+	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,0.7);">
+		<div class="col-md-12">
+		<h1><a href = "/indiefes/">indiefes</a></h1>
 		</div>
 		<div class="col-md-4">
+		<div class="col-md-12">
 			<form role="form" action="/indiefes/user/login-run" method="post">
 				<div class="form-group">
 					 
@@ -56,13 +38,6 @@
 				</button>
 			</form>
 		</div>
-		<div class="col-md-4">
 		</div>
 	</div>
-</div>
-
-  
-
-</body>
-
-</html>
+<%@ include file="../include/footer.jsp" %>
