@@ -79,7 +79,8 @@ create table indie_team(
 create table team_member(
     member_number	number	primary key,
     team_number	number	references indie_team(team_number),
-    user_id	varchar2(50)	references user_info(user_id)
+    user_id	varchar2(50)	references user_info(user_id),
+    team_level	number	default 0
 );
 
 create table art_info(
