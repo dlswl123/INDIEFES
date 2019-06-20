@@ -29,7 +29,7 @@
 		<div class="col-md-4">
 		</div>
 		<div class="col-md-4">
-			<form role="form" action="/user/login-run" method="post">
+			<form role="form" action="/indiefes/user/login-run" method="post">
 				<div class="form-group">
 					 
 					<label for="user_id">
