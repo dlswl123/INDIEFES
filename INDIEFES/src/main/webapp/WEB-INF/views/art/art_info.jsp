@@ -24,11 +24,6 @@ $(document).ready(function() {
 		
 	});
 	
-	// 담기버튼
-	$("#btnPut").click(function() {
-		
-	});
-	
 	// 다운버튼
 	$("#btnDown").click(function() {
 		
@@ -39,10 +34,6 @@ $(document).ready(function() {
 		
 	});
 	
-	// 모두담기버튼
-	$("#btnAllPut").click(function() {
-		
-	});
 	// 사용자용 끝
 	
 // 		뮤지션용
@@ -139,14 +130,12 @@ $(document).ready(function() {
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${userVo.user_level == 3}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnPut">담기</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnDown">다운</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllListen">전체듣기</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnAllPut">전체담기</button>
 <%-- 					</c:when> --%>
 <%-- 					<c:when test="${userVo.user_level == 2}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnMusicInput">음악추가</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnArtAdd">앨범등록</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnArtAdd">수정완료</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnCancel">등록취소</button>
 						
 <%-- 					</c:when> --%>
@@ -164,8 +153,6 @@ $(document).ready(function() {
 				<!-- 음악추가폼 -->
 					<form name="fileForm" action="art/musicUpload" method="post" enctype="multipart/form-data">
 						<div>
-<!-- 							<label>트랙넘버</label> -->
-<!-- 							<input type="text"> -->
 							<label>노래제목</label>
 							<input type="text" id="songName">
 				        	<input type="file" name="file_path" id="inputFile" style="display:none;">
@@ -197,7 +184,6 @@ $(document).ready(function() {
 <%-- 									</c:when> --%>
 <%-- 									<c:otherwise> --%>
 										<th>듣기</th>
-										<th>담기</th>
 										<th>가사</th>
 										<th>다운</th>
 <%-- 									</c:otherwise> --%>
@@ -220,7 +206,6 @@ $(document).ready(function() {
 <%-- 									</c:when> --%>
 <%-- 									<c:otherwise> --%>
 										<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
-										<td><span style="color:blue; size: 10px"><i class="fas fa-plus-square"></i></span></td>
 										<td><span style="color:blue; size: 10px"><i class="far fa-list-alt"></i></span></td>
 										<td><span style="color:blue; size: 10px"><i class="fas fa-file-download"></i></span></td>
 <%-- 									</c:otherwise> --%>
