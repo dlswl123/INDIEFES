@@ -25,7 +25,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/login-run", method=RequestMethod.POST)
 	public String loginRun(String user_id, String user_pw, HttpSession session)throws Exception{
-//		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 1.로그인폼에서 넘어온 데이터 -> service로 넘겨줌
+		System.out.println("LoginController, loginRun, user_id/user_pw:" + user_id + "/" + user_pw); // 1.로그인폼에서 넘어온 데이터 -> service로 넘겨줌
 //		String user_id = userInfoVo.getUser_id();
 //		String user_pw = userInfoVo.getUser_pw();
 		UserInfoVo userInfoVo = userInfoService.readWithPw(user_id, user_pw);
