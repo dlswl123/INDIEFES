@@ -89,9 +89,9 @@ $(document).ready(function() {
 				</div>
 				<div class="col-md-8">
 					<p>
-						<strong>앨범이름</strong><br>
-						<strong>가수이름</strong><br>
-						<small>앨범설명</small>
+						<strong>${artVo.art_title}</strong><br>
+						<strong>${artVo.team_number}</strong><br>
+						<small>${artVo.art_pr}</small>
 					</p>
 				</div>
 			</div>
@@ -137,16 +137,18 @@ $(document).ready(function() {
 							</tr>
 						</thead>
 						<tbody>
+						<c:forEach items="${musicList}" var="musicInfoVo">
 							<tr>
 								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td class="song_name">곡</td>
-								<td>아티스트블라블라</td>
+								<td>${musicList.track_number}</td>
+								<td class="song_name">${musicList.music_title}</td>
+								<td>${musicList.team_number}</td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-plus-square"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="far fa-list-alt"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-file-download"></i></span></td>
 							<tr>
+						</c:forEach>
 						</tbody>
 					</table>
 				</div>

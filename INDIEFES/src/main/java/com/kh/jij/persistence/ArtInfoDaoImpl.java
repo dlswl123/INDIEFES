@@ -1,12 +1,15 @@
 package com.kh.jij.persistence;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.MusicInfoVo;
 
 @Repository
 public class ArtInfoDaoImpl implements IArtInfoDao {
@@ -27,14 +30,15 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 
 	@Override
-	public void art_read(String user_id) throws Exception {
-		sqlSession.selectOne(NAMESPACE + ".art_read", user_id);
-		
+	public ArtInfoVo art_read(String user_id) throws Exception {
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".art_read", user_id);
+		return artVo;
 	}
 
 	@Override
-	public void music_read(int art_number) throws Exception {
-		sqlSession.selectOne(NAMESPACE + ".music_read", art_number);
+	public List<MusicInfoVo> music_read(int art_number) throws Exception {
+		List<MusicInfoVo> musicList = sqlSession.selectList(NAMESPACE + ".music_read", art_number);
+		return musicList;
 	}
 
 }

@@ -3,7 +3,7 @@ package com.kh.jij.domain;
 import java.sql.Date;
 
 public class ArtInfoVo {
-	
+		
 	private int art_number; // 뮤지션 분류코드
 	private String art_genre; // 앨범 장르
 	private String user_id; // 유저아이디
@@ -11,7 +11,7 @@ public class ArtInfoVo {
 	private String art_title; // 앨범명
 	private String art_cover; // 앨범 이미지
 	private String art_pr; // 앨범 설명
-	Date reg_art; // 앨범 등록일
+	private Date reg_art; // 앨범 등록일
 	private int liked_count; // 좋아요
 	private int good_count; // 추천
 	private int upload_check; // 업로드 확인

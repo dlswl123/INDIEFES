@@ -1,6 +1,9 @@
 package com.kh.jij.persistence;
 
+import java.util.List;
+
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.MusicInfoVo;
 
 public interface IArtInfoDao {
 	// 글쓰기
@@ -10,8 +13,8 @@ public interface IArtInfoDao {
 	public void attach(String file_path) throws Exception;
 	
 	// 앨범 정보 가져오기
-	public void art_read(String user_id) throws Exception;
+	public ArtInfoVo art_read(String user_id) throws Exception;
 	
 	// 노래 정보 가져오기
-	public void music_read(int art_number) throws Exception;
+	public List<MusicInfoVo> music_read(int art_number) throws Exception;
 }
