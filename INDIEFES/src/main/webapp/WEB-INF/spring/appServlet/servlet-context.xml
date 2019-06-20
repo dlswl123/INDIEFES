@@ -25,10 +25,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kh.indiefes" />
-	<context:component-scan base-package="com.kh.ts.controller" />
-	<context:component-scan base-package="com.kh.ij.controller" />
-	<context:component-scan base-package="com.kh.ks.controller" />
+	<context:component-scan base-package="com.kh.*" />
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	

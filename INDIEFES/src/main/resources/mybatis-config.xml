@@ -6,9 +6,9 @@
  <configuration>
  	<typeAliases>
  		<!-- 패키지단위 -->
- 		<package name="com.kh.domain"/>
+<!--  		<package name="com.kh.domain"/> -->
  		
  		<!-- 클래스 단위 -->
-<!--  		<typeAlias type="com.kh.domain.BoardVo" alian=""/> -->
+ 		<typeAlias type="com.kh.ks.domain.UserInfoVo" alias="UserInfoVo"/>
  	</typeAliases>
  </configuration>
