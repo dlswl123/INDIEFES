@@ -140,9 +140,9 @@ $(document).ready(function() {
 						<c:forEach items="${musicList}" var="musicInfoVo">
 							<tr>
 								<td><input type="checkbox" /></td>
-								<td>${musicList.track_number}</td>
-								<td class="song_name">${musicList.music_title}</td>
-								<td>${musicList.team_number}</td>
+								<td>${musicInfoVo.track_number}</td>
+								<td class="song_name">${musicInfoVo.music_title}</td>
+								<td>${artVo.team_number}</td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-plus-square"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="far fa-list-alt"></i></span></td>
