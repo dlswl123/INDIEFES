@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
+    
+<%@ include file="../include/header.jsp" %>
+
 <style>
 	th {
     height: 100px;
@@ -14,11 +14,7 @@
   .btn {border-radius: 12px;}
 </style>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="https://kit.fontawesome.com/9d5a98c207.js"></script>
+
 
 <script>
 $(document).ready(function() {
@@ -73,14 +69,11 @@ $(document).ready(function() {
 	});
 });
 </script>
-
-</head>
-<body>
-<h1>앨범 정보</h1>
-
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
+	
+		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+			<div class="row">
+					<h1>앨범 정보</h1>
+			</div>
 			<div class="row">
 				<div class="col-md-1">
 				</div>
@@ -90,7 +83,8 @@ $(document).ready(function() {
 				<div class="col-md-8">
 					<p>
 						<strong>${artVo.art_title}</strong><br>
-						<strong>${artVo.team_number}</strong><br>
+<%-- 						<strong>${artVo.team_number}</strong><br> --%>
+						<strong>${team_name}</strong><br>
 						<small>${artVo.art_pr}</small>
 					</p>
 				</div>
@@ -142,7 +136,8 @@ $(document).ready(function() {
 								<td><input type="checkbox" /></td>
 								<td>${musicInfoVo.track_number}</td>
 								<td class="song_name">${musicInfoVo.music_title}</td>
-								<td>${artVo.team_number}</td>
+<%-- 								<td>${artVo.team_number}</td> --%>
+								<td>${team_name}</td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-plus-square"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="far fa-list-alt"></i></span></td>
@@ -154,9 +149,6 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
 
-
-</body>
-</html>
+<%@ include file="../include/sidebar.jsp" %>
+<%@ include file="../include/footer.jsp" %>

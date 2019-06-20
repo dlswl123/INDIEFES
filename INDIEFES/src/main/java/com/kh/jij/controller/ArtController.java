@@ -28,12 +28,14 @@ public class ArtController {
 //		UserVo userVo = session.getAttribute("userVo");
 		
 		String user_id = "indie1";
+		String team_name = "인디1";
 		ArtInfoVo artVo = artService.art_read(user_id, 1);
 		List<MusicInfoVo> musicList = artService.music_read(4);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
-		System.out.println("ArtController, artVo : " + artVo);
-		System.out.println("ArtController, musicList : " + musicList);
+		model.addAttribute("team_name", team_name);
+//		System.out.println("ArtController, artVo : " + artVo);
+//		System.out.println("ArtController, musicList : " + musicList);
 	}
 	
 	@RequestMapping(value="/art_info_input", method=RequestMethod.GET)
