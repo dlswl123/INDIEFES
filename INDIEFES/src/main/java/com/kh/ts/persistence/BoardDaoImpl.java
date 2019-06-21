@@ -40,7 +40,7 @@ public class BoardDaoImpl implements IBoardDao {
 	@Override
 	public void updateViewcnt(int board_number) throws Exception {
 		sqlSession.update(Namespace + ".updateViewcnt",board_number);
-		System.out.println("BoardDaoImpl, updateViewcnt �����" );
+		System.out.println("BoardDaoImpl, updateViewcnt" );
 		
 	}
 	// 글수정

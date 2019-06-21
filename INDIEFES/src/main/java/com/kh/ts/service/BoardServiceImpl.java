@@ -40,7 +40,7 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public void updateViewcnt(int board_number) throws Exception {
 		boardDao.updateViewcnt(board_number); // updateViewcent
-		System.out.println("BoardServiceImp, updateViewcnt �����");
+		System.out.println("BoardServiceImp, updateViewcnt");
 	}
 	// 글수정
 	@Override

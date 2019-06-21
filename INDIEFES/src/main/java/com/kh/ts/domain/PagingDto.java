@@ -13,11 +13,14 @@ public class PagingDto {
 	}
 	public void setPage(int page) {
 		this.page = page;
-		
+		setRows();
 	}
-	public void setRows( ) {
-		
+	private void setRows( ) {
+		// 1		2
+		// s:1		11
+		// e:10		20
 		startRow = page * perPage - perPage +1;
+		endRow = startRow + perPage -1;
 	}
 	public int getPerPage() {
 		return perPage;

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.ks.domain.UserInfoVo;
+import com.kh.ks.service.IUserInfoService;
 import com.kh.ts.domain.BoardVo;
 import com.kh.ts.service.IBoardService;
 
@@ -26,6 +28,9 @@ public class BoardController {
 
 	@Inject
 	IBoardService boardService;
+	
+	@Inject
+	private IUserInfoService userInfoService;
 	
 	// 글목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -43,8 +48,11 @@ public class BoardController {
 		BoardVo boardVo = boardService.select(board_number);
 		// 회원아이디
 		String user_id = boardVo.getUser_id();
+		String user_pw = "1234";
+		UserInfoVo userInfoVo = userInfoService.readWithPw(user_id, user_pw);
+		String login_id = userInfoVo.getUser_id();
 		// 지정된회원
-		String login_id = "xotjd";
+//		String login_id = "xotjd";
 		System.out.println("user_id:" + user_id);
 		System.out.println("login_id:" + login_id);
 		if (! user_id.equals(login_id)) {
