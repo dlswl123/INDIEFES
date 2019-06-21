@@ -14,6 +14,4 @@ public class PlayerController {
 		System.out.println("Player()");
 	}
 	
-	
-	
 }

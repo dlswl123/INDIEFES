@@ -39,9 +39,10 @@
 				<input type="button" id="btnCreateAccount" value="회원가입" class="btn btn-primary" style="float: right;" />
 					
 				
-			</form>
+				</form>
+			</div>
 		</div>
-	</div>
+	
 	
 	
 	

@@ -10,11 +10,30 @@
 					<font style="color:#ffffff;">INDIEFES</font>
 				</a></h1>
 			</section>
-			<section id="login">
-				<h1><a href="/indiefes/user/login">
-					<font style="color:#ffffff;">로그인폼</font>
-				</a></h1>
-			</section>
+			
+			
+			
+			<c:choose>
+			 
+			    <c:when test="${userInfoVo eq null}">
+			        <section id="login">
+					<h1><a href="/indiefes/user/login">
+						<font style="color:#ffffff;">로그인폼</font>
+					</a></h1>
+					</section>
+			    </c:when>
+			 
+			   	 
+			    <c:otherwise>
+			        <section id="login">
+					<h1><a href="/indiefes/user/logout">
+						<font style="color:#ffffff;">로그아웃</font>
+					</a></h1>
+					</section>
+			    </c:otherwise>
+			 
+			</c:choose>
+					
 		    <section id="boardList">
 			    <h1><a href="/indiefes/board/list">
 			    	<font style="color:#ffffff;">자유게시판</font>

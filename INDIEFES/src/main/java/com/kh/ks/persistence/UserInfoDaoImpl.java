@@ -33,4 +33,14 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		return userInfoVo;
 	}
 
+	@Override
+	public UserInfoVo readWith(String user_id) throws Exception {
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("user_id", user_id);
+		UserInfoVo userInfoVo = sqlsession.selectOne(NAMESPACE + "readWith", paramMap); 
+		return userInfoVo;
+	}
+	
+	
+
 }

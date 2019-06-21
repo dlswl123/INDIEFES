@@ -80,8 +80,8 @@ public class ArtController {
 	// 앨범정보 처리
 	@RequestMapping(value="/art_info_input", method=RequestMethod.POST)
 	public String registPost(ArtInfoVo artVo,@RequestParam("file")MultipartFile file ,HttpSession session) throws Exception {
-		artVo.setUser_id("indie1");
-		artVo.setTeam_number(1);
+		artVo.setUser_id("indie2");
+		artVo.setTeam_number(24);
 		artService.insert(artVo);
 		String originalName = file.getOriginalFilename();
 		try {
