@@ -1,6 +1,6 @@
 package com.kh.ts.domain;
 
-public class PaginDto {
+public class PagingDto {
 	private int page = 1; // 현재페이지 
 	private int perPage = 10; // 한페이지당 보여질갯수
 	private int startRow = 1;
