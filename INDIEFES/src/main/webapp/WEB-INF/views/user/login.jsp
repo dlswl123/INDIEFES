@@ -35,8 +35,15 @@
 				<button type="submit" class="btn btn-primary">
 					로그인
 				</button>
-			</form>
+				
+				<input type="button" id="btnCreateAccount" value="회원가입" class="btn btn-primary" style="float: right;" />
+					
+				
+				</form>
+			</div>
 		</div>
-	</div>
+	
+	
+	
 	
 <%@ include file="../include/footer.jsp" %>
