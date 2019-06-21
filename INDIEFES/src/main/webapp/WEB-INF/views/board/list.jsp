@@ -18,14 +18,15 @@ $(document).ready(function() {
 	$("#btnRegist").click(function(){
 		console.log("regist");
 		location.href="/indiefes/board/regist";
-		
+	});
+	
 	// 검색버튼
 	$("#btnSearch").click(function(){
-		
-		setPage();
-		setSearch();
-		$("input[name=page]").val(1); // 검색시 페이지1로가기
-		$("#pageForm").submit();
+		console.log("btnSearch");
+// 		setPage();
+//		setSearch();
+// 		$("input[name=page]").val(1); // 검색시 페이지1로가기
+// 		$("#pageForm").submit();
 	});
 	
 	// 제목클릭
@@ -38,12 +39,12 @@ $(document).ready(function() {
 			var href = $(this).attr("href");
 			$("#pageForm").attr("action",href).submit();
 			
-		}); // $(".click_subject")
-	}); // $("#btnRegist").click
+		
+	}); // $(".click_subject")
 }); // $(document)
 </script>
 
-<form id="pageForm" action="/board/list">
+<form id="pageForm" action="/indiefes/board/list">
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">
 	<input type="hidden" name="page" 
@@ -57,25 +58,25 @@ $(document).ready(function() {
 </form>
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-		<h1>Indiefes 게시판</h1>
-			<select id="searchType">
-		  		<option value="subject"
-				<c:if test="${pagingDto.searchType == 'subject'}">
-					selected
-				</c:if>
-				>제목</option>
-				<option value="content"
-				<c:if test="${pagingDto.searchType == 'content'}">
-					selected
-				</c:if>
-				>내용</option>
-				<option value="user_id"
-				<c:if test="${pagingDto.searchType == 'user_id' }">
-					selected
-				</c:if>
-				>작성자</option>
-		  	</select>
-		  	
+<h1>Indiefes 게시판</h1>
+
+	<select id="searchType">
+		<option value="subject"
+		<c:if test="${pagingDto.searchType == 'subject'}">
+			selected
+		</c:if>
+		>제목</option>
+		<option value="content"
+		<c:if test="${pagingDto.searchType == 'content'}">
+			selected
+		</c:if>
+		>내용</option>
+		<option value="user_id"
+		<c:if test="${pagingDto.searchType == 'user_id' }">
+			selected
+		</c:if>
+		>작성자</option>
+	</select>
 		<input type="text" id = "keyword"
 				placeholder="검색어를 입력하세요"value="${pagingDto.keyword}"/>
 			<input type="button" value="검색버튼"id= "btnSearch"
@@ -104,10 +105,12 @@ $(document).ready(function() {
 								<!-- class="click_subject" 
 								data-board_number="${boardVo.board_number}" -->
 								${boardVo.subject}</a>
+								<c:if test="${boardVo.reply_count != 0 }">
 								<span style="color: red;">[${ boardVo.reply_count }]</span>
-								<c:if test="${boardVo.view_count >= 10 }">
-								<img src="../../../resources/bg_images/heart_fill.png" width="15">
-								<span style="color: red;">hot</span>
+								</c:if>
+								<c:if test="${boardVo.view_count >= 100 }">
+								<img src="<c:url value='/resources/images/heart_fill.png'/>" width="15">
+								<!-- <span style="color: red;">hot</span> -->
 								</c:if>
 							</td>		
 							<!-- 회원 -->

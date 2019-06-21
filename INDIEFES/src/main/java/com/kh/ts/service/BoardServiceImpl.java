@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.ts.domain.BoardVo;
+import com.kh.ts.domain.PagingDto;
 import com.kh.ts.persistence.IBoardDao;
 
 @Service
@@ -32,8 +33,8 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	// 글목록
 	@Override
-	public List<BoardVo> selectAll() throws Exception {
-		List<BoardVo> list = boardDao.selectAll(); // selectAll
+	public List<BoardVo> selectAll(PagingDto pagingDto) throws Exception {
+		List<BoardVo> list = boardDao.selectAll(pagingDto); // selectAll
 		return list;
 	}
 	// 조회수

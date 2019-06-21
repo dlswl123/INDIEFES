@@ -12,6 +12,7 @@ $(document).ready(function(){
 
 }); // $(document).ready
 </script>
+
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 	<h1>수정하기</h1>
 	<form role="form" method="post" action="/indiefes/board/update">

@@ -3,6 +3,7 @@ package com.kh.ts.service;
 import java.util.List;
 
 import com.kh.ts.domain.BoardVo;
+import com.kh.ts.domain.PagingDto;
 
 public interface IBoardService {
 	// 글쓰기
@@ -10,7 +11,7 @@ public interface IBoardService {
 	// 글조회
 	public BoardVo select(int board_number)throws Exception;
 	// 글목록
-	public List<BoardVo> selectAll()throws Exception;
+	public List<BoardVo> selectAll(PagingDto pagingDto)throws Exception;
 	// 조회수
 	public void updateViewcnt(int board_number)throws Exception;
 	// 글수정

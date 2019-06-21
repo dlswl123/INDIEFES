@@ -23,9 +23,19 @@ $(document).ready(function(){
 	
 }); // $(document).ready
 </script>
+
+
 <form id="pageForm" action="board/list">
 	<input type="hidden" name=board_number
 	 		value="${param.board_number}">
+	<input type="hidden" name=page
+	 		value="${pagingDto.page}">
+	<input type="hidden" name=perPage
+	 		value="${pagingDto.perPage}">
+	<input type="hidden" name=searchType
+	 		value="${pagingDto.searchType}">
+	<input type="hidden" name=keyword
+	 		value="${pagingDto.keyword}">
 </form>	 		
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
@@ -46,6 +56,11 @@ $(document).ready(function(){
 					<textarea class="form-control" id="content" rows="10" cols="80"
 					name="content" readonly>${boardVo.content}</textarea>
 				</div>
+				
+				<!-- 조회수 미해결 -->
+				<!-- 새로고침 할 시 현재 갖고 있는 페이지(board_number)정보와
+				 새로고침한 페이지(board_number)가 같으면
+				조회수를 올리지 않게 설정 -->
 				<div class="form-group">
 					<label for="view_count">조회수</label>
 					<input type="text" class="form-control" id="view_count"
