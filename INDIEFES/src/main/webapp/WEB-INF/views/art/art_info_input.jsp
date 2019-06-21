@@ -79,17 +79,17 @@ $(document).ready(function() {
 	});
 });
 </script>
-<!-- localhost/board/regist -->
+<div class="col-md-10">
 <h1 style="color: #ffffff;">앨범정보입력</h1>
-		<div class="col-md-12">
 			<!-- form action 속성 생략시 현재 경로(board/regist)가 액션 -->
-			<form role="form" method="post" id="art_info_input">
-			<input type="hidden" name="art_genre" value="">
-			<input type="hidden" name="art_cover" value="">
+	<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
+	<input type="hidden" name="art_genre" value="">
+	<input type="hidden" name="art_cover" value="">
+		<div class="row">
 			<div class="col-md-2">
 				<div class="form-group">
 						<h3 style="color: #ffffff;">앨범 이미지</h3>
-						<input type="file" id="art_cover" accept=".jpg, .jpeg, .png"/>
+						<input type="file" id="art_cover" accept=".jpg, .jpeg, .png" name="file"/>
 						<br>
 						<img id="img_preview" style="display:none;"/>	
 				</div>
@@ -114,18 +114,19 @@ $(document).ready(function() {
 						<option value="기타">기타</option>
 					</select>
 				</div>
-				<div class="form-group">
+				<div class="form-group" >
 					<label for="art_pr" style="color: #ffffff;">앨범 소개</label>
 					<textarea rows="10" cols="80" id="art_pr"
 						class="form-control" name="art_pr"></textarea>
 				</div>
-			</div>
-				<br>
+				<div class="form-group" >
 				<input type="button" id="btnSubmit" 
 					class="btn btn-success" value="작성완료"/>
-				<a href="/board/list">
-				<input type="button" class="btn btn-danger" value="작성취소"/></a> 
-			</form>
-<%@ include file="../include/sidebar.jsp" %>
+				<a href="/board/list"><input type="button" class="btn btn-danger" value="작성취소"/></a> 
+				</div>
+			</div>
 		</div>
+	</form>
+</div>
+<%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>
