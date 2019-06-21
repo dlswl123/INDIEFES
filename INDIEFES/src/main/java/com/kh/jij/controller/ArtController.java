@@ -38,8 +38,8 @@ public class ArtController {
 		
 		String user_id = "indie1";
 		String team_name = "인디1";
-		ArtInfoVo artVo = artService.art_read(user_id, 1);
-		List<MusicInfoVo> musicList = artService.music_read(4);
+		ArtInfoVo artVo = artService.artRead(user_id, 1);
+		List<MusicInfoVo> musicList = artService.musicRead(1);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("team_name", team_name);
@@ -52,11 +52,23 @@ public class ArtController {
 	public void ArtModify(HttpSession session, Model model) throws Exception {
 		String user_id = "indie1";
 		String team_name = "인디1";
-		ArtInfoVo artVo = artService.art_read(user_id, 1);
-		List<MusicInfoVo> musicList = artService.music_read(4);
+		ArtInfoVo artVo = artService.artRead(user_id, 1);
+		List<MusicInfoVo> musicList = artService.musicRead(1);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("team_name", team_name);
+		
+	}
+	
+	// 앨범리스트 폼
+	@RequestMapping(value="/art_list", method=RequestMethod.GET)
+	public void ArtList(HttpSession session, Model model) throws Exception {
+		List<ArtInfoVo> artList = artService.allArtList();
+		List<IndieTeamVo> teamList = artService.getIndieTeam();
+		model.addAttribute("artList", artList);
+		model.addAttribute("teamList", teamList);
+//		System.out.println("ArtController, ArtList 실행됨");
+//		System.out.println("ArtController, ArtList, teamList" + teamList);
 		
 	}
 	

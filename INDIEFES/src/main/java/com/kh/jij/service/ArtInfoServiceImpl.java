@@ -53,16 +53,28 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 
 	@Override
-	public ArtInfoVo art_read(String user_id, int art_number) throws Exception {
+	public ArtInfoVo artRead(String user_id, int art_number) throws Exception {
 		
-		ArtInfoVo artVo = artDao.art_read(user_id, art_number);
+		ArtInfoVo artVo = artDao.artRead(user_id, art_number);
 		return artVo;
 	}
 
 	@Override
-	public List<MusicInfoVo> music_read(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = artDao.music_read(art_number);
+	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
+		List<MusicInfoVo> musicList = artDao.musicRead(art_number);
 		return musicList;
+	}
+	@Override
+	public List<ArtInfoVo> allArtList() throws Exception {
+		List<ArtInfoVo> artList = artDao.allArtList();
+		return artList;
+	}
+	
+	// 인디그룹 이름 가져오기
+	@Override
+	public List<IndieTeamVo> getIndieTeam() throws Exception {
+		List<IndieTeamVo> teamList = artDao.getIndieTeam();
+		return teamList;
 	}
 
 

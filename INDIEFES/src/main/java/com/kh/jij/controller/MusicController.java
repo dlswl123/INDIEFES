@@ -24,7 +24,7 @@ public class MusicController {
 	public ResponseEntity<List<MusicInfoVo>> MusicTrackList(@PathVariable("art_number") int art_number) throws Exception  {
 		ResponseEntity<List<MusicInfoVo>> entity = null;
 		try {
-			List<MusicInfoVo> list = artService.music_read(art_number);
+			List<MusicInfoVo> list = artService.musicRead(art_number);
 			entity = new ResponseEntity<List<MusicInfoVo>>(list, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();

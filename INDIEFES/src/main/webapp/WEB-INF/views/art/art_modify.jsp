@@ -107,7 +107,7 @@ $(document).ready(function() {
 			<div class="row">
 				
 				<!-- 음악추가폼 -->
-				<div class="col-md-6">
+				<div class="col-md-9">
 					<form name="fileForm" action="art/musicUpload" method="post" enctype="multipart/form-data">
 						<div>
 							<label>노래제목</label>
@@ -121,7 +121,7 @@ $(document).ready(function() {
 				    </form>
 				</div>
 			    <!-- 음악추가폼 끝 -->
-			    <div class="col-md-6" align="right">
+			    <div class="col-md-3" align="right">
 					<button type="button" class="btn btn-outline-success" id="btnArtAdd">수정완료</button>
 					<button type="button" class="btn btn-outline-danger" id="btnCancel">등록취소</button>
 				</div>

@@ -1,6 +1,5 @@
 package com.kh.jij.persistence;
 
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,9 +15,9 @@ import com.kh.jij.domain.MusicInfoVo;
 
 @Repository
 public class ArtInfoDaoImpl implements IArtInfoDao {
-	
+
 	private static final String NAMESPACE = "art";
-	
+
 	@Inject
 	private SqlSession sqlSession;
 
@@ -26,7 +25,7 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	public void insert(ArtInfoVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
-	
+
 	@Override
 	public void teamInsert(IndieTeamVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".teamInsert", vo);
@@ -35,23 +34,34 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	@Override
 	public void teamInput(TeamMemberVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".memberInsert", vo);
-		
+
 	}
 
 	@Override
-	public ArtInfoVo art_read(String user_id, int art_number) throws Exception {
+	public ArtInfoVo artRead(String user_id, int art_number) throws Exception {
 		HashMap<String, Object> artMap = new HashMap<>();
 		artMap.put("user_id", user_id);
 		artMap.put("art_number", art_number);
-		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".art_read", artMap);
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artRead", artMap);
 		return artVo;
 	}
 
 	@Override
-	public List<MusicInfoVo> music_read(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = sqlSession.selectList(NAMESPACE + ".music_read", art_number);
+	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
+		List<MusicInfoVo> musicList = sqlSession.selectList(NAMESPACE + ".musicRead", art_number);
 		return musicList;
 	}
 
+	@Override
+	public List<ArtInfoVo> allArtList() throws Exception {
+		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".artList");
+		return artList;
+	}
+
+	@Override
+	public List<IndieTeamVo> getIndieTeam() throws Exception {
+		List<IndieTeamVo> teamList = sqlSession.selectList(NAMESPACE + ".getIndieTeam");
+		return teamList;
+	}
 
 }
