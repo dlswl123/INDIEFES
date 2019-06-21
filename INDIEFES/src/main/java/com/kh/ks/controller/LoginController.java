@@ -18,11 +18,13 @@ public class LoginController {
 	private IUserInfoService userInfoService;
 	
 	
+	//로그인 폼
 	@RequestMapping(value="/login")
 	public void LoginForm() {
 		System.out.println("loginForm() 실행됨");
 	}
 	
+	//로그인 성공
 	@RequestMapping(value="/login-run", method=RequestMethod.POST)
 	public String loginRun(String user_id, String user_pw, HttpSession session)throws Exception{
 		System.out.println("LoginController, loginRun, user_id/user_pw:" + user_id + "/" + user_pw); // 1.로그인폼에서 넘어온 데이터 -> service로 넘겨줌
@@ -33,6 +35,11 @@ public class LoginController {
 		if(userInfoVo != null) {
 			session.setAttribute("userInfoVo", userInfoVo);
 		}
-		return "/user/login_run";
+		return "redirect:home";
+	}
+	
+	@RequestMapping(value="/account-create", method=RequestMethod.GET)
+	public String accountCreate()throws Exception{
+		return "/user/account_create";
 	}
 }
