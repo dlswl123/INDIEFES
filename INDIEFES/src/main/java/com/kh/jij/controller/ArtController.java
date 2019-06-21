@@ -25,7 +25,7 @@ public class ArtController {
 	@Inject
 	IArtInfoService artService;
 	
-	// 앨범정보 폼
+	// 앨범정보조회 폼
 	@RequestMapping(value="/art_info", method=RequestMethod.GET)
 	public void ArtInfo(HttpSession session, Model model) throws Exception {
 //		UserVo userVo = session.getAttribute("userVo");
@@ -40,10 +40,24 @@ public class ArtController {
 //		System.out.println("ArtController, artVo : " + artVo);
 //		System.out.println("ArtController, musicList : " + musicList);
 	}
+	
+	// 앨범정보 수정 폼
+	@RequestMapping(value="/art_modify", method=RequestMethod.GET)
+	public void ArtModify(HttpSession session, Model model) throws Exception {
+		String user_id = "indie1";
+		String team_name = "인디1";
+		ArtInfoVo artVo = artService.art_read(user_id, 1);
+		List<MusicInfoVo> musicList = artService.music_read(4);
+		model.addAttribute("artVo", artVo);
+		model.addAttribute("musicList", musicList);
+		model.addAttribute("team_name", team_name);
+		
+	}
+	
 	// 앨범정보 입력폼
 	@RequestMapping(value="/art_info_input", method=RequestMethod.GET)
 	public void ArtInfoInput() {
-		System.out.println("ArtInfoInput()");
+//		System.out.println("ArtInfoInput()");
 	}
 	// 앨범정보 처리
 	@RequestMapping(value="/art_info_input", method=RequestMethod.POST)

@@ -49,8 +49,8 @@ $(document).ready(function(){
 					<button type="button" class="btn btn-warning" id="btnList">목록보기</button>
 			   </div>
 			</div>
-			</form>
-		</div>
+		</form>
+	</div>
 
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

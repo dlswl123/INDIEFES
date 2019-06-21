@@ -25,10 +25,10 @@
 			    	<font style="color:#ffffff;">앨범정보</font>
 			    </a></h1>
 		    </section>
-		    <section id="widget_3">
-			    <h1>
-			    	<font style="color:#ffffff;">링크3</font>
-			    </h1>
+		    <section id="concertInfo">
+			    <h1><a href="/indiefes/concert/info">
+			    	<font style="color:#ffffff;">공연정보</font>
+			    </a></h1>
 		    </section>
 		    <section id="player">
 			    <h1>

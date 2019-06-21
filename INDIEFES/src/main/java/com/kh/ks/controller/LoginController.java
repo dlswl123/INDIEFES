@@ -35,11 +35,13 @@ public class LoginController {
 		if(userInfoVo != null) {
 			session.setAttribute("userInfoVo", userInfoVo);
 		}
-		return "redirect:home";
+
+		return "redirect:/home";
 	}
 	
 	@RequestMapping(value="/account-create", method=RequestMethod.GET)
 	public String accountCreate()throws Exception{
 		return "/user/account_create";
+
 	}
 }

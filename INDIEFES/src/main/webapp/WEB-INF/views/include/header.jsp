@@ -19,12 +19,16 @@
 	
 <style>
 body {
-	background: url("${pageContext.request.contextPath}/resources/bg_images/bgpage.jpg") no-repeat center center fixed;
+/* 	background: url("${pageContext.request.contextPath}/resources/bg_images/bgpage.jpg") no-repeat center center fixed; */
+	background: url("<c:url value='/resources/bg_images/bgpage.jpg'/>") no-repeat center center fixed;
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
 }
+/* /resources 내의 자료 불러와지지 않을 때 사용법
+<script src="<c:url value='~~~주소~~~'/>"/>
+*/
 </style>
 </head>
 
