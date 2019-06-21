@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.List;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.domain.MusicInfoVo;
 
@@ -20,8 +21,12 @@ public interface IArtInfoService {
 	public void attach(String file_path) throws Exception;
 	
 	// 앨범 정보 가져오기
-	public ArtInfoVo art_read(String user_id, int art_number) throws Exception;
+	public ArtInfoVo artRead(String user_id, int art_number) throws Exception;
 	
 	// 노래 정보 가져오기
-	public List<MusicInfoVo> music_read(int art_number) throws Exception;
+	public List<MusicInfoVo> musicRead(int art_number) throws Exception;
+	
+	// 앨범 리스트 가져오기
+	public List<ArtInfoVo> allArtList() throws Exception;
+	public List<IndieTeamVo> getIndieTeam() throws Exception;
 }

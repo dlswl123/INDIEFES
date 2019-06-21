@@ -1,8 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@ include file="../include/header.jsp" %>
+<%@ include file="../include/header.jsp" %>  
 
 <style>
 	th {
@@ -11,7 +9,11 @@
   .song_name {
     width: 50%;
   }
-  .btn {border-radius: 12px;}
+  .btn {
+  border-radius: 12px;
+  }
+
+  
 </style>
 
 <script>
@@ -30,6 +32,14 @@ $(document).ready(function() {
 	// 모두듣기버튼
 	$("#btnAllListen").click(function() {
 		
+	});
+	
+	$("#allCheckbox").click(function() {
+		if($("#allCheckbox").prop("checked")) {
+			$("input[type=checkbox]").prop("checked",true);
+		} else {
+			$("input[type=checkbox]").prop("checked",false);
+		}
 	});
 	
 	// 사용자용 끝
@@ -77,13 +87,17 @@ $(document).ready(function() {
 			</div>
 			
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-12"  align="right">
 <!-- 				실행버튼 -->
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${userVo.user_level == 3}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button>
+						<!-- 담기로 구매한 사용자만 다운로드 가능함 -->
 						<button type="button" class="btn btn-outline-secondary" id="btnDown">다운</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnCart">담기</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllListen">전체듣기</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnAllDown">전체다운</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnAllCart">전체담기</button>
 <%-- 					</c:when> --%>
 <%-- 					<c:when test="${userVo.user_level == 2}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtModify">앨범수정</button>
@@ -102,13 +116,14 @@ $(document).ready(function() {
 					<table class="table">
 						<thead>
 							<tr>
-								<th><input type="checkbox" /></th>
+								<th><input type="checkbox" id="allCheckbox" /></th>
 								<th>번호</th>
 								<th class="song_name">곡</th>
 								<th>아티스트</th>
 								<th>듣기</th>
 								<th>가사</th>
 								<th>다운</th>
+								<th>담기</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -119,8 +134,9 @@ $(document).ready(function() {
 								<td class="song_name">${musicInfoVo.music_title}</td>
 								<td>${team_name}</td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
-								<td><span style="color:blue; size: 10px"><i class="far fa-list-alt"></i></span></td>
-								<td><span style="color:blue; size: 10px"><i class="fas fa-file-download"></i></span></td>
+								<td><span style="color:yellow; size: 10px"><i class="far fa-list-alt"></i></span></td>
+								<td><span style="color:green; size: 10px"><i class="fas fa-file-download"></i></span></td>
+								<td><span style="color:red; size: 10px"><i class="fas fa-cart-plus"></i></span></td>
 							<tr>
 						</c:forEach>
 						</tbody>
