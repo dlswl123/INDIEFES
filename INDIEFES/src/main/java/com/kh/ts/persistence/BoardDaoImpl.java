@@ -18,38 +18,38 @@ public class BoardDaoImpl implements IBoardDao {
 	@Inject
 	private SqlSession sqlSession;
 
-	// ±Û¾²±â
+	// ê¸€ì“°ê¸°
 	@Override
 	public void insert(BoardVo vo) throws Exception {
 		sqlSession.insert(Namespace + ".insert", vo);
 	
 	}
-	// ±ÛÁ¶È¸
+	// ê¸€ì¡°íšŒ
 	@Override
 	public BoardVo select(int board_number) throws Exception {
 		BoardVo vo = sqlSession.selectOne(Namespace + ".select", board_number);
 		return vo;
 	}
-	// ±Û¸ñ·Ï
+	// ê¸€ëª©ë¡
 	@Override
 	public List<BoardVo> selectAll() throws Exception {
 		List<BoardVo> list = sqlSession.selectList(Namespace + ".selectAll");
 		return list;
 	}
-	// Á¶È¸¼ö
+	// ì¡°íšŒìˆ˜
 	@Override
 	public void updateViewcnt(int board_number) throws Exception {
 		sqlSession.update(Namespace + ".updateViewcnt",board_number);
-		System.out.println("BoardDaoImpl, updateViewcnt ½ÇÇàµÊ" );
+		System.out.println("BoardDaoImpl, updateViewcnt ï¿½ï¿½ï¿½ï¿½ï¿½" );
 		
 	}
-	// ±Û¼öÁ¤
+	// ê¸€ìˆ˜ì •
 	@Override
 	public void update(BoardVo vo) throws Exception {
 		sqlSession.update(Namespace + ".update",vo);
 		
 	}
-	// ±Û»èÁ¦
+	// ê¸€ì‚­ì œ
 	@Override
 	public void delete(int board_number) throws Exception {
 		sqlSession.delete(Namespace + ".delete",board_number);		

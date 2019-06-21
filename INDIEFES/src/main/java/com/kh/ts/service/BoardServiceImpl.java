@@ -17,37 +17,37 @@ public class BoardServiceImpl implements IBoardService {
 	@Inject
 	private IBoardDao boardDao;
 	
-	// ±Û¾²±â
+	// ê¸€ì“°ê¸°
 	@Transactional
 	@Override
 	public void insert(BoardVo vo) throws Exception {
 		boardDao.insert(vo); // insert
 		
 	}
-	// ±ÛÁ¶È¸
+	// ê¸€ì¡°íšŒ
 	@Override
 	public BoardVo select(int board_number) throws Exception {
 		BoardVo vo = boardDao.select(board_number); // select
 		return vo;
 	}
-	// ±Û¸ñ·Ï
+	// ê¸€ëª©ë¡
 	@Override
 	public List<BoardVo> selectAll() throws Exception {
 		List<BoardVo> list = boardDao.selectAll(); // selectAll
 		return list;
 	}
-	// Á¶È¸¼ö
+	// ì¡°íšŒìˆ˜
 	@Override
 	public void updateViewcnt(int board_number) throws Exception {
 		boardDao.updateViewcnt(board_number); // updateViewcent
-		System.out.println("BoardServiceImp, updateViewcnt ½ÇÇàµÊ");
+		System.out.println("BoardServiceImp, updateViewcnt ï¿½ï¿½ï¿½ï¿½ï¿½");
 	}
-	// ±Û¼öÁ¤
+	// ê¸€ìˆ˜ì •
 	@Override
 	public void update(BoardVo vo) throws Exception {
 		boardDao.update(vo); // update
 	}
-	// ±Û»èÁ¦
+	// ê¸€ì‚­ì  
 	@Override
 	public void delete(int board_number) throws Exception {
 		boardDao.delete(board_number); // delete
