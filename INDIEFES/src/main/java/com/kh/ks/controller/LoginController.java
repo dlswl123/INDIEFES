@@ -33,6 +33,6 @@ public class LoginController {
 		if(userInfoVo != null) {
 			session.setAttribute("userInfoVo", userInfoVo);
 		}
-		return "redirect:/home";
+		return "redirect:/";
 	}
 }
