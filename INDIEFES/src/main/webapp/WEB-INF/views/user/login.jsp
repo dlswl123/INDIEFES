@@ -9,7 +9,6 @@
 		<div class="col-md-12">
 		<h1><a href = "/indiefes/">indiefes</a></h1>
 		</div>
-		
 		<div class="col-md-12">
 			<form role="form" action="/indiefes/user/login-run" method="post">
 				<div class="form-group">
