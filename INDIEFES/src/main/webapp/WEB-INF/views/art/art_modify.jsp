@@ -29,12 +29,12 @@ $(document).ready(function() {
 	
 	// 앨범등록 버튼
 	$("#btnArtAdd").click(function() {
-		location.href="/indiefes/art/art_info";
+		location.href="/indiefes/art/art_info?art_number=${param.art_number}";
 	});
 	
 	// 등록취소 버튼
 	$("#btnCancel").click(function() {
-		location.href="/indiefes/art/art_info";
+		location.href="/indiefes/art/art_list";
 	});
 	
 	// 추가 버튼
@@ -64,8 +64,8 @@ $(document).ready(function() {
 	
 	// 음악 트랙리스트 가져오기
 	function getList() {
-// 		var url = "/indiefes/music/list/${art_number}";
-		var url = "/indiefes/music/list/1";
+		var url = "/indiefes/music/list/${param.art_number}";
+// 		var url = "/indiefes/music/list/1";
 		$.getJSON(url, function(receivedData) {
 			console.log(receivedData);
 			var strHtml = "";

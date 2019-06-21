@@ -53,9 +53,16 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 
 	@Override
-	public ArtInfoVo artRead(String user_id, int art_number) throws Exception {
+	public ArtInfoVo artRead(int art_number) throws Exception {
+		ArtInfoVo artVo = artDao.artRead(art_number);
+		return artVo;
+	}
+	
+	//  수정
+//	@Override
+	public ArtInfoVo artModify(String user_id, int art_number) throws Exception {
 		
-		ArtInfoVo artVo = artDao.artRead(user_id, art_number);
+		ArtInfoVo artVo = artDao.artModify(user_id, art_number);
 		return artVo;
 	}
 

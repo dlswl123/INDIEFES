@@ -33,13 +33,12 @@ public class ArtController {
 	
 	// 앨범정보조회 폼
 	@RequestMapping(value="/art_info", method=RequestMethod.GET)
-	public void ArtInfo(HttpSession session, Model model) throws Exception {
+	public void ArtInfo(@RequestParam("art_number") int art_number, HttpSession session, Model model) throws Exception {
 //		UserVo userVo = session.getAttribute("userVo");
-		
-		String user_id = "indie1";
+//		System.out.println(art_number);
 		String team_name = "인디1";
-		ArtInfoVo artVo = artService.artRead(user_id, 1);
-		List<MusicInfoVo> musicList = artService.musicRead(1);
+		ArtInfoVo artVo = artService.artRead(art_number);
+		List<MusicInfoVo> musicList = artService.musicRead(art_number);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("team_name", team_name);
@@ -47,13 +46,14 @@ public class ArtController {
 //		System.out.println("ArtController, musicList : " + musicList);
 	}
 	
-	// 앨범정보 수정 폼
+//	 앨범정보 수정 폼
 	@RequestMapping(value="/art_modify", method=RequestMethod.GET)
-	public void ArtModify(HttpSession session, Model model) throws Exception {
+	public void ArtModify(@RequestParam("art_number") int art_number, HttpSession session, Model model) throws Exception {
+		System.out.println(art_number);
 		String user_id = "indie1";
 		String team_name = "인디1";
-		ArtInfoVo artVo = artService.artRead(user_id, 1);
-		List<MusicInfoVo> musicList = artService.musicRead(1);
+		ArtInfoVo artVo = artService.artModify(user_id, art_number);
+		List<MusicInfoVo> musicList = artService.musicRead(art_number);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("team_name", team_name);
@@ -69,6 +69,12 @@ public class ArtController {
 		model.addAttribute("teamList", teamList);
 //		System.out.println("ArtController, ArtList 실행됨");
 //		System.out.println("ArtController, ArtList, teamList" + teamList);
+		
+	}
+	
+	// 앨범 이미지 가져오기
+	@RequestMapping(value="/getArtCover/{art_cover}", method=RequestMethod.GET)
+	public void getArtImg() {
 		
 	}
 	

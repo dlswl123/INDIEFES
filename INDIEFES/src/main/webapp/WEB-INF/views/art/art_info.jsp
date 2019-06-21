@@ -47,7 +47,7 @@ $(document).ready(function() {
 // 		뮤지션용
 		// 앨범수정 버튼
 	$("#btnArtModify").click(function() {
-		location.href="/indiefes/art/art_modify";
+		location.href="/indiefes/art/art_modify?art_number=${artVo.art_number}";
 	});	
 	
 	// 앨범삭제 버튼

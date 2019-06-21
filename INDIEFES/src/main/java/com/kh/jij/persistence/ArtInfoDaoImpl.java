@@ -38,11 +38,18 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 
 	@Override
-	public ArtInfoVo artRead(String user_id, int art_number) throws Exception {
+	public ArtInfoVo artRead(int art_number) throws Exception {
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artRead", art_number);
+		return artVo;
+	}
+	
+	// 수정
+	@Override
+	public ArtInfoVo artModify(String user_id, int art_number) throws Exception {
 		HashMap<String, Object> artMap = new HashMap<>();
 		artMap.put("user_id", user_id);
 		artMap.put("art_number", art_number);
-		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artRead", artMap);
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artModify", artMap);
 		return artVo;
 	}
 

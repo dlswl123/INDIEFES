@@ -16,7 +16,10 @@ public interface IArtInfoDao {
 	public void teamInput(TeamMemberVo vo) throws Exception;
 	
 	// 앨범 정보 가져오기
-	public ArtInfoVo artRead(String user_id, int art_number) throws Exception;
+	public ArtInfoVo artRead(int art_number) throws Exception;
+	
+	// 앨범 수정정보 가져오기
+	public ArtInfoVo artModify(String user_id, int art_number) throws Exception;
 	
 	// 노래 정보 가져오기
 	public List<MusicInfoVo> musicRead(int art_number) throws Exception;

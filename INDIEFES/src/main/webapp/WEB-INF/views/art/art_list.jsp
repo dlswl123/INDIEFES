@@ -15,7 +15,7 @@
     }
     .art_info {
      border: 1px solid;
-     margin: 5 5 5 5;
+     margin: 20 20 20 20;
      float: left;
     }
 </style>
@@ -50,9 +50,9 @@
 						<figure class="albumInfo">
 							<div class="thumbnail">
 								<p class="badge"></p>
-								<a href="/indiefes/art/art_info" onclick="" target="_self">
+								<a href="/indiefes/art/art_info?art_number=${artInfoVo.art_number }" onclick="" target="_self">
 								<span class="mask"></span>
-								<img class="art_images" src="../resources/images/Koala.jpg" onerror="bugs.utils.imgError(this);" alt="포장마차 앨범 대표이미지">
+								<img class="art_images" src="/indiefes/art/getArtCover/${artInfoVo.art_cover}" onerror="bugs.utils.imgError(this);" alt="${artInfoVo.art_title} 앨범 대표이미지">
 								</a>
 <!-- 								<button onclick="" class="btnPlay" aria-label="새창">듣기</button> -->
 							</div>
