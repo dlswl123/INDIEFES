@@ -21,6 +21,7 @@
 	<select id="selectAll" resultType="BoardVo">
 		select * 
 		from board_info
+		order by board_number desc
 	</select>
 	
 	<!-- 조회수증가 -->
@@ -29,5 +30,19 @@
 			view_count = view_count+1
 		where board_number = #{board_number}
 	</update>
-
+	
+	<!-- 글수정 -->
+	<update id="update">
+		update board_info set
+			subject = #{subject},
+			user_id = #{user_id},
+			content = #{content}
+		where board_number = #{board_number}
+	</update>
+	
+	<!-- 글삭제 -->
+	<delete id="delete">
+		delete from board_info 
+		where board_number = #{board_number}
+	</delete>
 </mapper>

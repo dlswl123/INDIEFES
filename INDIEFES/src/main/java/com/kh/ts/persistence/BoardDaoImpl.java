@@ -43,5 +43,15 @@ public class BoardDaoImpl implements IBoardDao {
 		System.out.println("BoardDaoImpl, updateViewcnt 실행됨" );
 		
 	}
-	
+	// 글수정
+	@Override
+	public void update(BoardVo vo) throws Exception {
+		sqlSession.update(Namespace + ".update",vo);
+		
+	}
+	// 글삭제
+	@Override
+	public void delete(int board_number) throws Exception {
+		sqlSession.delete(Namespace + ".delete",board_number);		
+	}
 }

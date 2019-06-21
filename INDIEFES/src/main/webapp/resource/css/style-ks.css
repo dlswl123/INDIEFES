@@ -1,0 +1,117 @@
+header{
+	text-align: center;
+}
+
+header ul.gnb-sec{
+	
+}
+
+
+
+
+header ul.gnb-sec li{
+    float: left;
+    margin-left:-1px; 
+    z-index:1;
+    
+    font-family: DINPro_L;
+    
+    line-height: 60px;
+    display: block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+/*     width: 52px; */
+    
+}
+
+a:link, a:visited {
+    color: gray;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ol, ul, dl, dd {
+    list-style: none;
+}
+
+body {
+    color: gray;
+    line-height: 136%;
+    font-size: 12px;
+    text-align: left;
+    word-spacing: 0;
+    letter-spacing: -0.02em;
+    font-family: Nanum,'Malgun Gothic','맑은 고딕','NanumBarunGothic','나눔바른고딕','NanumGothic','나눔고딕','Nanum Barun Gothic','Apple SD Gothic Neo Bold','Apple SD Gothic Neo','애플 SD 고딕 Neo','dotum',sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    
+}
+
+.gnb-sec li a{
+	color: #303030;
+	font-size: 25px;
+	margin:8px
+}
+
+.gnb-sec{
+	width: 780px;
+  	margin-left: auto;
+  	margin-right: auto;
+	margin-top: 20px;
+	float: right;
+	left: -50%;
+}
+
+.gnb-sec li{
+	float: left;
+    left: 50%;
+}
+
+#product_name{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.coast{
+	color: black;
+	font-family: Tahoma, Geneva;
+	font-size: 20px;
+	font-weight: bold;
+	padding-left:10px;
+}
+
+#priceTd{
+	text-align: right;
+}
+
+.btnBuy{
+	text-align: center;
+	display: block;
+    padding: 18px;
+    float: right;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff !important;
+    margin-top: 9px;
+    margin-left: 5px;
+    width: 120px;
+    background-color: #17152a;
+    cursor: pointer;
+}
+
+.loginDiv{
+	margin-top: 23px;
+}
+
+#logoDiv{
+	margin-top: 15px;
+}
+
+#pagingDiv{
+	text-align: center;
+}
+
+.inputProduct{
+	width: 10%;
+}

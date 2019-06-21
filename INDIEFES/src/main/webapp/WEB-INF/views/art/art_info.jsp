@@ -14,17 +14,11 @@
   .btn {border-radius: 12px;}
 </style>
 
-
-
 <script>
 $(document).ready(function() {
+// 		사용자용
 	// 듣기버튼
 	$("#btnListen").click(function() {
-		
-	});
-	
-	// 담기버튼
-	$("#btnPut").click(function() {
 		
 	});
 	
@@ -38,52 +32,44 @@ $(document).ready(function() {
 		
 	});
 	
-	// 모두담기버튼
-	$("#btnAllPut").click(function() {
+	// 사용자용 끝
+	
+// 		뮤지션용
+		// 앨범수정 버튼
+	$("#btnArtModify").click(function() {
+		location.href="/indiefes/art/art_modify";
+	});	
+	
+	// 앨범삭제 버튼
+	$("#btnArtDelete").click(function() {
 		
 	});
+	// 뮤지션용 끝
 	
-	// 뮤지션 전용 - 음악추가 버튼
-	$("#btnMusicAdd").click(function() {
-		
-	});
-	
-	// 뮤지션 전용 - 완료버튼
-	$("#btnSuccess").click(function() {
-		
-	});
-	
-	// 뮤지션 전용 - 취소버튼
-	$("#btnCancel").click(function() {
-		
-	});
-	
-	// 운영자 전용 - 승인
+// 		운영자용
+	// 승인
 	$("#btnAppro").click(function() {
 		
 	});
 	
-	// 운영자 전용 - 반려
+	// 반려
 	$("#btnReturn").click(function() {
 		
 	});
+	// 운영자용 끝
 });
 </script>
-	
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div class="row">
-					<h1>앨범 정보</h1>
+				<h1>앨범 정보</h1>
 			</div>
 			<div class="row">
-				<div class="col-md-1">
-				</div>
 				<div class="col-md-3">
 					<img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" width="282" height="282" class="rounded" />
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-9">
 					<p>
 						<strong>${artVo.art_title}</strong><br>
-<%-- 						<strong>${artVo.team_number}</strong><br> --%>
 						<strong>${team_name}</strong><br>
 						<small>${artVo.art_pr}</small>
 					</p>
@@ -96,25 +82,21 @@ $(document).ready(function() {
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${userVo.user_level == 3}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnPut">담기</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnDown">다운</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllListen">전체듣기</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnAllPut">전체담기</button>
 <%-- 					</c:when> --%>
 <%-- 					<c:when test="${userVo.user_level == 2}"> --%>
-						<button type="button" class="btn btn-outline-secondary" id="btnMusicAdd">음악추가</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnSuccess">완료</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnCancel">취소</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnArtModify">앨범수정</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnArtDelete">앨범삭제</button>
+						
 <%-- 					</c:when> --%>
 <%-- 					<c:otherwise> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnAppro">승인</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnReturn">반려</button>
 <%-- 					</c:otherwise> --%>
 <%-- 				</c:choose> --%>
-				
 				</div>
 			</div>
-			
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table">
@@ -125,7 +107,6 @@ $(document).ready(function() {
 								<th class="song_name">곡</th>
 								<th>아티스트</th>
 								<th>듣기</th>
-								<th>담기</th>
 								<th>가사</th>
 								<th>다운</th>
 							</tr>
@@ -136,10 +117,8 @@ $(document).ready(function() {
 								<td><input type="checkbox" /></td>
 								<td>${musicInfoVo.track_number}</td>
 								<td class="song_name">${musicInfoVo.music_title}</td>
-<%-- 								<td>${artVo.team_number}</td> --%>
 								<td>${team_name}</td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
-								<td><span style="color:blue; size: 10px"><i class="fas fa-plus-square"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="far fa-list-alt"></i></span></td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-file-download"></i></span></td>
 							<tr>
