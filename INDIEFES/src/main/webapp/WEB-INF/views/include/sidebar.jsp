@@ -34,7 +34,7 @@
 			    <h1>
 				    <script type="text/javascript">
 						function musicPlayer() {
-							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=720,scrollbars=NO,titlebar=no,resizable=no");
+							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 						}
 					</script>
 			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font style="color:#ffffff;">플레이어</font></a>

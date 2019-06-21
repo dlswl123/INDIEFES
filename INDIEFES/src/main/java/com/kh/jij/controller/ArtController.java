@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -11,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.service.IArtInfoService;
+import com.kh.jij.util.FileUploadUtil;
 
 @Controller
 @RequestMapping("art/*")
@@ -24,6 +28,8 @@ public class ArtController {
 
 	@Inject
 	IArtInfoService artService;
+	@Resource(name="uploadPath")
+	private String uploadPath; // servlet-context.xml (id="uploadPath")
 	
 	// 앨범정보 폼
 	@RequestMapping(value="/art_info", method=RequestMethod.GET)
@@ -47,11 +53,17 @@ public class ArtController {
 	}
 	// 앨범정보 처리
 	@RequestMapping(value="/art_info_input", method=RequestMethod.POST)
-	public String registPost(ArtInfoVo artVo,HttpSession session) throws Exception {
+	public String registPost(ArtInfoVo artVo,@RequestParam("file")MultipartFile file ,HttpSession session) throws Exception {
 		artVo.setUser_id("indie1");
 		artVo.setTeam_number(1);
 		artService.insert(artVo);
-		return "redirect:/art/indie_team_input";
+		String originalName = file.getOriginalFilename();
+		try {
+			FileUploadUtil.uploadFile(uploadPath, originalName,artVo, file.getBytes());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/art/art_info_input";
 	}
 	// 팀생성 및 가입 폼
 	@RequestMapping(value="/indie_team_input", method=RequestMethod.GET)
