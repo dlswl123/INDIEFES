@@ -71,4 +71,22 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		return teamList;
 	}
 
+	@Override
+	public List<String> getCover() {
+		List<String> coverList = sqlSession.selectList(NAMESPACE + ".getCover");
+		return coverList;
+	}
+
+	@Override
+	public int getIndieNumber(String user_id) throws Exception {
+		int indieNumber = sqlSession.selectOne(NAMESPACE + ".getIndieNumber", user_id);
+		return indieNumber;
+	}
+
+	@Override
+	public String getTeamName(int team_number) throws Exception {
+		String teamName = sqlSession.selectOne(NAMESPACE + ".getTeamName", team_number);
+		return teamName;
+	}
+
 }

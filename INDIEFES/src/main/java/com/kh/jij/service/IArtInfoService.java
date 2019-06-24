@@ -32,4 +32,9 @@ public interface IArtInfoService {
 	// 앨범 리스트 가져오기
 	public List<ArtInfoVo> allArtList() throws Exception;
 	public List<IndieTeamVo> getIndieTeam() throws Exception;
+	// 앨범 커버 리스트 가져오기
+	public List<String> getCover();
+	
+	public int getIndieNumber(String user_id) throws Exception;
+	public String getTeamName (int team_number) throws Exception;
 }

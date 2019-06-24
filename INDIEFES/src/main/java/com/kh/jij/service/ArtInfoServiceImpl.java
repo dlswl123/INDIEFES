@@ -83,6 +83,21 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		List<IndieTeamVo> teamList = artDao.getIndieTeam();
 		return teamList;
 	}
+	@Override
+	public List<String> getCover() {
+		List<String> coverList =  artDao.getCover();
+		return coverList;
+	}
+	@Override
+	public int getIndieNumber(String user_id) throws Exception {
+		int indieNumber = artDao.getIndieNumber(user_id);
+		return indieNumber;
+	}
+	@Override
+	public String getTeamName(int team_number) throws Exception {
+		String teamName = artDao.getTeamName(team_number);
+		return teamName;
+	}
 
 
 }

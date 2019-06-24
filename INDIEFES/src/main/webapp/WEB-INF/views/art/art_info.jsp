@@ -74,10 +74,10 @@ $(document).ready(function() {
 				<h1>앨범 정보</h1>
 			</div>
 			<div class="row">
-				<div class="col-md-3">
-					<img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" width="282" height="282" class="rounded" />
+				<div class="col-md-4">
+					<img alt="${artVo.art_title} 앨범 대표이미지" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}" width="282" height="282" class="rounded" />
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-8">
 					<p>
 						<strong>${artVo.art_title}</strong><br>
 						<strong>${team_name}</strong><br>
@@ -132,7 +132,7 @@ $(document).ready(function() {
 								<td><input type="checkbox" /></td>
 								<td>${musicInfoVo.track_number}</td>
 								<td class="song_name">${musicInfoVo.music_title}</td>
-								<td>${team_name}</td>
+								<td>${teamName}</td>
 								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
 								<td><span style="color:yellow; size: 10px"><i class="far fa-list-alt"></i></span></td>
 								<td><span style="color:green; size: 10px"><i class="fas fa-file-download"></i></span></td>

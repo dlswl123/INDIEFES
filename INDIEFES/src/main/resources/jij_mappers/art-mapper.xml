@@ -60,9 +60,31 @@
 		order by reg_art desc
 	</select>
 	
+<!-- 	인디팀 불러오기 -->
 	<select id="getIndieTeam" resultType="IndieTeamVo">
 		select *
 		from indie_team
 		order by team_number
+	</select>
+	
+<!-- 	앨범커버 리스트 불러오기 -->
+	<select id="getCover" resultType="string">
+		select art_cover
+		from art_info
+		order by art_number desc
+	</select>
+	
+<!-- 	그룹넘버 가져오기 -->
+	<select id="getIndieNumber" resultType="integer">
+		select team_number
+		from team_member
+		where user_id = #{user_id}
+	</select>
+	
+<!-- 	그룹이름 가져오기 -->
+	<select id="getTeamName" resultType="string">
+		select art_team
+		from indie_team
+		where team_number = #{team_number}
 	</select>
 </mapper>

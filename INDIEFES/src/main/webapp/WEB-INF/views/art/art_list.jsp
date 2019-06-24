@@ -19,6 +19,22 @@
      float: left;
     }
 </style>
+<script>
+$(document).ready(function() {
+// 	$.getJSON("/indiefes/art/getCoverList", function(list) {
+// 		console.log("list:" + list);
+		
+// 		$(list).each(function() {
+// 			var fileName = this; // 2019/5/21/0e6348d6-92d6-4f92-98e2-617ce4ba64ff_Chrysanthemum.jpg
+// // 			var filePath = "<img src='/upload/displayFile?fileName=" + thumbnailName + "'>"
+// 			$("#img_art_cover").attr("src", filePath);
+// 		}); // $(list).each
+// 	}); // $.getJSON
+	
+});
+
+</script>
+
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
   <div class="row">
@@ -45,28 +61,28 @@
 			<div class="row">
 				<ul  class="albumList">
 				<li>
-					<c:forEach items="${artList}" var="artInfoVo">
+					<c:forEach items="${artList}" var="artVo">
 					<li class="art_info">
 						<figure class="albumInfo">
 							<div class="thumbnail">
 								<p class="badge"></p>
-								<a href="/indiefes/art/art_info?art_number=${artInfoVo.art_number }" onclick="" target="_self">
+								<a href="/indiefes/art/art_info?art_number=${artVo.art_number }&team_number=${artVo.team_number}" onclick="" target="_self">
 								<span class="mask"></span>
-								<img class="art_images" src="/indiefes/art/getArtCover/${artInfoVo.art_cover}" onerror="bugs.utils.imgError(this);" alt="${artInfoVo.art_title} 앨범 대표이미지">
+								<img id="img_art_cover"class="art_images" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}" alt="${artVo.art_title} 앨범 대표이미지">
 								</a>
 <!-- 								<button onclick="" class="btnPlay" aria-label="새창">듣기</button> -->
 							</div>
 							<figcaption class="info">
-								<a href="/indiefes/art/art_info" class="albumTitle" title="artInfoVo.art_title" onclick="" target="_self">${artInfoVo.art_title}</a>
+								<a href="/indiefes/art/art_info?art_number=${artVo.art_number }&team_number=${artVo.team_number}" class="albumTitle" title="artInfoVo.art_title" onclick="" target="_self">${artVo.art_title}</a>
 								<div class="subInfo">
 								<p class="artist">
 								<c:forEach items="${teamList}" var="teamList">
-								<c:if test="${artInfoVo.team_number == teamList.team_number}">
-								<a href="https://music.bugs.co.kr/artist/20041592?wl_ref=list_ab_04" class="artistTitle" title="${teamList.art_team}" onclick="" target="_self">${teamList.art_team}</a>
+								<c:if test="${artVo.team_number == teamList.team_number}">
+									<a href="https://music.bugs.co.kr/artist/20041592?wl_ref=list_ab_04" class="artistTitle" title="${teamList.art_team}" onclick="" target="_self">${teamList.art_team}</a>
 								</c:if>
 								</c:forEach>
 								<br>
-								<time datetime="">${artInfoVo.reg_art}</time>
+								<time datetime="">${artVo.reg_art}</time>
 								</p>
 								</div>
 							</figcaption>
