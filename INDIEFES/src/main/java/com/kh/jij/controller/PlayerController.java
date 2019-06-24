@@ -14,6 +14,9 @@ public class PlayerController {
 		System.out.println("Player()");
 	}
 	
-	
+	@RequestMapping(value="/playList", method=RequestMethod.GET)
+	public void listUp() {
+		
+	}
 	
 }

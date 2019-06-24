@@ -58,16 +58,22 @@ public class ArtController {
 
 //	 앨범정보 수정 폼
 	@RequestMapping(value = "/art_modify", method = RequestMethod.GET)
-	public void ArtModify(@RequestParam("art_number") int art_number, HttpSession session, Model model)
+	public void ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
 			throws Exception {
-		System.out.println(art_number);
-		String user_id = "indie1";
-		String team_name = "인디1";
+//		System.out.println(art_number);
+		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		String teamName = artService.getTeamName(team_number);
+//		String user_id = "indie1";
+//		String team_name = "알약";
+		System.out.println("ArtController, art_modify, userVo:" + userVo);
+		System.out.println("ArtController, art_modify, teamName:" + teamName);
 		ArtInfoVo artVo = artService.artModify(user_id, art_number);
 		List<MusicInfoVo> musicList = artService.musicRead(art_number);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
-		model.addAttribute("team_name", team_name);
+		model.addAttribute("teamName", teamName);
+		model.addAttribute("userVo", userVo);
 
 	}
 
@@ -78,20 +84,21 @@ public class ArtController {
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
-		System.out.println("ArtController, ArtList 실행됨");
-		System.out.println("ArtController, ArtList, teamList" + teamList);
+//		System.out.println("ArtController, ArtList 실행됨");
+//		System.out.println("ArtController, ArtList, teamList" + teamList);
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		System.out.println("userVo" + userVo);
 
 	}
 
 	// 앨범 이미지 가져오기
 	@RequestMapping(value = "/getCover", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getCover(@RequestParam("artCover") String artCover, @RequestParam("team_number") int team_number, HttpSession session) throws Exception {
+	public ResponseEntity<byte[]> getCover(@RequestParam("artCover") String artCover, @RequestParam("team_number") int team_number) throws Exception {
 //		System.out.println("fileName:" + fileName);
 		// -> /2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
-		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		String realPath = uploadPath + File.separator + team_number + File.separator + "0" + File.separator + artCover;
 		// -> H:/upload/2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
-		System.out.println("ArtController, getArtCober, realPath" + realPath);
+//		System.out.println("ArtController, getArtCover, realPath" + realPath);
 		// 파일의 확장자 얻기
 //		int dotIndex = fileName.lastIndexOf(".");
 //		String extName = fileName.substring(dotIndex + 1).toUpperCase();
@@ -128,7 +135,6 @@ public class ArtController {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		}
-		System.out.println(entity);
 		return entity;
 	}
 

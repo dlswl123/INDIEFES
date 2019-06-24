@@ -36,11 +36,8 @@
 	<select id="artModify" resultType="ArtInfoVo">
 		select * 
 		from art_info
-		where team_number = (select team_number
-							 from art_info
-							 where user_id = #{user_id}
-							 group by team_number)
-		 and art_number = #{art_number}
+		where user_id = #{user_id}
+		and art_number = #{art_number}
 	</select>
 	
 <!-- 	앨범 노래 읽기 -->

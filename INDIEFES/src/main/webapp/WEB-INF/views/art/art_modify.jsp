@@ -15,26 +15,93 @@
 </style>
 
 <script>
+$.fn.setPreview = function(opt){
+    "use strict"
+    var defaultOpt = {
+        inputFile: $(this),
+        img: null,
+        w: 200,
+        h: 200
+    };
+    $.extend(defaultOpt, opt);
+ 
+    var previewImage = function(){
+        if (!defaultOpt.inputFile || !defaultOpt.img) return;
+ 
+        var inputFile = defaultOpt.inputFile.get(0);
+        var img       = defaultOpt.img.get(0);
+ 
+        // FileReader
+        if (window.FileReader) {
+            // image 파일만
+            if (!inputFile.files[0].type.match(/image\//)) return;
+ 
+            // preview
+            try {
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    img.src = e.target.result;
+                    img.style.width  = defaultOpt.w+'px';
+                    img.style.height = defaultOpt.h+'px';
+                    img.style.display = '';
+                }
+                reader.readAsDataURL(inputFile.files[0]);
+            } catch (e) {
+                // exception...
+            }
+        // img.filters (MSIE)
+        } else if (img.filters) {
+            inputFile.select();
+            inputFile.blur();
+            var imgSrc = document.selection.createRange().text;
+ 
+            img.style.width  = defaultOpt.w+'px';
+            img.style.height = defaultOpt.h+'px';
+            img.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";           
+            img.style.display = '';
+        // no support
+        } else {
+            // Safari5, ...
+        }
+    };
+ 
+    // onchange
+    $(this).change(function(){
+        previewImage();
+    });
+};
+
+
 $(document).ready(function() {
 	
 	getList();
-	// 파일업로드버튼
-	$("#btnFile").click(function(e) {
-		$("#inputFile").trigger("click");
+	// 노래파일업로드버튼
+	$("#btnMusicFile").click(function(e) {
+		$("#inputMusicFile").trigger("click");
 	});
-	$("#inputFile").change(function(e) {
+	$("#inputMusicFile").change(function(e) {
+		$("#spanMusicFile").text(this.files[0].name);
+		
+	});
+	
+	// 커버이미지 파일업로드버튼
+	$("#btnFile").click(function(e) {
+		$("#artCover").trigger("click");
+	});
+	$("#artCover").change(function(e) {
 		$("#spanFile").text(this.files[0].name);
 		
 	});
 	
+	
 	// 앨범등록 버튼
 	$("#btnArtAdd").click(function() {
-		location.href="/indiefes/art/art_info?art_number=${param.art_number}";
+		location.href="/indiefes/art/art_info?art_number=${artVo.art_number }&team_number=${artVo.team_number}";
 	});
 	
 	// 등록취소 버튼
 	$("#btnCancel").click(function() {
-		location.href="/indiefes/art/art_list";
+		location.href="/indiefes/art/art_info?art_number=${artVo.art_number }&team_number=${artVo.team_number}";
 	});
 	
 	// 추가 버튼
@@ -88,43 +155,90 @@ $(document).ready(function() {
 	
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div class="row">
-					<h1>앨범 정보</h1>
+					<h1>앨범 수정</h1>
 			</div>
-			<div class="row">
-				<div class="col-md-3">
-					<!-- 앨범 표지-->
-					<img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" width="282" height="282" class="rounded" />
+			<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
+			<input type="hidden" name="art_genre" value="">
+			<input type="hidden" name="art_cover" value="">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+								<h3 style="color: #ffffff;">앨범 이미지</h3>
+								<input type="file" name="file" id="artCover" accept=".jpg, .jpeg, .png, .gif" style="display:none;">
+								<input type="button" value="파일찾기" id="btnFile" class="btn btn-sm btn-success">
+								<span id="spanFile">${artVo.art_cover}</span>
+								<br>
+								<img id="img_preview"  src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}" width="282" height="282" class="rounded" />	
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="form-group">
+								<label for="art_title" style="color: #ffffff;">앨범제목</label>
+								<input type="text" class="form-control" id="art_title" name="art_title" value="${artVo.art_title}" />
+								
+						</div>
+		<!-- 발라드 댄스 랩/힙합 R&B/Soul 재즈 록/메탈 트로트 포크/블루스 기타 -->
+						<div class="form-group">
+							<label for="art_genre" style="color: #ffffff;">장르</label>
+							<select id="art_genre">
+								<option value="발라드"<c:if test="${artVo.art_genre == '발라드'}">
+								selected
+								</c:if>>발라드</option>
+								<option value="댄스"<c:if test="${artVo.art_genre == '댄스'}">
+								selected
+								</c:if>>댄스</option>
+								<option value="랩/힙합"<c:if test="${artVo.art_genre == '랩/힙합'}">
+								selected
+								</c:if>>랩/힙합</option>
+								<option value="R&B/Soul"<c:if test="${artVo.art_genre == 'R&B/Soul'}">
+								selected
+								</c:if>>R&B/Soul</option>
+								<option value="재즈"<c:if test="${artVo.art_genre == '재즈'}">
+								selected
+								</c:if>>재즈</option>
+								<option value="록/메탈"<c:if test="${artVo.art_genre == '록/메탈'}">
+								selected
+								</c:if>>록/메탈</option>
+								<option value="포크/블루스"<c:if test="${artVo.art_genre == '포크/블루스'}">
+								selected
+								</c:if>>포크/블루스</option>
+								<option value="기타"<c:if test="${artVo.art_genre == '기타'}">
+								selected
+								</c:if>>기타</option>
+							</select>
+						</div>
+						<div class="form-group" >
+							<label for="art_pr" style="color: #ffffff;">앨범 소개</label>
+							<textarea rows="10" cols="80" id="art_pr"
+								class="form-control" name="art_pr">${artVo.art_pr }</textarea>
+						</div>
+						<div class="form-group" >
+						</div>
+					</div>
 				</div>
-				<div class="col-md-9">
-					<p>
-						<strong>${artVo.art_title}</strong><br>
-						<strong>${team_name}</strong><br>
-						<small>${artVo.art_pr}</small>
-					</p>
-				</div>
-			</div>
+			</form>
 			
 			<div class="row">
 				
 				<!-- 음악추가폼 -->
-				<div class="col-md-9">
-					<form name="fileForm" action="art/musicUpload" method="post" enctype="multipart/form-data">
-						<div>
+				<div class="col-md-12">
+					<form name="fileForm" action="art/musicUpload" method="post" enctype="multipart/form-data" class="form-inline">
+						<div class="col-md-9  form-group">
 							<label>노래제목</label>
-							<input type="text" id="songName">
-				        	<input type="file" name="file_path" id="inputFile" style="display:none;">
-							<input type="button" value="파일찾기" id="btnFile" class="btn btn-sm btn-success">
-							<span id="spanFile"></span>
+							<input type="text" id="songName" class="form-control">
+				        	<input type="file" name="file_path" id="inputMusicFile" accept=".mp3, .flac, .wav, .aac" style="display:none;">
+							<input type="button" value="파일찾기" id="btnMusicFile" class="btn btn-sm btn-success">
+							<span id="spanMusicFile"></span>
 							<button type="button" class="btn btn-sm btn-primary" id="btnMusicAdd">추가</button>
 							<button type="button" class="btn btn-sm btn-danger" id="btnMusicCancel">취소</button>
+						</div>
+					    <div class="col-md-3 form-group" align="right">
+							<button type="button" class="btn btn-outline-success" id="btnArtAdd">수정완료</button>
+							<button type="button" class="btn btn-outline-danger" id="btnCancel">등록취소</button>
 						</div>
 				    </form>
 				</div>
 			    <!-- 음악추가폼 끝 -->
-			    <div class="col-md-3" align="right">
-					<button type="button" class="btn btn-outline-success" id="btnArtAdd">수정완료</button>
-					<button type="button" class="btn btn-outline-danger" id="btnCancel">등록취소</button>
-				</div>
 			</div>
 			
 			<div class="row">
