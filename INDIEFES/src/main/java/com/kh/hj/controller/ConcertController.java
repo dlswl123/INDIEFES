@@ -18,10 +18,17 @@ public class ConcertController {
 		// move to /concert/info.jsp
 		
 	}
+	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void concertInfoWrite(Model model) {
-		// move to /concert/info.jsp
+		// move to /concert/write.jsp
 		
+	}
+	
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public String concertInfoWriteRun() {
+		// move to /concert/info.jsp
+		return "redirect:/concert/info";
 	}
 	
 }

@@ -36,13 +36,29 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.insert(NAMESPACE + ".memberInsert", vo);
 
 	}
-
 	@Override
-	public ArtInfoVo artRead(String user_id, int art_number) throws Exception {
+	public List<TeamMemberVo> teamInfo(int team_number) throws Exception {
+		List<TeamMemberVo> memberList = sqlSession.selectList(NAMESPACE + ".memberList", team_number);
+		return memberList;
+	}
+	@Override
+	public List<ArtInfoVo> teamArtList(int team_number) throws Exception {
+		List<ArtInfoVo> teamArtList = sqlSession.selectList(NAMESPACE + ".teamArtList",team_number);
+		return teamArtList;
+	}
+	@Override
+	public ArtInfoVo artRead(int art_number) throws Exception {
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artRead", art_number);
+		return artVo;
+	}
+	
+	// 수정
+	@Override
+	public ArtInfoVo artModify(String user_id, int art_number) throws Exception {
 		HashMap<String, Object> artMap = new HashMap<>();
 		artMap.put("user_id", user_id);
 		artMap.put("art_number", art_number);
-		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artRead", artMap);
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artModify", artMap);
 		return artVo;
 	}
 
@@ -63,5 +79,25 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		List<IndieTeamVo> teamList = sqlSession.selectList(NAMESPACE + ".getIndieTeam");
 		return teamList;
 	}
+
+	@Override
+	public List<String> getCover() {
+		List<String> coverList = sqlSession.selectList(NAMESPACE + ".getCover");
+		return coverList;
+	}
+
+	@Override
+	public int getIndieNumber(String user_id) throws Exception {
+		int indieNumber = sqlSession.selectOne(NAMESPACE + ".getIndieNumber", user_id);
+		return indieNumber;
+	}
+
+	@Override
+	public String getTeamName(int team_number) throws Exception {
+		String teamName = sqlSession.selectOne(NAMESPACE + ".getTeamName", team_number);
+		return teamName;
+	}
+
+
 
 }

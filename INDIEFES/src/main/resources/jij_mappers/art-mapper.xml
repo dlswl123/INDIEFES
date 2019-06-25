@@ -30,11 +30,14 @@
 	<select id="artRead" resultType="ArtInfoVo">
 		select * 
 		from art_info
-		where team_number = (select team_number
-							 from art_info
-							 where user_id = #{user_id}
-							 group by team_number)
-		 and art_number = #{art_number}
+		where art_number = #{art_number}
+	</select>
+	
+	<select id="artModify" resultType="ArtInfoVo">
+		select * 
+		from art_info
+		where user_id = #{user_id}
+		and art_number = #{art_number}
 	</select>
 	
 <!-- 	앨범 노래 읽기 -->
@@ -54,9 +57,44 @@
 		order by reg_art desc
 	</select>
 	
+<!-- 	인디팀 불러오기 -->
 	<select id="getIndieTeam" resultType="IndieTeamVo">
 		select *
 		from indie_team
 		order by team_number
+	</select>
+	
+<!-- 	앨범커버 리스트 불러오기 -->
+	<select id="getCover" resultType="string">
+		select art_cover
+		from art_info
+		order by art_number desc
+	</select>
+	
+<!-- 	그룹넘버 가져오기 -->
+	<select id="getIndieNumber" resultType="integer">
+		select team_number
+		from team_member
+		where user_id = #{user_id}
+	</select>
+	
+<!-- 	그룹이름 가져오기 -->
+	<select id="getTeamName" resultType="string">
+		select art_team
+		from indie_team
+		where team_number = #{team_number}
+	</select>
+<!-- 	그룹정보 읽기 -->
+	<select id="memberList" resultType="TeamMemberVo">
+		select * 
+		from team_member
+		where team_number = #{team_number}
+	</select>
+<!-- 	그룹앨범 리스트 가져오기 -->
+	<select id="teamArtList" resultType="ArtInfoVo">
+		select *
+		from art_info
+		where team_number = #{team_number}
+		order by reg_art desc
 	</select>
 </mapper>

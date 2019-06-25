@@ -16,12 +16,12 @@ $(document).ready(function() {
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 
 	<div class="row">
-		<section>
+		<section style="padding:20px;width:100%;">
 			<h1>공연 정보</h1>
-			
-			<article style="text-align:right;padding:20px;">
+	
+			<div style="float:right;">
 				<input type="button" class="btn btn-primary" value="글작성" id="btnWrite" />
-			</article>
+			</div>
 			
 		</section>
 	</div> <!-- row -->

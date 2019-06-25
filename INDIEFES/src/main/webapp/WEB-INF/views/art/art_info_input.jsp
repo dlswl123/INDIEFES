@@ -122,7 +122,7 @@ $(document).ready(function() {
 				<div class="form-group" >
 				<input type="button" id="btnSubmit" 
 					class="btn btn-success" value="작성완료"/>
-				<a href="/board/list"><input type="button" class="btn btn-danger" value="작성취소"/></a> 
+				<a href="/indiefes/art/art_list"><input type="button" class="btn btn-danger" value="작성취소"/></a> 
 				</div>
 			</div>
 		</div>
