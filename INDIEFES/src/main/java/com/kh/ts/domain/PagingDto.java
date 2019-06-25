@@ -15,7 +15,7 @@ public class PagingDto {
 		this.page = page;
 		setRows();
 	}
-	private void setRows( ) {
+	private void setRows() {
 		// 1		2
 		// s:1		11
 		// e:10		20
@@ -27,6 +27,7 @@ public class PagingDto {
 	}
 	public void setPerPage(int perPage) {
 		this.perPage = perPage;
+		setRows();
 	}
 	public int getStartRow() {
 		return startRow;

@@ -18,5 +18,6 @@ public interface IBoardDao {
 	public void update(BoardVo vo)throws Exception;
 	// 글삭제
 	public void delete(int board_number)throws Exception;
-	
+	// 페이지갯수
+	public int listCount(PagingDto pagingDto)throws Exception;
 }

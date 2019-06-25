@@ -39,7 +39,7 @@ $(document).ready(function(){
 </form>	 		
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-			<h1>글조회</h1>
+			<h1>글 조회</h1>
 			<form role="form" method="post">
 				<div class="form-group">
 					<label for="subject">글제목</label>

@@ -55,4 +55,10 @@ public class BoardDaoImpl implements IBoardDao {
 	public void delete(int board_number) throws Exception {
 		sqlSession.delete(Namespace + ".delete",board_number);		
 	}
+	// 페이지갯수
+	@Override
+	public int listCount(PagingDto pagingDto) throws Exception {
+		int count = sqlSession.selectOne(Namespace + ".listCount", pagingDto);
+		return count;
+	}
 }
