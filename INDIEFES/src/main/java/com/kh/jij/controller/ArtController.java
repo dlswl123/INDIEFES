@@ -71,12 +71,15 @@ public class ArtController {
 		artVo.setUser_id("indie2");
 		artVo.setTeam_number(24);
 		artService.insert(artVo);
+		
+		// 파일 업로드(@RequestParam("file")MultipartFile file)
 		String originalName = file.getOriginalFilename();
 		try {
 			FileUploadUtil.uploadFile(uploadPath, originalName,artVo, file.getBytes());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		return "redirect:/art/art_info_input";
 	}
 	// 팀생성 및 가입 폼
