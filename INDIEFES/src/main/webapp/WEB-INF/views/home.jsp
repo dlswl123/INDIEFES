@@ -9,6 +9,8 @@
 					INDIEFES 
 				</h1>
 				
+				<%@ include file="include/date.jsp" %>
+				
 				<section style="background-color:rgba(255,255,255,0.7);">
 					section
 					<article style="background-color:rgba(255,255,255,0.7);">

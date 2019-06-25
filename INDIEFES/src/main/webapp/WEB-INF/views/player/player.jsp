@@ -35,7 +35,7 @@
     <script>
 
         $(".MusicPlayer").musicPlayer({
-            //volume: 10,
+//             volume: 50,
 //             elements: ['artwork', 'controls', 'progress', 'time', 'volume'],
 //             playerAbovePlaylist: false,
             autoPlay: true,

@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ts.domain.BoardVo;
+import com.kh.ts.domain.PagingDto;
 
 @Repository
 public class BoardDaoImpl implements IBoardDao {
@@ -18,38 +19,38 @@ public class BoardDaoImpl implements IBoardDao {
 	@Inject
 	private SqlSession sqlSession;
 
-	// ±€æ≤±‚
+	// Í∏ÄÏì∞Í∏∞
 	@Override
 	public void insert(BoardVo vo) throws Exception {
 		sqlSession.insert(Namespace + ".insert", vo);
 	
 	}
-	// ±€¡∂»∏
+	// Í∏ÄÏ°∞Ìöå
 	@Override
 	public BoardVo select(int board_number) throws Exception {
 		BoardVo vo = sqlSession.selectOne(Namespace + ".select", board_number);
 		return vo;
 	}
-	// ±€∏Ò∑œ
+	// Í∏ÄÎ™©Î°ù
 	@Override
-	public List<BoardVo> selectAll() throws Exception {
-		List<BoardVo> list = sqlSession.selectList(Namespace + ".selectAll");
+	public List<BoardVo> selectAll(PagingDto pagingDto) throws Exception {
+		List<BoardVo> list = sqlSession.selectList(Namespace + ".selectAll",pagingDto);
 		return list;
 	}
-	// ¡∂»∏ºˆ
+	// Ï°∞ÌöåÏàò
 	@Override
 	public void updateViewcnt(int board_number) throws Exception {
 		sqlSession.update(Namespace + ".updateViewcnt",board_number);
-		System.out.println("BoardDaoImpl, updateViewcnt Ω««‡µ " );
+		System.out.println("BoardDaoImpl, updateViewcnt" );
 		
 	}
-	// ±€ºˆ¡§
+	// Í∏ÄÏàòÏ†ï
 	@Override
 	public void update(BoardVo vo) throws Exception {
 		sqlSession.update(Namespace + ".update",vo);
 		
 	}
-	// ±€ªË¡¶
+	// Í∏ÄÏÇ≠Ï†ú
 	@Override
 	public void delete(int board_number) throws Exception {
 		sqlSession.delete(Namespace + ".delete",board_number);		

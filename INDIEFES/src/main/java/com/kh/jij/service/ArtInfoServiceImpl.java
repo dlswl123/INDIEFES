@@ -46,23 +46,68 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		vo.setTeam_level(1);
 		artDao.teamInput(vo);
 	}
-
+	// 팀 정보
+	@Override
+	public List<TeamMemberVo> teamInfo(int team_number) throws Exception {
+		List<TeamMemberVo> memberList = artDao.teamInfo(team_number);
+		return memberList;
+	}
+	// 팀 앨범
+	@Override
+	public List<ArtInfoVo> teamArtList(int team_number) throws Exception {
+		List<ArtInfoVo> teamArtList = artDao.teamArtList(team_number);
+		return teamArtList;
+	}
 	@Override
 	public void attach(String file_path) throws Exception {
 		
 	}
 
 	@Override
-	public ArtInfoVo art_read(String user_id, int art_number) throws Exception {
+	public ArtInfoVo artRead(int art_number) throws Exception {
+		ArtInfoVo artVo = artDao.artRead(art_number);
+		return artVo;
+	}
+	
+	//  수정
+//	@Override
+	public ArtInfoVo artModify(String user_id, int art_number) throws Exception {
 		
-		ArtInfoVo artVo = artDao.art_read(user_id, art_number);
+		ArtInfoVo artVo = artDao.artModify(user_id, art_number);
 		return artVo;
 	}
 
 	@Override
-	public List<MusicInfoVo> music_read(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = artDao.music_read(art_number);
+	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
+		List<MusicInfoVo> musicList = artDao.musicRead(art_number);
 		return musicList;
+	}
+	@Override
+	public List<ArtInfoVo> allArtList() throws Exception {
+		List<ArtInfoVo> artList = artDao.allArtList();
+		return artList;
+	}
+	
+	// 인디그룹 이름 가져오기
+	@Override
+	public List<IndieTeamVo> getIndieTeam() throws Exception {
+		List<IndieTeamVo> teamList = artDao.getIndieTeam();
+		return teamList;
+	}
+	@Override
+	public List<String> getCover() {
+		List<String> coverList =  artDao.getCover();
+		return coverList;
+	}
+	@Override
+	public int getIndieNumber(String user_id) throws Exception {
+		int indieNumber = artDao.getIndieNumber(user_id);
+		return indieNumber;
+	}
+	@Override
+	public String getTeamName(int team_number) throws Exception {
+		String teamName = artDao.getTeamName(team_number);
+		return teamName;
 	}
 
 

@@ -1,6 +1,11 @@
 package com.kh.ks.controller;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -38,9 +43,23 @@ public class LoginController {
 		return "redirect:/";
 	}
 	
+	//회원가입
 	@RequestMapping(value="/account-create", method=RequestMethod.GET)
 	public String accountCreate()throws Exception{
 		return "/user/account_create";
 
 	}
+	
+	//로그아웃
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException{
+		
+		HttpSession session= request.getSession();
+		session.invalidate();
+		
+		return "redirect:/";
+	}
+	
+	
 }

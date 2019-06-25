@@ -25,4 +25,10 @@ public class UserInfoServiceImpl implements IUserInfoService {
 		return userInfoVo;
 	}
 
+	@Override
+	public UserInfoVo readWith(String user_id) throws Exception {
+		UserInfoVo userInfoVo = userInfoDao.readWith(user_id);
+		return userInfoVo;
+	}
+
 }

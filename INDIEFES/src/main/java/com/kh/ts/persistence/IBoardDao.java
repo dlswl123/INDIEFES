@@ -3,19 +3,20 @@ package com.kh.ts.persistence;
 import java.util.List;
 
 import com.kh.ts.domain.BoardVo;
+import com.kh.ts.domain.PagingDto;
 
 public interface IBoardDao {
-	// ±Û¾²±â
+	// ê¸€ì“°ê¸°
 	public void insert(BoardVo vo)throws Exception;
-	// ±ÛÁ¶È¸
+	// ê¸€ì¡°íšŒ
 	public BoardVo select(int board_number)throws Exception;
-	// ±Û¸ñ·Ï
-	public List<BoardVo> selectAll()throws Exception;
-	// Á¶È¸¼ö
+	// ê¸€ëª©ë¡
+	public List<BoardVo> selectAll(PagingDto pagingDto)throws Exception;
+	// ì¡°íšŒìˆ˜
 	public void updateViewcnt(int board_number)throws Exception;
-	// ±Û¼öÁ¤
+	// ê¸€ìˆ˜ì •
 	public void update(BoardVo vo)throws Exception;
-	// ±Û»èÁ¦
+	// ê¸€ì‚­ì œ
 	public void delete(int board_number)throws Exception;
 	
 }

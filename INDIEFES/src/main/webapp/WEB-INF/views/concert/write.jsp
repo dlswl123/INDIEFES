@@ -5,9 +5,12 @@
 <script>
 $(document).ready(function() {
 	
-	// move to new concert info write form
+	// set input today to concertdate
+	var today = new Date().toISOString().slice(0,16);
+	$("input[name=concertdate]").val(today);
+	
 	$("#btnConfirm").click(function() {
-		location.href = "/indiefes/concert/write";
+		$("#concertWriteForm").submit();
 	});
 	
 });
@@ -19,40 +22,35 @@ $(document).ready(function() {
 	<section style="background-color:rgba(255,255,255,0.7);margin:20px;">
 	
 		<article style="padding:20px;">
-			<form>
+			
+			<!-- // move to new concert info write form -->
+			<form role="form" action="/indiefes/concert/write" method="post" id="concertWriteForm">
 				<div class="form-group">
+					<input type="hidden" name="user_id" value="indie1" />
+				
 					<label id="subject">공연 제목</label>
 					<input type="text" class="form-control" name="subject" id="subject" />
+					
+					<label id="concertdate">공연 일자</label>
+					<input type="datetime-local" class="form-control" name="concertdate" id="concertdate" />
 					
 					<label id="content">공연 내용</label>
 					<textarea class="form-control" rows="10" cols="50" name="content" id="subject"
 					style="resize:none;">
 					</textarea>
 					
-					<label id="concerthall">공연장 위치</label>
-					<div id="map" style="width:100%;height:500px;"></div>
-					 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=913777d8d62e9dada9a5b7e3656cdba2&libraries=services,clusterer,drawing"></script>
-<!-- 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=913777d8d62e9dada9a5b7e3656cdba2"></script> -->
-					<script>
-						var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-						var options = { //지도를 생성할 때 필요한 기본 옵션
-							center: new daum.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-							level: 3 //지도의 레벨(확대, 축소 정도)
-						};
-					
-						var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
-					</script>
+					<%@ include file="../include/search_map.jsp" %>
 				</div>
+				
+				<div class="row">
+					<article style="text-align:right;padding:20px;">
+						<input type="Button" class="btn btn-primary" value="등록" id="btnConfirm"/>
+					</article>
+				</div> <!-- row -->
+				
 			</form>		
 		</article>
 	
-		<div class="row">
-			<article style="text-align:right;padding:20px;">
-				<input type="button" class="btn btn-primary" value="등록" id="btnConfirm" />
-			</article>
-		</div> <!-- row -->
-		
 	</section>
 
 </div> <!-- col-md-10 -->

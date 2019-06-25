@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.ks.domain.UserInfoVo;
+import com.kh.ks.service.IUserInfoService;
 import com.kh.ts.domain.BoardVo;
+import com.kh.ts.domain.PagingDto;
 import com.kh.ts.service.IBoardService;
 
 @Controller
@@ -27,79 +30,97 @@ public class BoardController {
 	@Inject
 	IBoardService boardService;
 	
-	// ±Û¸ñ·Ï
+	@Inject
+	private IUserInfoService userInfoService;
+	
+	int bno;
+	
+	// ê¸€ëª©ë¡
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void boardList(Model model) throws Exception {
-		// °Ô½ÃÆÇ ±Û ¸ñ·ÏºÒ·¯¿À±â
-		List<BoardVo> list = boardService.selectAll();
+	public void boardList(Model model, PagingDto pagingDto) throws Exception {
+		List<BoardVo> list = boardService.selectAll(pagingDto);
 		System.out.println("boardList");
 		model.addAttribute("list", list);
 	}
 	
-	// ±ÛÁ¶È¸
+	// ê¸€ì¡°íšŒ
 	@RequestMapping(value="/read", method = RequestMethod.GET)
-	public void read(@RequestParam("board_number")int board_number, Model model, HttpSession session)throws Exception {
+	public void read(@RequestParam("board_number")int board_number, Model model, 
+			HttpSession session, PagingDto pagingDto)throws Exception {
 		System.out.println("BoardController, read, board_number:" + board_number);
 		BoardVo boardVo = boardService.select(board_number);
-		// ÇØ´ç±Û ÀÛ¼º ¾ÆÀÌµğ
+		// íšŒì›ì•„ì´ë””
 		String user_id = boardVo.getUser_id();
-		// ·Î±×ÀÎ ¾ÆÀÌµğ
-		String login_id = "xotjd";
+		UserInfoVo userInfoVo = userInfoService.readWith(user_id);
+		System.out.println("userInfoVo:" + userInfoVo);
+		String login_id = userInfoVo.getUser_id();
+		// ì§€ì •ëœíšŒì›
 		System.out.println("user_id:" + user_id);
 		System.out.println("login_id:" + login_id);
 		if (! user_id.equals(login_id)) {
-			System.out.println("update ½ÇÇà");
-			boardService.updateViewcnt(board_number);
+			System.out.println("update");
+			
+		}
+		
+		// int bno ì „ì—­ë³€ìˆ˜ë¥¼ í•˜ë‚˜ ì •í•´ì„œ board_numberë¥¼ ì €ì¥
+		// í˜„ì¬ í˜¸ì¶œëœ board_numberì™€ ê°™ìœ¼ë©´ updateViewcntë¥¼ ì‹¤í–‰í•˜ì§€ ì•Šê²Œ í•¨
+		if (bno != board_number) {
+				boardService.updateViewcnt(board_number);
+			bno = board_number;
 		}
 		model.addAttribute("boardVo", boardVo);
+		model.addAttribute("pagingDto", pagingDto);
 	}
 	
-	// ±Û¾²±â Æû - /indiefes/board/regist(GET ¿äÃ»)
+	// ê¸€ì“°ê¸° í¼ - /indiefes/board/regist(GET ë¶ˆëŸ¬ì˜¤ê¸°)
 	@RequestMapping(value="/regist", method=RequestMethod.GET)
 	public void registGet() throws Exception {
-		System.out.println("registGet()½ÇÇàµÊ");
-		// ¹İÈ¯Å¸ÀÔÀÎ°æ¿ì ¿äÃ»°æ·Î.jsp·Î Æ÷¿öµùÇÑ´Ù
+		System.out.println("registGet()");
 		// /WEB-INF/indifes/board/regist.jsp
 	}
 	
-	// ±Û¾²±âÃ³¸® - /indiefes/board/regist(Post ¿äÃ»)
+	// ê¸€ì“°ê¸° ì²˜ë¦¬ - /indiefes/board/regist(Post ë¶ˆëŸ¬ì˜¤ê¸°)
 	@RequestMapping(value="/regist", method=RequestMethod.POST)
 	public String registPost(BoardVo boardVo, RedirectAttributes rttr, HttpSession session)throws Exception {
 		System.out.println("boardVo:" + boardVo);
 		System.out.println("BoardController, registPost, boardVo:" + boardVo);
 		boardService.insert(boardVo);
-		rttr.addAttribute("message","success_insert");
-//		-> ¸®´ÙÀÌ·ºÆ®½Ã ÇÑ¹ø ¾²ÀÌ°í ¹ö·ÁÁú ¼Ó¼º
+		rttr.addFlashAttribute("message","success_insert");
+		
 		return "redirect:/board/list";
 	}
 	
-	// ±Û¼öÁ¤ Æû - /indiefes/board/update(GET ¿äÃ»)
+	// ê¸€ìˆ˜ì • í¼ - /indiefes/board/update(GET ë¶ˆëŸ¬ì˜¤ê¸°)
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public void updateGet(@RequestParam("board_number")int board_number, Model model)throws Exception {
+	public void updateGet(@RequestParam("board_number")int board_number, Model model,
+			@ModelAttribute PagingDto pagingDto)throws Exception {
 		BoardVo boardVo = boardService.select(board_number);
 		model.addAttribute("boardVo", boardVo);
+		model.addAttribute("pagingDto", pagingDto);
 	}
 	
-	// ±Û¼öÁ¤Ã³¸® - /indiefes/board/update(Post ¿äÃ»)
+	// ê¸€ìˆ˜ì •ì²˜ë¦¬ - /indiefes/board/update(Post ë¶ˆëŸ¬ì˜¤ê¸°)
 	@RequestMapping(value="/update", method= RequestMethod.POST)
-	public String updatePost(BoardVo boardVo, RedirectAttributes rttr)throws Exception {
+	public String updatePost(BoardVo boardVo, RedirectAttributes rttr,@RequestParam(value="pagingDto", required=false) 
+		PagingDto pagingDto)throws Exception {
 		boardService.update(boardVo);
-		rttr.addAttribute("message", "success_update");
+		rttr.addFlashAttribute("message", "success_update");
+		rttr.addAttribute("pagingDto", pagingDto);
 		
 		return "redirect:/board/read?board_number=" + boardVo.getBoard_number();
 	}
-	// ±Û»èÁ¦ Æû - /indiefes/board/update(GET ¿äÃ»)
+	// ê¸€ì‚­ì œ í¼ - /indiefes/board/update(GET ì²˜ë¦¬)
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public void deleteGet(int board_number, Model model)throws Exception {
 		
 	}
-	// ±Û»èÁ¦Ã³¸® - /indiefes/board/delete(Post ¿äÃ»)
+	// ê¸€ì‚­ì œì²˜ë¦¬- /indiefes/board/delete(Post ì²˜ë¦¬)
 	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
 	public String deletePost(@RequestParam("board_number")int board_number,
 			RedirectAttributes rttr)throws Exception {
 		try {
 			boardService.delete(board_number);
-			rttr.addAttribute("mesage", "success_delete");
+			rttr.addFlashAttribute("message", "success_delete");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
