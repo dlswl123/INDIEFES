@@ -40,12 +40,8 @@ function Today(year,mon,day){
   maxdays = montharray[this_month-1]; 
 //아래는 윤달을 구하는 것
   if (this_month==2) { 
-      if ((this_year/4)!=parseInt(this_year/4)){
-    	  maxdays=28;
-    	  } 
-      else {
-    	  maxdays=29;
-      }
+      if ((this_year%4)!=0) maxdays=28; 
+      else maxdays=29; 
   } 
  
  document.writeln("<select name='year' size=1 onChange='dateSelect(this.form,this.form.month.selectedIndex);'>");

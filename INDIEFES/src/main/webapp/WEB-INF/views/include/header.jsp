@@ -31,10 +31,18 @@ body {
 /* /resources 내의 자료 불러와지지 않을 때 사용법
 <script src="<c:url value='~~~주소~~~'/>"/>
 */
+
+html, body {
+	-ms-user-select:none;
+	-webkit-user-select:none;
+	-moz-user-select:-moz-none;
+	user-select:none;
+}
 </style>
+
 </head>
 
-<body>
+<body oncontextmenu='return false' ondragstart='return false' onselectstart='return false'>
 
 <div class="container-fluid">
 	<div class="row">

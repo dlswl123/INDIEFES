@@ -12,8 +12,9 @@ $(document).ready(function(){
 
 }); // $(document).ready
 </script>
+
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-	<h1>수정하기</h1>
+	<h1>글 수정</h1>
 	<form role="form" method="post" action="/indiefes/board/update">
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">
@@ -40,8 +41,7 @@ $(document).ready(function(){
 			<div class="form-group">
 				<label for="reg_date">작성일</label> 
 				<input type="text" class="form-control" id="reg_date" 
-					value='<fmt:formatDate value="${boardVo.reg_date}" 
-					pattern="yyyy-MM-dd HH:mm:ss"/>' readonly/>
+					value="${boardVo.reg_date}" readonly/>
 			</div>
 			<div class="row">
 				<div class="col-md-12">

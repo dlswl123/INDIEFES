@@ -40,8 +40,8 @@
 			    </a></h1>
 		    </section>
 		    <section id="artInfo">
-			    <h1><a href="/indiefes/art/art_info">
-			    	<font style="color:#ffffff;">앨범정보</font>
+			    <h1><a href="/indiefes/art/art_list">
+			    	<font style="color:#ffffff;">앨범목록</font>
 			    </a></h1>
 		    </section>
 		    <section id="concertInfo">
