@@ -46,17 +46,15 @@ $(document).ready(function() {
 </script>
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div class="row">
-				<h1>팀정보</h1>
+				<h1>팀정보</h1><br><br><br>
 			</div>
 			<div class="row">
 				<div class="col-md-10">
-					<p>
-						<h3>${teamName}</h3><br>
-						<c:forEach items="${memberList}" var="memberVo">
-							<c:if test="${memberVo.team_level==0}"><strong>${memberVo.user_id}</strong><br></c:if>
-							<c:if test="${memberVo.team_level==1}"><small>${memberVo.user_id}</small></c:if>
-						</c:forEach>
-					</p>
+					<h3>${teamName}</h3><br>
+					<c:forEach items="${memberList}" var="memberVo">
+						<c:if test="${memberVo.team_level==0}"><strong>${memberVo.user_id}</strong><br></c:if>
+						<c:if test="${memberVo.team_level==1}"><small>${memberVo.user_id}</small></c:if>
+					</c:forEach>
 				</div>
 			</div>
 	<div class="row">
@@ -72,7 +70,7 @@ $(document).ready(function() {
 								<p class="badge"></p>
 								<a href="/indiefes/art/art_info?art_number=${artVo.art_number }&team_number=${artVo.team_number}" onclick="" target="_self">
 								<span class="mask"></span>
-								<img id="img_art_cover"class="art_images" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}" alt="${artVo.art_title} 앨범 대표이미지">
+								<img id="img_art_cover"class="art_images" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" alt="${artVo.art_title} 앨범 대표이미지">
 								</a>
 							</div>
 							<figcaption class="info">
