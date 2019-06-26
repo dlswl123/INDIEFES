@@ -37,8 +37,16 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 	public UserInfoVo readWith(String user_id) throws Exception {
 		HashMap<String, Object> paramMap = new HashMap<>();
 		paramMap.put("user_id", user_id);
-		UserInfoVo userInfoVo = sqlsession.selectOne(NAMESPACE + "readWith", paramMap); 
+		UserInfoVo userInfoVo = sqlsession.selectOne(NAMESPACE + ".readWith", paramMap); 
 		return userInfoVo;
+	}
+
+	@Override
+	public boolean createAccount(UserInfoVo userInfoVo) throws Exception {
+		System.out.println("Dao createAccount 호출됨");
+		System.out.println("Dao createAccount userInfoVo : " + userInfoVo);
+		sqlsession.insert(NAMESPACE + ".createAccount", userInfoVo); 
+		return true;
 	}
 	
 	

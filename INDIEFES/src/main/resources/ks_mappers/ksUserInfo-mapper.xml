@@ -31,5 +31,10 @@
 		select * from user_info
 		where user_id = #{user_id}
 	</select>
+	
+	<insert id="createAccount">
+		insert into user_info(user_id, user_pw, user_nick, user_name, user_email, user_birth, user_gender)
+		values (#{user_id}, #{user_pw}, #{user_nick}, #{user_name}, #{user_email}, #{user_birth}, #{user_gender})
+	</insert>
 
 </mapper>

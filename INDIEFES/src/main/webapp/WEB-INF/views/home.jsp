@@ -3,6 +3,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="include/header.jsp" %>
 
+
+
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div>
 				<h1>
@@ -24,6 +26,16 @@
 				</article>
 			</div>
 		</div> <!-- col-md-10 / main -->
+		
+		<script>
+		$(document).ready(function() {
+			var message = "${message}";
+			
+			if(message == "create_accout_success"){
+				alert("회원가입성공");
+			}
+		});
+		</script>
 		
 <%@ include file="include/sidebar.jsp" %>
 
