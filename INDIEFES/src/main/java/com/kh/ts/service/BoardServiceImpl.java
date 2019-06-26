@@ -59,4 +59,16 @@ public class BoardServiceImpl implements IBoardService {
 		int count = boardDao.listCount(pagingDto);
 		return count;
 	}
+	// 파일경로 가져오기
+	@Override
+	public List<String> getAttach(int board_number) throws Exception {
+		List<String> list = boardDao.getAttach(board_number);
+		return list;
+	}
+	// 파일삭제
+	@Override
+	public void deleteAttach(String file_path) throws Exception {
+		boardDao.deleteAttach(file_path);
+		
+	}
 }
