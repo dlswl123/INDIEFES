@@ -76,7 +76,7 @@ $(document).ready(function() {
 								<p class="badge"></p>
 								<a href="/indiefes/art/art_info?art_number=${artVo.art_number }&team_number=${artVo.team_number}" onclick="" target="_self">
 								<span class="mask"></span>
-								<img id="img_art_cover"class="art_images" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}" alt="${artVo.art_title} 앨범 대표이미지">
+								<img id="img_art_cover"class="art_images" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" alt="${artVo.art_title} 앨범 대표이미지">
 								</a>
 <!-- 								<button onclick="" class="btnPlay" aria-label="새창">듣기</button> -->
 							</div>
