@@ -18,8 +18,9 @@ $(document).ready(function(){
 		console.log("btnList");
 		location.href="/indiefes/board/list"
 	});
-	// 파일첨부 버튼
-	$("#file_path").click(function(e){
+	// 파일첨부 
+	$("#file_path").change(function(e) {
+		console.log("파일 첨부버튼");
 		e.preventDefault();
 		var file_path = e.originalEvent.dataTransfer.files[0];
 		console.log(e);
@@ -36,6 +37,9 @@ $(document).ready(function(){
 			"contentType" : false, // enctype="multipart/form-data"
 			"type" : "post",
 			"success" : function(fullName) { // /2019/5/17/asdad-adsa-ada_a.jpg
+				
+				console.log("ajax 실행");
+				console.log('ajax, fullName:' + fullName);
 				var slashIndex = fullName.lastIndexOf("/");
 				var front = fullName.substring(0, slashIndex + 1);
 				var rear = fullName.substring(slashIndex + 1);
@@ -103,11 +107,10 @@ $(document).ready(function(){
 			<!--  첨부파일 목록 -->
 			<div class="form-group" id="uploadedList">
 			</div>
-			
 				<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
 				<input type="button" id="btnList" class="btn btn-warning" value="목록보기"/>
 				<!-- multiple 여러개 파일을 올릴수있도록구현 -->
-				<input type="file" 	 id="file_path" class="btn btn-warning" multiple="multiple" value="파일첨부"/>
+				<input type="file" id="file_path" class="btn btn-warning" multiple="multiple"/>
 			</form>
 		</div>
 
