@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.ks.domain.UserInfoVo;
 import com.kh.ks.service.IUserInfoService;
 import com.kh.ts.domain.BoardVo;
+import com.kh.ts.domain.PaginationDto;
 import com.kh.ts.domain.PagingDto;
 import com.kh.ts.service.IBoardService;
 
@@ -38,9 +39,17 @@ public class BoardController {
 	// 글목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void boardList(Model model, PagingDto pagingDto) throws Exception {
+		System.out.println("BoardController, list, pagingDto:" + pagingDto);
 		List<BoardVo> list = boardService.selectAll(pagingDto);
 		System.out.println("boardList");
 		model.addAttribute("list", list);
+		PaginationDto paginationDto = new PaginationDto();
+		
+		paginationDto.setPagingDto(pagingDto);
+		int count = boardService.listCount(pagingDto);
+		System.out.println("count:" + count);
+		paginationDto.setTotalCount(count);
+		model.addAttribute("paginationDto", paginationDto);
 	}
 	
 	// 글조회
@@ -52,7 +61,7 @@ public class BoardController {
 		// 회원아이디
 		String user_id = boardVo.getUser_id();
 		UserInfoVo userInfoVo = userInfoService.readWith(user_id);
-		System.out.println("userInfoVo:" + userInfoVo);
+//		System.out.println("userInfoVo:" + userInfoVo);
 		String login_id = userInfoVo.getUser_id();
 		// 지정된회원
 		System.out.println("user_id:" + user_id);

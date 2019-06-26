@@ -48,9 +48,15 @@ public class BoardServiceImpl implements IBoardService {
 	public void update(BoardVo vo) throws Exception {
 		boardDao.update(vo); // update
 	}
-	// 글삭젠
+	// 글삭제
 	@Override
 	public void delete(int board_number) throws Exception {
 		boardDao.delete(board_number); // delete
+	}
+	// 페이징갯수
+	@Override
+	public int listCount(PagingDto pagingDto) throws Exception {
+		int count = boardDao.listCount(pagingDto);
+		return count;
 	}
 }

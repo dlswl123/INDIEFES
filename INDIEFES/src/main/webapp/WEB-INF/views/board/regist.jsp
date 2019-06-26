@@ -28,7 +28,7 @@ $(document).ready(function(){
 </script>
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-			<h1>글쓰기<h1>
+			<h1>글 쓰기<h1>
 			<form role="form" method="post" id="registForm">
 			<div class="form-group">
 				<label for="subject">제목</label>

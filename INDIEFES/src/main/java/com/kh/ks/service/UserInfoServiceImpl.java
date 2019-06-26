@@ -28,7 +28,17 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	@Override
 	public UserInfoVo readWith(String user_id) throws Exception {
 		UserInfoVo userInfoVo = userInfoDao.readWith(user_id);
+		System.out.println("UserInfoServiceImpl, readWith, userInfoVo:" + userInfoVo); 
 		return userInfoVo;
+	}
+
+	@Override
+	public boolean createAccount(UserInfoVo userInfoVo) throws Exception {
+		System.out.println("serive createAccount 호출됨");
+		System.out.println("serive createAccount userInfoVo : " + userInfoVo);
+		userInfoDao.createAccount(userInfoVo);
+		
+		return true;
 	}
 
 }

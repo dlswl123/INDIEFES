@@ -23,10 +23,42 @@ $(document).ready(function() {
 	// 검색버튼
 	$("#btnSearch").click(function(){
 		console.log("btnSearch");
-// 		setPage();
-//		setSearch();
-// 		$("input[name=page]").val(1); // 검색시 페이지1로가기
-// 		$("#pageForm").submit();
+		setPage();
+		setSearch();
+		$("input[name=page]").val(1); // 검색시 페이지1로가기
+		$("#pageForm").submit();
+	});
+	
+	// 페이지
+	function setPage() {
+		var page = "${pagingDto.page}"
+			if (page == "") {
+				page = 1;
+		}
+		var perPage = $("#perPage").val();
+		console.log(page);
+		$("input[name=page]").val(page);
+		$("input[name=perPage]").val(perPage);
+	}
+	
+	// 검색
+	function setSearch() {
+		var searchType = $("#searchType").val();
+		var keyword = $("#keyword").val();
+		
+		console.log("searchType" + searchType);
+		console.log("keyword" + keyword);
+		$("input[name=searchType]").val(searchType);
+		$("input[name=keyword]").val(keyword);
+		
+	}
+	
+	//	n줄씩 보기
+	$("#perPage").change(function() {
+		console.log("perPage");
+		setPage();
+		setSearch();
+		$("#pageForm").submit();
 	});
 	
 	// 제목클릭
@@ -38,9 +70,19 @@ $(document).ready(function() {
 			
 			var href = $(this).attr("href");
 			$("#pageForm").attr("action",href).submit();
-			
-		
 	}); // $(".click_subject")
+	
+	// 페이지 번호클릭
+	$(".a_pagination").click(function(e){
+			e.preventDefault();
+//			$(this).text();
+			setPage();
+			var page = $(this).attr("data-page"); // 페이지 숫자 읽기
+			$("input[name=page]").val(page); // 아래쪽 폼의 page에 설정
+			$("#pageForm").submit(); // 폼 설정
+
+			
+	}); // $(".a_pagination").click
 }); // $(document)
 </script>
 
@@ -48,18 +90,26 @@ $(document).ready(function() {
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">
 	<input type="hidden" name="page" 
-			value="${pagingDto.page}">
+			value="${paginationDto.pagingDto.page}">
 	<input type="hidden" name="perPage" 
-			value="${pagingDto.perPage}">
+			value="${paginationDto.pagingDto.perPage}">
 	<input type="hidden" name="searchType" 
-			value="${pagingDto.searchType}">
+			value="${paginationDto.pagingDto.searchType}">
 	<input type="hidden" name="keyword" 
-			value="${pagingDto.keyword}">
+			value="${paginationDto.pagingDto.keyword}">
 </form>
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 <h1>Indiefes 게시판</h1>
-
+	<p>데이터확인= ${paginationDto}</p>
+	<select id="perPage">
+				<c:forEach var= "i" begin= "5" end= "20" step= "5">
+					<option
+					value='<c:out value="${i}"/>'
+					<c:if test="${i == pagingDto.perPage}">selected</c:if>
+					><c:out value="${i}"/>줄씩 보기</option>
+				</c:forEach>
+				</select>
 	<select id="searchType">
 		<option value="subject"
 		<c:if test="${pagingDto.searchType == 'subject'}">
@@ -83,8 +133,8 @@ $(document).ready(function() {
 				class= "btn btn-danger"/>
 			<input type="button" class="btn btn-success"
 		  		value="글쓰기" id="btnRegist">
-		  	<div class="row">
-			<div class="col-md-12">
+				<div class="row">
+				<div class="col-md-12">
 				<table class="table">
 					<thead>
 						<tr>
@@ -110,7 +160,7 @@ $(document).ready(function() {
 								</c:if>
 								<c:if test="${boardVo.view_count >= 100 }">
 								<img src="<c:url value='/resources/images/heart_fill.png'/>" width="15">
-								<!-- <span style="color: red;">hot</span> -->
+								<span style="color: red;">hot</span>
 								</c:if>
 							</td>		
 							<!-- 회원 -->
@@ -129,6 +179,38 @@ $(document).ready(function() {
 				</table>
 				</div>
 			</div>
+			<!--  페이지네이션(페이지클릭창) -->
+			<div class="row">
+		<div class="col-md-12 text-center">
+			<nav>
+				<ul class="pagination" >
+				<!-- 이전 -->
+				<c:if test="${paginationDto.prev == true }">
+					<li class="page-item">
+						<a class="page-link a_pagination" href="#"
+						data-page="${paginationDto.startPage - 1}">이전</a>
+					</li>
+				</c:if>	
+				<!-- 페이징 -->
+				<c:forEach var="i" begin="${paginationDto.startPage}" 
+									end="${paginationDto.endPage }">
+					<li class="page-item
+					<c:if test="${paginationDto.pagingDto.page == i}">active</c:if>	
+					">
+						<a class="page-link a_pagination" href="#"
+							data-page="${i}">${i}</a>
+					</li>
+				</c:forEach>
+				<c:if test="${paginationDto.next == true }">
+					<li class="page-item">
+						<a class="page-link a_pagination"  href="#"
+						data-page= "${paginationDto.endPage +1}">다음</a>
+				</li>		
+				</c:if>		
+				</ul>
+			</nav>
 		</div>
+	</div>
+</div>
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

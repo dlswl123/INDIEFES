@@ -40,6 +40,14 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		UserInfoVo userInfoVo = sqlsession.selectOne(NAMESPACE + ".readWith", paramMap); 
 		return userInfoVo;
 	}
+
+	@Override
+	public boolean createAccount(UserInfoVo userInfoVo) throws Exception {
+		System.out.println("Dao createAccount 호출됨");
+		System.out.println("Dao createAccount userInfoVo : " + userInfoVo);
+		sqlsession.insert(NAMESPACE + ".createAccount", userInfoVo); 
+		return true;
+	}
 	
 	
 
