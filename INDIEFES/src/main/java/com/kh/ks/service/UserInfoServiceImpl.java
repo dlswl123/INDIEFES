@@ -16,6 +16,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	@Inject
 	private IUserInfoDao userInfoDao;
 
+	// 회원정보(아이디, 비밀번호 입력)
 	@Override
 	public UserInfoVo readWithPw(String user_id, String user_pw) throws Exception {
 		System.out.println("UserInfoServiceImpl, readWithPw, user_id:" + user_id); 
@@ -25,10 +26,29 @@ public class UserInfoServiceImpl implements IUserInfoService {
 		return userInfoVo;
 	}
 
+	//회원정보 (아이디만 입력)
 	@Override
 	public UserInfoVo readWith(String user_id) throws Exception {
 		UserInfoVo userInfoVo = userInfoDao.readWith(user_id);
+		System.out.println("UserInfoServiceImpl, readWith, userInfoVo:" + userInfoVo); 
 		return userInfoVo;
+	}
+
+	// 회원가입
+	@Override
+	public boolean createAccount(UserInfoVo userInfoVo) throws Exception {
+		System.out.println("serive createAccount 호출됨");
+		System.out.println("serive createAccount userInfoVo : " + userInfoVo);
+		userInfoDao.createAccount(userInfoVo);
+		
+		return true;
+	}
+
+	// 아이디 중복 체크
+	@Override
+	public UserInfoVo idCheck(String user_id) throws Exception {
+		UserInfoVo idChk = userInfoDao.idCheck(user_id);
+		return idChk;
 	}
 
 }

@@ -108,10 +108,6 @@
 						    position: map.getCenter() 
 						}); 
 						
-						// 저장시 넘겨줄 지도 좌표값
-						var pointX = 0.0;
-						var pointY = 0.0;
-						
 
 						//=======================================================
 						
@@ -212,6 +208,7 @@
 						    var resultDiv = document.getElementById('clickLatlng'); 
 						    resultDiv.innerHTML = message;
 						    
+						    map.panTo(marker.getPosition());
 						});
 						
 						
@@ -231,14 +228,11 @@
 
 						    var keyword = document.getElementById('keyword').value;
 
-						    console.log("keyword : " + keyword);
-						    
 						    if (!keyword.replace(/^\s+|\s+$/g, '')) {
 						        alert('키워드를 입력해주세요!');
 						        return false;
 						    }
 
-						    console.log("keywordSearch");
 						    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 						    ps.keywordSearch(keyword, placesSearchCB); 
 						}
@@ -246,9 +240,8 @@
 						// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
 						function placesSearchCB(data, status, pagination) {
 						    if (status === daum.maps.services.Status.OK) {
-						    	console.log("placeSearchCB Status.OK");
 
-						        // 정상적으로 검색이 완료됐으면
+						    	// 정상적으로 검색이 완료됐으면
 						        // 검색 목록과 마커를 표출합니다
 						        displayPlaces(data);
 
@@ -256,13 +249,11 @@
 						        displayPagination(pagination);
 
 						    } else if (status === daum.maps.services.Status.ZERO_RESULT) {
-						    	console.log("placeSearchCB Status.ZERO_RESULT");
 
 						        alert('검색 결과가 존재하지 않습니다.');
 						        return;
 
 						    } else if (status === daum.maps.services.Status.ERROR) {
-						    	console.log("placeSearchCB Status.ERROR");
 
 						        alert('검색 결과 중 오류가 발생했습니다.');
 						        return;
@@ -292,9 +283,6 @@
 						            marker = addMarker(placePosition, i), 
 						            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
-						        console.log("places[i].y : " + places[i].y);
-						        console.log("places[i].x : " + places[i].x);
-						            
 						        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
 						        // LatLngBounds 객체에 좌표를 추가합니다
 						        bounds.extend(placePosition);
@@ -311,15 +299,10 @@
 						                infowindow.close();
 						            });
 						            
-						            // 내 코드 - mouseclick 했을 시 좌표값을 저장
 						            daum.maps.event.addListener(marker, 'click', function() {
-										pointX = marker.x;
-										pointY = marker.y;
-										
-										console.log("pointX : " + pointX);
-										console.log("pointY : " + pointY);
+										getPlacePosition(marker, title);
 									});
-
+						            
 						            itemEl.onmouseover =  function () {
 						                displayInfowindow(marker, title);
 						            };
@@ -328,18 +311,12 @@
 						                infowindow.close();
 						            };
 						            
-						            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!여기하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-						            
-						            // 내코드 - 목록 클릭했을시 좌표값 저장
 						            itemEl.onclick = function() {
-						            	pointX = places[i].x;
-										pointY = places[i].y;
-										
-										console.log("pointX : " + pointX);
-										console.log("pointY : " + pointY);
+						            	getPlacePosition(marker, title);
 									};
+						            
 						        })(marker, places[i].place_name);
-
+						        
 						        fragment.appendChild(itemEl);
 						    }
 
@@ -451,6 +428,19 @@
 						    }
 						}
 						 
+						 // 클릭한 마커와 목록의 좌표를 얻어내는 함수
+						 function getPlacePosition(marker, title) {
+							 console.log("marker : " + marker);
+							 console.log("title : " + title);
+							 console.log("markerPosition : " + marker.getPosition());
+							 removeMarker();
+							 
+							 map.panTo(marker.getPosition());
+							 
+							 marker.setMap(map);
+							 markers.push(marker);
+						 }
+						 
 						 
 						//======================================================= 
 
@@ -480,10 +470,12 @@
 							            map: map,
 							            position: coords
 							        });
+							        var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+						            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 
 							        // 인포윈도우로 장소에 대한 설명을 표시합니다
 							        var infowindow = new daum.maps.InfoWindow({
-							            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+							            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + detailAddr + '</div>'
 							        });
 							        infowindow.open(map, marker);
 
@@ -493,9 +485,7 @@
 							});    
 						}
 						 
-						//==========================!!!!!!!!!!!!!!!결과 보여줄때 사용할 것!!!!!!!!!!!!!!==========================
-						 
-						 
+						
 						//======================================================= 
 						
 						

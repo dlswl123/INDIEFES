@@ -1,6 +1,10 @@
 package com.kh.ks.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -9,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ks.domain.UserInfoVo;
 import com.kh.ks.service.IUserInfoService;
@@ -36,6 +43,8 @@ public class LoginController {
 //		String user_id = userInfoVo.getUser_id();
 //		String user_pw = userInfoVo.getUser_pw();
 		UserInfoVo userInfoVo = userInfoService.readWithPw(user_id, user_pw);
+//		UserInfoVo userInfoVo1 = userInfoService.readWith(user_id);
+//		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
 		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
 		if(userInfoVo != null) {
 			session.setAttribute("userInfoVo", userInfoVo);
@@ -59,6 +68,60 @@ public class LoginController {
 		session.invalidate();
 		
 		return "redirect:/";
+	}
+	
+	// 회원가입
+	@RequestMapping(value="/account-create-run", method=RequestMethod.GET)
+	public String accountCreateRun(UserInfoVo userInfoVo, String birthYear, String birthMonth, String birthDay, 
+			RedirectAttributes rttr, HttpServletResponse response)throws Exception{
+		
+		System.out.println("account create birthYear : " + birthYear);
+		System.out.println("account create birthMonth : " + birthMonth);
+		System.out.println("account create birthDay : " + birthDay);
+		String birth = "";
+		birth = birthYear + "-" + birthMonth + "-" + birthDay;
+		System.out.println(birth);
+		
+		
+		userInfoVo.setUser_birth(birth);
+		
+		System.out.println("account create userInfoVo : " + userInfoVo);
+		
+		boolean accountResult = userInfoService.createAccount(userInfoVo);
+		System.out.println(accountResult);
+		String returnURI = "";
+		PrintWriter out=response.getWriter();
+		response.setContentType("text/html; charset=UTF-8");
+		if(accountResult == true) {
+			
+			rttr.addFlashAttribute("message", "create_accout_success");
+
+
+
+
+			
+			returnURI = "redirect:/user/login";
+		}
+		
+		
+		return returnURI;
+	}
+	
+	//아이디 중복 체크
+	@ResponseBody
+	@RequestMapping(value="/idCheck", method=RequestMethod.POST)
+	public int idCheck(HttpServletRequest request) throws Exception{
+	
+		int result = 0;
+		
+		String user_id = request.getParameter("user_id");
+		UserInfoVo idCheck = userInfoService.idCheck(user_id);
+		
+		if(idCheck != null) {
+			  result = 1;
+		} 
+		
+		return result;
 	}
 	
 	

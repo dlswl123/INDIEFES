@@ -3,6 +3,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="include/header.jsp" %>
 
+
+
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div>
 				<h1>
@@ -24,6 +26,8 @@
 				</article>
 			</div>
 		</div> <!-- col-md-10 / main -->
+		
+		
 		
 <%@ include file="include/sidebar.jsp" %>
 

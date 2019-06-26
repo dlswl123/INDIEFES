@@ -8,7 +8,7 @@ public class UserInfoVo {
 	private String user_nick;
 	private String user_name;
 	private String user_email;
-	private Date user_birth;
+	private String user_birth;
 	private String user_gender;
 	private Date reg_date;
 	private int point;
@@ -48,10 +48,10 @@ public class UserInfoVo {
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
-	public Date getUser_birth() {
+	public String getUser_birth() {
 		return user_birth;
 	}
-	public void setUser_birth(Date user_birth) {
+	public void setUser_birth(String user_birth) {
 		this.user_birth = user_birth;
 	}
 	public String getUser_gender() {
@@ -97,6 +97,7 @@ public class UserInfoVo {
 		this.deleted = deleted;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "UserInfoVo [user_id=" + user_id + ", user_pw=" + user_pw + ", user_nick=" + user_nick + ", user_name="
@@ -104,6 +105,11 @@ public class UserInfoVo {
 				+ user_gender + ", reg_date=" + reg_date + ", point=" + point + ", user_level=" + user_level
 				+ ", auto_login=" + auto_login + ", reg_indie=" + reg_indie + ", deleted=" + deleted + "]";
 	}
+	
+	
+	
+	
+	
 	
 	
 }
