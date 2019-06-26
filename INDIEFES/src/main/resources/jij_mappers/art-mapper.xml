@@ -33,6 +33,7 @@
 		where art_number = #{art_number}
 	</select>
 	
+<!-- 	앨범정보 수정 -->
 	<select id="artModify" resultType="ArtInfoVo">
 		select * 
 		from art_info
@@ -54,7 +55,17 @@
 	<select id="artList" resultType="ArtInfoVo">
 		select *
 		from art_info
+		<include refid="search"></include>
 		order by reg_art desc
+	</select>
+	
+	<select id="searchArtList">
+		select a.*
+		from music_info m, art_info a, indie_team i
+		where m.art_number = a.art_number
+		and a.team_number = i.team_number
+		<include refid="search"></include>
+		order by reg_art desc;
 	</select>
 	
 <!-- 	인디팀 불러오기 -->
@@ -84,12 +95,14 @@
 		from indie_team
 		where team_number = #{team_number}
 	</select>
+	
 <!-- 	그룹정보 읽기 -->
 	<select id="memberList" resultType="TeamMemberVo">
 		select * 
 		from team_member
 		where team_number = #{team_number}
 	</select>
+	
 <!-- 	그룹앨범 리스트 가져오기 -->
 	<select id="teamArtList" resultType="ArtInfoVo">
 		select *
@@ -97,4 +110,19 @@
 		where team_number = #{team_number}
 		order by reg_art desc
 	</select>
+	
+	<sql id="search">
+		<if test="searchType != null">
+	   		<if test="searchType == 'albumName'">
+	   			and a.art_title like '%' || #{keyword} || '%'
+	   		</if>
+	   		<if test="searchType == 'song'">
+	   			and m.music_title like '%' || #{keyword} || '%'
+	   		</if>
+	   		<if test="searchType == 'indieTeam'">
+	   			and i.art_team like '%' || #{keyword} || '%'
+	   		</if>
+	        </if>
+	</sql>
+	
 </mapper>

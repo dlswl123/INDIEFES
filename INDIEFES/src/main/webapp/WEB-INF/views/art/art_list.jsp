@@ -43,6 +43,18 @@ $(document).ready(function() {
 
 </script>
 
+<form id="pageForm" action="/indiefes/art/art_list">
+	<input type="hidden" name="art_number" 
+		value="${param.art_number}">
+	<input type="hidden" name="team_number" 
+		value="${param.team_number}">
+	<input type="hidden" name="perPage" 
+		value="${paginationDto.pagingDto.perPage}">
+	<input type="hidden" name="searchType" 
+		value="${paginationDto.pagingDto.searchType}">
+	<input type="hidden" name="keyword" 
+		value="${paginationDto.pagingDto.keyword}">
+</form>
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
   <div class="row">
@@ -51,18 +63,55 @@ $(document).ready(function() {
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-						<a href="#">Home</a>
+						<a href="/indiefes/">Home</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="/indiefes/art/art_list?">발라드</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">댄스</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">랩/힙합</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">R&B/Soul</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">재즈</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">록/메탈</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">포크/블루스</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">기타</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_info_input">앨범등록</a>
-					</li>
-					<li class="breadcrumb-item active">
-						Data
 					</li>
 				</ol>
 			</nav>
 		</div>
 	</div>
+	<div class="row">
+		<div class ="col-md-12">
+			<select id="art_genre">
+				<option value="발라드">발라드</option>
+				<option value="댄스">댄스</option>
+				<option value="랩/힙합">랩/힙합</option>
+				<option value="R&B/Soul">R&B/Soul</option>
+				<option value="재즈">재즈</option>
+				<option value="록/메탈" selected >록/메탈</option>
+				<option value="포크/블루스">포크/블루스</option>
+				<option value="기타">기타</option>
+			</select>
+		</div>
+	
+	</div>
+	
 	<div class="row">
 		<div class="col-md-12">
 			 <span class="badge badge-default">앨범 목록</span>

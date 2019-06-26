@@ -90,6 +90,8 @@ public class ArtController {
 		System.out.println("userVo" + userVo);
 
 	}
+	
+	
 
 	// 앨범 이미지 가져오기
 	@RequestMapping(value = "/getCover", method = RequestMethod.GET)
