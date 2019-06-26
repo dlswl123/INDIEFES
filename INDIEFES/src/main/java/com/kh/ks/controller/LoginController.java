@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ks.domain.UserInfoVo;
@@ -68,6 +70,7 @@ public class LoginController {
 		return "redirect:/";
 	}
 	
+	// 회원가입
 	@RequestMapping(value="/account-create-run", method=RequestMethod.GET)
 	public String accountCreateRun(UserInfoVo userInfoVo, String birthYear, String birthMonth, String birthDay, 
 			RedirectAttributes rttr, HttpServletResponse response)throws Exception{
@@ -97,11 +100,28 @@ public class LoginController {
 
 
 			
-			returnURI = "redirect:/";
+			returnURI = "redirect:/user/login";
 		}
 		
 		
 		return returnURI;
+	}
+	
+	//아이디 중복 체크
+	@ResponseBody
+	@RequestMapping(value="/idCheck", method=RequestMethod.POST)
+	public int idCheck(HttpServletRequest request) throws Exception{
+	
+		int result = 0;
+		
+		String user_id = request.getParameter("user_id");
+		UserInfoVo idCheck = userInfoService.idCheck(user_id);
+		
+		if(idCheck != null) {
+			  result = 1;
+		} 
+		
+		return result;
 	}
 	
 	
