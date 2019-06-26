@@ -5,7 +5,17 @@
 	
 	
 	<script>
+	$(document).ready(function() {
+		$("#idOverlapChk").click(function() {
+			var id = {user_id : $("#user_id").val()};
+			
+			console.log(id);
+		});
+
 		
+	});
+	
+	
 	</script>
 	
 	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,0.7);">
@@ -16,7 +26,8 @@
 					<label for="inputAccount">
 						아이디
 					</label>
-					<input type="text" class="form-control" name="user_id" />
+					<input type="text" class="form-control" id = "user_id" name="user_id" />
+					<input type="button" id="idOverlapChk" value="중복체크"/>
 				</div>
 				<div class="form-group">
 					 

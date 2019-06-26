@@ -5,12 +5,21 @@
 
 	
 	<script>
+	
+		var message = "${message}";
+		
+		if(message == "create_accout_success"){
+			alert("회원가입성공");
+		}
+	
 		$(document).ready(function() {
 			$("#btnCreateAccount").click(function() {
 				location.href="/indiefes/user/account-create";
 			});
+			
+			
 		});
-	</script>
+	</script>	
 	
 	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,0.7);">
 		<div class="col-md-12">

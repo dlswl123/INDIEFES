@@ -27,6 +27,12 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void insert(ArtInfoVo vo) throws Exception {
 		artDao.insert(vo);
 	}
+	// 입력앨범정보
+	@Override
+	public ArtInfoVo artInfo(int team_number) throws Exception {
+		ArtInfoVo artVo = artDao.artInfo(team_number);
+		return artVo;
+	}
 	// 팀생성
 	@Transactional
 	@Override
@@ -109,6 +115,7 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		String teamName = artDao.getTeamName(team_number);
 		return teamName;
 	}
+	
 
 
 }

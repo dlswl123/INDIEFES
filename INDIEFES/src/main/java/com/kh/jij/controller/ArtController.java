@@ -17,11 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
@@ -95,17 +93,18 @@ public class ArtController {
 
 	// 앨범 이미지 가져오기
 	@RequestMapping(value = "/getCover", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getCover(@RequestParam("artCover") String artCover, @RequestParam("team_number") int team_number) throws Exception {
+	public ResponseEntity<byte[]> getCover(@RequestParam("artCover") String artCover, @RequestParam("team_number") int team_number,@RequestParam("art_number") int art_number) throws Exception {
 //		System.out.println("fileName:" + fileName);
 		// -> /2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
-		String realPath = uploadPath + File.separator + team_number + File.separator + "0" + File.separator + artCover;
+		String album = "album";
+		String realPath = uploadPath + File.separator + album + File.separator + team_number + File.separator + art_number + File.separator + artCover;
 		// -> H:/upload/2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
 //		System.out.println("ArtController, getArtCover, realPath" + realPath);
 		// 파일의 확장자 얻기
 //		int dotIndex = fileName.lastIndexOf(".");
 //		String extName = fileName.substring(dotIndex + 1).toUpperCase();
 		String formatName = FileUploadUtil.getFormatName(artCover).toUpperCase();
-
+		
 		MediaType mediaType = null;
 		if (formatName.equals("JPG")) {
 			mediaType = MediaType.IMAGE_JPEG; // image/jpeg
@@ -129,7 +128,7 @@ public class ArtController {
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 				headers.add("Content-disposition", "attachment; filename=" + downloadName);
 			}
-			realPath = uploadPath + File.separator + team_number + File.separator + "0" + File.separator + artCover;
+			realPath = uploadPath + File.separator + album + File.separator + team_number + File.separator + art_number + File.separator + artCover;
 
 			FileInputStream is = new FileInputStream(realPath);
 			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), headers, HttpStatus.OK);
@@ -155,7 +154,7 @@ public class ArtController {
 		int indieNum = artService.getIndieNumber(userVo.getUser_id());
 		artVo.setTeam_number(indieNum);
 		artService.insert(artVo);
-		
+		artVo = artService.artInfo(artVo.getTeam_number());
 		// 파일 업로드(@RequestParam("file")MultipartFile file)
 		String originalName = file.getOriginalFilename();
 		try {
@@ -202,7 +201,6 @@ public class ArtController {
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("teamName", teamName);
 		model.addAttribute("teamArtList", teamArtList);
-		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		
 	}
 

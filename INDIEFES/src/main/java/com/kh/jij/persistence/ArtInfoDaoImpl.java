@@ -25,6 +25,12 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	public void insert(ArtInfoVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
+	
+	@Override
+	public ArtInfoVo artInfo(int team_number) throws Exception {
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artInfo",team_number);
+		return artVo;
+	}
 
 	@Override
 	public void teamInsert(IndieTeamVo vo) throws Exception {
@@ -98,6 +104,7 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		return teamName;
 	}
 
+	
 
 
 }

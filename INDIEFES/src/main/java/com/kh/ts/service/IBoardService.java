@@ -20,4 +20,8 @@ public interface IBoardService {
 	public void delete(int board_number)throws Exception;
 	// 페이지갯수
 	public int listCount(PagingDto pagingDto)throws Exception;
+	// 파일경로가져오기
+	public List<String> getAttach(int board_number)throws Exception;
+	// 파일삭제
+	public void deleteAttach(String file_path)throws Exception;
 }

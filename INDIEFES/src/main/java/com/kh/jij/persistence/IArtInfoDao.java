@@ -8,8 +8,11 @@ import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.domain.MusicInfoVo;
 
 public interface IArtInfoDao {
-	// 글쓰기
+	// 앨범입력
 	public void insert(ArtInfoVo vo) throws Exception;
+	
+	// 입력앨범정보
+	public ArtInfoVo artInfo(int team_number) throws Exception;
 	
 	// 팀생성
 	public void teamInsert(IndieTeamVo vo) throws Exception;

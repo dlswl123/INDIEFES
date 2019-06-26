@@ -8,6 +8,14 @@
 		insert into art_info (art_number, art_genre, user_id, team_number,art_title,art_cover,art_pr)
 		values (seq_art.nextval,#{art_genre},#{user_id},#{team_number},#{art_title},#{art_cover},#{art_pr})
 	</insert>
+	<select id="artInfo" resultType="ArtInfoVo">
+		select * 
+		from art_info
+		where art_number = 
+		(select max(art_number)
+		 from art_info 
+		 where team_number = #{team_number})
+	</select>
 	
 	<!-- 팀등록 -->
 	<insert id="teamInsert">
