@@ -107,7 +107,7 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 
 	@Override
 	public int artCount(PagingDto pagingDto) throws Exception {
-		int artCount = sqlSession.selectOne(NAMESPACE + ".artCount");
+		int artCount = sqlSession.selectOne(NAMESPACE + ".artCount", pagingDto);
 		return artCount;
 	}
 
