@@ -52,8 +52,8 @@ $(document).ready(function() {
 				<div class="col-md-10">
 					<h3>${teamName}</h3><br>
 					<c:forEach items="${memberList}" var="memberVo">
-						<c:if test="${memberVo.team_level==0}"><strong>${memberVo.user_id}</strong><br></c:if>
-						<c:if test="${memberVo.team_level==1}"><small>${memberVo.user_id}</small></c:if>
+						<c:if test="${memberVo.team_level==0}"><strong>${memberVo.user_nick}</strong><br></c:if>
+						<c:if test="${memberVo.team_level==1}"><small>${memberVo.user_nick}</small><br></c:if>
 					</c:forEach>
 				</div>
 			</div>

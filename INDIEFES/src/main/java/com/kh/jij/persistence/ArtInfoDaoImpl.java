@@ -104,6 +104,12 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		return teamName;
 	}
 
+	@Override
+	public List<MusicInfoVo> playList(String user_id) throws Exception {
+		List<MusicInfoVo> playList = sqlSession.selectList(NAMESPACE + ".playList", user_id);
+		return playList;
+	}
+
 	
 
 

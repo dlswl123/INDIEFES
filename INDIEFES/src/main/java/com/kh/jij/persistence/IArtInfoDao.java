@@ -48,4 +48,6 @@ public interface IArtInfoDao {
 	// 팀이름 가져오기
 	public String getTeamName (int team_number) throws Exception;
 	
+	// 플레이리스트
+	public List<MusicInfoVo> playList(String user_id) throws Exception;
 }
