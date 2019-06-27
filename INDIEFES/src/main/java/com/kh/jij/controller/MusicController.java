@@ -51,8 +51,4 @@ public class MusicController {
 		}
 		return entity;
 	}
-	
-	public void update() throws Exception {
-		
-	};
 }
