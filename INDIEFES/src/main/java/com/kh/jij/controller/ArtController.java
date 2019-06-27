@@ -17,9 +17,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
@@ -29,6 +31,8 @@ import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
+import com.kh.ts.domain.PaginationDto;
+import com.kh.ts.domain.PagingDto;
 
 @Controller
 @RequestMapping("art/*")
@@ -40,10 +44,8 @@ public class ArtController {
 	private String uploadPath; // servlet-context.xml (id="uploadPath")
 
 	// 앨범정보조회 폼
-	@RequestMapping(value = "/art_info", method = RequestMethod.GET)
-	public void ArtInfo(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model) throws Exception {
-//		UserVo userVo = session.getAttribute("userVo");
-//		System.out.println(art_number);
+	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
+	public String ArtInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, HttpSession session, Model model) throws Exception {
 		String teamName = artService.getTeamName(team_number);
 		ArtInfoVo artVo = artService.artRead(art_number);
 		List<MusicInfoVo> musicList = artService.musicRead(art_number);
@@ -52,6 +54,7 @@ public class ArtController {
 		model.addAttribute("teamName", teamName);
 //		System.out.println("ArtController, artVo : " + artVo);
 //		System.out.println("ArtController, musicList : " + musicList);
+		return "art/art_info";
 	}
 
 //	 앨범정보 수정 폼
@@ -77,20 +80,25 @@ public class ArtController {
 
 	// 앨범리스트 폼
 	@RequestMapping(value = "/art_list", method = RequestMethod.GET)
-	public void ArtList(HttpSession session, Model model) throws Exception {
-		List<ArtInfoVo> artList = artService.allArtList();
+	public void ArtList(PagingDto pagingDto, Model model) throws Exception {
+		System.out.println(pagingDto);
+		pagingDto.setPerPage(24);
+		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
-//		System.out.println("ArtController, ArtList 실행됨");
-//		System.out.println("ArtController, ArtList, teamList" + teamList);
-		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		System.out.println("userVo" + userVo);
+//		System.out.println("ArtController, ArtList, artList:" + artList);
+//		System.out.println("ArtController, ArtList, teamList:" + teamList);
+		PaginationDto paginationDto = new PaginationDto();
+		paginationDto.setPagingDto(pagingDto);
+		int artCount = artService.artCount(pagingDto);
+		System.out.println("artCount:" + artCount);
+		paginationDto.setTotalCount(artCount);
+		System.out.println(paginationDto);
+		model.addAttribute("paginationDto", paginationDto);
 
 	}
 	
-	
-
 	// 앨범 이미지 가져오기
 	@RequestMapping(value = "/getCover", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getCover(@RequestParam("artCover") String artCover, @RequestParam("team_number") int team_number,@RequestParam("art_number") int art_number) throws Exception {

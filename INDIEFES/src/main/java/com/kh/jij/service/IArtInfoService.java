@@ -7,6 +7,7 @@ import java.util.List;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
+import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
 
 public interface IArtInfoService {
@@ -41,11 +42,12 @@ public interface IArtInfoService {
 	public List<MusicInfoVo> musicRead(int art_number) throws Exception;
 	
 	// 앨범 리스트 가져오기
-	public List<ArtInfoVo> allArtList() throws Exception;
+	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception;
 	public List<IndieTeamVo> getIndieTeam() throws Exception;
 	// 앨범 커버 리스트 가져오기
 	public List<String> getCover();
 	
 	public int getIndieNumber(String user_id) throws Exception;
 	public String getTeamName (int team_number) throws Exception;
+	public int artCount(PagingDto pagingDto)throws Exception;
 }

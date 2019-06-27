@@ -3,6 +3,7 @@
   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="art">
+
 	<!-- 앨범정보입력 -->
 	<insert id="insert">
 		insert into art_info (art_number, art_genre, user_id, team_number,art_title,art_cover,art_pr)
@@ -62,19 +63,14 @@
 <!-- 	앨범 리스트 가져오기 -->
 	<select id="artList" resultType="ArtInfoVo">
 		select *
-		from art_info
-		<include refid="search"></include>
-		order by reg_art desc
+		from (select rownum rnum, a.*
+		      from (select art.* 
+		      		from art_info art
+		      <include refid="search"></include>
+		      order by art.art_number desc) a)
+		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
 	</select>
 	
-	<select id="searchArtList">
-		select a.*
-		from music_info m, art_info a, indie_team i
-		where m.art_number = a.art_number
-		and a.team_number = i.team_number
-		<include refid="search"></include>
-		order by reg_art desc;
-	</select>
 	
 <!-- 	인디팀 불러오기 -->
 	<select id="getIndieTeam" resultType="IndieTeamVo">
@@ -119,18 +115,34 @@
 		order by reg_art desc
 	</select>
 	
+	<!-- 페이징갯수 -->
+	<select id="artCount" resultType="int">
+		select count(*) 
+		from art_info art
+		<include refid="search"></include>
+	</select>
+	
+	
 	<sql id="search">
-		<if test="searchType != null">
-	   		<if test="searchType == 'albumName'">
-	   			and a.art_title like '%' || #{keyword} || '%'
-	   		</if>
+       	<if test="searchType != null">
+       		<if test="searchType == 'albumName'">
+            	where art_title like '%' || #{keyword} || '%'
+   			</if>
 	   		<if test="searchType == 'song'">
-	   			and m.music_title like '%' || #{keyword} || '%'
+	   			, music_info m
+	            where art.art_number = m.art_number
+	            and m.music_title like '%' || #{keyword} || '%'
 	   		</if>
 	   		<if test="searchType == 'indieTeam'">
-	   			and i.art_team like '%' || #{keyword} || '%'
+	            where art.team_number = (select team_number
+	                                     from indie_team i
+	                                     where i.art_team like '%' || #{keyword} || '%'
+	                                     group by i.team_number)
 	   		</if>
-	        </if>
+	   		<if test="searchType == 'artGenre'">
+	   			where art.art_genre like '%' || #{keyword} || '%'
+	   		</if>
+       	</if>
 	</sql>
 	
 </mapper>
