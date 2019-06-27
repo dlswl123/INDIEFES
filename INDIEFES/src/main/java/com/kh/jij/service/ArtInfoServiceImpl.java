@@ -1,8 +1,8 @@
 package com.kh.jij.service;
 
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,9 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
-import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IArtInfoDao;
+import com.kh.ts.domain.PagingDto;
 
 
 @Service
