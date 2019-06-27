@@ -89,18 +89,16 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-md-12"  align="right">
 <!-- 				실행버튼 -->
-				<c:choose>
-					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}">
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnAppro">승인</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnReturn">반려</button>
-					</c:when>
-					<c:when test="${userInfoVo.user_level eq 2 and artVo.user_id eq userInfoVo.user_id}">
-<%-- 						<c:if test="${}"> --%>
+<%-- 					</c:when> --%>
+<%-- 					<c:when test="${userInfoVo.user_level eq 2 and artVo.user_id eq userInfoVo.user_id}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtModify">앨범수정</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtDelete">앨범삭제</button>
-<%-- 						</c:if> --%>
-					</c:when>
-					<c:otherwise>
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button>
 						<!-- 담기로 구매한 사용자만 다운로드 가능함 -->
 						<button type="button" class="btn btn-outline-secondary" id="btnDown">다운</button>
@@ -108,8 +106,8 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-outline-secondary" id="btnAllListen">전체듣기</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllDown">전체다운</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllCart">전체담기</button>
-					</c:otherwise>
-				</c:choose>
+<%-- 					</c:otherwise> --%>
+<%-- 				</c:choose> --%>
 				</div>
 			</div>
 			<div class="row">

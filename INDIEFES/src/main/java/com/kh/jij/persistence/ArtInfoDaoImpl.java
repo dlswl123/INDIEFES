@@ -69,11 +69,6 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		return artVo;
 	}
 
-	@Override
-	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = sqlSession.selectList(NAMESPACE + ".musicRead", art_number);
-		return musicList;
-	}
 
 	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
