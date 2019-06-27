@@ -147,7 +147,7 @@ public class ArtController {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		}
-		System.out.println("realPath:"+realPath);
+//		System.out.println("realPath:"+realPath);
 		return entity;
 	}
 
