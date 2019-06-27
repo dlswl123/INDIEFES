@@ -75,7 +75,7 @@ $(document).ready(function() {
 			</div>
 			<div class="row">
 				<div class="col-md-4">
-					<img alt="${artVo.art_title} 앨범 대표이미지" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}" width="282" height="282" class="rounded" />
+					<img alt="${artVo.art_title} 앨범 대표이미지" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" width="282" height="282" class="rounded" />
 				</div>
 				<div class="col-md-8">
 					<p>
