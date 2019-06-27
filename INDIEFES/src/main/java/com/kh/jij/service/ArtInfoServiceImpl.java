@@ -84,11 +84,7 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		return artVo;
 	}
 
-	@Override
-	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = artDao.musicRead(art_number);
-		return musicList;
-	}
+
 	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
 		List<ArtInfoVo> artList = artDao.allArtList(pagingDto);

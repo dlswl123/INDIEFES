@@ -42,7 +42,7 @@
 		where art_number = #{art_number}
 	</select>
 	
-<!-- 	앨범정보 수정 -->
+<!-- 	앨범정보 수정폼 -->
 	<select id="artModify" resultType="ArtInfoVo">
 		select * 
 		from art_info
@@ -50,15 +50,10 @@
 		and art_number = #{art_number}
 	</select>
 	
-<!-- 	앨범 노래 읽기 -->
-	<select id="musicRead" resultType="MusicInfoVo">
-		select *
-		from music_info
-		where art_number = (select art_number
-							from art_info
-							where art_number = #{art_number})
-		order by track_number
-	</select>
+	<update id="artUpdate">
+		
+	
+	</update>
 	
 <!-- 	앨범 리스트 가져오기 -->
 	<select id="artList" resultType="ArtInfoVo">

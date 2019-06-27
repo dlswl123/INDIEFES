@@ -132,7 +132,6 @@ $(document).ready(function() {
 	// 음악 트랙리스트 가져오기
 	function getList() {
 		var url = "/indiefes/music/list/${param.art_number}";
-// 		var url = "/indiefes/music/list/1";
 		$.getJSON(url, function(receivedData) {
 			console.log(receivedData);
 			var strHtml = "";
@@ -168,7 +167,7 @@ $(document).ready(function() {
 								<input type="button" value="파일찾기" id="btnFile" class="btn btn-sm btn-success">
 								<span id="spanFile">${artVo.art_cover}</span>
 								<br>
-								<img id="img_preview"  src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}" width="282" height="282" class="rounded" />	
+								<img id="img_preview"  src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" width="282" height="282" class="rounded" style="display:none;"/>	
 						</div>
 					</div>
 					<div class="col-md-8">
@@ -224,8 +223,10 @@ $(document).ready(function() {
 				<div class="col-md-12">
 					<form name="fileForm" action="art/musicUpload" method="post" enctype="multipart/form-data" class="form-inline">
 						<div class="col-md-9  form-group">
+							<label>트랙</label>
+							<input type="number" id="trackNumber" name="track_number" class="form-control">
 							<label>노래제목</label>
-							<input type="text" id="songName" class="form-control">
+							<input type="text" id="songName" name="music_title" class="form-control">
 				        	<input type="file" name="file_path" id="inputMusicFile" accept=".mp3, .flac, .wav, .aac" style="display:none;">
 							<input type="button" value="파일찾기" id="btnMusicFile" class="btn btn-sm btn-success">
 							<span id="spanMusicFile"></span>

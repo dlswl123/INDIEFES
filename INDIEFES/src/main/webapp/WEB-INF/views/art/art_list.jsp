@@ -38,9 +38,11 @@ $(document).ready(function() {
 		$("#pageForm").submit();
 	});
 	
+	// 전체조회버튼
 	$("#btnAllSearch").click(function(){
 		setPage();
-		setSearch();
+		$("input[name=searchType]").val("");
+		$("input[name=keyword]").val("");
 		$("input[name=page]").val(1); // 검색시 페이지1로가기
 		$("#pageForm").submit();
 	});
@@ -155,12 +157,19 @@ $(document).ready(function() {
 		<div class ="col-md-12">
 			<div class="in-line">
 				 <select class="selectBox" id="searchType">
-					<option value="albumName">앨범제목</option>
-					<option value="song">노래제목</option>
-					<option value="indieTeam">가수명</option>
+					<option value="albumName" <c:if test="${paginationDto.pagingDto.searchType == 'albumName'}">
+								selected
+								</c:if>>앨범제목</option>
+					<option value="song" <c:if test="${paginationDto.pagingDto.searchType == 'song'}">
+								selected
+								</c:if>>노래제목</option>
+					<option value="indieTeam" <c:if test="${paginationDto.pagingDto.searchType == 'indieTeam'}">
+								selected
+								</c:if>>가수명</option>
 				</select>
-				<input type="text" id="keyword" >
+				<input type="text" id="keyword" value="${paginationDto.pagingDto.keyword}">
 				<input type="button" class="btn btn-primary" id="btnSearch" value="검색">
+				<input type="button" class="btn btn-warning" id="btnAllSearch" value="전체조회">
 			</div>
 			</div>
 	

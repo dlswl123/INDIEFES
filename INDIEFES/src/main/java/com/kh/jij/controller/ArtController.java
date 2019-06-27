@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
+import com.kh.jij.persistence.IMusicInfoDao;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.jij.util.FileUploadUtil;
@@ -40,15 +41,19 @@ public class ArtController {
 
 	@Inject
 	IArtInfoService artService;
+	
+	@Inject
+	IMusicInfoDao musicService;
+	
 	@Resource(name = "uploadPath")
 	private String uploadPath; // servlet-context.xml (id="uploadPath")
 
 	// 앨범정보조회 폼
 	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
-	public String ArtInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, HttpSession session, Model model) throws Exception {
+	public String ArtInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model) throws Exception {
 		String teamName = artService.getTeamName(team_number);
 		ArtInfoVo artVo = artService.artRead(art_number);
-		List<MusicInfoVo> musicList = artService.musicRead(art_number);
+		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("teamName", teamName);
@@ -57,31 +62,52 @@ public class ArtController {
 		return "art/art_info";
 	}
 
+//	// 음악목록 가져오기
+//	@RequestMapping(value="/list/{art_number}")
+//	public ResponseEntity<List<MusicInfoVo>> MusicTrackList(@PathVariable("art_number") int art_number) throws Exception  {
+//		ResponseEntity<List<MusicInfoVo>> entity = null;
+//		try {
+//			List<MusicInfoVo> list = musicService.musicRead(art_number);
+//			entity = new ResponseEntity<List<MusicInfoVo>>(list, HttpStatus.OK);
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			entity = new ResponseEntity<List<MusicInfoVo>>(HttpStatus.BAD_REQUEST);
+//		}
+//		return entity;
+//	}
+
+	
 //	 앨범정보 수정 폼
 	@RequestMapping(value = "/art_modify", method = RequestMethod.GET)
-	public void ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
+	public String ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
 			throws Exception {
 //		System.out.println(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
-		String user_id = userVo.getUser_id();
-		String teamName = artService.getTeamName(team_number);
-//		String user_id = "indie1";
-//		String team_name = "알약";
-		System.out.println("ArtController, art_modify, userVo:" + userVo);
-		System.out.println("ArtController, art_modify, teamName:" + teamName);
-		ArtInfoVo artVo = artService.artModify(user_id, art_number);
-		List<MusicInfoVo> musicList = artService.musicRead(art_number);
-		model.addAttribute("artVo", artVo);
-		model.addAttribute("musicList", musicList);
-		model.addAttribute("teamName", teamName);
-		model.addAttribute("userVo", userVo);
+		String url = "";
+		if (userVo != null) {
+			String user_id = userVo.getUser_id();
+			String teamName = artService.getTeamName(team_number);
+//			String user_id = "indie1";
+//			String team_name = "알약";
+//			System.out.println("ArtController, art_modify, userVo:" + userVo);
+//			System.out.println("ArtController, art_modify, teamName:" + teamName);
+			ArtInfoVo artVo = artService.artModify(user_id, art_number);
+			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
+			model.addAttribute("artVo", artVo);
+			model.addAttribute("musicList", musicList);
+			model.addAttribute("teamName", teamName);
+			model.addAttribute("userVo", userVo);
+			url = "art/art_modify";
+		} else {
+			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
+		}
+		return url;
 
 	}
 
 	// 앨범리스트 폼
 	@RequestMapping(value = "/art_list", method = RequestMethod.GET)
 	public void ArtList(PagingDto pagingDto, Model model) throws Exception {
-		System.out.println(pagingDto);
 		pagingDto.setPerPage(24);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
@@ -92,9 +118,7 @@ public class ArtController {
 		PaginationDto paginationDto = new PaginationDto();
 		paginationDto.setPagingDto(pagingDto);
 		int artCount = artService.artCount(pagingDto);
-		System.out.println("artCount:" + artCount);
 		paginationDto.setTotalCount(artCount);
-		System.out.println(paginationDto);
 		model.addAttribute("paginationDto", paginationDto);
 
 	}
