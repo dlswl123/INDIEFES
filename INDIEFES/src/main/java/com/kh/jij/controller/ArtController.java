@@ -62,21 +62,6 @@ public class ArtController {
 		return "art/art_info";
 	}
 
-//	// 음악목록 가져오기
-//	@RequestMapping(value="/list/{art_number}")
-//	public ResponseEntity<List<MusicInfoVo>> MusicTrackList(@PathVariable("art_number") int art_number) throws Exception  {
-//		ResponseEntity<List<MusicInfoVo>> entity = null;
-//		try {
-//			List<MusicInfoVo> list = musicService.musicRead(art_number);
-//			entity = new ResponseEntity<List<MusicInfoVo>>(list, HttpStatus.OK);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			entity = new ResponseEntity<List<MusicInfoVo>>(HttpStatus.BAD_REQUEST);
-//		}
-//		return entity;
-//	}
-
-	
 //	 앨범정보 수정 폼
 	@RequestMapping(value = "/art_modify", method = RequestMethod.GET)
 	public String ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
@@ -84,8 +69,9 @@ public class ArtController {
 //		System.out.println(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 		String url = "";
-		if (userVo != null) {
-			String user_id = userVo.getUser_id();
+//		if (userVo != null) {
+//			String user_id = userVo.getUser_id();
+			String user_id = "indie1";
 			String teamName = artService.getTeamName(team_number);
 //			String user_id = "indie1";
 //			String team_name = "알약";
@@ -98,9 +84,9 @@ public class ArtController {
 			model.addAttribute("teamName", teamName);
 			model.addAttribute("userVo", userVo);
 			url = "art/art_modify";
-		} else {
-			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
-		}
+//		} else {
+//			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
+//		}
 		return url;
 
 	}
