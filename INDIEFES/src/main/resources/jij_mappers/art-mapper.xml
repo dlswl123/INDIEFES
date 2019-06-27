@@ -3,6 +3,7 @@
   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="art">
+
 	<!-- 앨범정보입력 -->
 	<insert id="insert">
 		insert into art_info (art_number, art_genre, user_id, team_number,art_title,art_cover,art_pr)

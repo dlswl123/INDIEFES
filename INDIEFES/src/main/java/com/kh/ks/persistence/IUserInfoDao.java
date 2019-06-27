@@ -8,4 +8,6 @@ public interface IUserInfoDao {
 	public UserInfoVo readWith(String user_id) throws Exception;
 	
 	public boolean createAccount(UserInfoVo userInfoVo)throws Exception;
+	
+	public UserInfoVo idCheck(String user_id) throws Exception;
 }

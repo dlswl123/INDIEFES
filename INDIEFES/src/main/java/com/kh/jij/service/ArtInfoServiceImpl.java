@@ -39,10 +39,8 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void teamInsert(Map<String, Object> map) throws Exception {
 		IndieTeamVo teamVo = (IndieTeamVo)map.get("teamVo");
 		String user_id = (String)map.get("user_id");
-		String user_nick = (String)map.get("user_nick");
 		TeamMemberVo memberVo = new TeamMemberVo();
 		memberVo.setUser_id(user_id);
-		memberVo.setUser_nick(user_nick);
 		memberVo.setTeam_level(0);
 		artDao.teamInsert(teamVo);
 		artDao.teamInput(memberVo);
@@ -85,14 +83,10 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		return artVo;
 	}
 
+
 	@Override
-	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = artDao.musicRead(art_number);
-		return musicList;
-	}
-	@Override
-	public List<ArtInfoVo> allArtList() throws Exception {
-		List<ArtInfoVo> artList = artDao.allArtList();
+	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
+		List<ArtInfoVo> artList = artDao.allArtList(pagingDto);
 		return artList;
 	}
 	
@@ -117,6 +111,13 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		String teamName = artDao.getTeamName(team_number);
 		return teamName;
 	}
+	
+	@Override
+	public int artCount(PagingDto pagingDto) throws Exception {
+		int artCount = artDao.artCount(pagingDto);
+		return artCount;
+	}
+	
 	// 플레이리스트
 	@Override
 	public List<MusicInfoVo> playList(String user_id) throws Exception {

@@ -86,7 +86,7 @@ $(document).ready(function() {
 	<input type="hidden" name="art_genre" value="">
 	<input type="hidden" name="art_cover" value="">
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-md-3">
 				<div class="form-group">
 						<h3 style="color: #ffffff;">앨범 이미지</h3>
 						<input type="file" id="art_cover" accept=".jpg, .jpeg, .png" name="file"/>
@@ -94,7 +94,7 @@ $(document).ready(function() {
 						<img id="img_preview" style="display:none;"/>	
 				</div>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-7">
 				<div class="form-group">
 						<label for="art_title" style="color: #ffffff;">앨범제목</label>
 						<input type="text" class="form-control" id="art_title"

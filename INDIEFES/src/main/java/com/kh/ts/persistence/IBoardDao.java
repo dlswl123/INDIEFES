@@ -20,4 +20,12 @@ public interface IBoardDao {
 	public void delete(int board_number)throws Exception;
 	// 페이지갯수
 	public int listCount(PagingDto pagingDto)throws Exception;
+	// 파일경로 Insert
+	public void attach(String file_path)throws Exception;
+	// 파일경로 Get
+	public List<String> getAttach(int board_number)throws Exception;
+	// 파일삭제
+	public void deleteAttach(String file_path)throws Exception;
+	// 파일데이터삭제
+	public void deleteAttachByBno(int board_number)throws Exception;
 }

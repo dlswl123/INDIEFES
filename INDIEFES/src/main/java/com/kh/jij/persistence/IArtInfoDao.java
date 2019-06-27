@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
+import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
 
 public interface IArtInfoDao {

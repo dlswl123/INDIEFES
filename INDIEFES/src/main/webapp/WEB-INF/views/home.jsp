@@ -27,15 +27,7 @@
 			</div>
 		</div> <!-- col-md-10 / main -->
 		
-		<script>
-		$(document).ready(function() {
-			var message = "${message}";
-			
-			if(message == "create_accout_success"){
-				alert("회원가입성공");
-			}
-		});
-		</script>
+		
 		
 <%@ include file="include/sidebar.jsp" %>
 

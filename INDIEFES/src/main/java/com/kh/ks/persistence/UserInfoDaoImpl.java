@@ -48,6 +48,12 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		sqlsession.insert(NAMESPACE + ".createAccount", userInfoVo); 
 		return true;
 	}
+
+	@Override
+	public UserInfoVo idCheck(String user_id) throws Exception {
+		UserInfoVo idChk = sqlsession.selectOne(NAMESPACE + ".idCheck", user_id);
+		return idChk;
+	}
 	
 	
 

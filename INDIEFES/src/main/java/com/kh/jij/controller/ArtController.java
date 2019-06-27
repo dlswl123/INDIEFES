@@ -17,18 +17,23 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
+import com.kh.jij.persistence.IMusicInfoDao;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
+import com.kh.ts.domain.PaginationDto;
+import com.kh.ts.domain.PagingDto;
 
 @Controller
 @RequestMapping("art/*")
@@ -36,71 +41,79 @@ public class ArtController {
 
 	@Inject
 	IArtInfoService artService;
+	
+	@Inject
+	IMusicInfoDao musicService;
+	
 	@Resource(name = "uploadPath")
 	private String uploadPath; // servlet-context.xml (id="uploadPath")
 
 	// 앨범정보조회 폼
-	@RequestMapping(value = "/art_info", method = RequestMethod.GET)
-	public void ArtInfo(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model) throws Exception {
-//		UserVo userVo = session.getAttribute("userVo");
-//		System.out.println(art_number);
+	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
+	public String ArtInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model) throws Exception {
 		String teamName = artService.getTeamName(team_number);
 		ArtInfoVo artVo = artService.artRead(art_number);
-		List<MusicInfoVo> musicList = artService.musicRead(art_number);
+		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("teamName", teamName);
 //		System.out.println("ArtController, artVo : " + artVo);
 //		System.out.println("ArtController, musicList : " + musicList);
+		return "art/art_info";
 	}
 
 //	 앨범정보 수정 폼
 	@RequestMapping(value = "/art_modify", method = RequestMethod.GET)
-	public void ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
+	public String ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
 			throws Exception {
 //		System.out.println(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
-		String user_id = userVo.getUser_id();
-		String teamName = artService.getTeamName(team_number);
-//		String user_id = "indie1";
-//		String team_name = "알약";
-		System.out.println("ArtController, art_modify, userVo:" + userVo);
-		System.out.println("ArtController, art_modify, teamName:" + teamName);
-		ArtInfoVo artVo = artService.artModify(user_id, art_number);
-		List<MusicInfoVo> musicList = artService.musicRead(art_number);
-		model.addAttribute("artVo", artVo);
-		model.addAttribute("musicList", musicList);
-		model.addAttribute("teamName", teamName);
-		model.addAttribute("userVo", userVo);
+		String url = "";
+//		if (userVo != null) {
+//			String user_id = userVo.getUser_id();
+			String user_id = "indie1";
+			String teamName = artService.getTeamName(team_number);
+//			String user_id = "indie1";
+//			String team_name = "알약";
+//			System.out.println("ArtController, art_modify, userVo:" + userVo);
+//			System.out.println("ArtController, art_modify, teamName:" + teamName);
+			ArtInfoVo artVo = artService.artModify(user_id, art_number);
+			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
+			model.addAttribute("artVo", artVo);
+			model.addAttribute("musicList", musicList);
+			model.addAttribute("teamName", teamName);
+			model.addAttribute("userVo", userVo);
+			url = "art/art_modify";
+//		} else {
+//			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
+//		}
+		return url;
 
 	}
 
 	// 앨범리스트 폼
 	@RequestMapping(value = "/art_list", method = RequestMethod.GET)
-	public void ArtList(HttpSession session, Model model) throws Exception {
-		List<ArtInfoVo> artList = artService.allArtList();
+	public void ArtList(PagingDto pagingDto, Model model) throws Exception {
+		pagingDto.setPerPage(24);
+		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
-//		System.out.println("ArtController, ArtList 실행됨");
-//		System.out.println("ArtController, ArtList, teamList" + teamList);
-		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		System.out.println("userVo" + userVo);
+//		System.out.println("ArtController, ArtList, artList:" + artList);
+//		System.out.println("ArtController, ArtList, teamList:" + teamList);
+		PaginationDto paginationDto = new PaginationDto();
+		paginationDto.setPagingDto(pagingDto);
+		int artCount = artService.artCount(pagingDto);
+		paginationDto.setTotalCount(artCount);
+		model.addAttribute("paginationDto", paginationDto);
 
 	}
-
+	
 	// 앨범 이미지 가져오기
 	@RequestMapping(value = "/getCover", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getCover(@RequestParam("artCover") String artCover, @RequestParam("team_number") int team_number,@RequestParam("art_number") int art_number) throws Exception {
-//		System.out.println("fileName:" + fileName);
-		// -> /2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
 		String album = "album";
 		String realPath = uploadPath + File.separator + album + File.separator + team_number + File.separator + art_number + File.separator + artCover;
-		// -> H:/upload/2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
-//		System.out.println("ArtController, getArtCover, realPath" + realPath);
-		// 파일의 확장자 얻기
-//		int dotIndex = fileName.lastIndexOf(".");
-//		String extName = fileName.substring(dotIndex + 1).toUpperCase();
 		String formatName = FileUploadUtil.getFormatName(artCover).toUpperCase();
 		
 		MediaType mediaType = null;

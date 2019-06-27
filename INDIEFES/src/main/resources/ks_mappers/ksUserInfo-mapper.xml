@@ -36,5 +36,11 @@
 		insert into user_info(user_id, user_pw, user_nick, user_name, user_email, user_birth, user_gender)
 		values (#{user_id}, #{user_pw}, #{user_nick}, #{user_name}, #{user_email}, #{user_birth}, #{user_gender})
 	</insert>
+	
+	<!-- 아이디 확인 -->
+	<select id="idCheck" resultType="com.kh.ks.domain.UserInfoVo">
+		 select user_id from USER_INFO
+	     where user_id = #{user_id}
+	</select>
 
 </mapper>
