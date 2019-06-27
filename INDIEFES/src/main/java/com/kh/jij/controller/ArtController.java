@@ -102,15 +102,8 @@ public class ArtController {
 	// 앨범 이미지 가져오기
 	@RequestMapping(value = "/getCover", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getCover(@RequestParam("artCover") String artCover, @RequestParam("team_number") int team_number,@RequestParam("art_number") int art_number) throws Exception {
-//		System.out.println("fileName:" + fileName);
-		// -> /2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
 		String album = "album";
 		String realPath = uploadPath + File.separator + album + File.separator + team_number + File.separator + art_number + File.separator + artCover;
-		// -> H:/upload/2019/5/17/58d2f428-feb3-4c57-9d67-350dd294b25e_Chrysanthemum.jpg
-//		System.out.println("ArtController, getArtCover, realPath" + realPath);
-		// 파일의 확장자 얻기
-//		int dotIndex = fileName.lastIndexOf(".");
-//		String extName = fileName.substring(dotIndex + 1).toUpperCase();
 		String formatName = FileUploadUtil.getFormatName(artCover).toUpperCase();
 		
 		MediaType mediaType = null;
