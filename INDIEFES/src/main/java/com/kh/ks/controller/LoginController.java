@@ -45,7 +45,7 @@ public class LoginController {
 		UserInfoVo userInfoVo = userInfoService.readWithPw(user_id, user_pw);
 //		UserInfoVo userInfoVo1 = userInfoService.readWith(user_id);
 //		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
-		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
+//		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
 		if(userInfoVo != null) {
 			session.setAttribute("userInfoVo", userInfoVo);
 		}
@@ -75,23 +75,23 @@ public class LoginController {
 	public String accountCreateRun(UserInfoVo userInfoVo, String birthYear, String birthMonth, String birthDay, 
 			RedirectAttributes rttr, HttpServletResponse response)throws Exception{
 		
-		System.out.println("account create birthYear : " + birthYear);
-		System.out.println("account create birthMonth : " + birthMonth);
-		System.out.println("account create birthDay : " + birthDay);
+//		System.out.println("account create birthYear : " + birthYear);
+//		System.out.println("account create birthMonth : " + birthMonth);
+//		System.out.println("account create birthDay : " + birthDay);
 		String birth = "";
 		birth = birthYear + "-" + birthMonth + "-" + birthDay;
-		System.out.println(birth);
+//		System.out.println(birth);
 		
 		
 		userInfoVo.setUser_birth(birth);
 		
-		System.out.println("account create userInfoVo : " + userInfoVo);
+//		System.out.println("account create userInfoVo : " + userInfoVo);
 		
 		boolean accountResult = userInfoService.createAccount(userInfoVo);
 		System.out.println(accountResult);
 		String returnURI = "";
-		PrintWriter out=response.getWriter();
-		response.setContentType("text/html; charset=UTF-8");
+//		PrintWriter out=response.getWriter();
+//		response.setContentType("text/html; charset=UTF-8");
 		if(accountResult == true) {
 			
 			rttr.addFlashAttribute("message", "create_accout_success");
@@ -109,13 +109,15 @@ public class LoginController {
 	
 	//아이디 중복 체크
 	@ResponseBody
-	@RequestMapping(value="/idCheck", method=RequestMethod.POST)
+	@RequestMapping(value="/id-check", method=RequestMethod.POST)
 	public int idCheck(HttpServletRequest request) throws Exception{
 	
 		int result = 0;
 		
 		String user_id = request.getParameter("user_id");
+		System.out.println("아이디 중복 체크 Controller : " + user_id);
 		UserInfoVo idCheck = userInfoService.idCheck(user_id);
+		System.out.println("아이디 중복 체크 Controller(service에서 넘어온 데이터) : " + idCheck);
 		
 		if(idCheck != null) {
 			  result = 1;
@@ -123,6 +125,29 @@ public class LoginController {
 		
 		return result;
 	}
+	
+	// 닉네임 중복 체크
+	@ResponseBody
+	@RequestMapping(value="/nick-check", method= {RequestMethod.POST, RequestMethod.GET})
+	public int nickCheck(HttpServletRequest request) throws Exception{
+	
+		int result = 0;
+		
+		String user_nick = request.getParameter("user_nick");
+		System.out.println("닉네임 중복 체크 Controller : " + user_nick);
+		UserInfoVo nickCheck = userInfoService.nickCheck(user_nick);
+		System.out.println("닉네임 중복 체크 Controller(service에서 넘어온 데이터) : " + nickCheck);
+		
+		if(nickCheck != null) {
+			  result = 1;
+		} 
+		
+		return result;
+	}
+	
+	
+	
+	
 	
 	
 }
