@@ -9,12 +9,15 @@
 		
 		var idChkCondition = $("#idCheck").val();
 		var nickChkCondition = $("#nickCheck").val();
+		var pwChkCondition = $("#pwCheck").val();
+		
+		
 		
 		function overlapChk() {
 			
 			
 			
-		    if(idChkCondition == "Y" && nickChkCondition == "Y"){
+		    if(idChkCondition == "Y" && nickChkCondition == "Y" && pwChkCondition == "Y"){
 		    	$("#submit").removeAttr("disabled");
 		    }
 		    else{
@@ -98,41 +101,77 @@
 				  }
 			});  // ajax 끝
 		
-			// 닉네임 inputbox 값 변동
-			$("#user_nick").keyup(function(){
-				 $(".resultNick .msgNick").text("닉네임 중복 체크를 해주십시오");
-				 $(".resultNick .msgNick").attr("style", "color:#000");
-				 
-				 $("#nickCheck").attr("value", "N");
-				 
-				 nickChkCondition = $("#nickCheck").val();
-				 overlapChk();
-				 
-			});
-			
+		});
 		
+		// 닉네임 inputbox 값 변동
+		$("#user_nick").keyup(function(){
+			 $(".resultNick .msgNick").text("닉네임 중복 체크를 해주십시오");
+			 $(".resultNick .msgNick").attr("style", "color:#000");
+			 
+			 $("#nickCheck").attr("value", "N");
+				 
+			 nickChkCondition = $("#nickCheck").val();
+			 overlapChk();
+				 
+		});
+		
+		// 비밀번호확인 inputbox 값 변동
+		$("#user_pw2").keyup(function(){
+			var pwVal = $("#user_pw").val();
+			var pwVal2 = $("#user_pw2").val();
+			
+			if(pwVal == pwVal2){
+				$(".resultPw .msgPw").text("비밀번호가 일치합니다");
+				$(".resultPw .msgPw").attr("style", "color:#00f");
+				
+				$("#pwCheck").attr("value", "Y");
+			}
+			else{
+				$(".resultPw .msgPw").text("비밀번호가 일치하지 않습니다");
+				$(".resultPw .msgPw").attr("style", "color:#f00");
+				
+				$("#pwCheck").attr("value", "N");
+			}
+			pwChkCondition = $("#pwCheck").val();
+			overlapChk();
+			
+			
+// 			 console.log("비밀번호 바뀜");
+// 			 console.log(pwCondition);
+// 			 console.log(pwCondition2);
+			 
 		});
 		
 		//
-		$("#idChkTest").click(function() {
+// 		$("#idChkTest").click(function() {
 			
 			
 			
 			
-			console.log("아이디체크여부 : " + idChkCondition);
+// 			console.log("아이디체크여부 : " + idChkCondition);
 			
 			
-		});
+// 		});
 		
-		$("#nickChkTest").click(function() {
+// 		$("#nickChkTest").click(function() {
 			
 			
 			
 			
 			
-			console.log("닉네임체크여부 : " + nickChkCondition);
+// 			console.log("닉네임체크여부 : " + nickChkCondition);
 			
-		});
+// 		});
+		
+// 		$("#pwChkTest").click(function() {
+			
+			
+// 			var pwCondition = $("#user_pw").val();
+			
+			
+// 			console.log("비밀번호 : " + pwCondition);
+			
+// 		});
 		
 		
 		
@@ -161,7 +200,7 @@
 					<label for="inputPassword1">
 						비밀번호
 					</label>
-					<input type="password" class="form-control" name="user_pw" />
+					<input type="password" class="form-control" name="user_pw" id="user_pw" />
 				</div>
 				
 				<div class="form-group">
@@ -169,7 +208,10 @@
 					<label for="inputPassword2">
 						비밀번호 확인
 					</label>
-					<input type="password" class="form-control" name="user_pw2" />
+					<input type="password" class="form-control" name="user_pw2" id="user_pw2" />
+					<p class="resultPw">
+						<span class="msgPw"></span>
+					</p>
 				</div>
 				
 				<div class="form-group">
@@ -250,9 +292,11 @@
 				
 <!-- 				<input type="button" id="idChkTest" value="아이디체크테스트"> -->
 <!-- 				<input type="button" id="nickChkTest" value="닉네임체크테스트">  -->
+<!-- 					<input type="button" id="pwChkTest" value="비밀번호값테스트"> -->
 				
 				<input type="hidden" id="idCheck" name="idCheck" value="N"/>
 				<input type="hidden" id="nickCheck" name="nickCheck" value="N"/>
+				<input type="hidden" id="pwCheck" name="pwCheck" value="N"/>
 			</form>
 		</div>
 	</div>
