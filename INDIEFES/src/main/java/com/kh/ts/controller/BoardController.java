@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ks.domain.UserInfoVo;
@@ -84,7 +86,7 @@ public class BoardController {
 	// 글쓰기 폼 - /indiefes/board/regist(GET 불러오기)
 	@RequestMapping(value="/regist", method=RequestMethod.GET)
 	public void registGet() throws Exception {
-		System.out.println("registGet()");
+		System.out.println("BoardController, registGet() 실행됨");
 		// /WEB-INF/indifes/board/regist.jsp
 	}
 	
@@ -134,5 +136,13 @@ public class BoardController {
 			e.printStackTrace();
 		}
 		return "redirect:/board/list?board_number=" + board_number;
+	}
+	// 첨부파일목록
+	@RequestMapping(value="/getAttach/{board_number}")
+	@ResponseBody
+	public List<String> getAttach(@PathVariable("board_number")int board_number)throws Exception {
+		List<String> list = boardService.getAttach(board_number);
+		System.out.println("BoardController, getAttach, list:" + list);
+		return list;
 	}
 }

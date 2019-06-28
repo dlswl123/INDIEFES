@@ -11,6 +11,9 @@ public class MusicInfoVo {
 	private int pay_count;
 	private int upload_check;
 	private String file_path;
+	private int team_number;
+	
+	private String team_name;
 
 	public int getArt_number() {
 		return art_number;
@@ -84,11 +87,29 @@ public class MusicInfoVo {
 		this.file_path = file_path;
 	}
 
+	public int getTeam_number() {
+		return team_number;
+	}
+
+	public void setTeam_number(int team_number) {
+		this.team_number = team_number;
+	}
+
+	public String getTeam_name() {
+		return team_name;
+	}
+
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
+
 	@Override
 	public String toString() {
-		return "music_infoVo [art_number=" + art_number + ", music_number=" + music_number + ", track_number="
+		return "MusicInfoVo [art_number=" + art_number + ", music_number=" + music_number + ", track_number="
 				+ track_number + ", music_title=" + music_title + ", heard_count=" + heard_count + ", price=" + price
-				+ ", pay_count=" + pay_count + ", upload_check=" + upload_check + ", file_path=" + file_path + "]";
+				+ ", pay_count=" + pay_count + ", upload_check=" + upload_check + ", file_path=" + file_path
+				+ ", team_number=" + team_number + ", team_name=" + team_name + "]";
 	}
+
 
 }

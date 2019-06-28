@@ -1,8 +1,8 @@
 package com.kh.jij.service;
 
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,9 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
-import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IArtInfoDao;
+import com.kh.ts.domain.PagingDto;
 
 
 @Service
@@ -83,14 +84,10 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		return artVo;
 	}
 
+
 	@Override
-	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = artDao.musicRead(art_number);
-		return musicList;
-	}
-	@Override
-	public List<ArtInfoVo> allArtList() throws Exception {
-		List<ArtInfoVo> artList = artDao.allArtList();
+	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
+		List<ArtInfoVo> artList = artDao.allArtList(pagingDto);
 		return artList;
 	}
 	
@@ -114,6 +111,19 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public String getTeamName(int team_number) throws Exception {
 		String teamName = artDao.getTeamName(team_number);
 		return teamName;
+	}
+	
+	@Override
+	public int artCount(PagingDto pagingDto) throws Exception {
+		int artCount = artDao.artCount(pagingDto);
+		return artCount;
+	}
+	
+	// 플레이리스트
+	@Override
+	public List<MusicInfoVo> playList(String user_id) throws Exception {
+		List<MusicInfoVo> playList = artDao.playList(user_id);
+		return playList;
 	}
 	
 

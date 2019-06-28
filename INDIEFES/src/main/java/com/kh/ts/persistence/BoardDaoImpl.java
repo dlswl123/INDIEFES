@@ -61,4 +61,28 @@ public class BoardDaoImpl implements IBoardDao {
 		int count = sqlSession.selectOne(Namespace + ".listCount", pagingDto);
 		return count;
 	}
+	// 파일경로 Insert
+	@Override
+	public void attach(String file_path) throws Exception {
+		sqlSession.insert(Namespace + ".attach", file_path);
+		
+	}
+	// 파일경로 Get
+	@Override
+	public List<String> getAttach(int board_number) throws Exception {
+		List<String> list = sqlSession.selectList(Namespace + ".getAttach", board_number);
+		return list;
+	}
+	// 파일삭제 
+	@Override
+	public void deleteAttach(String file_path) throws Exception {
+		sqlSession.delete(Namespace + ".deleteAttach", file_path);
+		
+	}
+	// 파일데이터삭제
+	@Override
+	public void deleteAttachByBno(int board_number) throws Exception {
+		sqlSession.delete(Namespace + ".deleteAttachByBno", board_number);
+		
+	}
 }

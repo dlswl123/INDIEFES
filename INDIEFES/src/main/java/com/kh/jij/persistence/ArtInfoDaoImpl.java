@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
+import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
 
 @Repository
@@ -75,8 +76,8 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 
 	@Override
-	public List<ArtInfoVo> allArtList() throws Exception {
-		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".artList");
+	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
+		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".artList", pagingDto);
 		return artList;
 	}
 
@@ -102,6 +103,18 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	public String getTeamName(int team_number) throws Exception {
 		String teamName = sqlSession.selectOne(NAMESPACE + ".getTeamName", team_number);
 		return teamName;
+	}
+
+	@Override
+	public List<MusicInfoVo> playList(String user_id) throws Exception {
+		List<MusicInfoVo> playList = sqlSession.selectList(NAMESPACE + ".playList", user_id);
+		return playList;
+	}
+
+	@Override
+	public int artCount(PagingDto pagingDto) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

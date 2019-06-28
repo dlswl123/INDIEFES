@@ -20,26 +20,61 @@ $(document).ready(function(){
 //		console.log(btnDelete);
 		location.href = "/indiefes/board/delete?board_number=${boardVo.board_number}";
 	});
-	
+	//첨부파일 목록 가져오기
+	$.getJSON("/indiefes/board/getAttach/${boardVo.board_number}", function(list) {
+		console.log(list);
+		
+		$(list).each(function(){
+			var fullName = this; // 2019/5/21/b7b9f598-0187-4071-a030-cda86bef5c4f_Lighthouse.jpg
+			
+			var underscoreIndex = fullName.lastIndexOf("_");
+			var fName = fullName.substring(underscoreIndex + 1);
+			
+			var divEl = "<div class='img-thumbnail'>";
+			
+			if (isImage(fullName)) { // 이미지인 경우
+				var slashIndex = fullName.lastIndexOf("/");
+				var front = fullName.substring(0, slashIndex + 1); // // 2019/5/21/
+				var rear = fullName.substring(slashIndex + 1); // b7b9f598-0187-4071-a030-cda86bef5c4f_Lighthouse.jpg
+				var thumbnailName = front + "s_" + rear;
+				var href="";
+				
+				
+				divEl   += "<img src='/upload/displayFile?fileName="  + thumbnailName + "'><br>"
+						+ "<a target='blank' href='/upload/displayFile?fileName="
+						+ fullName + "'>" + fName + "</a>";
+						
+			} else { // 이미지가 아닌 경우
+				 divEl	+= "<img src='/resources/images/file_image.png'><br>"
+				 		+ "<a href='/upload/displayFile?fileName=" + fullName + "'>" 
+				 		+	fName + "</a>";
+				 		
+				
+			}
+			
+			divEl += "</div>";
+			
+			$("#uploadedList").append(divEl);
+		
+		});	// $(list).each(function()	
+	}); // $.getJSON
 }); // $(document).ready
 </script>
-
-
-<form id="pageForm" action="board/list">
+<form id="pageForm" action="/indiefes/board/list">
 	<input type="hidden" name=board_number
 	 		value="${param.board_number}">
 	<input type="hidden" name=page
-	 		value="${pagingDto.page}">
+	 		value="${param.page}">
 	<input type="hidden" name=perPage
-	 		value="${pagingDto.perPage}">
+	 		value="${param.perPage}">
 	<input type="hidden" name=searchType
-	 		value="${pagingDto.searchType}">
+	 		value="${param.searchType}">
 	<input type="hidden" name=keyword
-	 		value="${pagingDto.keyword}">
-</form>	 		
-
+	 		value="${param.keyword}">
+</form>	 	
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<h1>글 조회</h1>
+			데이터확인 = ${param.board_number}
 			<form role="form" method="post">
 				<div class="form-group">
 					<label for="subject">글제목</label>
@@ -70,6 +105,11 @@ $(document).ready(function(){
 					<label for="reg_date">작성일</label>
 					<input type="text" class="form-control"	id="reg_date"
 						value="${boardVo.reg_date}" readonly/>
+				</div>
+				<div class="form-group">
+					<label for="file_path">첨부파일</label>
+					<input type="text" class="form-control" id="uploadedList"
+						value="${boardVo.file_path}" readonly/>
 				</div>
 				</form>
 			<div class="row">

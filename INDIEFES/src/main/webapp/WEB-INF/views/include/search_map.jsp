@@ -42,6 +42,7 @@
 #centerAddr {display:block;margin-top:2px;font-weight: normal;}
 .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 #addr_menu_wrap	{position:absolute;top:65px;left:10px;width:300px;z-index:1;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+#addr_result_wrap {position:absolute;bottom:10px;right:10px;width:300px;z-index:1;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 </style>
     
     
@@ -52,7 +53,16 @@
 					        <span class="title">지도중심기준 행정동 주소정보</span>
 					        <span id="centerAddr"></span>
 					    </div>
-						<div id="clickLatlng"></div>
+						<div id="addr_menu_wrap" class="bg_white">
+					    	<div class="option">
+					      		<div>
+					      			<form id="searchAddr">
+					      				주소 : <input type="text" id="keyAddr" size="30">
+					      				<button type="button" onclick="searchAddr(); return false;" class="btn btn-xs btn-primary" id="addrSearch">검색하기</button>
+					      			</form>
+					      		</div>
+					      	</div>
+					    </div>
 					  	<div id="menu_wrap" class="bg_white">
 					        <div class="option">
 					            <div>
@@ -67,36 +77,67 @@
 					        <ul id="placesList"></ul>
 					        <div id="pagination"></div>
 					    </div>
-					    <div id="addr_menu_wrap" class="bg_white">
+					    <div id="addr_result_wrap" class="bg_white">
 					    	<div class="option">
-					      		<div>
-					      			<form id="searchAddr">
-					      				주소 : <input type="text" id="keyAddr" size="30">
-					      				<button type="button" onclick="searchAddr(); return false;" class="btn btn-xs btn-primary" id="addrSearch">검색하기</button>
-					      			</form>
-					      		</div>
-					      	</div>
+					    		<div>
+					    			<b>선택장소 확인</b><br>
+					    			<div id="chAddr"></div>
+					    			<input type="hidden" id="pointX" name="pointX" />
+					    			<input type="hidden" id="pointY" name="pointY" />
+					    		</div>
+					    	</div>
 					    </div>
 					</div>
 					 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=913777d8d62e9dada9a5b7e3656cdba2&libraries=services,clusterer,drawing"></script>
 <!-- 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=913777d8d62e9dada9a5b7e3656cdba2"></script> -->
 					<script>
+						// 지도 스크립트 코드
 						//=======================================================
-					
+							
 							
 						// 마커를 담을 배열입니다
 						var markers = [];
 					
 						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-					    mapOption = { 
-					        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+					    mapOption = {
+							center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 					        level: 3 // 지도의 확대 레벨
-					    };
+						};
+						
 
+						
+						//=======================================================
+						
+						
+						// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+// 						if (navigator.geolocation) {
+						
+						    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+// 						    navigator.geolocation.getCurrentPosition(function(position) {
+						    
+// 						        var lat = position.coords.latitude, // 위도
+// 						            lon = position.coords.longitude; // 경도
+						    
+// 						        mapOption = { 
+// 								        center: new daum.maps.LatLng(lat, lon), // 지도의 중심좌표
+// 								        level: 3 // 지도의 확대 레벨
+// 								    };
+						            
+// 						            console.log("lat : " + lat + ", lon : " + lon);
+// 						      });
+
+// 						}
+						
+						
+						//=======================================================
+						
+
+							
 						var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 						
 						var geocoder = new daum.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성합니다
+						
 						
 						
 						//=======================================================
@@ -110,7 +151,7 @@
 						
 
 						//=======================================================
-						
+							
 							
 						// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 						var mapTypeControl = new daum.maps.MapTypeControl();
@@ -136,6 +177,7 @@
 						daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 						    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 						        if (status === daum.maps.services.Status.OK) {
+						        	
 						            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 						            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 						            
@@ -144,6 +186,9 @@
 						                            detailAddr + 
 						                        	'</div>';
 
+						            // 지도에 표시되고 있는 마커를 제거합니다
+						            removeMarker();            	
+						            
 						            // 마커를 클릭한 위치에 표시합니다 
 						            marker.setPosition(mouseEvent.latLng);
 						            marker.setMap(map);
@@ -151,6 +196,11 @@
 						            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
 						            infowindow.setContent(content);
 						            infowindow.open(map, marker);
+						            
+						         	// 중심을 선택한 곳으로 옮김
+								    map.panTo(marker.getPosition());
+						         	
+								    setPlaceInfoWithoutTitle(marker);
 						        }   
 						    });
 						});
@@ -184,33 +234,7 @@
 						        }
 						    }    
 						}
-						
-						
-						//=======================================================
-						
-							
-						// 지도에 마커를 표시합니다
-						marker.setMap(map);
-						
-						// 지도에 클릭 이벤트를 등록합니다
-						// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-						daum.maps.event.addListener(map, 'click', function(mouseEvent) {        
-						    
-						    // 클릭한 위도, 경도 정보를 가져옵니다 
-						    var latlng = mouseEvent.latLng; 
-						    
-						    // 마커 위치를 클릭한 위치로 옮깁니다
-						    marker.setPosition(latlng);
-						    
-						    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-						    message += '경도는 ' + latlng.getLng() + ' 입니다';
-						    
-						    var resultDiv = document.getElementById('clickLatlng'); 
-						    resultDiv.innerHTML = message;
-						    
-						    map.panTo(marker.getPosition());
-						});
-						
+
 						
 						//=======================================================
 						
@@ -428,6 +452,10 @@
 						    }
 						}
 						 
+						 
+						 //======================================================= 
+						 
+						 
 						 // 클릭한 마커와 목록의 좌표를 얻어내는 함수
 						 function getPlacePosition(marker, title) {
 							 console.log("marker : " + marker);
@@ -439,6 +467,47 @@
 							 
 							 marker.setMap(map);
 							 markers.push(marker);
+							 
+							 setPlaceInfo(marker, title);
+						 }
+						 
+						 // 선택한 주소값을 받아오는 함수
+						 function setPlaceInfo(marker, title) {
+							 var latLng = marker.getPosition();
+							 var pointX = latLng.getLng();
+							 var pointY = latLng.getLat();
+							 
+							 searchDetailAddrFromCoords(latLng, function(result, status) {
+								 if (status === daum.maps.services.Status.OK) {
+						            var detailAddr = '<div>상호명 : ' + title + '</div>';
+						            	detailAddr += !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+						            	detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+						            	detailAddr += '<input type="hidden" name="chAddrName" value="' + title + '">';
+						            
+						            // 선택에 법정동 상세 주소정보를 표시합니다
+						            $("#chAddr").html(detailAddr);
+								 }
+							 });
+						 }
+						 
+						 // 선택한 주소값을 받아오는 함수 (상호명 없을때)
+						 function setPlaceInfoWithoutTitle(marker) {
+							 var latLng = marker.getPosition();
+							 var pointX = latLng.getLng();
+							 var pointY = latLng.getLat();
+							 
+							 searchDetailAddrFromCoords(latLng, function(result, status) {
+								 if (status === daum.maps.services.Status.OK) {
+						            var detailAddr = '<div>상호명 : <input type="text" name="chAddrName" placeholder="장소명을 입력해주세요"/></div>';
+						            	detailAddr += !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+						            	detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+						            
+						            console.log(detailAddr);
+						                        	
+						            // 선택에 법정동 상세 주소정보를 표시합니다
+						            $("#chAddr").html(detailAddr);
+								 }
+							 });
 						 }
 						 
 						 
@@ -450,7 +519,7 @@
 							console.log("keyAddr : " + keyAddr);
 						    
 						    if (!keyAddr.replace(/^\s+|\s+$/g, '')) {
-						        alert('키워드를 입력해주세요!');
+						        alert('주소를 입력해주세요!');
 						        return false;
 						    }
 
@@ -470,18 +539,24 @@
 							            map: map,
 							            position: coords
 							        });
+							        
 							        var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 						            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 
+						            var content = '<div class="bAddr"><span class="title">법정동 주소정보</span>' + detailAddr + '</div>';
+						            
 							        // 인포윈도우로 장소에 대한 설명을 표시합니다
-							        var infowindow = new daum.maps.InfoWindow({
-							            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + detailAddr + '</div>'
-							        });
+							        infowindow.setContent(content);
 							        infowindow.open(map, marker);
 
+							        markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+							        
 							        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 							        map.setCenter(coords);
-							    } 
+							        
+							        setPlaceInfoWithoutTitle(marker);
+
+							     } 
 							});    
 						}
 						 

@@ -9,26 +9,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Music</title>
 
-    <!-- add styles and scripts -->
+    <!-- 스타일 스크립트 -->
     <link href="<c:url value ='/resources/css/styles.css'/>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<c:url value ='/resources/js/jquery-1.7.2.min.js'/>"></script>
     <script type="text/javascript" src="<c:url value ='/resources/js/musicplayer.js'/>"></script>
-    <!-- Add the slick-theme.css if you want default styling -->
-
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
-    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="<c:url value ='/resources/css/slick.css'/>" />
+    <link rel="stylesheet" type="text/css" href="<c:url value ='/resources/css/slick-theme.min.css'/>"/>
 
 </head>
 
 <body>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <script type="text/javascript" src="<c:url value ='/resources/css/slick.min.jss'/>"></script>
 
     <div class="MusicPlayer">
         <ul class="playlist">
-            <li data-cover="" data-artist="test1">
-            	<a href="">music-name</a>
-            </li>
+        <c:forEach items="${playList}" var="playList">
+	            <li data-cover="" data-artist="${playList.team_name}">
+<%-- 	            	<a href="http:${playList.file_path}">${playList.music_title}</a> --%>
+	            	<a href="/indiefes/player/Song?file_path=${playList.file_path}&team_number=${playList.team_number}&art_number=${playList.art_number}">${playList.music_title}</a>
+	            </li>
+		</c:forEach>
         </ul>
     </div>
 
@@ -39,6 +39,7 @@
 //             elements: ['artwork', 'controls', 'progress', 'time', 'volume'],
 //             playerAbovePlaylist: false,
             autoPlay: true,
+            preload: true,
             loop: true,
             onLoad: function () {
 //                 Add Audio player

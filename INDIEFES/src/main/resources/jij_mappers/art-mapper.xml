@@ -3,6 +3,7 @@
   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="art">
+
 	<!-- 앨범정보입력 -->
 	<insert id="insert">
 		insert into art_info (art_number, art_genre, user_id, team_number,art_title,art_cover,art_pr)
@@ -25,12 +26,12 @@
 	
 	<!-- 팀멤버 등록 -->
 	<insert id="memberInsert">
-		insert into team_member (member_number, team_number,user_id,team_level)
+		insert into team_member (member_number, team_number,user_id,team_level,user_nick)
 			<if test = "team_level == 0">
-				values (seq_member.nextval,seq_team.currval,#{user_id},#{team_level})
+				values (seq_member.nextval,seq_team.currval,#{user_id},#{team_level},#{user_nick})
 			</if>
 			<if test = "team_level == 1">
-				values (seq_member.nextval,#{team_number},#{user_id},#{team_level})
+				values (seq_member.nextval,#{team_number},#{user_id},#{team_level},#{user_nick})
 			</if>
 	</insert>
 	
@@ -105,4 +106,14 @@
 		where team_number = #{team_number}
 		order by reg_art desc
 	</select>
+<!-- 	노래 리스트 가져오기 -->
+	<select id="playList" resultType="MusicInfoVo">
+		select *
+		from music_info
+		where music_number in (select music_number
+							  from play_list
+							  where user_id = #{user_id})
+		order by music_number
+	</select>
+	
 </mapper>
