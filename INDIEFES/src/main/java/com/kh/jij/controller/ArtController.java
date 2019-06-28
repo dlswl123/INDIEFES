@@ -72,7 +72,7 @@ public class ArtController {
 //		if (userVo != null) {
 //			String user_id = userVo.getUser_id();
 			String user_id = "indie1";
-			String teamName = artService.getTeamName(team_number);
+			
 //			String user_id = "indie1";
 //			String team_name = "알약";
 //			System.out.println("ArtController, art_modify, userVo:" + userVo);
@@ -81,7 +81,6 @@ public class ArtController {
 			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 			model.addAttribute("artVo", artVo);
 			model.addAttribute("musicList", musicList);
-			model.addAttribute("teamName", teamName);
 			model.addAttribute("userVo", userVo);
 			url = "art/art_modify";
 //		} else {

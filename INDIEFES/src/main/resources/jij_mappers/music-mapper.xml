@@ -12,6 +12,30 @@
 		order by track_number
 	</select>
 	
+<!-- 	음악추가 -->
+	<insert id="musicInsert">
+		insert into music_info(art_number, music_number, track_number, music_title, file_path, team_number)
+		values(#{art_number}, seq_music.nextval, #{track_number}, #{music_title}, #{file_path}, #{team_number})
+	</insert>
 	
+<!-- 	음악수정 -->
+	<update id="musicUpdate">
+		update music_info set
+			track_number = #{track_number},
+			music_title = #{music_title},
+			file_path = #{file_path}
+		where art_number = #{art_number}
+		and music_number = #{music_number}
+		and team_number = #{team_number}
+	</update>
+	
+<!--	 음악삭제 -->
+	<update id="musicDelete">
+		update music_info set
+			upload_check = 0
+		where art_number = #{art_number}
+		and music_number = #{music_number}
+		and team_number = #{team_number}
+	</update>
 	
 </mapper>

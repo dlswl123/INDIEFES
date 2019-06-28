@@ -26,7 +26,7 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 
 	@Override
 	public void musicInsert(MusicInfoVo musicinfoVo) throws Exception {
-		sqlSession.insert(NAMESPACE + ".insert", musicinfoVo);
+		sqlSession.insert(NAMESPACE + ".musicInsert", musicinfoVo);
 	}
 
 	
