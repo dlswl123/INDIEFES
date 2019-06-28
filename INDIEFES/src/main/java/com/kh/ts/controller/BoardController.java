@@ -26,6 +26,7 @@ import com.kh.ts.domain.BoardVo;
 import com.kh.ts.domain.PaginationDto;
 import com.kh.ts.domain.PagingDto;
 import com.kh.ts.service.IBoardService;
+import com.kh.ts.util.FileUploadUtil;
 
 @Controller
 @RequestMapping(value="/board/*")
@@ -126,23 +127,45 @@ public class BoardController {
 		
 		return "redirect:/board/read?board_number=" + boardVo.getBoard_number();
 	}
-	// 글삭제 폼 - /indiefes/board/update(GET 처리)
+	
+	// 글삭제 폼 - /indiefes/board/delete(GET 처리)
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
-	public void deleteGet(int board_number, Model model)throws Exception {
-		
-	}
-	// 글삭제처리- /indiefes/board/delete(Post 처리)
-	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
-	public String deletePost(@RequestParam("board_number")int board_number,
-			RedirectAttributes rttr)throws Exception {
+	public String deleteGet(@RequestParam("board_number")int board_number, Model model, RedirectAttributes rttr)throws Exception {
+		// 글삭제처리
 		try {
+			List<String> list = boardService.getAttach(board_number);
+			for (String filePath : list) {
+				FileUploadUtil.deleteFile(filePath);
+			}
 			boardService.delete(board_number);
 			rttr.addFlashAttribute("message", "success_delete");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return "redirect:/board/list?board_number=" + board_number;
 	}
+	
+	// 글삭제처리- /indiefes/board/delete(Post 처리)
+	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
+	public String deletePost(@RequestParam("board_number")int board_number,
+			RedirectAttributes rttr)throws Exception {
+					
+		// 글삭제처리
+		try {
+			List<String> list = boardService.getAttach(board_number);
+			for (String filePath : list) {
+				FileUploadUtil.deleteFile(filePath);
+			}
+			boardService.delete(board_number);
+			rttr.addFlashAttribute("message", "success_delete");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/board/list?board_number=" + board_number;
+	}
+	
 	// 첨부파일목록
 	@RequestMapping(value="/getAttach/{board_number}")
 	@ResponseBody

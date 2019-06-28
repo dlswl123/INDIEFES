@@ -32,15 +32,15 @@ $(document).ready(function(){
 				console.log(fName);
 				
 				
-				divEl   += "<img src='/upload/displayFile?fileName="  + thumbnailName + "'>"
+				divEl   += "<img src='/indiefes/upload/displayFile?fileName="  + thumbnailName + "'>"
 						
 			} else { // 이미지가 아닌 경우
 				
-				divEl  += "<img src='/resources/images/file_image.png'>";
+				divEl  += "<img src='/indiefes/resources/images/file_image.png'>";
 				
 			}
 			
-				divEl	+= "<br><a target='blank' href='/upload/displayFile?fileName="
+				divEl	+= "<br><a target='blank' href='/indiefes/upload/displayFile?fileName="
 						+ fullName + "'>" + fName 
 						+ "</a>&nbsp;&nbsp;<span><a href='#' class='deleteFile' data-fileName='" + fullName
 						+ "'>&times;</a></span>"
@@ -55,7 +55,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		var that = $(this);
 		var fileName = $(this).attr("data-fileName");
-		var url = "/upload/deleteFile?fileName=" + fileName;
+		var url = "/indiefes/upload/deleteFile?fileName=" + fileName;
 		$.get(url, function(result){
 			if (result == "success") {
 				that.parents("div.img-thumbnail").remove();
@@ -75,7 +75,6 @@ $(document).ready(function(){
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 	<h1>글 수정</h1>
-	데이터확인 = ${param.board_number}
 	<form role="form" method="post" action="/indiefes/board/update">
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">

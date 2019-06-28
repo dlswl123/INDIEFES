@@ -55,8 +55,13 @@ public class BoardServiceImpl implements IBoardService {
 		boardDao.update(vo); // update
 	}
 	// 글삭제
+	@Transactional
 	@Override
 	public void delete(int board_number) throws Exception {
+		List<String> list = boardDao.getAttach(board_number);
+		if (list != null) {
+			boardDao.deleteAttachByBno(board_number); // tbl_file 로우삭제
+		}
 		boardDao.delete(board_number); // delete
 	}
 	// 페이징갯수
@@ -76,5 +81,10 @@ public class BoardServiceImpl implements IBoardService {
 	public void deleteAttach(String file_path) throws Exception {
 		boardDao.deleteAttach(file_path);
 		
+	}
+	// 게시물파일삭제
+	@Override
+	public void deleteAttachByBno(int board_number) throws Exception {
+		boardDao.deleteAttachByBno(board_number);
 	}
 }

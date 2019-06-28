@@ -96,7 +96,6 @@ $(document).ready(function(){
 </script>
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<h1>글 쓰기</h1>
-			${BoardVo.user_id}
 			<form role="form" method="post" id="registForm">
 			<div class="form-group">
 				<label for="subject">제목</label>
@@ -116,7 +115,7 @@ $(document).ready(function(){
 			</div>
 			<!--  첨부파일 목록 -->
 			<div class="form-group" id="uploadedList"></div>
-<%-- 			<input type="hidden" name="user_id" value="${userInfoVo.user_id}"/> --%>
+			<%-- <input type="hidden" name="user_id" value="${userInfoVo.user_id}"/> --%>
 			<div id="file_path_div">
 				<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
 				<input type="button" id="btnList" class="btn btn-warning" value="목록보기"/>
