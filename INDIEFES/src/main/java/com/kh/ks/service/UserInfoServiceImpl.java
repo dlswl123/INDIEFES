@@ -12,7 +12,6 @@ import com.kh.ks.persistence.IUserInfoDao;
 @Service
 public class UserInfoServiceImpl implements IUserInfoService {
 	
-	
 	@Inject
 	private IUserInfoDao userInfoDao;
 
