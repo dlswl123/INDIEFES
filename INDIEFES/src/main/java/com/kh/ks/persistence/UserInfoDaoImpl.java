@@ -49,10 +49,22 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		return true;
 	}
 
+	// 아이디 중복체크
 	@Override
 	public UserInfoVo idCheck(String user_id) throws Exception {
+		System.out.println("아이디 중복 체크 Daoimpl : " + user_id);
 		UserInfoVo idChk = sqlsession.selectOne(NAMESPACE + ".idCheck", user_id);
+		System.out.println("아이디 중복 체크 Daoimpl(service로 넘겨주는 데이터) : " + idChk);
 		return idChk;
+	}
+
+	// 닉네임 중복체크
+	@Override
+	public UserInfoVo nickCheck(String user_nick) throws Exception {
+		System.out.println("닉네임 중복 체크 Daoimpl : " + user_nick);
+		UserInfoVo nickChk = sqlsession.selectOne(NAMESPACE + ".nickCheck", user_nick);
+		System.out.println("닉네임 중복 체크 Daoimpl(service로 넘겨주는 데이터) : " + nickChk);
+		return nickChk;
 	}
 	
 	
