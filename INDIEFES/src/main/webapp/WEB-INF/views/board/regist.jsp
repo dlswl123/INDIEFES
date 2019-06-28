@@ -19,16 +19,20 @@ $(document).ready(function(){
 		location.href="/indiefes/board/list"
 	});
 	// 파일첨부 
-	$("#file_path").change(function(e) {
-		console.log("파일 첨부버튼");
+	$("#fileDrop").on("dragenter dragover", function(e) {
+// 		console.log("dragenter dragover");
 		e.preventDefault();
-		var file_path = e.originalEvent.dataTransfer.files[0];
+	});
+	$("#fileDrop").on("drop", function(e) {
 		console.log(e);
-		// -> 첨부한파일목록 구현
-		var formDate = new FormData();
-		formData.append("file_path",file_path); // <input type="file" name"file_path">
+		e.preventDefault();
+		var file = e.originalEvent.dataTransfer.files[0];
+		console.log(file);
+
+		var formData = new FormData();
+		formData.append("file", file); // <input type="file" name"file_path">
 		
-		var url= "/upload/uploadAjax";
+		var url= "/indiefes/upload/uploadAjax";
 
 		$.ajax({
 			"url" : url,
@@ -38,23 +42,26 @@ $(document).ready(function(){
 			"type" : "post",
 			"success" : function(fullName) { // /2019/5/17/asdad-adsa-ada_a.jpg
 				
-				console.log("ajax 실행");
-				console.log('ajax, fullName:' + fullName);
+				console.log(fullName);
 				var slashIndex = fullName.lastIndexOf("/");
 				var front = fullName.substring(0, slashIndex + 1);
+//				console.log(front); 2019/6/27
 				var rear = fullName.substring(slashIndex + 1);
-				var thumbnailName = front + "s_" + rear; // /2019/5/17/s-asdad-adsa-ada_a.jpg
-				console.log(fullName);
+//				console.log(rear); 0ed9f524-3287-419c-b75b-f141e9ece760_Desert.jpg
+				var thumbnailName = front + "s_" + rear; // 2019/6/27/s_97ae61f1-d8d4-4613-ae29-3eb14b7dcaed_Desert.jpg
+//				console.log(thumbnailName);
+				
+				
 				var startIndex = fullName.indexOf("_");
-				var fileName = fullName.substring(startIndex + 1);
+ 				var fileName = fullName.substring(startIndex + 1);
 				var div = "";
 				if (isImage(fileName)) {
 					div = "<div data-filename='" + fullName + "'>" + fileName
-						+ 	"<img src='/upload/displayFile?fileName=" + thumbnailName + "'>"
+						+ 	"<img src='/indiefes/upload/displayFile?fileName=" + thumbnailName + "'>"
 						+ "</div>";
 				} else {
 					div = "<div data-filename='" + fullName + "'>" + fileName
-						+	"<img src='/resources/images/file_image.png' width='20'>"
+						+	"<img src='/indiefes/resources/images/file_image.png' width='20'>"
 						+ "</div>";
 				}
 						
@@ -62,7 +69,7 @@ $(document).ready(function(){
 			} // success" : function(fullName)
 			
 		}); // $.ajax
-	}); // $("#file_path").click
+ 	}); // $("#file_path").click
 
 	// 작성완료 버튼
 	$("#btnSubmit").click(function(){
@@ -100,17 +107,19 @@ $(document).ready(function(){
 				<textarea rows="10" cols="80" id="content"
 					class="form-control" name="content"></textarea>	
 			</div>
-			<!-- 파일첨부영역 -->
-				<div class="form-grop">
-				<div id="file_path"></div>
+			<!-- 파일 첨부 -->
+			<div class="form-grop">
+				<label for="content">첨부할 파일을 드래그 &amp; 드롭하세요.</label>
+				<!-- 드롭 영역 -->
+				<div id="fileDrop"></div>
 			</div>
 			<!--  첨부파일 목록 -->
 			<div class="form-group" id="uploadedList">
 			</div>
-				<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
-				<input type="button" id="btnList" class="btn btn-warning" value="목록보기"/>
-				<!-- multiple 여러개 파일을 올릴수있도록구현 -->
-				<input type="file" id="file_path" class="btn btn-warning" multiple="multiple"/>
+				<div id="file_path_div">
+					<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
+					<input type="button" id="btnList" class="btn btn-warning" value="목록보기"/>
+				</div>
 			</form>
 		</div>
 

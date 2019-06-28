@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.jij.util.FileUploadUtil;
+import com.kh.ts.util.FileUploadUtil;
 import com.kh.ts.service.IBoardService;
 
 @Controller
-@RequestMapping("/upload")
+@RequestMapping("/upload/*")
 public class UploadController {
 	
 	@Resource(name="uploadPath")
@@ -34,19 +34,21 @@ public class UploadController {
 	@RequestMapping(value="/test")
 	public void uploadTest() throws Exception {
 		System.out.println("uploadPath:" + uploadPath);
-		
 	}
-	
+
 	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST,
 				produces="text/plain; charset=utf-8")
 	@ResponseBody
-	public ResponseEntity<String> uploadAjax(MultipartFile file_path) throws Exception {
-			String originalName = file_path.getOriginalFilename();
+	public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
+					
+			String originalName = file.getOriginalFilename();
 			System.out.println("originalName:" + originalName);
 			ResponseEntity<String> entity = null;
 			try {
-				String dirPath = FileUploadUtil.uploadFile(uploadPath, originalName, null, file_path.getBytes());
+				String dirPath = FileUploadUtil.uploadFile(uploadPath, originalName, file.getBytes());
+				System.out.println("UploadController, uploadAjax(), dirPath:" + dirPath);
 				String path = dirPath.replace("\\", "/");
+				System.out.println("UploadController, uploadAjax(), path:" + path);
 				entity = new ResponseEntity<>(path, HttpStatus.OK);
 			} catch(Exception e) {
 				e.printStackTrace();
