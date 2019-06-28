@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ks.domain.UserInfoVo;
 import com.kh.ks.service.IUserInfoService;
+import com.kh.ks.service.UserInfoServiceImpl;
 import com.kh.ts.domain.BoardVo;
 import com.kh.ts.domain.PaginationDto;
 import com.kh.ts.domain.PagingDto;
@@ -94,8 +95,13 @@ public class BoardController {
 	@RequestMapping(value="/regist", method=RequestMethod.POST)
 	public String registPost(BoardVo boardVo, RedirectAttributes rttr, HttpSession session)throws Exception {
 		System.out.println("boardVo:" + boardVo);
-		System.out.println("BoardController, registPost, boardVo:" + boardVo);
+		UserInfoVo userInfoVo =(UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userInfoVo.getUser_id();
+		boardVo.setUser_id(user_id);
+		
 		boardService.insert(boardVo);
+		
+		
 		rttr.addFlashAttribute("message","success_insert");
 		
 		return "redirect:/board/list";

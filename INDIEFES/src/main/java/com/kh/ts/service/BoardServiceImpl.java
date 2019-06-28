@@ -23,6 +23,12 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public void insert(BoardVo vo) throws Exception {
 		boardDao.insert(vo); // insert
+		String[] files = vo.getFiles();
+		if (files !=null) {
+			for (String file: files) {
+				boardDao.attach(file); // insert
+			}
+		}
 		
 	}
 	// 글조회

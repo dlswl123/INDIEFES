@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
+<script src="/indiefes/resources/js/myscript.js"></script> 
 <script>
 $(document).ready(function(){
 	// 목록보기 버튼
@@ -84,8 +85,7 @@ $(document).ready(function(){
 				name="subject"value="${boardVo.subject}" />
 			</div>
 			<div class="form-group">
-				<label for="user_id">작성자</label> 
-				<input type="text" class="form-control" id="user_id" 
+				<input type="hidden" class="form-control" id="user_id" 
 						name="user_id" value="${boardVo.user_id}" readonly/>
 			</div>
 			<div class="form-group">
@@ -102,16 +102,17 @@ $(document).ready(function(){
 				<label for="reg_date">작성일</label> 
 				<input type="text" class="form-control" id="reg_date" 
 					value="${boardVo.reg_date}" readonly/>
-			</div>
-				<label for="file_path">첨부파일</label>
-				<div id="uploadedList"></div>
-					
-					<div class="row">
+			<div class="row">
 					<div class="col-md-12">
+						<label for="regdate">첨부파일</label> 
+						<div id="uploadedList">
+						
+						</div>
+					</div>
+				</div>
 					<input type="submit" class="btn btn-success" value="수정완료" id="btnUpdate"/>
 					<button type="button" class="btn btn-warning" id="btnList">목록보기</button>
 			   </div>
-			</div>
 		</form>
 	</div>
 
