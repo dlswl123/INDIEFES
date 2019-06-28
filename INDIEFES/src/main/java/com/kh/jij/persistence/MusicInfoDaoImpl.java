@@ -43,6 +43,12 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 
 	@Override
 	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicUpdate", musicInfoVo);
+	}
+
+	@Override
+	public void musicDelete(MusicInfoVo musicInfoVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicDelete", musicInfoVo);
 		
 	}
 	

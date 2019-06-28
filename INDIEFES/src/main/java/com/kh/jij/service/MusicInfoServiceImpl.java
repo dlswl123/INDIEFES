@@ -31,5 +31,15 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 		int track_number = musicDao.getMaxTrackNum(art_number);
 		return track_number;
 	}
+
+	@Override
+	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
+		musicDao.musicUpdate(musicInfoVo);
+	}
+
+	@Override
+	public void musicDelete(MusicInfoVo musicInfoVo) throws Exception {
+		musicDao.musicDelete(musicInfoVo);
+	}
 	
 }

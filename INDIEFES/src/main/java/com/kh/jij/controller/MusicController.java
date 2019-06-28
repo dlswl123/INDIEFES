@@ -58,4 +58,28 @@ public class MusicController {
 		}
 		return entity;
 	}
+	
+	// 수정하기
+	@RequestMapping(value="/update/{music_number}", method=RequestMethod.PUT)
+	public ResponseEntity<String> update(@PathVariable("music_number") int music_number , @RequestBody MusicInfoVo musicInfoVo) throws Exception {
+		musicInfoVo.setMusic_number(music_number);
+		ResponseEntity<String> entity = null;
+		try {
+			musicService.musicUpdate(musicInfoVo);
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+//	삭제하기
+	@RequestMapping(value="delete")
+	public ResponseEntity<String> delete(@PathVariable("music_number")int music_number) throws Exception {
+		ResponseEntity<String> entity = null;
+		return entity;
+	}
+	
+	
 }
