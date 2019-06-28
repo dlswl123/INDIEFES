@@ -33,6 +33,9 @@ public interface IArtInfoDao {
 	// 앨범 수정정보 가져오기
 	public ArtInfoVo artModify(String user_id, int art_number) throws Exception;
 	
+	// 노래 정보 가져오기
+	public List<MusicInfoVo> musicRead(int art_number) throws Exception;
+	
 	// 검색, paging, nowPage 나중에 추가할것.
 	// 앨범 리스트 가져오기
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception;
@@ -46,6 +49,7 @@ public interface IArtInfoDao {
 	// 팀이름 가져오기
 	public String getTeamName (int team_number) throws Exception;
 	
-	// 페이지갯수
+	// 플레이리스트
+	public List<MusicInfoVo> playList(String user_id) throws Exception;
 	public int artCount(PagingDto pagingDto)throws Exception;
 }

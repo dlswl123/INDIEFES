@@ -26,12 +26,12 @@
 	
 	<!-- 팀멤버 등록 -->
 	<insert id="memberInsert">
-		insert into team_member (member_number, team_number,user_id,team_level)
+		insert into team_member (member_number, team_number,user_id,team_level,user_nick)
 			<if test = "team_level == 0">
-				values (seq_member.nextval,seq_team.currval,#{user_id},#{team_level})
+				values (seq_member.nextval,seq_team.currval,#{user_id},#{team_level},#{user_nick})
 			</if>
 			<if test = "team_level == 1">
-				values (seq_member.nextval,#{team_number},#{user_id},#{team_level})
+				values (seq_member.nextval,#{team_number},#{user_id},#{team_level},#{user_nick})
 			</if>
 	</insert>
 	
@@ -42,7 +42,6 @@
 		where art_number = #{art_number}
 	</select>
 	
-<!-- 	앨범정보 수정폼 -->
 	<select id="artModify" resultType="ArtInfoVo">
 		select * 
 		from art_info
@@ -50,22 +49,22 @@
 		and art_number = #{art_number}
 	</select>
 	
-	<update id="artUpdate">
-		
-	
-	</update>
+<!-- 	앨범 노래 읽기 -->
+	<select id="musicRead" resultType="MusicInfoVo">
+		select *
+		from music_info
+		where art_number = (select art_number
+							from art_info
+							where art_number = #{art_number})
+		order by track_number
+	</select>
 	
 <!-- 	앨범 리스트 가져오기 -->
 	<select id="artList" resultType="ArtInfoVo">
 		select *
-		from (select rownum rnum, a.*
-		      from (select art.* 
-		      		from art_info art
-		      <include refid="search"></include>
-		      order by art.art_number desc) a)
-		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
+		from art_info
+		order by reg_art desc
 	</select>
-	
 	
 <!-- 	인디팀 불러오기 -->
 	<select id="getIndieTeam" resultType="IndieTeamVo">
@@ -94,14 +93,12 @@
 		from indie_team
 		where team_number = #{team_number}
 	</select>
-	
 <!-- 	그룹정보 읽기 -->
 	<select id="memberList" resultType="TeamMemberVo">
 		select * 
 		from team_member
 		where team_number = #{team_number}
 	</select>
-	
 <!-- 	그룹앨범 리스트 가져오기 -->
 	<select id="teamArtList" resultType="ArtInfoVo">
 		select *
@@ -109,35 +106,14 @@
 		where team_number = #{team_number}
 		order by reg_art desc
 	</select>
-	
-	<!-- 페이징갯수 -->
-	<select id="artCount" resultType="int">
-		select count(*) 
-		from art_info art
-		<include refid="search"></include>
+<!-- 	노래 리스트 가져오기 -->
+	<select id="playList" resultType="MusicInfoVo">
+		select *
+		from music_info
+		where music_number in (select music_number
+							  from play_list
+							  where user_id = #{user_id})
+		order by music_number
 	</select>
-	
-	
-	<sql id="search">
-       	<if test="searchType != null">
-       		<if test="searchType == 'albumName'">
-            	where art_title like '%' || #{keyword} || '%'
-   			</if>
-	   		<if test="searchType == 'song'">
-	   			, music_info m
-	            where art.art_number = m.art_number
-	            and m.music_title like '%' || #{keyword} || '%'
-	   		</if>
-	   		<if test="searchType == 'indieTeam'">
-	            where art.team_number = (select team_number
-	                                     from indie_team i
-	                                     where i.art_team like '%' || #{keyword} || '%'
-	                                     group by i.team_number)
-	   		</if>
-	   		<if test="searchType == 'artGenre'">
-	   			where art.art_genre like '%' || #{keyword} || '%'
-	   		</if>
-       	</if>
-	</sql>
 	
 </mapper>

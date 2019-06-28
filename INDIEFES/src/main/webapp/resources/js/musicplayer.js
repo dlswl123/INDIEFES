@@ -1,7 +1,3 @@
-/*
- *  Author Sam Johnson
- *  Under MIT License
- */
 (function($, window, document, undefined) {
   "use strict";
   // Create the defaults once

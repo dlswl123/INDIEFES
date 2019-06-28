@@ -72,7 +72,7 @@ public class ArtController {
 //		if (userVo != null) {
 //			String user_id = userVo.getUser_id();
 			String user_id = "indie1";
-			String teamName = artService.getTeamName(team_number);
+			
 //			String user_id = "indie1";
 //			String team_name = "알약";
 //			System.out.println("ArtController, art_modify, userVo:" + userVo);
@@ -81,7 +81,6 @@ public class ArtController {
 			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 			model.addAttribute("artVo", artVo);
 			model.addAttribute("musicList", musicList);
-			model.addAttribute("teamName", teamName);
 			model.addAttribute("userVo", userVo);
 			url = "art/art_modify";
 //		} else {
@@ -147,6 +146,7 @@ public class ArtController {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		}
+//		System.out.println("realPath:"+realPath);
 		return entity;
 	}
 
@@ -190,6 +190,7 @@ public class ArtController {
 		map.put("teamVo", teamVo);
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		map.put("user_id", userVo.getUser_id());
+		map.put("user_nick", userVo.getUser_nick());
 		artService.teamInsert(map);
 		return "redirect:/art/indie_team_input";
 	}
@@ -199,6 +200,7 @@ public class ArtController {
 	public String memberInfoInput(TeamMemberVo memberVo, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		memberVo.setUser_id(userVo.getUser_id());
+		memberVo.setUser_nick(userVo.getUser_nick());
 		artService.teamInput(memberVo);
 		return "redirect:/art/indie_team_input";
 	}
@@ -209,9 +211,11 @@ public class ArtController {
 		List<TeamMemberVo> memberList = artService.teamInfo(team_number);
 		String teamName = artService.getTeamName(team_number);
 		List<ArtInfoVo> teamArtList = artService.teamArtList(team_number);
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("teamName", teamName);
 		model.addAttribute("teamArtList", teamArtList);
+		model.addAttribute("userVo", userVo);
 		
 	}
 

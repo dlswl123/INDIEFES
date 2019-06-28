@@ -46,6 +46,9 @@ public interface IArtInfoService {
 	// 앨범 커버 리스트 가져오기
 	public List<String> getCover();
 	
+	// 플레이리스트
+	public List<MusicInfoVo> playList(String user_id) throws Exception;
+	
 	public int getIndieNumber(String user_id) throws Exception;
 	public String getTeamName (int team_number) throws Exception;
 	public int artCount(PagingDto pagingDto)throws Exception;
