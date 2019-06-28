@@ -70,12 +70,6 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 
 	@Override
-	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
-		List<MusicInfoVo> musicList = sqlSession.selectList(NAMESPACE + ".musicRead", art_number);
-		return musicList;
-	}
-
-	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
 		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".artList", pagingDto);
 		return artList;
@@ -106,18 +100,15 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 
 	@Override
+	public int artCount(PagingDto pagingDto) throws Exception {
+		int artCount = sqlSession.selectOne(NAMESPACE + ".artCount", pagingDto);
+		return artCount;
+	}
+	
+	@Override
 	public List<MusicInfoVo> playList(String user_id) throws Exception {
 		List<MusicInfoVo> playList = sqlSession.selectList(NAMESPACE + ".playList", user_id);
 		return playList;
 	}
-
-	@Override
-	public int artCount(PagingDto pagingDto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-
 
 }

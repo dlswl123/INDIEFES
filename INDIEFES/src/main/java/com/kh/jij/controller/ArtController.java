@@ -54,6 +54,7 @@ public class ArtController {
 		String teamName = artService.getTeamName(team_number);
 		ArtInfoVo artVo = artService.artRead(art_number);
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
+		
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("teamName", teamName);
@@ -79,9 +80,11 @@ public class ArtController {
 //			System.out.println("ArtController, art_modify, teamName:" + teamName);
 			ArtInfoVo artVo = artService.artModify(user_id, art_number);
 			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
+			int track_number = musicService.getMaxTrackNum(art_number);
 			model.addAttribute("artVo", artVo);
 			model.addAttribute("musicList", musicList);
 			model.addAttribute("userVo", userVo);
+			model.addAttribute("track_number", track_number);
 			url = "art/art_modify";
 //		} else {
 //			url = "redirect:/art/art_info/" + art_number + "/" + art_number;

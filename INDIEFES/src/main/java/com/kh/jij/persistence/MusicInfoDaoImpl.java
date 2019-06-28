@@ -28,5 +28,22 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 		sqlSession.insert(NAMESPACE + ".musicInsert", musicInfoVo);
 		
 	}
+
+	@Override
+	public int getMaxTrackNum(int art_number) throws Exception {
+		int track_number = 0;
+		String tNum = sqlSession.selectOne(NAMESPACE + ".getMaxTrackNum", art_number);
+		if(tNum == null) {
+			track_number = 0;
+		} else {
+			track_number = Integer.parseInt(tNum);
+		}
+		return track_number;
+	}
+
+	@Override
+	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
+		
+	}
 	
 }

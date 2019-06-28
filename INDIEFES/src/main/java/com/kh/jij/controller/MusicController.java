@@ -35,9 +35,7 @@ public class MusicController {
 	public ResponseEntity<List<MusicInfoVo>> MusicTrackList(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number,Model model) throws Exception  {
 		ResponseEntity<List<MusicInfoVo>> entity = null;
 		try {
-			String teamName = artService.getTeamName(team_number);
 			List<MusicInfoVo> list = musicService.musicRead(art_number);
-			model.addAttribute("teamName", teamName);
 			entity = new ResponseEntity<List<MusicInfoVo>>(list, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
