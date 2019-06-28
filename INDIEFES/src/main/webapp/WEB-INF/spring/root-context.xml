@@ -31,7 +31,7 @@
 		</bean>
 		
 		<!-- SQL Template -->
-		<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<bean class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 			<constructor-arg name="sqlSessionFactory"
 				ref="sqlSessionFactory" />
 		</bean>
