@@ -86,7 +86,7 @@ public class BoardController {
 	// 글쓰기 폼 - /indiefes/board/regist(GET 불러오기)
 	@RequestMapping(value="/regist", method=RequestMethod.GET)
 	public void registGet() throws Exception {
-		System.out.println("registGet()");
+		System.out.println("BoardController, registGet() 실행됨");
 		// /WEB-INF/indifes/board/regist.jsp
 	}
 	

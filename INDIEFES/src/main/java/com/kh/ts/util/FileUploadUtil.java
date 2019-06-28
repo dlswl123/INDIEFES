@@ -1,4 +1,4 @@
-package com.kh.ts.until;
+package com.kh.ts.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

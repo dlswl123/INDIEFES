@@ -108,9 +108,8 @@ $(document).ready(function(){
 				</div>
 				<div class="form-group">
 					<label for="file_path">첨부파일</label>
-					<div id="uploadedList">
-						
-					</div>
+					<input type="text" class="form-control" id="uploadedList"
+						value="${boardVo.file_path}" readonly/>
 				</div>
 				</form>
 			<div class="row">
