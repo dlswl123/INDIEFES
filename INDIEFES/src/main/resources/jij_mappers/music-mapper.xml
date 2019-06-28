@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  	
+<mapper namespace="music">
+
+<!-- 	앨범 노래 읽기 -->
+	<select id="musicRead" resultType="MusicInfoVo">
+		select *
+		from music_info
+		where art_number = #{art_number}
+		and upload_check = 0
+		order by track_number
+	</select>
+
+<!-- 앨범에 노래등록 -->
+	<insert id="musicInsert">
+		insert into music_info(art_number, music_number, track_number, music_title, file_path)
+		values(#{art_number}, seq_music.nextval, #{track_number}, #{music_title}, #{file_path})
+	</insert>
+
+<!-- 노래 수정 -->
+	<update id="musicUpdate">
+		update music_info set
+		    track_number = #{track_number},
+		    music_title = #{music_title},
+		    file_path = #{file_path}
+		where team_number = #{team_number}
+		and art_number = #{art_number}
+		and music_number = #{music_number}
+	</update>
+	
+<!-- 	노래삭제(노래 노출 상태 변경) -->
+	<update id="musicDelete">
+		update music_info set
+			upload_check = 1
+		where team_number = #{team_number}
+		and art_number = #{art_number}
+		and music_number = #{music_number}
+	</update>
+	
+	
+	
+</mapper>
