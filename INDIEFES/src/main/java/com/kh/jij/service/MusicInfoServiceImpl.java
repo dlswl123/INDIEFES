@@ -12,7 +12,7 @@ import com.kh.jij.persistence.IMusicInfoDao;
 @Service
 public class MusicInfoServiceImpl implements IMusicInfoService{
 
-	@inject
+	@Inject
 	private IMusicInfoDao musicDao;
 	
 	@Override
