@@ -5,12 +5,14 @@
 	#fileDrop {
 		width : 80%;
 		height : 100px;
-		border : 1px dashed green;	
-		background-color : #FF8C00;
+		border : 1px dashed blue;
+		background-color : yellow;
 		margin : auto;
 	}
-</style> 
+</style>
+<script src="/indiefes/resources/js/myscript.js"></script> 
 <script>
+
 $(document).ready(function(){
 	
 	// 목록보기 버튼
@@ -18,13 +20,14 @@ $(document).ready(function(){
 		console.log("btnList");
 		location.href="/indiefes/board/list"
 	});
-	// 파일첨부 
+	// 파일드롭 영역
 	$("#fileDrop").on("dragenter dragover", function(e) {
 // 		console.log("dragenter dragover");
 		e.preventDefault();
 	});
 	$("#fileDrop").on("drop", function(e) {
 		console.log(e);
+		// -> 드롭 영역에 드롭한 파일
 		e.preventDefault();
 		var file = e.originalEvent.dataTransfer.files[0];
 		console.log(file);
@@ -41,7 +44,8 @@ $(document).ready(function(){
 			"contentType" : false, // enctype="multipart/form-data"
 			"type" : "post",
 			"success" : function(fullName) { // /2019/5/17/asdad-adsa-ada_a.jpg
-				
+				// 업로드 성공시
+				// 브라우저에 보여질 이미지의 경로/이름(서버측 경로)
 				console.log(fullName);
 				var slashIndex = fullName.lastIndexOf("/");
 				var front = fullName.substring(0, slashIndex + 1);
@@ -51,17 +55,18 @@ $(document).ready(function(){
 				var thumbnailName = front + "s_" + rear; // 2019/6/27/s_97ae61f1-d8d4-4613-ae29-3eb14b7dcaed_Desert.jpg
 //				console.log(thumbnailName);
 				
-				
+				// 화면(브라우저)에 이미지 보이기
 				var startIndex = fullName.indexOf("_");
- 				var fileName = fullName.substring(startIndex + 1);
+ 				var fileName = fullName.substring(startIndex + 1); // 파라미터 값이 1개 -> 끝까지, 97ae61f1-d8d4-4613-ae29-3eb14b7dcaed_Desert.jpg
 				var div = "";
+ 				// 해당 파일이 이미지인지 아닌지 체크
 				if (isImage(fileName)) {
 					div = "<div data-filename='" + fullName + "'>" + fileName
 						+ 	"<img src='/indiefes/upload/displayFile?fileName=" + thumbnailName + "'>"
 						+ "</div>";
 				} else {
 					div = "<div data-filename='" + fullName + "'>" + fileName
-						+	"<img src='/indiefes/resources/images/file_image.png' width='20'>"
+						+	"<img src='/indiefes/resources/images/file_image.png'>"
 						+ "</div>";
 				}
 						
@@ -98,11 +103,6 @@ $(document).ready(function(){
 					name="subject" />
 			</div>
 			<div class="form-group">
-				<label for="user_id">작성자</label>
-				<input type="text" class="form-control" id="user_id"
-					name="user_id" value="${BoardVo.user_id}"/>
-			</div>
-			<div class="form-group">
 				<label for="content">글내용</label>
 				<textarea rows="10" cols="80" id="content"
 					class="form-control" name="content"></textarea>	
@@ -114,12 +114,12 @@ $(document).ready(function(){
 				<div id="fileDrop"></div>
 			</div>
 			<!--  첨부파일 목록 -->
-			<div class="form-group" id="uploadedList">
+			<div class="form-group" id="uploadedList"></div>
+			<%-- <input type="hidden" name="user_id" value="${userInfoVo.user_id}"/> --%>
+			<div id="file_path_div">
+				<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
+				<input type="button" id="btnList" class="btn btn-warning" value="목록보기"/>
 			</div>
-				<div id="file_path_div">
-					<input type="button" id="btnSubmit" class="btn btn-success" value="작성완료"/>
-					<input type="button" id="btnList" class="btn btn-warning" value="목록보기"/>
-				</div>
 			</form>
 		</div>
 

@@ -24,4 +24,6 @@ public interface IBoardService {
 	public List<String> getAttach(int board_number)throws Exception;
 	// 파일삭제
 	public void deleteAttach(String file_path)throws Exception;
+	// 게시글파일삭제
+	public void deleteAttachByBno(int board_number)throws Exception;
 }

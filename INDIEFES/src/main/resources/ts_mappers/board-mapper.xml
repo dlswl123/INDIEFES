@@ -73,6 +73,11 @@
 		delete from board_file
 		where file_path = #{file_path}
 	</delete>
+	<!-- 게시글첨부파일삭제 -->
+	<delete id="deleteAttachByBno">
+		delete from board_file
+		where board_number= #{board_number}
+	</delete>
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 'subject'">

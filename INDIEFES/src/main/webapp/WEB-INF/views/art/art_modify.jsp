@@ -20,8 +20,8 @@ $.fn.setPreview = function(opt){
     var defaultOpt = {
         inputFile: $(this),
         img: null,
-        w: 200,
-        h: 200
+        w: 282,
+        h: 282
     };
     $.extend(defaultOpt, opt);
  
@@ -83,14 +83,14 @@ $(document).ready(function() {
 	    $('#art_cover').setPreview(opt);
 	
 	getList();
-// 	// 노래파일업로드버튼
-// 	$("#btnMusicFile").click(function(e) {
-// 		$("#inputMusicFile").trigger("click");
-// 	});
-// 	$("#inputMusicFile").change(function(e) {
-// 		$("#spanMusicFile").text(this.files[0].name);
+	// 노래파일업로드버튼
+	$("#btnMusicFile").click(function(e) {
+		$("#inputMusicFile").trigger("click");
+	});
+	$("#inputMusicFile").change(function(e) {
+		$("#spanMusicFile").text(this.files[0].name);
 		
-// 	});
+	});
 	
 	// 커버이미지 파일업로드버튼
 	$("#btnFile").click(function(e) {
@@ -100,7 +100,6 @@ $(document).ready(function() {
 		$("#spanFile").text(this.files[0].name);
 		
 	});
-	
 	
 	// 앨범등록 버튼
 	$("#btnArtAdd").click(function() {
@@ -117,7 +116,8 @@ $(document).ready(function() {
 		var art_number = "${artVo.art_number}";
 		var team_number = "${artVo.team_number}";
 		var music_title = $("#songName").val();
-		var track_number = $("#trackNumber").val();
+		var tNum = $("#trackNumber").val();
+		var track_number = Number(tNum) + 1;
 		var file_path = $("#spanMusicFile").text();
 		var data = {
 				"art_number" : art_number,
@@ -140,35 +140,39 @@ $(document).ready(function() {
 				console.log(receivedData);
 			} // $.ajax
 		});
+			$("#trackNumber").attr("value", track_number);
+			console.log("tNum:" + tNum);
 	});
 	
 	// 취소 버튼
 	$("#btnMusicCancel").click(function() {
-		$("#spanFile").text("");
+		$("#spanMusicFile").text("");
 		$("#songName").val("");
+		$("#trackNumber").val("");
 	});
 	
 	// 뮤직수정 버튼
-	$("#addReplyList").on("click", ".btnAddReplyMod",function() {
+	$("#trackList").on("click", ".btnMusicMod",function() {
 		var tNum = $(this).attr("data-track_number");
 		var td = $(this).parent().parent().children();
-		var rnoStr = td.eq(1).text();
+		var tNumStr = td.eq(2).text();
 // 		td.eq(2).html("<textarea style='width:100%;border:1;overflow:visible;text-overflow:ellipsis;' rows='5' id='addReplyUpdate'>" + rnoStr + "</textarea>");
-		td.eq(1).html("<input type='text' id='musicTrackNumber'>" + rnoStr);
-		td.eq(2).html("<input type='text' id='musicTitle'>" + rnoStr);
-// 		td.eq(4).html("<input type='button' class='btn btn-info btn-xs' id='btnReplyUpdate' value='확인'>");
-		td.eq(5).html("<input type='button' class='btn btn-info btn-xs' id='btnMusicUpdate' value='확인'>");
+		td.eq(2).html("<input type='text' class='form-control' id='musicTitle' value='" + tNumStr + "'>");
+		td.eq(3).html("<input type='file' name='file_path' id='inputMusicFile' accept='.mp3, .flac, .wav, .aac' style='display:none;'>"
+					+ "<input type='button' value='파일찾기' id='btnMusicFile' class='btn btn-sm btn-success'>"
+					+ "<span id='spanMusicFile'></span>'");
+		td.eq(5).html("<input type='button' class='btn btn-sm btn-primary' id='btnUpdate' value='확인'>");
 		
-		$("#btnMusicUpdate").click(function() {
-			var track_number = $("#musicTrackNumber").val();
+		$("#btnUpdate").click(function() {
 			var music_title = $("#musicTitle").val();
-			console.log(modStr);
-	 		var add_text = modStr;
+			console.log("music_title:" + music_title);
+	 		var add_text = music_title;
 	 		var url = "/indiefes/music/update";
 	 		var data = {
-	 			"track_number" : track_number,
 	 			"music_title" : music_title
 	 		};
+	 		console.log("add_text" + add_text);
+	 		
 	 		$.get(url, data, function(receivedData) {
 	 			console.log(receivedData);
 				
@@ -176,11 +180,11 @@ $(document).ready(function() {
 				
 	 			if (trimStr == "true") {
 	// 				$("#addReplyList").remove() // $()를 삭제
-	 				$("#addReplyList").empty() // $()안의 내용을 삭제
+	 				$("#trackList").empty() // $()안의 내용을 삭제
 	 				flagAddReply = false;
 	 				getAddReplyList();
-	 				td.eq(2).html(modStr);
-	 				td.eq(4).html("<input type='button' class='btn btn-xs btn-warning btnAddReplyMod' value='수정' data-rno='" + rno + "'>");
+	 				td.eq(2).html(music_title);
+	 				td.eq(4).html("<Button type='button' class='btn btn-sm btn-warning btnMusicMod' id='btnMusicUpdate' data-track_number='" + this.track_number + "data-'>수정</Button>");
 	 			}
 	 		});
 		});
@@ -203,15 +207,16 @@ $(document).ready(function() {
 		$.getJSON(url, function(receivedData) {
 			console.log(receivedData);
 			var strHtml = "";
+			var team_name = "${team_name}";
 			$(receivedData).each(function(i) {
 				strHtml += "<tr>"
 			    	  + 	 "<td><input type='checkbox' /></td>"
 			    	  + 	 "<td>" + this.track_number + "</td>"
 			    	  + 	 "<td class='song_name'>" + this.music_title + "</td>"
-			       	  + 	 "<td>${team_name}</td>"
+			       	  + 	 "<td>" + this.file_path + "</td>"
 			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-success' >등록</Button></td>"
-			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-warning btnMusicMod' data-track_number='" + this.track_number + "'>수정</Button></td>"
-			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-danger btnMusicDel'  data-track_number='" + this.track_number + "'>삭제</Button></td>"
+			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-warning btnMusicMod' id='btnMusicUpdate' data-track_number='" + this.track_number + "data-'>수정</Button></td>"
+			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-danger btnMusicDel'  id='btnMusicDelete' data-track_number='" + this.track_number + "'>삭제</Button></td>"
 					  +  "</tr>";
 			});
 			$("#trackList").html(strHtml);
@@ -288,16 +293,27 @@ $(document).ready(function() {
 				<!-- 음악추가폼 -->
 				<div class="col-md-12">
 					<form name="fileForm" action="art/musicUpload" method="post" enctype="multipart/form-data" class="form-inline">
-						<div class="col-md-9  form-group">
-							<label>트랙</label>
-							<input type="number" id="trackNumber" name="track_number" class="form-control">
-							<label>노래제목</label>
-							<input type="text" id="songName" name="music_title" class="form-control">
-				        	<input type="file" name="file_path" id="inputMusicFile" accept=".mp3, .flac, .wav, .aac" style="display:none;">
-							<input type="button" value="파일찾기" id="btnMusicFile" class="btn btn-sm btn-success">
-							<span id="spanMusicFile"></span>
-							<button type="button" class="btn btn-sm btn-primary" id="btnMusicAdd">추가</button>
-							<button type="button" class="btn btn-sm btn-danger" id="btnMusicCancel">취소</button>
+					<input type="hidden" name="track_number" value="${track_number}"  id="trackNumber" >
+						<div class="col-md-9 form-group">
+							<div class="col-md-12  form-group row">
+<!-- 								<div class="col-xs-1"> -->
+<!-- 									<label for="tracknumber">트랙</label> -->
+<!-- 									<input type="number" id="trackNumber" name="track_number" class="form-control" min="1"  style="width: 80;"> -->
+<!-- 								</div> -->
+								<div class="col-xs-4">
+									<label for="songName">노래제목</label>
+									<input type="text" id="songName" name="music_title" class="form-control">
+								</div>
+								<div  class="col-xs-4">
+								<label>&nbsp; &nbsp;</label>
+						        	<input type="file" name="file_path" id="inputMusicFile" accept=".mp3, .flac, .wav, .aac" style="display:none;">
+									<input type="button" value="파일찾기" id="btnMusicFile" class="btn btn-sm btn-success">
+									<span id="spanMusicFile"></span>
+									<button type="button" class="btn btn-sm btn-primary" id="btnMusicAdd">추가</button>
+									<button type="button" class="btn btn-sm btn-danger" id="btnMusicCancel">취소</button>
+								</div>
+							
+							</div>
 						</div>
 					    <div class="col-md-3 form-group" align="right">
 							<button type="button" class="btn btn-outline-success" id="btnArtAdd">수정완료</button>
@@ -316,7 +332,7 @@ $(document).ready(function() {
 								<th><input type="checkbox" /></th>
 								<th>번호</th>
 								<th class="song_name">곡</th>
-								<th>아티스트</th>
+								<th>노래파일</th>
 								<th>가사</th>
 								<th>수정</th>
 								<th>삭제</th>
