@@ -23,9 +23,10 @@
 		select * from concert_info 
 	</select>
 	
-	<!-- 공연 홍보 글 파일 가져오기 -->
+	<!-- 공연 홍보 글 가져오기 -->
 	<select id="getConcertInfo" resultType="ConcertInfoVo">
 		select * from concert_info where concert_number = #{concert_number}
+<!-- 		select * from concert_info where (concert_date - sysdate > 0) order by (concert_date - sysdate) -->
 	</select>
 	
 	<!-- 공연 홍보 글 파일 가져오기 -->
