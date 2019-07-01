@@ -10,4 +10,6 @@ public interface IUserInfoService {
 	public boolean createAccount(UserInfoVo userInfoVo)throws Exception;
 	
 	public UserInfoVo idCheck(String user_id) throws Exception;
+
+	public UserInfoVo nickCheck(String user_nick) throws Exception;
 }

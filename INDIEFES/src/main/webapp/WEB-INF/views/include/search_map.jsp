@@ -57,7 +57,7 @@
 					    	<div class="option">
 					      		<div>
 					      			<form id="searchAddr">
-					      				주소 : <input type="text" id="keyAddr" size="30">
+					      				주소 : <input type="text" id="keyAddr" size="30" placeholder="주소로 검색시 이용">
 					      				<button type="button" onclick="searchAddr(); return false;" class="btn btn-xs btn-primary" id="addrSearch">검색하기</button>
 					      			</form>
 					      		</div>
@@ -68,7 +68,7 @@
 					            <div>
 <!-- 					                <form onsubmit="searchPlaces(); return false;"> -->
 					                <form id="searchPlaces">
-					                    키워드 : <input type="text" id="keyword" size="15"> 
+					                    키워드 : <input type="text" id="keyword" size="15" placeholder="ex)공연장"> 
 					                    <button type="button" onclick="searchPlaces(); return false;" class="btn btn-xs btn-primary" id="mapSearch">검색하기</button> 
 					                </form>
 					            </div>
@@ -82,8 +82,9 @@
 					    		<div>
 					    			<b>선택장소 확인</b><br>
 					    			<div id="chAddr"></div>
-					    			<input type="hidden" id="pointX" name="pointX" />
-					    			<input type="hidden" id="pointY" name="pointY" />
+					    			<input type="hidden" id="place_name" name="place_name" />
+					    			<input type="hidden" id="place_x" name="place_x" />
+					    			<input type="hidden" id="place_y" name="place_y" />
 					    		</div>
 					    	</div>
 					    </div>
@@ -192,6 +193,7 @@
 						            // 마커를 클릭한 위치에 표시합니다 
 						            marker.setPosition(mouseEvent.latLng);
 						            marker.setMap(map);
+						            markers.push(marker);
 
 						            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
 						            infowindow.setContent(content);
@@ -441,6 +443,9 @@
 						function displayInfowindow(marker, title) {
 						    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
 
+						 	// 마커의 중심으로 이동
+						    map.panTo(marker.getPosition());
+						    
 						    infowindow.setContent(content);
 						    infowindow.open(map, marker);
 						}
@@ -458,9 +463,6 @@
 						 
 						 // 클릭한 마커와 목록의 좌표를 얻어내는 함수
 						 function getPlacePosition(marker, title) {
-							 console.log("marker : " + marker);
-							 console.log("title : " + title);
-							 console.log("markerPosition : " + marker.getPosition());
 							 removeMarker();
 							 
 							 map.panTo(marker.getPosition());
@@ -482,10 +484,14 @@
 						            var detailAddr = '<div>상호명 : ' + title + '</div>';
 						            	detailAddr += !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 						            	detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-						            	detailAddr += '<input type="hidden" name="chAddrName" value="' + title + '">';
+						            	detailAddr += '<input type="hidden" id="chAddrName" name="chAddrName" value="' + title + '">';
 						            
 						            // 선택에 법정동 상세 주소정보를 표시합니다
 						            $("#chAddr").html(detailAddr);
+						            
+						            $("#place_name").val(title);
+						            $("#place_x").val(pointX);
+						            $("#place_y").val(pointY);
 								 }
 							 });
 						 }
@@ -498,17 +504,23 @@
 							 
 							 searchDetailAddrFromCoords(latLng, function(result, status) {
 								 if (status === daum.maps.services.Status.OK) {
-						            var detailAddr = '<div>상호명 : <input type="text" name="chAddrName" placeholder="장소명을 입력해주세요"/></div>';
+						            var detailAddr = '<div>상호명 : <input type="text" id="chAddrName" name="chAddrName" placeholder="장소명을 입력해주세요" required/></div>';
 						            	detailAddr += !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 						            	detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 						            
-						            console.log(detailAddr);
-						                        	
 						            // 선택에 법정동 상세 주소정보를 표시합니다
 						            $("#chAddr").html(detailAddr);
+						            
+						            $("#place_x").val(pointX);
+						            $("#place_y").val(pointY);
 								 }
 							 });
 						 }
+						 
+						$("#chAddr").on("change", "#chAddrName", function() {
+							var placeName = $(this).val();
+							$("#place_name").val(placeName);
+						});
 						 
 						 
 						//======================================================= 
@@ -516,16 +528,13 @@
 						// 주소 입력 후 검색
 						function searchAddr() {
 							var keyAddr = document.getElementById('keyAddr').value;
-							console.log("keyAddr : " + keyAddr);
 						    
 						    if (!keyAddr.replace(/^\s+|\s+$/g, '')) {
 						        alert('주소를 입력해주세요!');
 						        return false;
 						    }
 
-						    console.log("keyAddrSearch");
 						    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-						    
 							// 주소로 좌표를 검색합니다
 							geocoder.addressSearch(keyAddr, function(result, status) {
 								

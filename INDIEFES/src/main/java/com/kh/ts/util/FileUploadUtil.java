@@ -1,4 +1,4 @@
-package com.kh.ts.until;
+package com.kh.ts.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -77,6 +77,14 @@ public class FileUploadUtil {
 		}
 		
 		return datePath; // 2019/5/17
+	}
+	
+	// 파일 지우기
+	public static void deleteFile(String filePath) throws Exception {
+		File f = new File(filePath);
+		if (f.exists()) {
+			f.delete();
+		}
 	}
 	
 	// 확장자 얻기

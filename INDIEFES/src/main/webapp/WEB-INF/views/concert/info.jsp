@@ -5,6 +5,12 @@
 <script>
 $(document).ready(function() {
 	
+	var resultMessage = "${resultMessage}";
+	
+	if (resultMessage == "insert_success") {
+		alert("글 등록이 완료되었습니다.");
+	}
+	
 	// move to new concert info write form
 	$("#btnWrite").click(function() {
 		location.href = "/indiefes/concert/write";
