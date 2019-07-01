@@ -7,6 +7,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PlayListVo;
 
 public interface IArtInfoDao {
 	// 앨범입력
@@ -50,6 +51,16 @@ public interface IArtInfoDao {
 	public String getTeamName (int team_number) throws Exception;
 	
 	// 플레이리스트
+	public List<PlayListVo> playListInfo(String user_id) throws Exception;
+	
+	// 리스트에 노래 가져오기
 	public List<MusicInfoVo> playList(String user_id) throws Exception;
+	
+	// 리스트에서 곡 등록
+	public void playInsert(PlayListVo vo) throws Exception;
+	
+	// 리스트에서 곡 삭제
+	public void playDelete(int play_index) throws Exception;
+	
 	public int artCount(PagingDto pagingDto)throws Exception;
 }

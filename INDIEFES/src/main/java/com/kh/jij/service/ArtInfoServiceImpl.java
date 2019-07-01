@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PlayListVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IArtInfoDao;
 import com.kh.ts.domain.PagingDto;
@@ -121,11 +122,34 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	
 	// 플레이리스트
 	@Override
+	public List<PlayListVo> playListInfo(String user_id) throws Exception {
+		List<PlayListVo> playListInfo = artDao.playListInfo(user_id);
+		return playListInfo;
+	}
+	
+	// 리스트에 곡 가져오기
+	@Override
 	public List<MusicInfoVo> playList(String user_id) throws Exception {
 		List<MusicInfoVo> playList = artDao.playList(user_id);
 		return playList;
 	}
+	// 리스트에서 곡 등록
+	@Override
+	public void playInsert(Map<String, Object> map) throws Exception {
+		MusicInfoVo musicVo = (MusicInfoVo)map.get("musicVo");
+		String user_id = (String)map.get("user_id");
+		PlayListVo vo = new PlayListVo();
+		vo.setUser_id(user_id);
+		vo.setMusic_number(musicVo.getMusic_number());
+		artDao.playInsert(vo);
+		
+	}
 	
+	// 리스트에서 곡 삭제
+	@Override
+	public void playDelete(int play_index) throws Exception {
+		artDao.playDelete(play_index);
+	}
 
 
 }

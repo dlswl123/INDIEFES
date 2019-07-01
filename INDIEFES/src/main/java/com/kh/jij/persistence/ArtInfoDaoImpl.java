@@ -13,6 +13,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PlayListVo;
 
 @Repository
 public class ArtInfoDaoImpl implements IArtInfoDao {
@@ -106,9 +107,26 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 
 	@Override
+	public List<PlayListVo> playListInfo(String user_id) throws Exception {
+		List<PlayListVo> playListInfo = sqlSession.selectList(NAMESPACE + ".playListInfo", user_id);
+		return playListInfo;
+	}
+	
+	@Override
 	public List<MusicInfoVo> playList(String user_id) throws Exception {
 		List<MusicInfoVo> playList = sqlSession.selectList(NAMESPACE + ".playList", user_id);
 		return playList;
+	}
+	@Override
+	public void playInsert(PlayListVo vo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".playInsert", vo);
+		
+	}
+	
+	@Override
+	public void playDelete(int play_index) throws Exception {
+		sqlSession.delete(NAMESPACE + ".playDelete", play_index);
+		
 	}
 
 	@Override
@@ -116,6 +134,9 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
+
 
 	
 

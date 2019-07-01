@@ -13,7 +13,7 @@
 	
 	<!-- 아이콘 -->
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  	<script src="https://kit.fontawesome.com/9d5a98c207.js"></script>
+<!--   	<script src="https://kit.fontawesome.com/9d5a98c207.js"></script> -->
   	<!-- 아이콘 끝 -->
   	
 	 <!-- Latest compiled and minified CSS -->
