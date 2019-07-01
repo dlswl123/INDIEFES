@@ -22,6 +22,14 @@ $(document).ready(function() {
 		console.log($("input[name=concert_date]").val());
 	});
 	
+	// 홍보파일업로드버튼(리스트용)
+	$("#btnInfoFile").click(function(e) {
+		$("#info_file").trigger("click");
+	});
+	$("#info_file").change(function(e) {
+		$("#spanInfoFile").text(this.files[0].name);
+	});
+	
 });
 </script>
 
@@ -33,7 +41,7 @@ $(document).ready(function() {
 		<article style="padding:20px;">
 			
 			<!-- // move to new concert info write form -->
-			<form role="form" action="/indiefes/concert/write" method="post" id="concertWriteForm">
+			<form role="form" action="/indiefes/concert/write" method="post" id="concertWriteForm" enctype="multipart/form-data">
 				<div class="form-group">
 					<!-- Session으로 유저 정보 받아오기 -->
 <!-- 					<input type="hidden" name="user_id" value="indie1" /> -->
@@ -49,10 +57,18 @@ $(document).ready(function() {
 					<input type="text" class="form-control" name="summary" id="summary" placeholder="목록에 보여질 내용을 한줄로 요약해서 기입해주세요" />
 					
 					<label id="info_file_path">목록에 보일 홍보 요약 포스터(크기는 1200x300)</label>
-					<input type="file" class="form-control" id="info_file_path" name="info_file_path" />
-
+					<br>
+					<input type="file" class="form-control" id="info_file" name="info_file_path" accept=".jpg, .gif, .png, .bmp, .jpeg" style="display:none;" />
+					<input type="button" value="파일찾기" id="btnInfoFile" class="btn btn-sm btn-success" />
+					<span id="spanInfoFile"></span>
+					<br>
+<!-- -------------------------------------------------------------------------------------------- -->
 					<label id="file_path">홍보 포스터</label>
 					<input type="file" class="form-control" id="file_path" name="file_path" />
+					<!-- file drag&drop area and show file list -->
+					<div id="filePosterList">
+					첨부할 파일을 끌어다 놓으세요
+					</div>
 					
 					<label id="content">공연 내용</label>
 					<textarea class="form-control" rows="10" cols="50" name="content"
