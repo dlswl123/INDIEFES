@@ -10,11 +10,6 @@ body {
 /*   background-color: #000000; */
 }
 
-header h2 {
-  color: #000000;
-  text-align: center;
-}
-
 /* 뮤직플레이어 스타일 시트 */
 .MusicPlayer {
   margin: 50px auto 0;
@@ -236,10 +231,4 @@ header h2 {
 .playlist div.active {
   background-color: rgba( 255, 100, 255, 0.3 );
   font-weight: bold;
-}
-.slick-dots {
-  bottom: 5px !important;
-}
-.slick-dots li button:before {
-  font-size: 8px !important;
 }

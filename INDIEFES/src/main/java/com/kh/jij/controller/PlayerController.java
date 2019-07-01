@@ -3,7 +3,9 @@ package com.kh.jij.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PlayListVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
@@ -35,25 +38,31 @@ public class PlayerController {
 	@Resource(name = "uploadPath")
 	private String uploadPath; // servlet-context.xml (id="uploadPath")
 	
+	// 플레이어
 	@RequestMapping(value="/player", method=RequestMethod.GET)
 	public void Player(HttpSession session,Model model) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		List<PlayListVo> playListInfo = artService.playListInfo(userVo.getUser_id());
 		List<MusicInfoVo> playList = artService.playList(userVo.getUser_id());
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
-		for(MusicInfoVo vo1:playList) {
-			for(IndieTeamVo vo2:teamList) {
-				if(vo1.getTeam_number()==vo2.getTeam_number()) {
-					vo1.setTeam_name(vo2.getArt_team());
-//					String filePath = uploadPath+File.separator+"album"+File.separator+vo1.getTeam_number()+File.separator+vo1.getArt_number()+File.separator+vo1.getFile_path();
-//					vo1.setFile_path(filePath);
+		for(PlayListVo vo:playListInfo) {
+			for(MusicInfoVo vo1:playList) {
+				for(IndieTeamVo vo2:teamList) {
+					if(vo1.getTeam_number()==vo2.getTeam_number()) {
+						vo1.setTeam_name(vo2.getArt_team());
+					}
+					if(vo.getMusic_number()==vo1.getMusic_number()) {
+						vo1.setPlay_index(vo.getPlay_index());
+					}
 				}
 			}
 		}
 		model.addAttribute("playList", playList);
 		model.addAttribute("uploadPath", uploadPath);
-//		System.out.println("playList:"+playList);
+		System.out.println("playList:"+playList);
 	}
-
+	
+	// 플레이리스트
 	@RequestMapping(value = "/Song", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getCover(@RequestParam("file_path") String filePath, @RequestParam("team_number") int team_number,@RequestParam("art_number") int art_number) throws Exception {
 		String album = "album";
@@ -77,6 +86,23 @@ public class PlayerController {
 		}
 //		System.out.println("realPath:"+realPath);
 		return entity;
+	}
+	// 등록
+	@RequestMapping(value="/playInsert", method=RequestMethod.GET)
+	public String playInsert(MusicInfoVo musicVo, HttpSession session) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("musicVo", musicVo);
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		map.put("user_id", userVo.getUser_id());
+		artService.playInsert(map);
+		return "redirect:/player/player";
+	}
+	// 삭제
+	@RequestMapping(value="/playDelete", method=RequestMethod.GET)
+	public String Delete(int play_index) throws Exception {
+		artService.playDelete(play_index);
+//		System.out.println("삭제됨"+play_index);
+		return "redirect:/player/player";
 	}
 	@RequestMapping(value="/playList", method=RequestMethod.GET)
 	public void listUp() {
