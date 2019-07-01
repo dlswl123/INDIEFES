@@ -13,6 +13,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PlayListVo;
 
 @Repository
 public class ArtInfoDaoImpl implements IArtInfoDao {
@@ -61,14 +62,25 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	
 	// 수정
 	@Override
-	public ArtInfoVo artModify(String user_id, int art_number) throws Exception {
+	public ArtInfoVo artModifyFrom(String user_id, int art_number) throws Exception {
 		HashMap<String, Object> artMap = new HashMap<>();
 		artMap.put("user_id", user_id);
 		artMap.put("art_number", art_number);
-		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artModify", artMap);
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artModifyFrom", artMap);
 		return artVo;
 	}
-
+	
+	// 수정처리
+	@Override
+	public void artModify(ArtInfoVo artInfoVo, String user_id) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("artInfoVo", artInfoVo);
+		map.put("user_id", user_id);
+		sqlSession.update(NAMESPACE + ".artModify", map);
+		
+	}
+	
+	// 앨범 리스트 가져오기
 	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
 		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".artList", pagingDto);
@@ -100,6 +112,12 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 
 	@Override
+	public List<PlayListVo> playListInfo(String user_id) throws Exception {
+		List<PlayListVo> playListInfo = sqlSession.selectList(NAMESPACE + ".playListInfo", user_id);
+		return playListInfo;
+	}
+		
+	@Override	
 	public int artCount(PagingDto pagingDto) throws Exception {
 		int artCount = sqlSession.selectOne(NAMESPACE + ".artCount", pagingDto);
 		return artCount;
@@ -110,5 +128,17 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		List<MusicInfoVo> playList = sqlSession.selectList(NAMESPACE + ".playList", user_id);
 		return playList;
 	}
+	@Override
+	public void playInsert(PlayListVo vo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".playInsert", vo);
+		
+	}
+	
+	@Override
+	public void playDelete(int play_index) throws Exception {
+		sqlSession.delete(NAMESPACE + ".playDelete", play_index);
+		
+	}
+
 
 }

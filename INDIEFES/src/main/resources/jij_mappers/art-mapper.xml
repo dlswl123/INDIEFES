@@ -43,12 +43,24 @@
 	</select>
 	
 <!-- 	앨범정보 수정폼 -->
-	<select id="artModify" resultType="ArtInfoVo">
+	<select id="artModifyFrom" resultType="ArtInfoVo">
 		select * 
 		from art_info
 		where user_id = #{user_id}
 		and art_number = #{art_number}
 	</select>
+	
+<!-- 	앨범수정하기 -->
+	<update id="artModify">
+		update art_info set
+			art_genre = #{art_genre}
+			art_title = #{art_title}
+			art_cover = #{art_cover}
+			art_pr = #{art_pr}
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+		
+	</update>
 	
 <!-- 	앨범 리스트 가져오기 -->
 	<select id="artList" resultType="ArtInfoVo">
@@ -134,14 +146,29 @@
        	</if>
 	</sql>
 	
-<!-- 	노래 리스트 가져오기 -->
+<!-- 	리스트에 노래 가져오기 -->
 	<select id="playList" resultType="MusicInfoVo">
 		select *
 		from music_info
 		where music_number in (select music_number
 							  from play_list
 							  where user_id = #{user_id})
+		order by music_number					  
+	</select>
+<!-- 	플레이 리스트 -->
+	<select id="playListInfo" resultType="PlayListVo">
+		select * from play_list
+		where user_id = #{user_id}
 		order by music_number
 	</select>
-	
+<!-- 	노래 리스트 등록 -->
+	<delete id="playInsert">
+		insert into play_list(user_id,music_number,play_index)
+		values (#{user_id},#{music_number},seq_playlist.nextval);
+	</delete>
+<!-- 	노래 리스트 삭제 -->
+	<delete id="playDelete">
+		delete from play_list
+		where play_index = #{play_index} 
+	</delete>
 </mapper>
