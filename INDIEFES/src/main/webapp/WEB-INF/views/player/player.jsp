@@ -38,7 +38,6 @@ function allowDrop(ev) {
 </head>
 
 <body>
-<!-- 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script> -->
     <div ondrop="drop(event)" ondragover="allowDrop(event)" style=" width: 100%; height: 0px; text-align: center;">
       	<img src=" <c:url value ='/resources/images/Delete.png'/>" alt="삭제이미지" style="width: 50px; height: 50px;"/>
     </div>
