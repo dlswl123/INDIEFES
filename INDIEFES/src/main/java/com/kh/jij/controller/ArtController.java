@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
+import com.kh.jij.persistence.ArtInfoDaoImpl;
 import com.kh.jij.persistence.IMusicInfoDao;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.service.IArtInfoService;
@@ -65,33 +66,47 @@ public class ArtController {
 
 //	 앨범정보 수정 폼
 	@RequestMapping(value = "/art_modify", method = RequestMethod.GET)
-	public String ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
-			throws Exception {
+	public String ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model) throws Exception {
 //		System.out.println(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 		String url = "";
 //		if (userVo != null) {
 //			String user_id = userVo.getUser_id();
 			String user_id = "indie1";
-			
-//			String user_id = "indie1";
-//			String team_name = "알약";
 //			System.out.println("ArtController, art_modify, userVo:" + userVo);
 //			System.out.println("ArtController, art_modify, teamName:" + teamName);
-			ArtInfoVo artVo = artService.artModify(user_id, art_number);
+			ArtInfoVo artVo = artService.artModifyForm(user_id, art_number);
 			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 			int track_number = musicService.getMaxTrackNum(art_number);
 			model.addAttribute("artVo", artVo);
 			model.addAttribute("musicList", musicList);
 			model.addAttribute("userVo", userVo);
 			model.addAttribute("track_number", track_number);
-			url = "art/art_modify";
+			url = "/art/art_modify";
 //		} else {
 //			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
 //		}
 		return url;
-
 	}
+	
+	// 앨범 수정
+	@RequestMapping(value = "/art_modify", method = RequestMethod.POST)
+	public String ArtModify(ArtInfoVo artVo, @RequestParam("file") MultipartFile file, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		artVo.setUser_id(userVo.getUser_id());
+		artService.artModify(artVo, userVo.getUser_id());
+		System.out.println("ArtController, ArtModify, artVo:" + artVo);
+		// 파일 업로드(@RequestParam("file")MultipartFile file)
+		String originalName = file.getOriginalFilename();
+		try {
+			FileUploadUtil.uploadFile(uploadPath, originalName, artVo, file.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/art/art_info/" + artVo.getArt_number() + "/" + artVo.getTeam_number();
+	}
+	
 
 	// 앨범리스트 폼
 	@RequestMapping(value = "/art_list", method = RequestMethod.GET)

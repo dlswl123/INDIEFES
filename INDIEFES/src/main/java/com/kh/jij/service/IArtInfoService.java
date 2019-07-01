@@ -35,8 +35,11 @@ public interface IArtInfoService {
 	// 앨범 정보 가져오기
 	public ArtInfoVo artRead(int art_number) throws Exception;
 	
-	// 앨범 정보 가져오기
-	public ArtInfoVo artModify(String user_id, int art_number) throws Exception;
+	// 앨범 수정 가져오기
+	public ArtInfoVo artModifyForm(String user_id, int art_number) throws Exception;
+	
+	// 앨범 정보 수정
+	public void artModify(ArtInfoVo artInfoVo, String user_id) throws Exception;
 	
 	// 앨범 리스트 가져오기
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception;

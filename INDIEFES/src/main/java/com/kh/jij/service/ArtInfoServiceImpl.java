@@ -23,17 +23,19 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	@Inject
 	private IArtInfoDao artDao;
 
-	@Override
 	// 앨범정보입력
+	@Override
 	public void insert(ArtInfoVo vo) throws Exception {
 		artDao.insert(vo);
 	}
+	
 	// 입력앨범정보
 	@Override
 	public ArtInfoVo artInfo(int team_number) throws Exception {
 		ArtInfoVo artVo = artDao.artInfo(team_number);
 		return artVo;
 	}
+	
 	// 팀생성
 	@Transactional
 	@Override
@@ -76,14 +78,22 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		return artVo;
 	}
 	
-	//  수정
-//	@Override
-	public ArtInfoVo artModify(String user_id, int art_number) throws Exception {
+	//  수정폼
+	@Override
+	public ArtInfoVo artModifyForm(String user_id, int art_number) throws Exception {
 		
-		ArtInfoVo artVo = artDao.artModify(user_id, art_number);
+		ArtInfoVo artVo = artDao.artModifyFrom(user_id, art_number);
 		return artVo;
 	}
 
+	// 수정처리
+	@Override
+	public void artModify(ArtInfoVo artInfoVo, String user_id) throws Exception {
+		artDao.artModify(artInfoVo, user_id);
+		
+	}
+	
+	
 
 	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
