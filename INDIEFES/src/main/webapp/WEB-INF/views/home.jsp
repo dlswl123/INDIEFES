@@ -5,6 +5,19 @@
 
 
 
+		<script>
+			$(document).ready(function() {
+			
+			var message = "${message}";
+			if (message == "success") {
+				alert("회원정보가 수정되었습니다 재로그인 해주십시오");
+			}
+			else if(message == "delete-success"){
+				alert("회원탈퇴가 완료되었습니다");
+			}
+		});
+			
+		</script>
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div>
 				<h1>

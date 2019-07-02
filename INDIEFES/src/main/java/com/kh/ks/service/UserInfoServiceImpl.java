@@ -61,4 +61,19 @@ public class UserInfoServiceImpl implements IUserInfoService {
 		return nickChk;
 	}
 
+	// 회원정보 수정
+	@Override
+	public void userInfoAdjust(UserInfoVo userInfoVo) throws Exception {
+		
+		userInfoDao.userInfoAdjust(userInfoVo);
+		
+	}
+
+	@Override
+	public void userDelete(String user_id) throws Exception {
+		System.out.println(user_id);
+		userInfoDao.userDelete(user_id);
+		
+	}
+
 }
