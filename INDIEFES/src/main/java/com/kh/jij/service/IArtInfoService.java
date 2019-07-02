@@ -57,6 +57,13 @@ public interface IArtInfoService {
 	// 리스트에서 곡 삭제
 	public void playDelete(int play_index) throws Exception;
 	
+	// 최신 앨범
+	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception;
+	public int toDayCount()throws Exception;
+	
+	// 인기 앨범
+	public List<ArtInfoVo> goodList() throws Exception;
+	
 	public int getIndieNumber(String user_id) throws Exception;
 	public String getTeamName (int team_number) throws Exception;
 	public int artCount(PagingDto pagingDto)throws Exception;

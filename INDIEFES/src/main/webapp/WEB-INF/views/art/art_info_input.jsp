@@ -73,7 +73,7 @@ $(document).ready(function() {
 		$("input[name=art_cover]").val(art_cover);
 		var art_genre = $("#art_genre").val();
 		$("input[name=art_genre]").val(art_genre);
-		console.log($("input[name=art_cover]").val());
+// 		console.log($("input[name=art_cover]").val());
 		// 폼을 전송
 		$("#art_info_input").submit();
 	});

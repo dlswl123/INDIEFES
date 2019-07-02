@@ -129,4 +129,21 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		
 	}
 
+	@Override
+	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
+		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".toDayList",pagingDto);
+		return artList;
+	}
+	@Override
+	public List<ArtInfoVo> goodList() throws Exception {
+		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".goodList");
+		return artList;
+	}
+
+	@Override
+	public int toDayCount() throws Exception {
+		int artCount = sqlSession.selectOne(NAMESPACE + ".toDayCount");
+		return artCount;
+	}
+
 }

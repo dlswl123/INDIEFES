@@ -104,6 +104,7 @@ public class ArtController {
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
 		paginationDto.setPagingDto(pagingDto);
+		System.out.println("리스트"+paginationDto);
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
 		model.addAttribute("paginationDto", paginationDto);
@@ -218,6 +219,15 @@ public class ArtController {
 		model.addAttribute("teamName", teamName);
 		model.addAttribute("teamArtList", teamArtList);
 		model.addAttribute("userVo", userVo);
+		
+	}
+	// 팀정보
+	@RequestMapping(value = "/home_art_list", method = RequestMethod.GET)
+	public void HomeArtList(PagingDto pagingDto,Model model) throws Exception {
+		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
+		List<IndieTeamVo> teamList = artService.getIndieTeam();
+		model.addAttribute("artList", artList);
+		model.addAttribute("teamList", teamList);
 		
 	}
 
