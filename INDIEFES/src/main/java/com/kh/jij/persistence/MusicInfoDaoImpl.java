@@ -1,5 +1,6 @@
 package com.kh.jij.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -7,7 +8,9 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.MusicLyricsVo;
 
 @Repository
 public class MusicInfoDaoImpl implements IMusicInfoDao {
@@ -43,6 +46,20 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 
 	@Override
 	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicUpdate", musicInfoVo);
+	}
+	
+
+
+	@Override
+	public void musicDelete(MusicInfoVo musicInfoVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicDelete", musicInfoVo);
+		
+	}
+
+	@Override
+	public void musicLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".lyricsInsert", musicLyricsVo);
 		
 	}
 	

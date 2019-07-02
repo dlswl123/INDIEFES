@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
@@ -50,7 +49,7 @@ public class ArtController {
 
 	// 앨범정보조회 폼
 	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
-	public String ArtInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model) throws Exception {
+	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model) throws Exception {
 		String teamName = artService.getTeamName(team_number);
 		ArtInfoVo artVo = artService.artRead(art_number);
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
@@ -65,37 +64,59 @@ public class ArtController {
 
 //	 앨범정보 수정 폼
 	@RequestMapping(value = "/art_modify", method = RequestMethod.GET)
-	public String ArtModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model)
-			throws Exception {
+	public String artModify(@RequestParam("art_number") int art_number, @RequestParam("team_number") int team_number, HttpSession session, Model model) throws Exception {
 //		System.out.println(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 		String url = "";
 //		if (userVo != null) {
 //			String user_id = userVo.getUser_id();
 			String user_id = "indie1";
-			
-//			String user_id = "indie1";
-//			String team_name = "알약";
 //			System.out.println("ArtController, art_modify, userVo:" + userVo);
 //			System.out.println("ArtController, art_modify, teamName:" + teamName);
-			ArtInfoVo artVo = artService.artModify(user_id, art_number);
+			ArtInfoVo artVo = artService.artModifyForm(user_id, art_number);
 			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 			int track_number = musicService.getMaxTrackNum(art_number);
 			model.addAttribute("artVo", artVo);
 			model.addAttribute("musicList", musicList);
 			model.addAttribute("userVo", userVo);
 			model.addAttribute("track_number", track_number);
-			url = "art/art_modify";
+			url = "/art/art_modify";
 //		} else {
 //			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
 //		}
 		return url;
-
+	}
+	
+	// 앨범 수정
+	@RequestMapping(value = "/art_modify", method = RequestMethod.POST)
+	public String artModify(ArtInfoVo artVo, @RequestParam("file") MultipartFile file, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		artVo.setUser_id(userVo.getUser_id());
+		System.out.println("ArtController, ArtModify, artVo:" + artVo);
+		artService.artModify(artVo);
+		// 파일 업로드(@RequestParam("file")MultipartFile file)
+		String originalName = file.getOriginalFilename();
+		try {
+			FileUploadUtil.uploadFile(uploadPath, originalName, artVo, file.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/art/art_info/" + artVo.getArt_number() + "/" + artVo.getTeam_number();
+	}
+	
+	// 앨범 삭제
+	@RequestMapping(value="/art_delete/{art_number}", method = RequestMethod.GET)
+	public String artDelete(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		artService.artDelete(art_number, user_id);
+		return "redirect:/art/art_list";
 	}
 
 	// 앨범리스트 폼
 	@RequestMapping(value = "/art_list", method = RequestMethod.GET)
-	public void ArtList(PagingDto pagingDto, Model model) throws Exception {
+	public void artList(PagingDto pagingDto, Model model) throws Exception {
 		pagingDto.setPerPage(24);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
@@ -105,6 +126,7 @@ public class ArtController {
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
 		paginationDto.setPagingDto(pagingDto);
+		System.out.println("리스트"+paginationDto);
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
 		model.addAttribute("paginationDto", paginationDto);
@@ -155,7 +177,7 @@ public class ArtController {
 
 	// 앨범정보 입력폼
 	@RequestMapping(value = "/art_info_input", method = RequestMethod.GET)
-	public void ArtInfoInput() {
+	public void artInfoInput() {
 //		System.out.println("ArtInfoInput()");
 	}
 
@@ -182,13 +204,13 @@ public class ArtController {
 
 	// 팀생성 및 가입 폼
 	@RequestMapping(value = "/indie_team_input", method = RequestMethod.GET)
-	public void TeamInput() {
+	public void teamInput() {
 		System.out.println("TeamInput()");
 	}
 
 	// 팀생성처리
 	@RequestMapping(value = "/indie_team_input", method = RequestMethod.POST)
-	public String TeamInfoInput(IndieTeamVo teamVo, HttpSession session) throws Exception {
+	public String teamInfoInput(IndieTeamVo teamVo, HttpSession session) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("teamVo", teamVo);
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
@@ -210,7 +232,7 @@ public class ArtController {
 	
 	// 팀정보
 	@RequestMapping(value = "/indie_team_info", method = RequestMethod.GET)
-	public void TeamInfo(HttpSession session,Model model,int team_number) throws Exception {
+	public void teamInfo(HttpSession session,Model model,int team_number) throws Exception {
 		List<TeamMemberVo> memberList = artService.teamInfo(team_number);
 		String teamName = artService.getTeamName(team_number);
 		List<ArtInfoVo> teamArtList = artService.teamArtList(team_number);
@@ -219,6 +241,15 @@ public class ArtController {
 		model.addAttribute("teamName", teamName);
 		model.addAttribute("teamArtList", teamArtList);
 		model.addAttribute("userVo", userVo);
+		
+	}
+	// 팀정보
+	@RequestMapping(value = "/home_art_list", method = RequestMethod.GET)
+	public void HomeArtList(PagingDto pagingDto,Model model) throws Exception {
+		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
+		List<IndieTeamVo> teamList = artService.getIndieTeam();
+		model.addAttribute("artList", artList);
+		model.addAttribute("teamList", teamList);
 		
 	}
 

@@ -21,8 +21,7 @@
 <!-- 	음악수정 -->
 	<update id="musicUpdate">
 		update music_info set
-			music_title = #{music_title},
-			file_path = #{file_path}
+			music_title = #{music_title}
 		where art_number = #{art_number}
 		and music_number = #{music_number}
 		and team_number = #{team_number}
@@ -36,6 +35,20 @@
 		and music_number = #{music_number}
 		and team_number = #{team_number}
 	</update>
+	
+<!-- 	앨범등록 -->
+	<update id="musicArtUpdate">
+		update music_info set
+			upload_check = 1
+		where art_number = #{art_number}
+		and team_number = #{team_number}
+	</update>
+	
+	<insert id="lyricsInsert">
+		insert into music_lyrics (music_number, lyrics)
+		values(#{music_number},#{lyrics})
+	</insert>
+	
 	
 <!-- 	트랙리스트 확인 -->
 	<select id="getMaxTrackNum" resultType="string">

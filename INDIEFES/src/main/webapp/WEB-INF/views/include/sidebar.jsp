@@ -30,6 +30,12 @@
 						<font style="color:#ffffff;">로그아웃</font>
 					</a></h1>
 					</section>
+					
+					<section id="userInfo">
+					<h1><a href="/indiefes/user/user-info-pwinput">
+						<font style="color:#ffffff;">회원정보</font>
+					</a></h1>
+					</section>
 			    </c:otherwise>
 			 
 			</c:choose>

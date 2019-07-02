@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.MusicLyricsVo;
 import com.kh.jij.persistence.IMusicInfoDao;
 
 @Service
@@ -30,6 +31,22 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 	public int getMaxTrackNum(int art_number) throws Exception {
 		int track_number = musicDao.getMaxTrackNum(art_number);
 		return track_number;
+	}
+
+	@Override
+	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
+		musicDao.musicUpdate(musicInfoVo);
+	}
+
+	@Override
+	public void musicDelete(MusicInfoVo musicInfoVo) throws Exception {
+		musicDao.musicDelete(musicInfoVo);
+	}
+
+	@Override
+	public void musicLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
+		musicDao.musicLyrics(musicLyricsVo);
+		
 	}
 	
 }

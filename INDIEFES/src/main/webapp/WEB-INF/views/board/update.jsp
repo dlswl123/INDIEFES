@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
+<script src="/indiefes/resources/js/myscript.js"></script> 
 <script>
 $(document).ready(function(){
 	// 목록보기 버튼
@@ -31,15 +32,15 @@ $(document).ready(function(){
 				console.log(fName);
 				
 				
-				divEl   += "<img src='/upload/displayFile?fileName="  + thumbnailName + "'>"
+				divEl   += "<img src='/indiefes/upload/displayFile?fileName="  + thumbnailName + "'>"
 						
 			} else { // 이미지가 아닌 경우
 				
-				divEl  += "<img src='/resources/images/file_image.png'>";
+				divEl  += "<img src='/indiefes/resources/images/file_image.png'>";
 				
 			}
 			
-				divEl	+= "<br><a target='blank' href='/upload/displayFile?fileName="
+				divEl	+= "<br><a target='blank' href='/indiefes/upload/displayFile?fileName="
 						+ fullName + "'>" + fName 
 						+ "</a>&nbsp;&nbsp;<span><a href='#' class='deleteFile' data-fileName='" + fullName
 						+ "'>&times;</a></span>"
@@ -54,7 +55,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		var that = $(this);
 		var fileName = $(this).attr("data-fileName");
-		var url = "/upload/deleteFile?fileName=" + fileName;
+		var url = "/indiefes/upload/deleteFile?fileName=" + fileName;
 		$.get(url, function(result){
 			if (result == "success") {
 				that.parents("div.img-thumbnail").remove();
@@ -74,7 +75,6 @@ $(document).ready(function(){
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 	<h1>글 수정</h1>
-	데이터확인 = ${param.board_number}
 	<form role="form" method="post" action="/indiefes/board/update">
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">
@@ -84,8 +84,7 @@ $(document).ready(function(){
 				name="subject"value="${boardVo.subject}" />
 			</div>
 			<div class="form-group">
-				<label for="user_id">작성자</label> 
-				<input type="text" class="form-control" id="user_id" 
+				<input type="hidden" class="form-control" id="user_id" 
 						name="user_id" value="${boardVo.user_id}" readonly/>
 			</div>
 			<div class="form-group">
@@ -102,16 +101,17 @@ $(document).ready(function(){
 				<label for="reg_date">작성일</label> 
 				<input type="text" class="form-control" id="reg_date" 
 					value="${boardVo.reg_date}" readonly/>
-			</div>
-				<label for="file_path">첨부파일</label>
-				<div id="uploadedList"></div>
-					
-					<div class="row">
+			<div class="row">
 					<div class="col-md-12">
+						<label for="regdate">첨부파일</label> 
+						<div id="uploadedList">
+						
+						</div>
+					</div>
+				</div>
 					<input type="submit" class="btn btn-success" value="수정완료" id="btnUpdate"/>
 					<button type="button" class="btn btn-warning" id="btnList">목록보기</button>
 			   </div>
-			</div>
 		</form>
 	</div>
 

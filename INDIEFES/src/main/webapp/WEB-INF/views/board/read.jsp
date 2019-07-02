@@ -3,6 +3,8 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
+
+<script src="/indiefes/resources/js/myscript.js"></script> 
 <script>
 $(document).ready(function(){
 	// 수정하기버튼
@@ -74,7 +76,6 @@ $(document).ready(function(){
 </form>	 	
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<h1>글 조회</h1>
-			데이터확인 = ${param.board_number}
 			<form role="form" method="post">
 				<div class="form-group">
 					<label for="subject">글제목</label>
@@ -107,10 +108,11 @@ $(document).ready(function(){
 						value="${boardVo.reg_date}" readonly/>
 				</div>
 				<div class="form-group">
-					<label for="file_path">첨부파일</label>
-					<input type="text" class="form-control" id="uploadedList"
-						value="${boardVo.file_path}" readonly/>
-				</div>
+					<label for="regdate">첨부파일</label>
+					<div id="uploadedList">
+						
+					</div>
+				</div>	
 				</form>
 			<div class="row">
 				<div class="col-md-12">

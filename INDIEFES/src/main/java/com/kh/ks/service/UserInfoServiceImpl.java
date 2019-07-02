@@ -12,7 +12,6 @@ import com.kh.ks.persistence.IUserInfoDao;
 @Service
 public class UserInfoServiceImpl implements IUserInfoService {
 	
-	
 	@Inject
 	private IUserInfoDao userInfoDao;
 
@@ -60,6 +59,21 @@ public class UserInfoServiceImpl implements IUserInfoService {
 		UserInfoVo nickChk = userInfoDao.nickCheck(user_nick);
 		System.out.println("닉네임 중복 체크 service(Controller로 넘겨주는 데이터) : " + nickChk);
 		return nickChk;
+	}
+
+	// 회원정보 수정
+	@Override
+	public void userInfoAdjust(UserInfoVo userInfoVo) throws Exception {
+		
+		userInfoDao.userInfoAdjust(userInfoVo);
+		
+	}
+
+	@Override
+	public void userDelete(String user_id) throws Exception {
+		System.out.println(user_id);
+		userInfoDao.userDelete(user_id);
+		
 	}
 
 }

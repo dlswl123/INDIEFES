@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>  
-
 <style>
 	th {
     height: 100px;
@@ -12,7 +11,9 @@
   .btn {
   border-radius: 12px;
   }
-
+ .icon {
+  cursor: pointer;
+ }
   
 </style>
 
@@ -42,9 +43,46 @@ $(document).ready(function() {
 		}
 	});
 	
+	// 음악리스트- 듣기버튼
+	$("#tblMusicList").on("click", ".spMusicPlay",function() {
+		var music_number = $(this).attr("data-music_number");
+		console.log(music_number);
+		
+	});
+	// 음악리스트- 가사버튼
+	$("#tblMusicList").on("click", ".spMusicLyrics",function() {
+		var music_number = $(this).attr("data-music_number");
+		console.log(music_number);
+		
+	});
+	// 음악리스트- 다운버튼
+	$("#tblMusicList").on("click", ".spMusicDown",function() {
+		var music_number = $(this).attr("data-music_number");
+		console.log(music_number);
+		
+	});
+	// 음악리스트- 담기버튼
+	$("#tblMusicList").on("click", ".spMusicCart",function() {
+		var music_number = $(this).attr("data-music_number");
+		console.log(music_number);
+		
+	});
+	// 앨범정보- 좋아요버튼
+	$(".spLikedCount").click(function() {
+		var art_number = $(this).attr("data-art_number");
+		console.log(art_number);
+		
+	});
+	// 앨범정보- 추천버튼
+	$(".spGoodCount").click(function() {
+		var art_number = $(this).attr("data-art_number");
+		console.log(art_number);
+		
+	});
+	
 	// 사용자용 끝
 	
-// 		뮤지션용
+// 		뮤지션(리더)용
 		// 앨범수정 버튼
 	$("#btnArtModify").click(function() {
 		location.href="/indiefes/art/art_modify?art_number=${artVo.art_number }&team_number=${artVo.team_number}";
@@ -52,7 +90,7 @@ $(document).ready(function() {
 	
 	// 앨범삭제 버튼
 	$("#btnArtDelete").click(function() {
-		
+		location.href="/indiefes/art/art_delete/${artVo.art_number}";
 	});
 	// 뮤지션용 끝
 	
@@ -87,7 +125,7 @@ $(document).ready(function() {
 			</div>
 			
 			<div class="row">
-				<div class="col-md-12"  align="right">
+				<div class="col-md-10"  align="right">
 <!-- 				실행버튼 -->
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}"> --%>
@@ -110,12 +148,19 @@ $(document).ready(function() {
 <%-- 				</c:choose> --%>
 				</div>
 			</div>
+			<div class="row"  align="right">
+				<div class="col-md-12">
+				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-left: 30px;"><i class="far fa-heart fa-2x"></i></span>
+<!-- 					<i class="fas fa-heart"></i> -->
+				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-left: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span>
+<!-- 					<i class="fas fa-thumbs-up"></i> -->
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table">
 						<thead>
 							<tr>
-								<th><input type="checkbox" id="allCheckbox" /></th>
 								<th>번호</th>
 								<th class="song_name">곡</th>
 								<th>아티스트</th>
@@ -125,18 +170,20 @@ $(document).ready(function() {
 								<th>담기</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="tblMusicList">
 						<c:forEach items="${musicList}" var="musicInfoVo">
 							<tr>
-								<td><input type="checkbox" /></td>
+<!-- 								<td><input type="checkbox" /></td> -->
 								<td>${musicInfoVo.track_number}</td>
 								<td class="song_name">${musicInfoVo.music_title}</td>
 								<td>${teamName}</td>
-								<td><span style="color:blue; size: 10px"><i class="fas fa-caret-square-right"></i></span></td>
-								<td><span style="color:yellow; size: 10px"><i class="far fa-list-alt"></i></span></td>
-								<td><span style="color:green; size: 10px"><i class="fas fa-file-download"></i></span></td>
-								<td><span style="color:red; size: 10px"><i class="fas fa-cart-plus"></i></span></td>
+								<td><span class="spMusicPlay icon" style="color:blue;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-play"></i></span></td>
+								<td><span class="spMusicLyrics icon" style="color:yellow;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="far fa-file-alt"></i></span></td>
+<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
+								<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
+								<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-cart-plus"></i></span></td>
 							<tr>
+<%-- 							<a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}"></a> --%>
 						</c:forEach>
 						</tbody>
 					</table>

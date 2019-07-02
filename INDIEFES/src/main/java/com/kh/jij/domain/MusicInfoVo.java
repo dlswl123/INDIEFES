@@ -14,6 +14,7 @@ public class MusicInfoVo {
 	private int team_number;
 	
 	private String team_name;
+	private int play_index;
 
 	public int getArt_number() {
 		return art_number;
@@ -103,13 +104,20 @@ public class MusicInfoVo {
 		this.team_name = team_name;
 	}
 
+	public int getPlay_index() {
+		return play_index;
+	}
+
+	public void setPlay_index(int play_index) {
+		this.play_index = play_index;
+	}
+
 	@Override
 	public String toString() {
 		return "MusicInfoVo [art_number=" + art_number + ", music_number=" + music_number + ", track_number="
 				+ track_number + ", music_title=" + music_title + ", heard_count=" + heard_count + ", price=" + price
 				+ ", pay_count=" + pay_count + ", upload_check=" + upload_check + ", file_path=" + file_path
-				+ ", team_number=" + team_number + ", team_name=" + team_name + "]";
+				+ ", team_number=" + team_number + ", team_name=" + team_name + ", play_index=" + play_index + "]";
 	}
-
 
 }
