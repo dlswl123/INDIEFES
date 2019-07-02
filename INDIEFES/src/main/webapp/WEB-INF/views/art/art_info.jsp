@@ -207,15 +207,17 @@ $(document).ready(function() {
 						<tbody id="tblMusicList">
 						<c:forEach items="${musicList}" var="musicInfoVo">
 							<tr>
-								<td><input type="checkbox" /></td>
+<!-- 								<td><input type="checkbox" /></td> -->
 								<td>${musicInfoVo.track_number}</td>
 								<td class="song_name">${musicInfoVo.music_title}</td>
 								<td>${teamName}</td>
 								<td><span class="spMusicPlay icon" style="color:blue;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-play"></i></span></td>
 								<td><span class="spMusicLyrics icon" style="color:yellow;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="far fa-file-alt"></i></span></td>
-								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
+<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
+								<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
 								<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-cart-plus"></i></span></td>
 							<tr>
+<%-- 							<a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}"></a> --%>
 						</c:forEach>
 						</tbody>
 					</table>
