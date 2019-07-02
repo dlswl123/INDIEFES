@@ -58,7 +58,6 @@ public class HomeController {
 		model.addAttribute("toDayPaging", toDayPaging);
 		// 인기앨범
 		List<ArtInfoVo> goodList = artService.goodList();
-		System.out.println(goodList);
 		model.addAttribute("goodList", goodList);
 		return "home";
 	}
