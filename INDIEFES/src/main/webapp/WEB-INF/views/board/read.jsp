@@ -40,13 +40,13 @@ $(document).ready(function(){
 				var href="";
 				
 				
-				divEl   += "<img src='/upload/displayFile?fileName="  + thumbnailName + "'><br>"
+				divEl   += "<img src='/indiefes/upload/displayFile?fileName="  + thumbnailName + "'><br>"
 						+ "<a target='blank' href='/upload/displayFile?fileName="
 						+ fullName + "'>" + fName + "</a>";
 						
 			} else { // 이미지가 아닌 경우
-				 divEl	+= "<img src='/resources/images/file_image.png'><br>"
-				 		+ "<a href='/upload/displayFile?fileName=" + fullName + "'>" 
+				 divEl	+= "<img src='/indiefes/resources/images/file_image.png'><br>"
+				 		+ "<a href='/indiefes/upload/displayFile?fileName=" + fullName + "'>" 
 				 		+	fName + "</a>";
 				 		
 				
