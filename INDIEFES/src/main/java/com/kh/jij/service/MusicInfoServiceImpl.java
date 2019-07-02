@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.MusicLyricsVo;
 import com.kh.jij.persistence.IMusicInfoDao;
 
 @Service
@@ -40,6 +41,12 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 	@Override
 	public void musicDelete(MusicInfoVo musicInfoVo) throws Exception {
 		musicDao.musicDelete(musicInfoVo);
+	}
+
+	@Override
+	public void musicLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
+		musicDao.musicLyrics(musicLyricsVo);
+		
 	}
 	
 }

@@ -44,7 +44,7 @@ $(document).ready(function() {
 	
 	// 사용자용 끝
 	
-// 		뮤지션용
+// 		뮤지션(리더)용
 		// 앨범수정 버튼
 	$("#btnArtModify").click(function() {
 		location.href="/indiefes/art/art_modify?art_number=${artVo.art_number }&team_number=${artVo.team_number}";

@@ -3,6 +3,7 @@ package com.kh.jij.service;
 import java.util.List;
 
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.MusicLyricsVo;
 
 public interface IMusicInfoService {
 
@@ -19,4 +20,7 @@ public interface IMusicInfoService {
 	
 	// 노래 삭제
 	public void musicDelete(MusicInfoVo musicInfoVo) throws Exception;
+	
+	// 노래가사 입력
+	public void musicLyrics(MusicLyricsVo musicLyricsVo) throws Exception;
 }

@@ -62,14 +62,22 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	
 	// 수정
 	@Override
-	public ArtInfoVo artModify(String user_id, int art_number) throws Exception {
+	public ArtInfoVo artModifyFrom(String user_id, int art_number) throws Exception {
 		HashMap<String, Object> artMap = new HashMap<>();
 		artMap.put("user_id", user_id);
 		artMap.put("art_number", art_number);
-		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artModify", artMap);
+		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artModifyFrom", artMap);
 		return artVo;
 	}
-
+	
+	// 수정처리
+	@Override
+	public void artModify(ArtInfoVo artInfoVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".artModify", artInfoVo);
+		
+	}
+	
+	// 앨범 리스트 가져오기
 	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
 		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".artList", pagingDto);

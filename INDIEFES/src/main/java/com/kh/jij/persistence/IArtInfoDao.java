@@ -32,7 +32,10 @@ public interface IArtInfoDao {
 	public ArtInfoVo artRead(int art_number) throws Exception;
 	
 	// 앨범 수정정보 가져오기
-	public ArtInfoVo artModify(String user_id, int art_number) throws Exception;
+	public ArtInfoVo artModifyFrom(String user_id, int art_number) throws Exception;
+	
+	// 앨범 수정
+	public void artModify(ArtInfoVo artInfoVo) throws Exception;
 	
 	// 검색, paging, nowPage 나중에 추가할것.
 	// 앨범 리스트 가져오기
