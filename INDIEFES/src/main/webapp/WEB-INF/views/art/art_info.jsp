@@ -50,11 +50,43 @@ $(document).ready(function() {
 		
 	});
 	// 음악리스트- 가사버튼
-	$("#tblMusicList").on("click", ".spMusicLyrics",function() {
+	$("#tblMusicList").on("click", ".spMusicLyrics", function() {
+		$("#modal-a").trigger("click");
 		var music_number = $(this).attr("data-music_number");
-		console.log(music_number);
-		
+		$("#btnModalLyric").attr("data-music_number", music_number);
 	});
+	
+	// 모달 수정 버튼
+	$("#btnModalLyric").click(function() {
+		var music_number = $(this).attr("data-music_number");
+		var lyrics = $("#lyrics").val().trim();
+		console.log(music_number);
+		console.log(lyrics);
+		var url = "/indiefes/music/lyrics";
+		var data = {
+			"music_number" : music_number,
+			"lyrics" : lyrics
+		};
+		$.ajax({
+			"type" : 'post',
+			"url" : url,
+			"headers" : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Overried" : "post"
+			},
+			"dataType" : "text",
+			"data" : JSON.stringify(data),
+			"success" : function(receivedData) {
+				console.log(receivedData); // success
+				if (receivedData.trim() == "success") {
+					$("#trackList").empty();
+	 				getList();
+				}
+			}
+		}); // $.ajax
+		$("#modal-lyrics").modal("hide");
+	});
+	
 	// 음악리스트- 다운버튼
 	$("#tblMusicList").on("click", ".spMusicDown",function() {
 		var music_number = $(this).attr("data-music_number");
@@ -125,7 +157,7 @@ $(document).ready(function() {
 			</div>
 			
 			<div class="row">
-				<div class="col-md-10"  align="right">
+				<div class="col-md-12"  align="right">
 <!-- 				실행버튼 -->
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}"> --%>
@@ -148,19 +180,21 @@ $(document).ready(function() {
 <%-- 				</c:choose> --%>
 				</div>
 			</div>
-			<div class="row"  align="right">
-				<div class="col-md-12">
-				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-left: 30px;"><i class="far fa-heart fa-2x"></i></span>
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-md-12" align="right"> -->
+<%-- 				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-heart fa-2x"></i></span> --%>
 <!-- 					<i class="fas fa-heart"></i> -->
-				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-left: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span>
+<%-- 				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span> --%>
 <!-- 					<i class="fas fa-thumbs-up"></i> -->
-				</div>
-			</div>
+				
+<!-- 				</div> -->
+<!-- 			</div> -->
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table">
 						<thead>
 							<tr>
+								<th><input type="checkbox" id="allCheckbox" /></th>
 								<th>번호</th>
 								<th class="song_name">곡</th>
 								<th>아티스트</th>
@@ -187,6 +221,44 @@ $(document).ready(function() {
 					</table>
 				</div>
 			</div>
+<!-- 			Modal -->
+			<div class="row" >
+				<div class="col-md-12">
+					<a id="modal-a" href="#modal-lyrics" role="button" class="btn" data-toggle="modal"></a>
+					
+					<div class="modal fade" id="modal-lyrics" role="dialog" >
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="myModalLabel">
+										${artVo.art_title }가사
+									</h5> 
+									<button type="button" class="close" data-dismiss="modal">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								<div class="modal-body">
+								<textarea  rows="10" cols="80" id="lyrics" class="form-control" name="lyrics">
+								</textarea>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" id="btnModalLyric"
+										data-music_number="" data-modify_lyric="">
+										수정
+									</button> 
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">
+										닫기
+									</button>
+								</div>
+							</div>
+							
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+<!-- 			 Modal End -->
 		</div>
 
 <%@ include file="../include/sidebar.jsp" %>
