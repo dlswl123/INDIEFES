@@ -62,17 +62,20 @@ public class MusicController {
 		return entity;
 	}
 
-	// 수정하기
+	// 음악 수정하기
 	@RequestMapping(value = "/update/{music_number}", method = RequestMethod.PUT)
 	public ResponseEntity<String> update(@PathVariable("music_number") int music_number, @RequestBody MusicInfoVo musicInfoVo, HttpSession session) throws Exception {
 		musicInfoVo.setMusic_number(music_number);
 		ResponseEntity<String> entity = null;
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		System.out.println(musicInfoVo);
-		System.out.println(userVo);
+		String user_id = userVo.getUser_id();
+		int team_number = artService.getIndieNumber(user_id);
+		musicInfoVo.setTeam_number(team_number);
+//		System.out.println(musicInfoVo);
+//		System.out.println(team_number);
 //		if (userVo != null) {
 			try {
-				musicService.musicUpdate(musicInfoVo, userVo.getUser_id());
+				musicService.musicUpdate(musicInfoVo);
 				entity = new ResponseEntity<String>("success", HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();

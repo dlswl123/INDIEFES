@@ -109,15 +109,10 @@ $(document).ready(function() {
 	$("#btnArtAdd").click(function() {
 		var file = $("#art_cover").val().split("\\");
 		var art_cover = file[file.length-1]
-		if(art_cover != null || art_cover != "") {
-			$("input[name=art_cover]").val("${artVo.art_cover}");	
-		} else {
-			$("input[name=art_cover]").val(art_cover);
-			
-		}
+		$("input[name=art_cover]").val(art_cover);
 		var art_genre = $("#art_genre").val();
 		$("input[name=art_genre]").val(art_genre);
-		console.log($("input[name=art_cover]").val());
+		console.log(art_cover);
 		console.log(file);
 		// 폼을 전송
 		$("#art_info_input").submit();

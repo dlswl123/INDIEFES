@@ -45,11 +45,8 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 	}
 
 	@Override
-	public void musicUpdate(MusicInfoVo musicInfoVo, String user_id) throws Exception {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("musicInfoVo", musicInfoVo);
-		map.put("user_id", user_id);
-		sqlSession.update(NAMESPACE + ".musicUpdate", map);
+	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicUpdate", musicInfoVo);
 	}
 	
 
