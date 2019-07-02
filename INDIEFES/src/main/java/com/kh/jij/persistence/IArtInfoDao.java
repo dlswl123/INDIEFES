@@ -37,6 +37,9 @@ public interface IArtInfoDao {
 	// 앨범 수정
 	public void artModify(ArtInfoVo artInfoVo) throws Exception;
 	
+	// 앨범 삭제
+	public void artDelete(int art_number, String user_id) throws Exception;
+	
 	// 검색, paging, nowPage 나중에 추가할것.
 	// 앨범 리스트 가져오기
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception;
@@ -61,6 +64,12 @@ public interface IArtInfoDao {
 	
 	// 리스트에서 곡 삭제
 	public void playDelete(int play_index) throws Exception;
+	
+	// 최신 앨범
+	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception;
+	public int toDayCount()throws Exception;
+	// 인기 앨범
+	public List<ArtInfoVo> goodList() throws Exception;
 	
 	public int artCount(PagingDto pagingDto)throws Exception;
 }

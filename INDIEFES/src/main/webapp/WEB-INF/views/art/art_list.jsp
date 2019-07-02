@@ -121,28 +121,52 @@ $(document).ready(function() {
 						<a href="/indiefes/" >Home</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="발라드">발라드</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="발라드" 
+						<c:if test="${paginationDto.pagingDto.keyword == '발라드'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>발라드</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="댄스">댄스</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="댄스"
+						<c:if test="${paginationDto.pagingDto.keyword == '댄스'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>댄스</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="랩/힙합">랩/힙합</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="랩/힙합"
+						<c:if test="${paginationDto.pagingDto.keyword == '랩/힙합'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>랩/힙합</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="R&B/Soul">R&B/Soul</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="R&B/Soul"
+						<c:if test="${paginationDto.pagingDto.keyword == 'R&B/Soul'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>R&B/Soul</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="재즈">재즈</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="재즈"
+						<c:if test="${paginationDto.pagingDto.keyword == '재즈'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>재즈</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="록/메탈">록/메탈</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="록/메탈"
+						<c:if test="${paginationDto.pagingDto.keyword == '록/메탈'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>록/메탈</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="포크/블루스">포크/블루스</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="포크/블루스" 
+						<c:if test="${paginationDto.pagingDto.keyword == '포크/블루스'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>포크/블루스</a>
 					</li>
 					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_list" class="art_genre" data-genre="기타">기타</a>
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="기타"
+						<c:if test="${paginationDto.pagingDto.keyword == '기타'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>기타</a>
 					</li>
 					<c:if test="${userInfoVo.user_level == 2 }">
 					<li class="breadcrumb-item">
@@ -167,12 +191,19 @@ $(document).ready(function() {
 								selected
 								</c:if>>가수명</option>
 				</select>
-				<input type="text" id="keyword" value="${paginationDto.pagingDto.keyword}">
+				<input type="text" id="keyword" 
+				<c:choose>
+					<c:when test="${paginationDto.pagingDto.searchType == 'artGenre'}">
+						value=""
+					</c:when>
+					<c:otherwise>
+						value="${paginationDto.pagingDto.keyword}"
+					</c:otherwise>
+				</c:choose>>
 				<input type="button" class="btn btn-primary" id="btnSearch" value="검색">
 				<input type="button" class="btn btn-warning" id="btnAllSearch" value="전체조회">
 			</div>
 			</div>
-	
 	</div>
 	
 	<div class="row">
@@ -182,6 +213,8 @@ $(document).ready(function() {
 <!-- 			앨범 리스트 -->
 				<ul  class="albumList">
 				<li>
+			<c:choose>
+				<c:when test="${not empty artList}">
 					<c:forEach items="${artList}" var="artVo">
 					<li class="art_info">
 						<figure class="albumInfo">
@@ -210,6 +243,11 @@ $(document).ready(function() {
 						</figure>
 					</li>
 					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<span>검색결과가 존재하지 않습니다.</span>
+				</c:otherwise>
+			</c:choose>
 				</li>
 				</ul>
 <!-- 				앨범리스트 끝 -->

@@ -82,7 +82,6 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	//  수정폼
 	@Override
 	public ArtInfoVo artModifyForm(String user_id, int art_number) throws Exception {
-		
 		ArtInfoVo artVo = artDao.artModifyFrom(user_id, art_number);
 		return artVo;
 	}
@@ -91,10 +90,13 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	@Override
 	public void artModify(ArtInfoVo artInfoVo) throws Exception {
 		artDao.artModify(artInfoVo);
-		
 	}
 	
-	
+
+	@Override
+	public void artDelete(int art_number, String user_id) throws Exception {
+		artDao.artDelete(art_number, user_id);
+	}
 
 	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
@@ -160,6 +162,20 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void playDelete(int play_index) throws Exception {
 		artDao.playDelete(play_index);
 	}
-
+	@Override
+	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
+		List<ArtInfoVo> artList = artDao.toDayList(pagingDto);
+		return artList;
+	}
+	@Override
+	public List<ArtInfoVo> goodList() throws Exception {
+		List<ArtInfoVo> artList = artDao.goodList();
+		return artList;
+	}
+	@Override
+	public int toDayCount() throws Exception {
+		int artCount = artDao.toDayCount();
+		return artCount;
+	}
 
 }
