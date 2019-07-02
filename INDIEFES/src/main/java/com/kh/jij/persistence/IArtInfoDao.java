@@ -37,6 +37,9 @@ public interface IArtInfoDao {
 	// 앨범 수정
 	public void artModify(ArtInfoVo artInfoVo) throws Exception;
 	
+	// 앨범 삭제
+	public void artDelete(int art_number, String user_id) throws Exception;
+	
 	// 검색, paging, nowPage 나중에 추가할것.
 	// 앨범 리스트 가져오기
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception;

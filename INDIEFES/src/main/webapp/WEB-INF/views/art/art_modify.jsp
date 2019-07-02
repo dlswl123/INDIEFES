@@ -120,7 +120,7 @@ $(document).ready(function() {
 	
 	// 등록취소 버튼
 	$("#btnCancel").click(function() {
-		location.href="/indiefes/art/art_info?art_number=${artVo.art_number }&team_number=${artVo.team_number}";
+		location.href="/indiefes/art/art_info/${artVo.art_number }/${artVo.team_number}";
 	});
 	
 	// 음악 추가 버튼
