@@ -109,7 +109,7 @@ $(document).ready(function() {
 	$("#btnArtAdd").click(function() {
 		var file = $("#art_cover").val().split("\\");
 		var art_cover = file[file.length-1]
-		if(art_cover != null || art_cober != "") {
+		if(art_cover != null || art_cover != "") {
 			$("input[name=art_cover]").val("${artVo.art_cover}");	
 		} else {
 			$("input[name=art_cover]").val(art_cover);
