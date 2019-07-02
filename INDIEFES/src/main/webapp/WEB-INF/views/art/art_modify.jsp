@@ -109,15 +109,10 @@ $(document).ready(function() {
 	$("#btnArtAdd").click(function() {
 		var file = $("#art_cover").val().split("\\");
 		var art_cover = file[file.length-1]
-		if(art_cover != null || art_cober != "") {
-			$("input[name=art_cover]").val("${artVo.art_cover}");	
-		} else {
-			$("input[name=art_cover]").val(art_cover);
-			
-		}
+		$("input[name=art_cover]").val(art_cover);
 		var art_genre = $("#art_genre").val();
 		$("input[name=art_genre]").val(art_genre);
-		console.log($("input[name=art_cover]").val());
+		console.log(art_cover);
 		console.log(file);
 		// 폼을 전송
 		$("#art_info_input").submit();
@@ -306,9 +301,9 @@ $(document).ready(function() {
 <!-- 			앨범 수정폼 -->
 			<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
 			<input type="hidden" name="art_genre" value="">
-			<input type="hidden" name="art_cover" value="">
-			<input type="hidden" name="art_number" value="${artVo.art_number }">
-			<input type="hidden" name="team_number" value="${artVo.art_number }">
+			<input type="hidden" name="art_cover" value="${artVo.art_cover }">
+			<input type="hidden" name="art_number" value="${artVo.art_number}">
+			<input type="hidden" name="team_number" value="${artVo.team_number}">
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">

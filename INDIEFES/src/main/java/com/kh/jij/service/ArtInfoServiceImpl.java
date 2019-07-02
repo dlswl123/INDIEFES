@@ -89,8 +89,8 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 
 	// 수정처리
 	@Override
-	public void artModify(ArtInfoVo artInfoVo, String user_id) throws Exception {
-		artDao.artModify(artInfoVo, user_id);
+	public void artModify(ArtInfoVo artInfoVo) throws Exception {
+		artDao.artModify(artInfoVo);
 		
 	}
 	

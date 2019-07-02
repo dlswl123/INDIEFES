@@ -72,11 +72,8 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	
 	// 수정처리
 	@Override
-	public void artModify(ArtInfoVo artInfoVo, String user_id) throws Exception {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("artInfoVo", artInfoVo);
-		map.put("user_id", user_id);
-		sqlSession.update(NAMESPACE + ".artModify", map);
+	public void artModify(ArtInfoVo artInfoVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".artModify", artInfoVo);
 		
 	}
 	

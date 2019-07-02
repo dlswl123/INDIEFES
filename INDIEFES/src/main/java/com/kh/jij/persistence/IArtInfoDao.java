@@ -34,8 +34,8 @@ public interface IArtInfoDao {
 	// 앨범 수정정보 가져오기
 	public ArtInfoVo artModifyFrom(String user_id, int art_number) throws Exception;
 	
-	// 노래 수정
-	public void artModify(ArtInfoVo artInfoVo, String user_id) throws Exception;
+	// 앨범 수정
+	public void artModify(ArtInfoVo artInfoVo) throws Exception;
 	
 	// 검색, paging, nowPage 나중에 추가할것.
 	// 앨범 리스트 가져오기

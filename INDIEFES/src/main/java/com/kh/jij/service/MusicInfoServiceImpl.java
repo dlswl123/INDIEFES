@@ -34,8 +34,8 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 	}
 
 	@Override
-	public void musicUpdate(MusicInfoVo musicInfoVo, String user_id) throws Exception {
-		musicDao.musicUpdate(musicInfoVo, user_id);
+	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
+		musicDao.musicUpdate(musicInfoVo);
 	}
 
 	@Override

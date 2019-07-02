@@ -93,8 +93,8 @@ public class ArtController {
 	public String ArtModify(ArtInfoVo artVo, @RequestParam("file") MultipartFile file, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		artVo.setUser_id(userVo.getUser_id());
-		artService.artModify(artVo, userVo.getUser_id());
 		System.out.println("ArtController, ArtModify, artVo:" + artVo);
+		artService.artModify(artVo);
 		// 파일 업로드(@RequestParam("file")MultipartFile file)
 		String originalName = file.getOriginalFilename();
 		try {
