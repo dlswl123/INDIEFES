@@ -162,6 +162,20 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void playDelete(int play_index) throws Exception {
 		artDao.playDelete(play_index);
 	}
-
+	@Override
+	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
+		List<ArtInfoVo> artList = artDao.toDayList(pagingDto);
+		return artList;
+	}
+	@Override
+	public List<ArtInfoVo> goodList() throws Exception {
+		List<ArtInfoVo> artList = artDao.goodList();
+		return artList;
+	}
+	@Override
+	public int toDayCount() throws Exception {
+		int artCount = artDao.toDayCount();
+		return artCount;
+	}
 
 }

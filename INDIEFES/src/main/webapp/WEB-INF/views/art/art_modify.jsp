@@ -301,9 +301,9 @@ $(document).ready(function() {
 <!-- 			앨범 수정폼 -->
 			<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
 			<input type="hidden" name="art_genre" value="">
-			<input type="hidden" name="art_cover" value="${artVo.art_cover }">
-			<input type="hidden" name="art_number" value="${artVo.art_number}">
-			<input type="hidden" name="team_number" value="${artVo.team_number}">
+			<input type="hidden" name="art_cover" value="">
+			<input type="hidden" name="art_number" value="${artVo.art_number }">
+			<input type="hidden" name="team_number" value="${artVo.art_number }">
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
