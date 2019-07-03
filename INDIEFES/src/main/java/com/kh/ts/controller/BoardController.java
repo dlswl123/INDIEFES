@@ -67,19 +67,15 @@ public class BoardController {
 			HttpSession session, PagingDto pagingDto)throws Exception {
 		System.out.println("BoardController, read, board_number:" + board_number);
 		BoardVo boardVo = boardService.select(board_number);
-		// 회원아이디
-		String user_id = boardVo.getUser_id();
-		UserInfoVo userInfoVo = userInfoService.readWith(user_id);
-//		System.out.println("userInfoVo:" + userInfoVo);
-		String login_id = userInfoVo.getUser_id();
+	
 		// 지정된회원
-		System.out.println("user_id:" + user_id);
-		System.out.println("login_id:" + login_id);
-		if (! user_id.equals(login_id)) {
-			System.out.println("update");
-			
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+	
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
 		}
-		
+
 		// int bno 전역변수를 하나 정해서 board_number를 저장
 		// 현재 호출된 board_number와 같으면 updateViewcnt를 실행하지 않게 함
 		if (bno != board_number) {
@@ -87,6 +83,7 @@ public class BoardController {
 			bno = board_number;
 		}
 		model.addAttribute("boardVo", boardVo);
+		
 		model.addAttribute("pagingDto", pagingDto);
 	}
 	

@@ -53,6 +53,7 @@ public class ReplyController {
 	public ResponseEntity<String> update(@PathVariable("reply_number") int reply_number,
 										@RequestBody ReplyVo replyVo) {
 		replyVo.setReply_number(reply_number);
+		System.out.println("ReplyController reply_number:" + reply_number);
 		ResponseEntity<String> entity = null;
 		try {
 			replyService.update(replyVo);
@@ -64,21 +65,22 @@ public class ReplyController {
 		return entity;
 	}
 	
-		// 댓글 삭제
-		@RequestMapping(value="/delete/{reply_number}/{board_number}", method=RequestMethod.DELETE)
-		public ResponseEntity<String> delete(
-				@PathVariable("reply_number") int reply_number,
-				@PathVariable("board_number") int board_number) {
-			ResponseEntity<String> entity = null;
-			try {
-				replyService.delete(reply_number, board_number);
-				entity = new ResponseEntity<String>("success", HttpStatus.OK);
-			} catch (Exception e) {
-				e.printStackTrace();
-				entity = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
-			}
-			return entity;
+	// 댓글 삭제
+	@RequestMapping(value="/delete/{reply_number}/{board_number}", method=RequestMethod.DELETE)
+	public ResponseEntity<String> delete(
+			@PathVariable("reply_number") int reply_number,
+			@PathVariable("board_number") int board_number) {
+//		System.out.println("ReplyController reply_number:" + reply_number);
+		ResponseEntity<String> entity = null;
+		try {
+			replyService.delete(reply_number, board_number);
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 		}
+		return entity;
+	}
 	
 	// 댓글목록
 	@RequestMapping(value="/list/{board_number}", method=RequestMethod.GET)
