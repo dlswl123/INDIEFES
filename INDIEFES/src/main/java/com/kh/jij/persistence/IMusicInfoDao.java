@@ -20,4 +20,8 @@ public interface IMusicInfoDao {
 	// 노래가사 입력
 	public void musicLyrics(MusicLyricsVo musicLyricsVo) throws Exception;
 	
+	// 가사찾기
+	public String getLyrics(int music_number) throws Exception;
+	// 가사수정
+	public void updateLyrics(MusicLyricsVo musicLyricsVo) throws Exception;
 }

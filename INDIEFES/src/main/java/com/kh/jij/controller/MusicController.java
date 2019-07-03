@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.MusicLyricsVo;
@@ -34,7 +35,7 @@ public class MusicController {
 	// 음악목록 가져오기
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseEntity<List<MusicInfoVo>> MusicTrackList(@RequestParam("art_number") int art_number,
-			@RequestParam("team_number") int team_number, Model model) throws Exception {
+			@RequestParam("team_number") int team_number) throws Exception {
 		ResponseEntity<List<MusicInfoVo>> entity = null;
 		try {
 			List<MusicInfoVo> list = musicService.musicRead(art_number);
@@ -115,9 +116,37 @@ public class MusicController {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-
 		return entity;
-
 	}
 
+	// 가사찾기
+	@RequestMapping(value="/getLyrics/{music_number}", method = RequestMethod.GET, produces="application/text;charset=utf-8")
+	public ResponseEntity<String> getLyrics(@PathVariable("music_number") int music_number) throws Exception {
+		ResponseEntity<String> entity = null;
+		try {
+			String lyrics = musicService.getLyrics(music_number);
+			System.out.println(lyrics);
+			entity = new ResponseEntity<String>(lyrics, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	// 가사수정
+	@RequestMapping(value="/updateLyrics/{music_number}", method = RequestMethod.PUT)
+	public ResponseEntity<String> updateLyrics(@PathVariable("music_number") int music_number, @RequestBody MusicLyricsVo musicLyricsVo) throws Exception {
+		ResponseEntity<String> entity = null;
+		try {
+			System.out.println(musicLyricsVo);
+			musicService.updateLyrics(musicLyricsVo);
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 }
