@@ -101,6 +101,7 @@ $(document).ready(function() {
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 <h1>Indiefes 게시판</h1>
+	${boardVo.user_id}
 	<select id="perPage">
 				<c:forEach var= "i" begin= "5" end= "20" step= "5">
 					<option
@@ -131,8 +132,11 @@ $(document).ready(function() {
 				placeholder="검색어를 입력하세요"value="${pagingDto.keyword}"/>
 			<input type="button" value="검색버튼"id= "btnSearch"
 				class= "btn btn-danger"/>
+				
+			<!-- 로그인시에만 글쓰기버튼을 사용할수있도록 구현 -->
+			<c:if test="${user_id != null}">	
 			<input type="button" class="btn btn-success" value="글쓰기" id="btnRegist">
-		 
+		 	</c:if>
 				<div class="row">
 				<div class="col-md-12">
 				<table class="table">
