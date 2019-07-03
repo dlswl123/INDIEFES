@@ -138,14 +138,18 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		List<MusicInfoVo> playList = artDao.playList(user_id);
 		return playList;
 	}
+	
 	// 리스트에서 곡 등록
 	@Override
 	public void playInsert(Map<String, Object> map) throws Exception {
 		MusicInfoVo musicVo = (MusicInfoVo)map.get("musicVo");
 		String user_id = (String)map.get("user_id");
+//		System.out.println(user_id);
+//		System.out.println(musicVo);
 		PlayListVo vo = new PlayListVo();
 		vo.setUser_id(user_id);
 		vo.setMusic_number(musicVo.getMusic_number());
+		System.out.println(vo);
 		artDao.playInsert(vo);
 		
 	}

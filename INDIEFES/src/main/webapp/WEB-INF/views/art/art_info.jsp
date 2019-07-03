@@ -23,9 +23,10 @@
 <script>
 $(document).ready(function() {
 // 		사용자용
+
 	// 듣기버튼
 	$("#btnListen").click(function() {
-		location.href="";
+		location.href="/indiefes/player/playInsertAll/${artVo.art_number}";
 	});
 	// 전체 다운
 	$("#btnAllDown").click(function() {
@@ -38,8 +39,23 @@ $(document).ready(function() {
 	
 	// 모두듣기버튼
 	$("#btnAllListen").click(function() {
-		location.href="";
-	});
+		var art_number = "${artVo.art_number}";
+		var url = "/indiefes/player/playInsertAll/" + art_number;
+		$.ajax({
+			"type" : 'post',
+			"url" : url,
+			"headers" : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Overried" : "post"
+			},
+			"success" : function(receivedData) {
+				console.log(receivedData); // success
+				if (receivedData.trim() == "success") {
+					window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+				} // if
+			} // "success"
+		}); // $.ajax
+	}); // $("#btnAllListen").click
 	
 // 	// 체크박스 전체 선택, 전체 선택 해제
 // 	$("#allCheckbox").click(function() {
@@ -52,10 +68,9 @@ $(document).ready(function() {
 	
 	// 음악리스트- 듣기버튼
 	$("#tblMusicList").on("click", ".spMusicPlay",function() {
-		var music_number = $(this).attr("data-music_number");
-		console.log(music_number);
 		
 	});
+	
 	// 음악리스트- 가사버튼
 	$("#tblMusicList").on("click", ".spMusicLyrics", function() {
 		$("#modal-a").trigger("click");

@@ -5,6 +5,7 @@ import java.io.File;
 import org.springframework.util.FileCopyUtils;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.MusicInfoVo;
 
 public class FileUploadUtil {
 
@@ -12,6 +13,25 @@ public class FileUploadUtil {
 			 byte[] fileData) throws Exception {
 		int teamNumber = artVo.getTeam_number();
 		int artNumber = artVo.getArt_number();
+		String album = "album";
+		
+		String filePath = uploadPath+File.separator+album+File.separator+teamNumber+File.separator+artNumber+ File.separator + originalName;
+		String path = uploadPath+File.separator+album+File.separator +teamNumber+File.separator+artNumber;
+		String fileName = album+File.separator+teamNumber+File.separator+artNumber+File.separator+originalName;
+		File target = new File(path);
+		File f = new File(filePath);
+		if (!target.exists()) {
+			target.mkdirs();
+		}
+		FileCopyUtils.copy(fileData, f);
+		
+		return fileName;
+	}
+	
+	public static String uploadFile(String uploadPath, String originalName, MusicInfoVo musicInfoVo,
+			 byte[] fileData) throws Exception {
+		int teamNumber = musicInfoVo.getTeam_number();
+		int artNumber = musicInfoVo.getArt_number();
 		String album = "album";
 		
 		String filePath = uploadPath+File.separator+album+File.separator+teamNumber+File.separator+artNumber+ File.separator + originalName;
