@@ -85,4 +85,9 @@ public class BoardDaoImpl implements IBoardDao {
 		sqlSession.delete(Namespace + ".deleteAttachByBno", board_number);
 		
 	}
+	// 댓글업데이트
+	@Override
+	public void updateReplycnt(int board_number) throws Exception {
+		sqlSession.update(Namespace + ".updateReplycnt", board_number);
+	}
 }

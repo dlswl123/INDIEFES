@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  	
+<mapper namespace="reply">
+
+	<!-- 댓글쓰기 -->
+	<insert id="insert">
+		insert into reply_info (reply_number, board_number, user_id, content)
+		values (seq_reply.nextval, #{board_number}, #{user_id}, #{content})
+	</insert>
+	
+	<!-- 댓글수정 -->
+	<update id="update">
+		update reply_info set
+			content = #{content},
+			user_id = #{user_id}
+			late_date = sysdate
+		where reply_number = #{reply_number}
+	</update>
+	
+	<!-- 댓글삭제 -->
+	<delete id="delete">
+		delete from reply_info
+		where reply_number = #{reply_number}
+	</delete>
+	
+	<!-- 댓글목록 -->
+	<select id="list" resultType="ReplyVo">
+		select *
+		from reply_info
+		where board_number = #{board_number}
+		order by reply_number desc
+	</select>
+	
+</mapper>	
+	

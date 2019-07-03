@@ -12,19 +12,98 @@ $(document).ready(function(){
 //		console.log(btnUpdate);
 		location.href = "/indiefes/board/update?board_number=${boardVo.board_number}";
 	});
+	
 	// 목록보기버튼
 	$("#btnList").click(function(){
 //		console.log(btnList);
 		location.href = "/indiefes/board/list";
 	});
+	
 	// 삭제하기버튼
 	$("#btnDelete").click(function(){
 //		console.log(btnDelete);
-		location.href = "/indiefes/board/delete?board_number=${boardVo.board_number}";
+		var del = confirm("삭제하시겠습니까?");
+		if (del) {
+			location.href = "/indiefes/board/delete?board_number=${boardVo.board_number}";
+		}
 	});
+	// 댓글 목록 가져오기
+	function getReplyList() {
+		var url = "/indiefes/reply/list/${boardVo.board_number}"
+		$.getJSON(url, function(receivedData) {
+			console.log("getReplyList()", receivedData);
+			var strHtml = "";
+			$(receivedData).each(function(i) {
+				var user_id = "${userInfoVo.user_id}";
+				
+				strHtml += "<tr>"
+					+		"<td>" + this.reply_number + "</td>"
+					+		"<td>" + this.content + "</td>"
+					+		"<td>" + this.user_id + "</td>"
+					+		"<td>" + dateString(this.reg_date) + "</td>";
+				if (user_id == this.user_id) {
+					strHtml +=  "<td>"
+							+	"<input type='button' value='수정' class='btn-xs btn-warning'"
+							+		"data=content='" + this.content + "'"
+							+     " data-user_id='" + this.user_id + "'"
+							+		" data-reply_number='" + this.reply_number + "'"
+							+		" data-index='" + i + "'>" 
+							+ 	"</td>"
+							+  	"<td>"
+							+ 	"<input type='button' value='삭제' class='btn-xs btn-danger'"
+							+     " data-reply_number='" + this.reply_number + "'"
+							+		" data-board_number='" + this.board_number + "'"
+							+		" data-index='" + i + "'>"
+							+	"</td>";
+				} else {
+					strHtml += "<td>&nbsp;</td>"
+							+  "<td>&nbsp;</td>";
+				}
+					  
+				strHtml += "</tr>";
+	
+			});// $(receivedData).each(function(i)
+					$("#replyList").html(strHtml);
+		}); // $.getJSON
+	}// function getReplyList()
+	
+	// 댓글 목록 버튼
+	$("#btnReplyList").click(function(){
+		console.log("btnReplyList 버튼 클릭됨.");
+		getReplyList();
+	});
+	
+	// 댓글 쓰기 버튼
+	$("#btnReply").click(function(){
+		console.log("btnReply 클릭됨");
+		var board_number = "${boardVo.board_number}";
+		var content = $("#reply_text").val();
+		var user_id =$("#user_id").val();
+		var data = {
+				"board_number" : board_number,
+				"content" : content,
+				"user_id" : user_id
+		};
+		var url = "/indiefes/reply/insert";
+		$.ajax({
+			"type" : "post",
+			"url" : url,
+			"headers" : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Mehod-Override" : "post"
+			},
+			"dataType" : "text",
+			"data" : JSON.stringify(data),
+			"success" : function(receivedData) {
+				getReplyList(); // 댓글 목록 가져오기
+				
+			}
+		}); // $.ajax
+	}); // $("#btnReply").click
+
 	//첨부파일 목록 가져오기
 	$.getJSON("/indiefes/board/getAttach/${boardVo.board_number}", function(list) {
-		console.log(list);
+		console.log("첨부 파일 목록 가져오기", list);
 		
 		$(list).each(function(){
 			var fullName = this; // 2019/5/21/b7b9f598-0187-4071-a030-cda86bef5c4f_Lighthouse.jpg
@@ -122,7 +201,49 @@ $(document).ready(function(){
 					
 				</div> <!-- class="col-md-12"-->
 		 	</div> <!-- class="row"> -->
-		</div> <!-- class="col-md-10" -->
+		 	<hr>
+		 	
+		 	<!--  댓글작성 -->
+		 	<div class="row" style="background-color: #bfd2ef">
+		 		<div class="col-md-12">
+		 			<div class="form-group">
+		 				<label for="title">댓글 내용</label>
+		 				<input type="text" class="form-control" id="reply_text"/>
+		 			</div>
+		 		</div>
+		 		<div class="col-md-12">
+		 		<div class="form-group">
+		 			<input type="button" class="btn-xs btn-success" id="btnReply"
+		 				value="작성완료"/>
+		 		</div>
+		 		</div>
+		 	</div>
+		 	<hr>
+		 	<!-- 댓글 목록 -->
+		 	<div class="row">
+		 		<div class="col-md-12">
+		 			<p><input type="button" id=btnReplyList value="댓글목록"
+		 				class="btn btn-primary"></p>
+		 			<table class="table">
+		 				<thead>
+		 					<tr>
+		 						<th>번호</th>
+		 						<th>댓글내용</th>
+		 						<th>작성자</th>
+		 						<th>날짜</th>
+		 						<th>수정</th>
+		 						<th>삭제</th>
+		 					</tr>
+		 				</thead>
+		 				<!-- 여기에 댓글 목록 보임 -->
+		 				<tbody id="replyList">
+		 				
+		 				</tbody>
+		 			</table>
+		 		</div>
+		 	</div>
+		 	
+		 </div>  <!-- class="col-md-10"   -->
 	
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

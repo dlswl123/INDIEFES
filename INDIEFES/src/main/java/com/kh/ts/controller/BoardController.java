@@ -25,7 +25,9 @@ import com.kh.ks.service.UserInfoServiceImpl;
 import com.kh.ts.domain.BoardVo;
 import com.kh.ts.domain.PaginationDto;
 import com.kh.ts.domain.PagingDto;
+import com.kh.ts.domain.ReplyVo;
 import com.kh.ts.service.IBoardService;
+import com.kh.ts.service.IReplyService;
 import com.kh.ts.util.FileUploadUtil;
 
 @Controller
@@ -34,6 +36,9 @@ public class BoardController {
 
 	@Inject
 	IBoardService boardService;
+	
+	@Inject
+	IReplyService replyService;
 	
 	@Inject
 	private IUserInfoService userInfoService;
@@ -147,24 +152,24 @@ public class BoardController {
 	}
 	
 	// 글삭제처리- /indiefes/board/delete(Post 처리)
-	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
-	public String deletePost(@RequestParam("board_number")int board_number,
-			RedirectAttributes rttr)throws Exception {
-					
-		// 글삭제처리
-		try {
-			List<String> list = boardService.getAttach(board_number);
-			for (String filePath : list) {
-				FileUploadUtil.deleteFile(filePath);
-			}
-			boardService.delete(board_number);
-			rttr.addFlashAttribute("message", "success_delete");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "redirect:/board/list?board_number=" + board_number;
-	}
+//	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
+//	public String deletePost(@RequestParam("board_number")int board_number,
+//			RedirectAttributes rttr)throws Exception {
+//					
+//		// 글삭제처리
+//		try {
+//			List<String> list = boardService.getAttach(board_number);
+//			for (String filePath : list) {
+//				FileUploadUtil.deleteFile(filePath);
+//			}
+//			boardService.delete(board_number);
+//			rttr.addFlashAttribute("message", "success_delete");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return "redirect:/board/list?board_number=" + board_number;
+//	}
 	
 	// 첨부파일목록
 	@RequestMapping(value="/getAttach/{board_number}")
@@ -174,4 +179,5 @@ public class BoardController {
 		System.out.println("BoardController, getAttach, list:" + list);
 		return list;
 	}
+	
 }
