@@ -69,7 +69,7 @@ public class PlayerController {
 		String formatName = FileUploadUtil.getFormatName(filePath).toUpperCase();
 		MediaType mediaType = null;
 		if (formatName.equals("MP3")||formatName.equals("WAV")||formatName.equals("OGG")||formatName.equals("FLAC")) {
-			mediaType = new MediaType("audio", "ogg");
+			mediaType = new MediaType("audio", "mp3");
 		} 
 
 		ResponseEntity<byte[]> entity = null;

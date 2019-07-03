@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <div class="row">
 	<ul  class="albumList">
-		<c:set var="count" value="0"/>
 		<c:forEach items="${goodList}" var="artVo">
 			<li class="art_info">
 				<figure class="albumInfo">

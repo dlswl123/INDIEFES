@@ -20,7 +20,6 @@
 	}
   
 </style>
-
 <script>
 $(document).ready(function() {
 // 		사용자용
@@ -28,10 +27,12 @@ $(document).ready(function() {
 	$("#btnListen").click(function() {
 		location.href="";
 	});
-	
-	// 다운버튼
-	$("#btnDown").click(function() {
-		$("#down").trigger("click");
+	// 전체 다운
+	$("#btnAllDown").click(function() {
+		var id = 3;
+		for (var i = 1; i <= id ; i++) {
+			$("#"+i).get(0).click();
+		}
 // 		location.href="";
 	});
 	
@@ -254,21 +255,17 @@ $(document).ready(function() {
 								<td class="song_name" style="text-align: left;">${musicInfoVo.music_title}</td>
 								<td>${teamName}</td>
 								<td><span class="spMusicPlay icon" style="color:blue;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-play"></i></span></td>
-<<<<<<< HEAD
-								<td><span class="spMusicLyrics icon" style="color:yellow;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="far fa-file-alt"></i></span></td>
-<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
-								<td><a id="down" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
-=======
 								<td><span class="spMusicLyrics icon" style="color:yellow;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="far fa-file-alt"></i></span></td>
+<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
+								<td><a id="${count = count+1}" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
 <%-- 								<c:choose> --%>
 <%-- 									<c:when test=""> --%>
-										<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
+<%-- 										<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td> --%>
 <%-- 									</c:when> --%>
 <%-- 									<c:otherwise> --%>
 	<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
 <%-- 									</c:otherwise> --%>
 <%-- 								</c:choose> --%>
->>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 								<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-cart-plus"></i></span></td>
 							<tr>
 <%-- 							<a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}"></a> --%>
