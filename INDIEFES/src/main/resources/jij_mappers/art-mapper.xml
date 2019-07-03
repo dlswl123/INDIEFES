@@ -169,7 +169,7 @@
 <!-- 	노래 리스트 등록 -->
 	<delete id="playInsert">
 		insert into play_list(user_id,music_number,play_index)
-		values (#{user_id},#{music_number},seq_playlist.nextval);
+		values (#{user_id},#{music_number},seq_playlist.nextval)
 	</delete>
 <!-- 	노래 리스트 삭제 -->
 	<delete id="playDelete">
