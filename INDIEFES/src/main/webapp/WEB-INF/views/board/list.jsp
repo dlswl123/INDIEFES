@@ -101,7 +101,6 @@ $(document).ready(function() {
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 <h1>Indiefes 게시판</h1>
-	<p>데이터확인= ${paginationDto}</p>
 	<select id="perPage">
 				<c:forEach var= "i" begin= "5" end= "20" step= "5">
 					<option
@@ -127,12 +126,13 @@ $(document).ready(function() {
 		</c:if>
 		>작성자</option>
 	</select>
+		
 		<input type="text" id = "keyword"
 				placeholder="검색어를 입력하세요"value="${pagingDto.keyword}"/>
 			<input type="button" value="검색버튼"id= "btnSearch"
 				class= "btn btn-danger"/>
-			<input type="button" class="btn btn-success"
-		  		value="글쓰기" id="btnRegist">
+			<input type="button" class="btn btn-success" value="글쓰기" id="btnRegist">
+		 
 				<div class="row">
 				<div class="col-md-12">
 				<table class="table">

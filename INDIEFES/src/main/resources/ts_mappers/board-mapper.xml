@@ -22,8 +22,9 @@
 		select *
 		from(select rownum rnum, a.*
 			from(select * from board_info
-				<include refid="search"></include>
-				order by board_number)a)
+				where is_del != 'Y'
+				<include refid="contentView"></include>
+				order by board_number desc)a)
 		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
 	</select>
 	
@@ -32,6 +33,15 @@
 		select count(*) from board_info
 		<include refid="search"></include>
 	</select>	
+	
+	<!-- 댓글 갯수 갱신 -->
+	<update id="updateReplycnt">
+		update board_info set
+			reply_count = (select count(*)
+					       from reply_info
+					       where board_number = #{board_number})
+		where board_number = #{board_number}
+	</update>
 	
 	<!-- 조회수증가 -->
 	<update id="updateViewcnt">
@@ -51,8 +61,11 @@
 	
 	<!-- 글삭제 -->
 	<delete id="delete">
-		delete from board_info 
-		where board_number = #{board_number}
+<!-- 		delete from board_info  -->
+<!-- 		where board_number = #{board_number} -->
+	update board_info set
+    	is_del = 'Y'
+	where board_number = #{board_number}
 	</delete>
 	
 	<!-- 첨부파일경로 추가 -->
@@ -78,6 +91,20 @@
 		delete from board_file
 		where board_number= #{board_number}
 	</delete>
+	<sql id="contentView">
+		<if test="searchType != null">
+			<if test="searchType == 'subject'">
+			 	and subject like '%' || #{keyword} ||'%'
+			</if>	
+			<if test="searchType == 'content'">
+			 	 and content like '%' || #{keyword} || '%'
+			</if>	 
+			<if test="searchType == 'user_id'">
+    		  	 and content like '%' || #{keyword} ||'%'s
+			</if>
+			 
+		</if>
+	</sql>
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 'subject'">
@@ -87,7 +114,7 @@
 			 	 where content like '%' || #{keyword} || '%'
 			</if>	 
 			<if test="searchType == 'user_id'">
-    		  	  where content like '%' || #{keyword} ||'%'s
+    		  	 where content like '%' || #{keyword} ||'%'s
 			</if>
 			 
 		</if>
