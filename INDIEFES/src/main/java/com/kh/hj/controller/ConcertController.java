@@ -191,7 +191,7 @@ public class ConcertController {
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			// 이미지인지 확인
-			boolean isImage = FileUploadUtil.isImage(formatName);
+			boolean isImage = FileUploadUti.isImage(formatName);
 			
 			if (isImage) {
 				headers.setContentType(mediaType);
