@@ -50,4 +50,10 @@ public class ConcertDaoImpl implements IConcertDao {
 		return list;
 	}
 
+	@Override
+	public void deleteConcertInfo(int concert_number) throws Exception {
+		// 공연 홍보 글 삭제
+		sqlSession.update(NAMESPACE + ".deleteConcertInfo", concert_number);
+	}
+
 }
