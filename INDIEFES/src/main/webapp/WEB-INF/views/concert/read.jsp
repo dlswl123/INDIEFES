@@ -121,7 +121,7 @@ $(document).ready(function() {
 					<label id="content">공연 내용</label>
 					<div>${vo.content}</div><br>
 						
-<%-- 					<%@ include file="../include/show_map.jsp" %> --%>
+					<%@ include file="../include/show_map.jsp" %>
 					
 				</div>
 				
