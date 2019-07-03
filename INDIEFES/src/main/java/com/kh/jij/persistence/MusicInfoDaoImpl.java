@@ -62,5 +62,16 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 		sqlSession.insert(NAMESPACE + ".lyricsInsert", musicLyricsVo);
 		
 	}
+
+	@Override
+	public String getLyrics(int music_number) throws Exception {
+		String lyrics = sqlSession.selectOne(NAMESPACE + ".getLyrics", music_number);
+		return lyrics;
+	}
+
+	@Override
+	public void updateLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".updateLyrics", musicLyricsVo);
+	}
 	
 }
