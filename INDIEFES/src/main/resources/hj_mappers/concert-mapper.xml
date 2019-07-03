@@ -20,13 +20,13 @@
 	
 	<!-- 공연 홍보 글 목록 가져오기 -->
 	<select id="getConcertInfoList" resultType="ConcertInfoVo">
-		select * from concert_info 
+		select * from concert_info where deleted = 'X'
+<!-- 		select * from concert_info where deleted = 'X' and (concert_date - sysdate > 0) order by (concert_date - sysdate) -->
 	</select>
 	
 	<!-- 공연 홍보 글 가져오기 -->
 	<select id="getConcertInfo" resultType="ConcertInfoVo">
 		select * from concert_info where concert_number = #{concert_number}
-<!-- 		select * from concert_info where (concert_date - sysdate > 0) order by (concert_date - sysdate) -->
 	</select>
 	
 	<!-- 공연 홍보 글 파일 가져오기 -->
@@ -34,6 +34,9 @@
 		select file_path from concert_file where concert_number = #{concert_number}
 	</select>
 	
-
+	<!-- 공연 홍보 글 삭제 -->
+	<update id="deleteConcertInfo">
+		update concert_info set deleted = 'Y' where concert_number = #{concert_number}
+	</update>
 	
 </mapper>
