@@ -20,7 +20,6 @@
 	}
   
 </style>
-
 <script>
 $(document).ready(function() {
 // 		사용자용
@@ -29,10 +28,13 @@ $(document).ready(function() {
 	$("#btnListen").click(function() {
 		location.href="/indiefes/player/playInsertAll/${artVo.art_number}";
 	});
-	
-	// 다운버튼
-	$("#btnDown").click(function() {
-		location.href="";
+	// 전체 다운
+	$("#btnAllDown").click(function() {
+		var id = 3;
+		for (var i = 1; i <= id ; i++) {
+			$("#"+i).get(0).click();
+		}
+// 		location.href="";
 	});
 	
 	// 모두듣기버튼
@@ -190,6 +192,10 @@ $(document).ready(function() {
 	});
 	// 운영자용 끝
 	
+	// 뮤직 플레이어
+	function musicPlayer() {
+		window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+	}
 });
 </script>
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
@@ -267,11 +273,13 @@ $(document).ready(function() {
 								<td>${musicInfoVo.track_number}</td>
 								<td class="song_name" style="text-align: left;">${musicInfoVo.music_title}</td>
 								<td>${teamName}</td>
-								<td><span class="spMusicPlay icon" style="color:blue;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-play"></i></span></td>
+								<td><a onclick="musicPlayer();" href="/indiefes/player/playInsert?music_number=${musicInfoVo.music_number}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" ><span class="spMusicPlay icon" style="color:blue;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-play"></i></span></a></td>
 								<td><span class="spMusicLyrics icon" style="color:yellow;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="far fa-file-alt"></i></span></td>
+<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
+								<td><a id="${count = count+1}" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
 <%-- 								<c:choose> --%>
 <%-- 									<c:when test=""> --%>
-										<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
+<%-- 										<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td> --%>
 <%-- 									</c:when> --%>
 <%-- 									<c:otherwise> --%>
 	<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>

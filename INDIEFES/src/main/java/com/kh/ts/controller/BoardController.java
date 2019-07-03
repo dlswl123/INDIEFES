@@ -47,8 +47,16 @@ public class BoardController {
 	
 	// 글목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void boardList(Model model, PagingDto pagingDto) throws Exception {
+	public void boardList(Model model, HttpSession session, PagingDto pagingDto) throws Exception {
 		System.out.println("BoardController, list, pagingDto:" + pagingDto);
+		// 지정된회원만 글쓰기버튼을 사용할수있도록 구현
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+		}
+		
 		List<BoardVo> list = boardService.selectAll(pagingDto);
 		System.out.println("boardList");
 		model.addAttribute("list", list);

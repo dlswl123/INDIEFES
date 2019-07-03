@@ -30,9 +30,6 @@ public interface IArtInfoService {
 	// 팀앨범 리스트 가져오기
 	public List<ArtInfoVo> teamArtList(int team_number) throws Exception;
 	
-	// 파일경로 인서트(첨부)
-	public void attach(String file_path) throws Exception;
-	
 	// 앨범 정보 가져오기
 	public ArtInfoVo artRead(int art_number) throws Exception;
 	
@@ -70,7 +67,12 @@ public interface IArtInfoService {
 	// 인기 앨범
 	public List<ArtInfoVo> goodList() throws Exception;
 	
+	// 팀 넘버
 	public int getIndieNumber(String user_id) throws Exception;
+	
+	// 팀 이름
 	public String getTeamName (int team_number) throws Exception;
+	
+	// 앨범 수
 	public int artCount(PagingDto pagingDto)throws Exception;
 }

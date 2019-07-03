@@ -10,7 +10,6 @@ public class FileUploadUtil {
 
 	public static String uploadFile(String uploadPath, String originalName, ArtInfoVo artVo,
 			 byte[] fileData) throws Exception {
-		System.out.println("artVo:"+artVo);
 		int teamNumber = artVo.getTeam_number();
 		int artNumber = artVo.getArt_number();
 		String album = "album";
@@ -18,8 +17,6 @@ public class FileUploadUtil {
 		String filePath = uploadPath+File.separator+album+File.separator+teamNumber+File.separator+artNumber+ File.separator + originalName;
 		String path = uploadPath+File.separator+album+File.separator +teamNumber+File.separator+artNumber;
 		String fileName = album+File.separator+teamNumber+File.separator+artNumber+File.separator+originalName;
-//		System.out.println("FileUploadUtil, filePath" + filePath);
-//		System.out.println("FileUploadUtil, path" + path);
 		File target = new File(path);
 		File f = new File(filePath);
 		if (!target.exists()) {

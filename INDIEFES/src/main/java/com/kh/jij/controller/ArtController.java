@@ -250,7 +250,6 @@ public class ArtController {
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
-		
 	}
 
 	
