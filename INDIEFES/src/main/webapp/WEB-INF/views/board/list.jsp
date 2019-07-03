@@ -103,6 +103,7 @@ $(document).ready(function() {
 <h1>Indiefes 게시판</h1>
 	${boardVo.user_id}
 	<select id="perPage">
+	
 				<c:forEach var= "i" begin= "5" end= "20" step= "5">
 					<option
 					value='<c:out value="${i}"/>'
@@ -110,6 +111,7 @@ $(document).ready(function() {
 					><c:out value="${i}"/>줄씩 보기</option>
 				</c:forEach>
 				</select>
+	
 	<select id="searchType">
 		<option value="subject"
 		<c:if test="${pagingDto.searchType == 'subject'}">

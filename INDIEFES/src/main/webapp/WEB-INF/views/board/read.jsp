@@ -198,7 +198,7 @@ $(document).ready(function(){
 				var href="";
 				
 				
-				divEl   += "<img src='/indiefes/upload/displayFile?fileName="  + thumbnailName + "'><br>"
+				divEl   += "<img src='/indiefes/upload/displayFile?fileName="  + fullName + "'><br>"
 						+ "<a target='blank' href='/upload/displayFile?fileName="
 						+ fullName + "'>" + fName + "</a>";
 						
