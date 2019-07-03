@@ -182,7 +182,7 @@
 		select *
 		from (select rownum rnum, a.*
 		      from (select art.* from art_info art
-		      		where art.reg_art > (sysdate-1)
+		      		where art.reg_art > (sysdate-7)
 		      order by art.art_number desc) a)
 		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
 	</select>
@@ -197,6 +197,6 @@
 	<select id="toDayCount" resultType="int">
 		select count(*) 
 		from art_info
-		where reg_art > (sysdate-1)
+		where reg_art > (sysdate-7)
 	</select>
 </mapper>
