@@ -6,38 +6,25 @@
 	
 	<script>
 	
-		var message = "${message}";
-		
-		if(message == "create_accout_success"){
-			alert("회원가입성공");
-		} else if (message == "login_fail") {
-			alert("로그인 실패");
-		}
-	
 		$(document).ready(function() {
-			$("#btnCreateAccount").click(function() {
-				location.href="/indiefes/user/account-create";
-			});
 			
+			var user_info_winput_run_result = "${user-info-pwinput-run}";
+			if (user_info_winput_run_result == 'fail') {
+				alert("비밀번호가 틀렸습니다");
+			}
 			
 		});
 	</script>	
 	
 	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,0.7);">
 		<div class="col-md-12">
-		<h1><a href = "/indiefes/">indiefes</a></h1>
+		<h1>비밀번호를 입력하세요</h1>
 		</div>
 		<div class="col-md-12">
-			<form role="form" action="/indiefes/user/login-run" method="post">
+			<form role="form" action="/indiefes/user/user-info-pwinput-run" method="post">
+			
 				<div class="form-group">
-					 
-					<label for="user_id">
-						아이디
-					</label>
-					<input type="text" class="form-control" name="user_id" id="user_id" />
-				</div>
-				<div class="form-group">
-					 
+					 <input type="hidden" name="user_id" value="${userInfoVo.user_id}">
 					<label for="user_pw">
 						비밀번호
 					</label>
@@ -51,10 +38,8 @@
 <!-- 					</label> -->
 <!-- 				</div>  -->
 				<button type="submit" class="btn btn-primary">
-					로그인
+					확인
 				</button>
-				
-				<input type="button" id="btnCreateAccount" value="회원가입" class="btn btn-primary" style="float: right;" />
 					
 				
 				</form>

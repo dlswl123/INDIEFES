@@ -41,6 +41,7 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		return userInfoVo;
 	}
 
+	// 회원가입
 	@Override
 	public boolean createAccount(UserInfoVo userInfoVo) throws Exception {
 		System.out.println("Dao createAccount 호출됨");
@@ -66,6 +67,26 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		System.out.println("닉네임 중복 체크 Daoimpl(service로 넘겨주는 데이터) : " + nickChk);
 		return nickChk;
 	}
+
+	// 회원정보 수정
+	@Override
+	public void userInfoAdjust(UserInfoVo userInfoVo) throws Exception {
+		
+		sqlsession.update(NAMESPACE + ".userUpdate", userInfoVo);
+		
+	}
+
+	@Override
+	public void userDelete(String user_id) throws Exception {
+		System.out.println(user_id);
+		sqlsession.delete(NAMESPACE + ".userDelete", user_id);
+	}
+
+	
+	
+	
+	
+	
 	
 	
 

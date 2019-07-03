@@ -19,4 +19,7 @@ public interface IConcertDao {
 	
 	// 공연 홍보 글 파일 불러오기
 	public List<String> getConcertInfoFiles(int concert_number) throws Exception;
+	
+	// 공연 홍보 글 삭제
+	public void deleteConcertInfo(int concert_number) throws Exception;
 }

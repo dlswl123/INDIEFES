@@ -38,7 +38,7 @@ public class LoginController {
 	
 	//로그인 성공
 	@RequestMapping(value="/login-run", method=RequestMethod.POST)
-	public String loginRun(String user_id, String user_pw, HttpSession session)throws Exception{
+	public String loginRun(String user_id, String user_pw, HttpSession session, RedirectAttributes rttr)throws Exception{
 		System.out.println("LoginController, loginRun, user_id/user_pw:" + user_id + "/" + user_pw); // 1.로그인폼에서 넘어온 데이터 -> service로 넘겨줌
 //		String user_id = userInfoVo.getUser_id();
 //		String user_pw = userInfoVo.getUser_pw();
@@ -46,10 +46,16 @@ public class LoginController {
 //		UserInfoVo userInfoVo1 = userInfoService.readWith(user_id);
 //		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
 //		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
+		String redirectUrl = "";
 		if(userInfoVo != null) {
 			session.setAttribute("userInfoVo", userInfoVo);
+			redirectUrl = "redirect:/";
+		} else {
+			rttr.addFlashAttribute("message", "login_fail");
+			redirectUrl = "redirect:/user/login";
 		}
-		return "redirect:/";
+		return redirectUrl;
+		
 	}
 	
 	//회원가입
@@ -70,7 +76,7 @@ public class LoginController {
 		return "redirect:/";
 	}
 	
-	// 회원가입
+	// 회원가입 처리
 	@RequestMapping(value="/account-create-run", method=RequestMethod.GET)
 	public String accountCreateRun(UserInfoVo userInfoVo, String birthYear, String birthMonth, String birthDay, 
 			RedirectAttributes rttr, HttpServletResponse response)throws Exception{
@@ -136,17 +142,101 @@ public class LoginController {
 		String user_nick = request.getParameter("user_nick");
 		System.out.println("닉네임 중복 체크 Controller : " + user_nick);
 		UserInfoVo nickCheck = userInfoService.nickCheck(user_nick);
+		
 		System.out.println("닉네임 중복 체크 Controller(service에서 넘어온 데이터) : " + nickCheck);
+		
 		
 		if(nickCheck != null) {
 			  result = 1;
 		} 
 		
+		
 		return result;
 	}
 	
+	// 회원정보
+	@RequestMapping(value="/user-info", method=RequestMethod.GET)
+	public String userInfo()throws Exception{
+		return "/user/user_info";
+
+	}
 	
+	// 회원정보 비밀번호확인
+	@RequestMapping(value="/user-info-pwinput", method= {RequestMethod.POST, RequestMethod.GET})
+	public String userInfoPwinput(HttpSession session)throws Exception{
+		System.out.println("LoginController, userInfoPwinput(), sesssion:" + session);
+		UserInfoVo userInfoVo =(UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo == null) {
+			return "redirect:/user/login";
+		}
+		return "/user/user_info_pwinput";
+		
+	}
 	
+	// 회원정보 비밀번호확인 동작
+	@RequestMapping(value="/user-info-pwinput-run", method= {RequestMethod.POST, RequestMethod.GET})
+	public String userInfoPwinputRun(HttpSession session, String user_pw, RedirectAttributes rttr)throws Exception{
+		String URI = "";
+		if (session == null) {
+			URI = "redirect:/user/login";
+		}
+		
+		UserInfoVo userInfoVo =(UserInfoVo)session.getAttribute("userInfoVo");
+		String sessionUserid = userInfoVo.getUser_id();
+		String sessionUserpw = userInfoVo.getUser_pw();
+		
+		System.out.println("회원정보재확인 Controller id : " + sessionUserid);
+		System.out.println("회원정보재확인 Controller pw세션 : " + sessionUserpw);
+		System.out.println("회원정보재확인 Controller pw입력 : " + user_pw);
+		if(sessionUserpw.equals(user_pw)) {
+			URI = "redirect:/user/user-info";
+			rttr.addFlashAttribute("user-info-pwinput-run", "success");
+		}
+		else {
+			URI = "redirect:/user/user-info-pwinput";
+			rttr.addFlashAttribute("user-info-pwinput-run", "fail");
+		}
+		
+		return URI;
+			
+	}
+	
+	// 회원정보 수정
+	@RequestMapping(value="/user-info-adjust", method= {RequestMethod.POST, RequestMethod.GET})
+	public String userInfoAdjust(UserInfoVo userInfoVo, String birthYear, String birthMonth, String birthDay, 
+			RedirectAttributes rttr, HttpServletRequest request)throws Exception{
+		
+		System.out.println("user-info-adjust birthYear : " + birthYear);
+		System.out.println("user-info-adjust birthMonth : " + birthMonth);
+		System.out.println("user-info-adjust birthDay : " + birthDay);
+		String birth = "";
+		birth = birthYear + "-" + birthMonth + "-" + birthDay;
+		System.out.println(birth);
+		
+		
+		userInfoVo.setUser_birth(birth);
+		System.out.println("user-info-adjust : " + userInfoVo);
+		userInfoService.userInfoAdjust(userInfoVo);
+		
+		rttr.addFlashAttribute("message", "success");
+		HttpSession session= request.getSession();
+		session.invalidate();
+//		System.out.println("user-info-adjust : " + userInfoVo);
+		return "redirect:/";
+		
+	}
+	
+	@RequestMapping(value="/user-delete", method= {RequestMethod.POST, RequestMethod.GET})
+	public String userDelete(HttpSession session, RedirectAttributes rttr)throws Exception{
+		
+		UserInfoVo userInfoVo =(UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userInfoVo.getUser_id();
+		System.out.println(user_id);
+		userInfoService.userDelete(user_id);
+		rttr.addFlashAttribute("message", "delete-success");
+		session.invalidate();
+		return "redirect:/";
+	}
 	
 	
 	

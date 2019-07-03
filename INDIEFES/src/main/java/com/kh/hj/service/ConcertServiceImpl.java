@@ -42,5 +42,18 @@ public class ConcertServiceImpl implements IConcertService {
 		ConcertInfoVo vo = dao.getConcertInfo(concert_number);
 		return vo;
 	}
+	
+	@Override
+	public List<String> getConcertInfoFiles(int concert_number) throws Exception {
+		// 공연 홍보 글 파일 불러오기
+		List<String> list = dao.getConcertInfoFiles(concert_number);
+		return list;
+	}
+
+	@Override
+	public void deleteConcertInfo(int concert_number) throws Exception {
+		// 공연 홍보 글 삭제
+		dao.deleteConcertInfo(concert_number);
+	}
 
 }
