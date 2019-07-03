@@ -54,8 +54,8 @@ public class ConcertController {
 		
 		UserInfoVo vo = (UserInfoVo)session.getAttribute("userInfoVo");
 		if (vo != null) {
-			String user_id = vo.getUser_id();
-			model.addAttribute("user_id", user_id);
+			int user_level = vo.getUser_level();
+			model.addAttribute("user_level", user_level);
 		}
 		
 		model.addAttribute("list", list);
@@ -88,9 +88,14 @@ public class ConcertController {
 	}
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public void concertInfoRead(@RequestParam("concert_number")int concert_number, Model model) throws Exception {
+	public void concertInfoRead(@RequestParam("concert_number")int concert_number, HttpSession session, Model model) throws Exception {
 		ConcertInfoVo vo = service.getConcertInfo(concert_number);
 		List<String> list = service.getConcertInfoFiles(concert_number);
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+		}
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
 	}

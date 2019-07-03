@@ -1,11 +1,11 @@
 (function($, window, document, undefined) {
   "use strict";
-  // Create the defaults once
+  // 기본값 생성
   var pluginName = "musicPlayer",
     defaults = {
       playlistItemSelector: "li",
       autoPlay: false,
-      volume: 100,
+      volume: 77,
       loop: false,
       timeSeparator: " / ",
       playerAbovePlaylist: true,
@@ -32,7 +32,7 @@
       onMute: function() {}
     };
 
-  //Setup Touch Events
+  // 터치 이벤트 설정
   var isTouch = "ontouchstart" in window,
     eStart = isTouch ? "touchstart" : "mousedown",
     eMove = isTouch ? "touchmove" : "mousemove",
@@ -72,24 +72,24 @@
         playerThis = this;
 
       for (var elemItem in this.settings.elements) {
-        //PREPARE VOLUME
+        // 볼륨 준비함
         if (this.settings.elements[elemItem] == "volume") {
           volumeElem =
             "<div class='volume'><div class='volume-btn' title='Volume'></div><div class=' volume-adjust'><div><div></div></div></div></div>";
           fullPlayerElem += volumeElem;
         }
-        //PREPARE PROGRESS
+        // 프로그레스바 준비함
         else if (this.settings.elements[elemItem] == "progress") {
           progressElem =
             "<div class='progressbar'><div class='bar-loaded' ></div><div class='bar-played'></div></div>";
           fullPlayerElem += progressElem;
         }
-        //PREPARE ARTWORK
+        // 커버 준비함
         else if (this.settings.elements[elemItem] == "artwork") {
           artworkElem = "<div class='cover'></div>";
           fullPlayerElem += artworkElem;
         }
-        //PREPARE INFORMATION displayed by the player in  the given order
+        // 주어진 순서대로 플레이어가 표시 한 정보를 준비함
         else if (this.settings.elements[elemItem] == "information") {
           $.inArray("title", this.settings.infoElements) != "-1"
             ? (titleElem = "<div class='title'></div>")
@@ -108,7 +108,7 @@
           infoElem = "<div class='info' >" + infoInnerElem + "</div>";
           fullPlayerElem += infoElem;
         }
-        //PREPARE TIME (current & Duration) in the given order
+        // 지정된 순서로 시간 준비 (current & Duration)
         else if (this.settings.elements[elemItem] == "time") {
           $.inArray("current", this.settings.timeElements) != "-1"
             ? (curTimeElem = "<div class='time-current'></div>")
@@ -134,7 +134,7 @@
           timeElem = "<div class='timeHolder'>" + timeInnerElem + "</div>";
           fullPlayerElem += timeElem;
         }
-        //PREPARE CONTROLS inner elements to display [play, stop, forward or backward] in the given order
+        // 지정된 순서로 [play, stop, forward or backward] 표시 할 내부 요소를 제어 준비
         else if (this.settings.elements[elemItem] == "controls") {
           $.inArray("backward", this.settings.controlElements) != "-1"
             ? (backwardElem = "<div class='rew'></div>")
@@ -165,7 +165,7 @@
         }
       }
 
-      //ADD THE PREPARED ELEMENT SORTED IN THEIR RIGHT ORDER TO THE PLAYER ELEMENT
+      // 준비된 요소를 플레이어 요소에 맞춰 순서대로 추가합니다.
       playerElem = $("<div class='player' >" + fullPlayerElem + "</div>");
       //console.log(this.element);
       if (this.settings.playerAbovePlaylist) {
@@ -204,43 +204,43 @@
         mute: "mute"
       };
 
-      //Volume cannot be set using JavaScript, so the volumechange event will never be fired.
-      //Even if the user changes the volume on their device while mobile Safari is open, this event will not fire
-      //source: https://www.ibm.com/developerworks/library/wa-ioshtml5/
-      //Hide Volume control on IOS devices.
+      // 자바 스크립트를 사용하여 볼륨을 설정할 수 없으므로 볼륨 변경 이벤트가 실행되지 않습니다.
+      // 모바일 사파리가 열린 상태에서 사용자가 기기의 볼륨을 변경하더라도 이 이벤트는 시작되지 않습니다.
+      // source: https://www.ibm.com/developerworks/library/wa-ioshtml5/
+      // IOS 장치의 볼륨 제어 숨기기.
       if (/iPad|iPhone|iPod/.test(navigator.userAgent))
         $(this.volumeInfo).hide();
 
-      // initialization - first element in playlist
+      // 초기화 - 재생 목록의 첫 번째 요소
       this.initAudio(
         $(this.playlistHolder.find(this.playlistItemSelector + ":first"))
       );
 
-      // set volume
+      // 볼륨 설정
       this.song.volume = this.volumeValue;
 
-      //set default time Current and duration time
+      // 기본 시간과 현재 및 지속 시간 설정
       this.timeDuration.html("&hellip;");
       this.timeCurrent.text(this.secondsToTime(0));
 
-      // play click
+      // 재생 클릭
       $(this.controlPlay).click(function(e) {
         e.preventDefault();
 
         playerThis.playAudio();
       });
 
-      // pause click
+      // 일시정지 정지 클릭
       $(this.controlPause).click(function(e) {
         e.preventDefault();
 
         playerThis.stopAudio();
 
-        //issue pause callback
+        // issue pause callback
         playerThis.settings.onPause();
       });
 
-      // forward click
+      // 다음곡 클릭
       $(this.controlFwd).click(function(e) {
         e.preventDefault();
 
@@ -248,7 +248,7 @@
 
         var next = playerThis.getSong(true);
 
-        //Looping Activated : play the first item on the playlist if there is no next item with(looping)
+        // 루핑 활성화 : 다음 항목이 없는 경우 재생 목록의 첫 번째 항목을 재생(루핑)
         if (next.length == 0) {
           next = $(playerThis.playlistHolder).find(
             playerThis.playlistItemSelector + ":first"
@@ -262,7 +262,7 @@
         playerThis.settings.onFwd();
       });
 
-      // rewind click
+      // 이전곡 클릭
       $(this.controlRew).click(function(e) {
         e.preventDefault();
 
@@ -270,7 +270,7 @@
 
         var prev = playerThis.getSong(false);
 
-        //play the last item on the playlist if there is no previous item (looping)
+        // 이전 항목이 없는 경우 재생 목록의 마지막 항목 재생(루핑)
         if (prev.length == 0) {
           prev = $(playerThis.playlistHolder).find(
             playerThis.playlistItemSelector + ":last"
@@ -284,7 +284,7 @@
         playerThis.settings.onRew();
       });
 
-      //stop click
+      // 정지 클릭
       $(this.controlStop).click(function(e) {
         e.preventDefault();
 
@@ -295,7 +295,7 @@
         playerThis.settings.onStop();
       });
 
-      // Play clicked Playlist song.
+      // 클릭 한 재생 목록 노래를 재생합니다.
       $(this.playlistHolder)
         .find(this.playlistItemSelector)
         .click(function(e) {
@@ -349,24 +349,24 @@
         artist = elem.attr("data-artist"),
         playerInstance = this;
 
-      //Set the title of the song  on the player
+      // 플레이어에서 노래 제목 설정
       $(this.trackInfo)
         .children(".title")
         .text(title);
-      //Set the artist name on the player
+      // 플레이어에서 아티스트 이름 설정
       $(this.trackInfo)
         .children(".artist")
         .text(artist);
 
-      //Set the cover image for the player
+      // 플레이어의 표지 이미지 설정
       $(this.coverInfo).css("background-image", "url(" + cover + ")");
 
       this.song = new Audio(url);
 
-      //Force load
+      // 강제로드
       this.song.load();
 
-      //set the song time duration on player
+      // 플레이어의 노래 지속 시간 설정
       this.song.addEventListener(
         "loadeddata",
         function() {
@@ -381,15 +381,14 @@
         false
       );
 
-      //update bar loader
+      // 바 로더 업데이트
       this.song.addEventListener("progress", function() {
         $(playerInstance.barLoaded).width(
-          (this.buffered.end(0) / this.duration) * 100 + "%"
-        );
+          (this.buffered.end(0) / this.duration) * 100 + "%");
       });
 
-      //timeupdate event listener (timeupdate used together with the current Time Property to return
-      // the current position of the audio playback in seconds)
+      // 시간 업데이트 이벤트 리스너 (현재 시간 속성과 함께 사용되어 오디오 재생의
+      // 현재 위치를 초 단위로 반환하는 시간 업데이트)
       this.song.addEventListener("timeupdate", function() {
         $(playerInstance.timeCurrent).text(
           playerInstance.secondsToTime(this.currentTime)
@@ -421,22 +420,22 @@
       });
 
       this.song.addEventListener("ended", function() {
-        //Play the loaded song when autoplay is activated
-        //$('.fwd').click();
+        // 자동 실행 시 로드된 노래 재생
+        // $('.fwd').click();
         if (playerInstance.settings.autoPlay) {
           playerInstance.autoPlayNext();
         } else {
-          //Hide playing class
+          // 재생 클래스 숨기기
           playerInstance.playerHolder.removeClass(
             playerInstance.cssClass.playing
           );
-          //Hide pause Icon and show play
+          // 일시 중지 아이콘 숨기기 및 재생 표시
           $(playerInstance.controlPlay).removeClass("hidden");
           $(playerInstance.controlPause).removeClass("visible");
         }
       });
 
-      //Toggle Mute icon and reset Volume
+      // 음소거 아이콘 전환 및 볼륨 재설정
       $(this.volumeButton).on("click", function() {
         if (
           $(playerInstance.playerHolder).hasClass(playerInstance.cssClass.mute)
@@ -455,7 +454,7 @@
         return false;
       });
 
-      //when volume bar is clicked
+      // 볼륨 바를 클릭할 때
       $(this.volumeAdjuster)
         .on(eStart, function(e) {
           playerInstance.adjustVolume(e);
@@ -469,7 +468,7 @@
           playerInstance.volumeAdjuster.unbind(eMove);
         });
 
-      //when trackbar is click
+      // 트랙 바를 클릭할 때
       $(this.theBar)
         .on(eStart, function(e) {
           playerInstance.adjustCurrentTime(e);
@@ -491,17 +490,17 @@
       //issue Callback
       this.settings.onLoad();
 
-      //Play the loaded song when autoplay is activated
+      // 자동 실행 시 로드된 노래 재생
       if (this.settings.autoPlay) this.playAudio();
     },
 
     playAudio: function() {
       this.song.play();
 
-      //Add playing class
+      // 재생 클래스 추가
       this.playerHolder.addClass(this.cssClass.playing);
 
-      //Hide pause Icon and show play if they exist
+      // 일시 중지 아이콘 숨기기 및 아이콘이 있으면 재생 표시
       if (
         $.inArray("controls", this.settings.elements) != "-1" &&
         $.inArray("play", this.settings.controlElements) != "-1"
@@ -514,10 +513,10 @@
 
     stopAudio: function() {
       this.song.pause();
-      //Remove playing class
+      // 재생 클래스 제거
       this.playerHolder.removeClass(this.cssClass.playing);
 
-      //Hide pause Icon and show play if they exist
+      // 일시 중지 아이콘 숨기기 및 아이콘이 있으면 재생 표시
       if (
         $.inArray("controls", this.settings.elements) != "-1" &&
         $.inArray("play", this.settings.controlElements) != "-1"
@@ -526,11 +525,11 @@
         $(this.controlPause).removeClass("visible");
       }
     },
-    // Auto Play the next track and loop if loop is activated
+    // 자동 루프가 활성화 된 경우 다음 트랙 및 루프를 재생합니다.
     autoPlayNext: function() {
       this.stopAudio();
       var next = this.getSong(true);
-      //Looping Activated : play the first item on the playlist if there is no next item with(looping)
+      // 루핑 활성화 : 다음 항목이 없으면 재생 목록의 첫 번째 항목을 재생합니다 (루핑)
       if (next.length == 0 && this.settings.loop) {
         next = $(this.playlistHolder).find(
           this.playlistItemSelector + ":first"
@@ -542,7 +541,7 @@
         this.playAudio();
       }
     },
-    //nextSong: is Boolean to get next or previous song.
+    // nextSong : 다음 또는 이전 노래를 가져 오는 Boolean입니다.
     getSong: function(nextSong) {
       var $x = $(this.playlistHolder).find(this.playlistItemSelector);
       var curSong = $(this.playlistItemSelector + ".active");
@@ -552,16 +551,16 @@
         return $x.eq($x.index(curSong) - 1);
       }
     },
-    //initiate the give song maintaining current settings
+    // 현재 노래 설정을 유지
     loadNewSong: function(elem) {
-      //save current volume  level
+      // 현재 볼륨 저장
       this.volumeValue = this.song.volume;
-      //set up the next song to be played
+      // 다음 곡 재생 설정
       this.initAudio(elem);
-      //set song volume to the previous track's volume to ensure consistency
+      // 노래 볼륨을 이전 트랙의 볼륨으로 설정
       this.song.volume = this.volumeValue;
       this.volumeAdjuster.find("div").width(this.volumeValue * 100 + "%");
-      //reset progress & loaded bar indicator to begin
+      // 진행률 및 로드된 바 재설정
       this.barPlayed.width(0);
       this.barLoaded.width(0);
     }

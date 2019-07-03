@@ -18,6 +18,8 @@
     <link href="<c:url value ='/resources/css/styles.css'/>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<c:url value ='/resources/js/jquery-1.7.2.min.js'/>"></script>
     <script type="text/javascript" src="<c:url value ='/resources/js/musicplayer.js'/>"></script>
+</head>
+<body>
 <script>
 function allowDrop(ev) {
 	  ev.preventDefault();
@@ -35,9 +37,6 @@ function allowDrop(ev) {
 		}
 	}
 </script>
-</head>
-
-<body>
     <div ondrop="drop(event)" ondragover="allowDrop(event)" style=" width: 100%; height: 0px; text-align: center;">
       	<img src=" <c:url value ='/resources/images/Delete.png'/>" alt="삭제이미지" style="width: 50px; height: 50px;"/>
     </div>
@@ -50,15 +49,14 @@ function allowDrop(ev) {
 			</c:forEach>
         </ul>
     </div>
-
     <script>
-
         $(".MusicPlayer").musicPlayer({
 //             volume: 50,
 //             elements: ['artwork', 'controls', 'progress', 'time', 'volume'],
 //             playerAbovePlaylist: false,
             autoPlay: true,
             loop: true,
+            readState : true,
             onLoad: function () {
 //                 Add Audio player
                 plElem = "<div class='pl'></div>";
@@ -69,10 +67,7 @@ function allowDrop(ev) {
                     $('.MusicPlayer').find('.playlist').toggleClass("hidden");
                 });
             },
-
         });
-
     </script>
-
 </body>
 </html>

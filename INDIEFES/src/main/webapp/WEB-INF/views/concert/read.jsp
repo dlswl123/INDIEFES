@@ -121,13 +121,17 @@ $(document).ready(function() {
 					<label id="content">공연 내용</label>
 					<div>${vo.content}</div><br>
 						
-<%-- 					<%@ include file="../include/show_map.jsp" %> --%>
+					<%@ include file="../include/show_map.jsp" %>
 					
 				</div>
 				
 				<div class="row">
 					<article style="text-align:right;padding:20px;">
-						<input type="Button" class="btn btn-primary" value="목록보기" id="btnList"/>
+						<c:if test="${vo.user_id == user_id}">
+							<input type="button" class="btn btn-danger" value="삭제" id="btnDel"/>
+							<input type="button" class="btn btn-warning" value="수정" id="btnMod"/>
+						</c:if>
+						<input type="button" class="btn btn-primary" value="목록보기" id="btnList"/>
 					</article>
 				</div> <!-- row -->
 				

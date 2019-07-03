@@ -23,44 +23,47 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	@Inject
 	private SqlSession sqlSession;
 
+	// 앨범작성
 	@Override
 	public void insert(ArtInfoVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
-	
+	// 앨범정보
 	@Override
 	public ArtInfoVo artInfo(int team_number) throws Exception {
 		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artInfo",team_number);
 		return artVo;
 	}
-
+	// 팀 생성
 	@Override
 	public void teamInsert(IndieTeamVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".teamInsert", vo);
 	}
-
+	// 팀 가입
 	@Override
 	public void teamInput(TeamMemberVo vo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".memberInsert", vo);
 
 	}
+	// 팀 정보
 	@Override
 	public List<TeamMemberVo> teamInfo(int team_number) throws Exception {
 		List<TeamMemberVo> memberList = sqlSession.selectList(NAMESPACE + ".memberList", team_number);
 		return memberList;
 	}
+	// 팀 앨범정보
 	@Override
 	public List<ArtInfoVo> teamArtList(int team_number) throws Exception {
 		List<ArtInfoVo> teamArtList = sqlSession.selectList(NAMESPACE + ".teamArtList",team_number);
 		return teamArtList;
 	}
+	// 앨범정보
 	@Override
 	public ArtInfoVo artRead(int art_number) throws Exception {
 		ArtInfoVo artVo = sqlSession.selectOne(NAMESPACE + ".artRead", art_number);
 		return artVo;
 	}
-	
-	// 수정
+	// 앨범 수정
 	@Override
 	public ArtInfoVo artModifyFrom(String user_id, int art_number) throws Exception {
 		HashMap<String, Object> artMap = new HashMap<>();
@@ -70,13 +73,13 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		return artVo;
 	}
 	
-	// 수정처리
+	// 앨범 수정처리
 	@Override
 	public void artModify(ArtInfoVo artInfoVo) throws Exception {
 		sqlSession.update(NAMESPACE + ".artModify", artInfoVo);
 	}
 	
-	// 삭제처리
+	// 앨범 삭제처리
 	@Override
 	public void artDelete(int art_number, String user_id) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
@@ -154,22 +157,23 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.delete(NAMESPACE + ".playDelete", play_index);
 		
 	}
-
+	
+	// 최신 앨범 
 	@Override
 	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
 		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".toDayList",pagingDto);
 		return artList;
 	}
-	@Override
-	public List<ArtInfoVo> goodList() throws Exception {
-		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".goodList");
-		return artList;
-	}
-
+	// 최신앨범 수
 	@Override
 	public int toDayCount() throws Exception {
 		int artCount = sqlSession.selectOne(NAMESPACE + ".toDayCount");
 		return artCount;
 	}
-
+	// 인기 앨범
+	@Override
+	public List<ArtInfoVo> goodList() throws Exception {
+		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".goodList");
+		return artList;
+	}
 }
