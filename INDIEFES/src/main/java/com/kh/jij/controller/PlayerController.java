@@ -59,7 +59,6 @@ public class PlayerController {
 		}
 		model.addAttribute("playList", playList);
 		model.addAttribute("uploadPath", uploadPath);
-		System.out.println("playList:"+playList);
 	}
 	
 	// 플레이리스트
@@ -69,8 +68,8 @@ public class PlayerController {
 		String realPath = uploadPath + File.separator + album + File.separator + team_number + File.separator + art_number + File.separator + filePath;
 		String formatName = FileUploadUtil.getFormatName(filePath).toUpperCase();
 		MediaType mediaType = null;
-		if (formatName.equals("MP3")) {
-			mediaType = new MediaType("audio", "mp3");
+		if (formatName.equals("MP3")||formatName.equals("WAV")||formatName.equals("OGG")||formatName.equals("FLAC")) {
+			mediaType = new MediaType("audio", "ogg");
 		} 
 
 		ResponseEntity<byte[]> entity = null;
@@ -84,7 +83,6 @@ public class PlayerController {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		}
-//		System.out.println("realPath:"+realPath);
 		return entity;
 	}
 	// 등록
@@ -101,7 +99,6 @@ public class PlayerController {
 	@RequestMapping(value="/playDelete", method=RequestMethod.GET)
 	public String Delete(int play_index) throws Exception {
 		artService.playDelete(play_index);
-//		System.out.println("삭제됨"+play_index);
 		return "redirect:/player/player";
 	}
 	@RequestMapping(value="/playList", method=RequestMethod.GET)

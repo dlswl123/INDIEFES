@@ -10,6 +10,7 @@ public interface IMusicInfoService {
 	// 노래 정보 가져오기
 	public List<MusicInfoVo> musicRead(int art_number) throws Exception;
 	
+	// 노래 등록
 	public void musicInsert(MusicInfoVo musicInfoVo) throws Exception;
 	
 	// 트랙넘버 가져오기
