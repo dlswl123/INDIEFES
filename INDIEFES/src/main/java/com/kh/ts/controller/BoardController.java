@@ -49,7 +49,7 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void boardList(Model model, HttpSession session, PagingDto pagingDto) throws Exception {
 		System.out.println("BoardController, list, pagingDto:" + pagingDto);
-		// 지정된회원만 글쓰기버튼을 사용할수있도록 구현
+		// 지정된회원만 글쓰기버튼을 보여질수있도록 구현
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		
 		if (userInfoVo != null) {

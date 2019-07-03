@@ -25,7 +25,7 @@ $(document).ready(function() {
 		<section style="padding:20px;width:100%;">
 			<h1>공연 정보</h1>
 
-			<c:if test="${user_id != null}">
+			<c:if test="${user_level < 3}">
 				<div style="float:right;">
 					<input type="button" class="btn btn-primary" value="글작성" id="btnWrite" />
 				</div>

@@ -81,6 +81,9 @@ $(document).ready(function() {
 		
 	} // End of uploadPosterFiles();
 	
+	$("#btnCancel").click(function() {
+		location.href = "/indiefes/concert/info";
+	});
 	
 	$("#btnConfirm").click(function() {
 		
@@ -124,7 +127,6 @@ $(document).ready(function() {
 	<section style="background-color:rgba(255,255,255,0.7);margin:20px;">
 	
 		<article style="padding:20px;">
-			
 			<!-- // move to new concert info write form -->
 			<form role="form" action="/indiefes/concert/write" method="post" id="concertWriteForm" enctype="multipart/form-data">
 				<div class="form-group">
@@ -173,6 +175,7 @@ $(document).ready(function() {
 				<div class="row">
 					<article style="text-align:right;padding:20px;">
 						<input type="Button" class="btn btn-primary" value="등록" id="btnConfirm"/>
+						<input type="Button" class="btn btn-danger" value="취소" id="btnCancel"/>
 					</article>
 				</div> <!-- row -->
 				
