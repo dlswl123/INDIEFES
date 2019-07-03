@@ -252,4 +252,6 @@ public class ArtController {
 		model.addAttribute("teamList", teamList);
 	}
 
+	
+	
 }

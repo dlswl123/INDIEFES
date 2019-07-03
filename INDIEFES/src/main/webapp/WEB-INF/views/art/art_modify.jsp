@@ -237,7 +237,7 @@ $(document).ready(function() {
 		$("#btnModalLyric").attr("data-music_number", music_number);
 	});
 	
-	// 모달 수정 버튼
+	// 모달 등록 버튼
 	$("#btnModalLyric").click(function() {
 		var music_number = $(this).attr("data-music_number");
 		var lyrics = $("#lyrics").val().trim();

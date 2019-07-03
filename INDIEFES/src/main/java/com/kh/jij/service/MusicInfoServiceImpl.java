@@ -50,5 +50,16 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 		musicDao.musicLyrics(musicLyricsVo);
 		
 	}
+
+	@Override
+	public String getLyrics(int music_number) throws Exception {
+		String lyrics = musicDao.getLyrics(music_number);
+		return lyrics;
+	}
+
+	@Override
+	public void updateLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
+		musicDao.updateLyrics(musicLyricsVo);
+	}
 	
 }
