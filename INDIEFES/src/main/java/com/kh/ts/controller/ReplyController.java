@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +49,36 @@ public class ReplyController {
 		return entity;
 	}
 	// 댓글 수정
-	@RequestMapping(value="/update/{reply_number", method=RequestMethod.PUT)
+	@RequestMapping(value="/update/{reply_number}", method=RequestMethod.PUT)
 	public ResponseEntity<String> update(@PathVariable("reply_number") int reply_number,
 										@RequestBody ReplyVo replyVo) {
-		System.out.println("ReplyController reply_number:" + reply_number);
-		
-		return null;
+		replyVo.setReply_number(reply_number);
+		ResponseEntity<String> entity = null;
+		try {
+			replyService.update(replyVo);
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
+	
+		// 댓글 삭제
+		@RequestMapping(value="/delete/{reply_number}/{board_number}", method=RequestMethod.DELETE)
+		public ResponseEntity<String> delete(
+				@PathVariable("reply_number") int reply_number,
+				@PathVariable("board_number") int board_number) {
+			ResponseEntity<String> entity = null;
+			try {
+				replyService.delete(reply_number, board_number);
+				entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			}
+			return entity;
+		}
 	
 	// 댓글목록
 	@RequestMapping(value="/list/{board_number}", method=RequestMethod.GET)
