@@ -68,14 +68,13 @@ public class BoardController {
 		System.out.println("BoardController, read, board_number:" + board_number);
 		BoardVo boardVo = boardService.select(board_number);
 	
-		// 지정된회원
+		// 지정된회원만 수정,삭제버튼이 보이도록
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
 	
 		if (userInfoVo != null) {
 			String user_id = userInfoVo.getUser_id();
 			model.addAttribute("user_id", user_id);
 		}
-
 		// int bno 전역변수를 하나 정해서 board_number를 저장
 		// 현재 호출된 board_number와 같으면 updateViewcnt를 실행하지 않게 함
 		if (bno != board_number) {
@@ -91,7 +90,7 @@ public class BoardController {
 	@RequestMapping(value="/regist", method=RequestMethod.GET)
 	public void registGet() throws Exception {
 		System.out.println("BoardController, registGet() 실행됨");
-		// /WEB-INF/indifes/board/regist.jsp
+	// /WEB-INF/indifes/board/regist.jsp
 	}
 	
 	// 글쓰기 처리 - /indiefes/board/regist(Post 불러오기)

@@ -126,12 +126,13 @@ $(document).ready(function() {
 		</c:if>
 		>작성자</option>
 	</select>
+		
 		<input type="text" id = "keyword"
 				placeholder="검색어를 입력하세요"value="${pagingDto.keyword}"/>
 			<input type="button" value="검색버튼"id= "btnSearch"
 				class= "btn btn-danger"/>
-			<input type="button" class="btn btn-success"
-		  		value="글쓰기" id="btnRegist">
+			<input type="button" class="btn btn-success" value="글쓰기" id="btnRegist">
+		 
 				<div class="row">
 				<div class="col-md-12">
 				<table class="table">
