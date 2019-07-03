@@ -15,7 +15,7 @@
 	<update id="update">
 		update reply_info set
 			content = #{content},
-			user_id = #{user_id}
+			user_id = #{user_id},
 			late_date = sysdate
 		where reply_number = #{reply_number}
 	</update>

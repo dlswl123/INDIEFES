@@ -133,7 +133,7 @@ $(document).ready(function() {
 			<input type="button" value="검색버튼"id= "btnSearch"
 				class= "btn btn-danger"/>
 				
-			<!-- 로그인시에만 글쓰기버튼을 사용할수있도록 구현 -->
+			<!-- 로그인시에만 글쓰기버튼을 보여질수있도록 구현 -->
 			<c:if test="${user_id != null}">	
 			<input type="button" class="btn btn-success" value="글쓰기" id="btnRegist">
 		 	</c:if>
