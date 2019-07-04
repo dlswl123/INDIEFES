@@ -64,10 +64,10 @@ $(document).ready(function() {
 	},function(){
 		$(this).text("PLAYER").css("font-family","prstart").css("font-size","1rem");
 	});
-	$("#payInfo").hover(function() {
-		$(this).text("결제목록 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	$("#payInfo font").hover(function() {
+		$(this).text("결제정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
 	},function(){
-		$(this).text("PAYLIST").css("font-family","prstart").css("font-size","1rem");
+		$(this).text("PAY INFO").css("font-family","prstart").css("font-size","1rem");
 	});
 });
 </script>
@@ -109,7 +109,7 @@ $(document).ready(function() {
 					
 					<section id="payInfo">
 					<a href="/indiefes/art/pay_info">
-						<font>PAYLIST</font>
+						<font>PAY INFO</font>
 					</a>
 					</section>
 					
@@ -139,14 +139,6 @@ $(document).ready(function() {
 			    <a href="/indiefes/concert/info">
 			    	<font>CONCERT INFO</font>
 			    </a>
-		    </section>
-		    <section id="player">
-			    <script type="text/javascript">
-					function musicPlayer() {
-						window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
-					}
-				</script>
-		    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>
 		    </section>
 		</aside>
 	</div>
