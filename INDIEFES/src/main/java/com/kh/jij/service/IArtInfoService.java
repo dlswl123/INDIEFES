@@ -75,4 +75,9 @@ public interface IArtInfoService {
 	
 	// 앨범 수
 	public int artCount(PagingDto pagingDto)throws Exception;
+	
+	// 앨범승인요청
+	public void artUploadAppro(int art_number, String user_id) throws Exception;
+	// 업로드승인
+	public void artUpload(int art_number) throws Exception;
 }

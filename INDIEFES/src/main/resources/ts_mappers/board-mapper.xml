@@ -13,16 +13,18 @@
 	<!-- 글조회 -->
 	<select id="select" resultType="BoardVo">
 		select *
-		from board_info
-		where board_number=#{board_number}
+		from board_info b, user_info u
+		where b.user_id = u.user_id and board_number=#{board_number}		
 	</select>
 	
 	<!-- 글목록 -->
 	<select id="selectAll" resultType="BoardVo">
 		select *
 		from(select rownum rnum, a.*
-			from(select * from board_info
-				where is_del != 'Y'
+			from(select b.board_number, b.reply_count, b.subject, b.reg_date, b.view_count, u.user_nick
+				 from board_info b, user_info u
+				 where b.user_id = u.user_id
+				 and is_del != 'Y'
 				<include refid="contentView"></include>
 				order by board_number desc)a)
 		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
@@ -91,6 +93,8 @@
 		delete from board_file
 		where board_number= #{board_number}
 	</delete>
+	
+	<!-- 글목록 게시판에 구현search -->
 	<sql id="contentView">
 		<if test="searchType != null">
 			<if test="searchType == 'subject'">
@@ -105,6 +109,8 @@
 			 
 		</if>
 	</sql>
+	
+	<!-- 5줄 10줄 15줄 20줄 페이징부분 search -->
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 'subject'">

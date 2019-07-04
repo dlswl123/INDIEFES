@@ -216,6 +216,7 @@ $(document).ready(function() {
 			<c:choose>
 				<c:when test="${not empty artList}">
 					<c:forEach items="${artList}" var="artVo">
+					<c:if test="${artVo.upload_check == 1 }">
 					<li class="art_info">
 						<figure class="albumInfo">
 							<div class="thumbnail">
@@ -242,6 +243,7 @@ $(document).ready(function() {
 							</figcaption>
 						</figure>
 					</li>
+					</c:if>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>

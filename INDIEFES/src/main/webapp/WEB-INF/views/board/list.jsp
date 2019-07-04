@@ -124,7 +124,7 @@ $(document).ready(function() {
 		</c:if>
 		>내용</option>
 		<option value="user_id"
-		<c:if test="${pagingDto.searchType == 'user_id' }">
+		<c:if test="${userInfoVo.user_nick }">
 			selected
 		</c:if>
 		>작성자</option>
@@ -163,15 +163,17 @@ $(document).ready(function() {
 								data-board_number="${boardVo.board_number}" -->
 								${boardVo.subject}</a>
 								<c:if test="${boardVo.reply_count != 0 }">
-								<span style="color: red;">[${ boardVo.reply_count }]</span>
+								<span style="color: red;">[${ boardVo.reply_count}]</span>
 								</c:if>
-								<c:if test="${boardVo.view_count >= 10 }">
+								
+								<c:if test="${boardVo.view_count >= 50 }">
 								<img src="<c:url value='/resources/images/heart_fill.png'/>" width="15">
 								<span style="color: red;">hot</span>
 								</c:if>
 							</td>		
 							<!-- 회원 -->
-							<td>${boardVo.user_id}</td>
+							<td>${boardVo.user_nick}</td>
+							<%--(${boardVo.user_id}) --%>
 							<!-- 작성일 -->
 							<td>
 							<%-- <fmt:formatDate value=" --%>

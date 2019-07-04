@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,14 +55,14 @@ public class MusicController {
 
 	// 음악 추가하기
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public ResponseEntity<String> insert(@RequestBody MusicInfoVo musicInfoVo, @RequestParam("file") MultipartFile file) throws Exception {
+	public ResponseEntity<String> insert(MusicInfoVo musicInfoVo, @RequestParam("file_path") MultipartFile file) throws Exception {
 		System.out.println("MusicController, insert, musicInfoVo:" + musicInfoVo);
 		ResponseEntity<String> entity = null;
 		try {
 			musicService.musicInsert(musicInfoVo);
 			String originalName = file.getOriginalFilename();
 			try {
-				FileUploadUtil.uploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
+				FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
