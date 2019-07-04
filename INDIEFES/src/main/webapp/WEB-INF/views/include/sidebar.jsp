@@ -20,6 +20,52 @@
 	padding-left:20px;
 }
 </style>
+
+<script>
+$(document).ready(function() {
+	$("#login font").hover(function() {
+		$(this).text("로그인 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("LOGIN").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#logout font").hover(function() {
+		$(this).text("로그아웃 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("LOGOUT").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#userInfo font").hover(function() {
+		$(this).text("회원정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("USER INFO").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#boardList font").hover(function() {
+		$(this).text("자유게시판 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("FREE BOARD").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#artInfo font").hover(function() {
+		$(this).text("앨범목록 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("ALBUM LIST").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#concertInfo font").hover(function() {
+		$(this).text("공연정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("CONCERT INFO").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#player font").hover(function() {
+		$(this).text("플레이어 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("PLAYER").css("font-family","prstart").css("font-size","1rem");
+	});
+});
+</script>
     
 <div class="col-md-2">
 	<div class="sidebar" style="position:fixed;background-color:rgba(0,0,0,0.7);width:100%;height:100%;">
