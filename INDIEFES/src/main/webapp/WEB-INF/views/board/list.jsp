@@ -124,7 +124,7 @@ $(document).ready(function() {
 		</c:if>
 		>내용</option>
 		<option value="user_id"
-		<c:if test="${userInfoVo.user_nick }">
+		<c:if test="${pagingDto.searchType == 'user_id'}">
 			selected
 		</c:if>
 		>작성자</option>

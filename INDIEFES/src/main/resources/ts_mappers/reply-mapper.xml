@@ -28,9 +28,10 @@
 	
 	<!-- 댓글목록 -->
 	<select id="list" resultType="ReplyVo">
-		select *
-		from reply_info
-		where board_number = #{board_number}
+		select r.user_id, r.reply_number, r.board_number, r.content, r.reg_date, u.user_nick
+		from reply_info r, user_info u
+		where r.user_id = u.user_id 
+		and r.board_number = #{board_number}
 		order by reply_number desc
 	</select>
 	
