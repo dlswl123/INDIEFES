@@ -176,4 +176,19 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".goodList");
 		return artList;
 	}
+	
+	// 앨범등록 승인요청
+	@Override
+	public void artUploadAppro(int art_number, String user_id) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("art_number", art_number);
+		map.put("user_id", user_id);
+		sqlSession.update(NAMESPACE + ".artUploadAppro", map);
+	}
+	
+	// 앨범등록 승인
+	@Override
+	public void artUpload(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".artUpload", art_number);
+	}
 }

@@ -178,6 +178,17 @@ $(document).ready(function() {
 	$("#btnArtDelete").click(function() {
 		location.href="/indiefes/art/art_delete/${artVo.art_number}";
 	});
+	
+	// 앨범 등록 요청 버튼
+	$("#btnArtAppro").click(function() {
+		var check = confirm("등록 요청할 경우 수정 및 삭제할수 없습니다. 그래도 진행하시겠습니까?");
+		if (check == true) {
+			location.href="/indiefes/art/artUploadAppro/${artVo.art_number}";
+		} else if (check == false) {
+// 			alert("취소하셨습니다.");
+		}
+	});
+	
 	// 뮤지션용 끝
 	
 // 		운영자용
@@ -229,6 +240,7 @@ $(document).ready(function() {
 <%-- 					<c:when test="${userInfoVo.user_level eq 2 and artVo.user_id eq userInfoVo.user_id}"> --%>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtModify">앨범수정</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtDelete">앨범삭제</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnArtAppro">앨범등록</button>
 <%-- 					</c:when> --%>
 <%-- 					<c:otherwise> --%>
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button> -->

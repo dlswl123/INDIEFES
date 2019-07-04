@@ -110,4 +110,27 @@ public class PlayerController {
 		
 	}
 	
+	@RequestMapping(value="/playInsertAll/{art_number}", method=RequestMethod.POST)
+	public ResponseEntity<String> playInsertAll(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
+		ResponseEntity<String> entity = null;
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
+		Map<String, Object> map = new HashMap<>();
+		try {
+			for (int i = 0; i < musicList.size(); i++) {
+				MusicInfoVo musicVo = musicList.get(i);
+				map.put("user_id", userVo.getUser_id());
+				map.put("musicVo", musicVo);
+				artService.playInsert(map);
+				map.remove("user_id");
+				map.remove("musicVo");
+				entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 }
