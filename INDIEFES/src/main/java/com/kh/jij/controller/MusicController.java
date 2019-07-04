@@ -54,7 +54,7 @@ public class MusicController {
 
 	// 음악 추가하기
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public ResponseEntity<String> insert(@RequestBody MusicInfoVo musicInfoVo, @RequestParam("file") MultipartFile file) throws Exception {
+	public ResponseEntity<String> insert(MusicInfoVo musicInfoVo, @RequestParam("file_path") MultipartFile file) throws Exception {
 		System.out.println("MusicController, insert, musicInfoVo:" + musicInfoVo);
 		ResponseEntity<String> entity = null;
 		try {
