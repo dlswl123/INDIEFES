@@ -93,6 +93,8 @@
 		delete from board_file
 		where board_number= #{board_number}
 	</delete>
+	
+	<!-- 글목록 게시판에 구현search -->
 	<sql id="contentView">
 		<if test="searchType != null">
 			<if test="searchType == 'subject'">
@@ -107,6 +109,8 @@
 			 
 		</if>
 	</sql>
+	
+	<!-- 5줄 10줄 15줄 20줄 페이징부분 search -->
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 'subject'">

@@ -163,7 +163,7 @@ $(document).ready(function() {
 								data-board_number="${boardVo.board_number}" -->
 								${boardVo.subject}</a>
 								<c:if test="${boardVo.reply_count != 0 }">
-								<span style="color: red;">[${ boardVo.reply_count }]</span>
+								<span style="color: red;">[${ boardVo.reply_count}]</span>
 								</c:if>
 								<c:if test="${boardVo.view_count >= 10 }">
 								<img src="<c:url value='/resources/images/heart_fill.png'/>" width="15">
