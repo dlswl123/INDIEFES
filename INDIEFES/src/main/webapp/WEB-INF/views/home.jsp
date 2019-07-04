@@ -3,7 +3,16 @@
     pageEncoding="UTF-8"%>
 <%@ include file="include/header.jsp" %>
 
-
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+}
+#dgm {
+	font-family: dgm;
+	font-size: 2rem;
+}
+</style>
 
 		<script>
 			$(document).ready(function() {
@@ -20,22 +29,28 @@
 		</script>
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div>
-				<h1>
-					INDIEFES 
-				</h1>
-				
+				<section id="logo">
+					<font>
+						InDiEFeS 
+					</font>
+				</section>
+				<hr>
 				<section>
-					최신 앨범
+					<font id="dgm">
+						최신 앨범
+					</font>
 					<article class="art1">
 					<%@ include file="include/home_today_list.jsp" %>
 					</article>
 				</section>
-				
+				<hr>
 				<section>
-					인기 앨범
-				<article class="art2">
+					<font id="dgm">
+						인기 앨범
+					</font>
+					<article class="art2">
 					<%@ include file="include/home_good_list.jsp" %>
-				</article>
+					</article>
 				</section>
 			</div>
 		</div> <!-- col-md-10 / main -->
