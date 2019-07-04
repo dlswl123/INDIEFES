@@ -21,7 +21,7 @@
 	<select id="selectAll" resultType="BoardVo">
 		select *
 		from(select rownum rnum, a.*
-			from(select b.board_number, b.subject, b.reg_date, b.view_count, u.user_nick
+			from(select b.board_number, b.reply_count, b.subject, b.reg_date, b.view_count, u.user_nick
 				 from board_info b, user_info u
 				 where b.user_id = u.user_id
 				 and is_del != 'Y'

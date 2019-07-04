@@ -165,7 +165,8 @@ $(document).ready(function() {
 								<c:if test="${boardVo.reply_count != 0 }">
 								<span style="color: red;">[${ boardVo.reply_count}]</span>
 								</c:if>
-								<c:if test="${boardVo.view_count >= 10 }">
+								
+								<c:if test="${boardVo.view_count >= 50 }">
 								<img src="<c:url value='/resources/images/heart_fill.png'/>" width="15">
 								<span style="color: red;">hot</span>
 								</c:if>
