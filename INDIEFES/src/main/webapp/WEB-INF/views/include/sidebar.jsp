@@ -37,7 +37,7 @@
 			    <c:when test="${userInfoVo eq null}">
 			        <section id="login">
 					<a href="/indiefes/user/login">
-						<font style="font-family:bom;">LOGIN</font>
+						<font>LOGIN</font>
 					</a>
 					</section>
 			    </c:when>
