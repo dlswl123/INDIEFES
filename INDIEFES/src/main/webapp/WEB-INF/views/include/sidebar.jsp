@@ -10,7 +10,7 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userInfo, #boardList, #artInfo, #concertInfo, #player font {
+.sidebar #login, #logout, #userInfo, #boardList, #artInfo, #concertInfo, #player,#payInfo font {
 	font-family: prstart;
 }
 .sidebar #home {
@@ -64,6 +64,11 @@ $(document).ready(function() {
 	},function(){
 		$(this).text("PLAYER").css("font-family","prstart").css("font-size","1rem");
 	});
+	$("#payInfo").hover(function() {
+		$(this).text("결제목록 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("PAYLIST").css("font-family","prstart").css("font-size","1rem");
+	});
 });
 </script>
     
@@ -101,26 +106,21 @@ $(document).ready(function() {
 						<font>USER INFO</font>
 					</a>
 					</section>
-<<<<<<< HEAD
 					
 					<section id="payInfo">
-					<h1><a href="/indiefes/art/pay_info">
-						<font style="color:#ffffff;">결제정보</font>
-					</a></h1>
+					<a href="/indiefes/art/pay_info">
+						<font>PAYLIST</font>
+					</a>
 					</section>
 					
 					<section id="player">
-			    	<h1>
 				    <script type="text/javascript">
 						function musicPlayer() {
 							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 						}
 					</script>
-			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font style="color:#ffffff;">Player</font></a>
-			    	</h1>
+			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>
 		    		</section>
-=======
->>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 			    </c:otherwise>
 			 
 			</c:choose>

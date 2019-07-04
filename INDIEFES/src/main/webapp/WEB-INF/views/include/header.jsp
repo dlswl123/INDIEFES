@@ -33,9 +33,6 @@ body {
   	font-family: 스웨거 TTF;
 /*   	font-family: Ghang, Misdemeanor,Urban Jungle,FuturaBlack BT,Yj SHANALL,Yj WADAG; */
 }
-aside{
-font-family: 영남일보체;
-}
 /* /resources 내의 자료 불러와지지 않을 때 사용법
 <script src="<c:url value='~~~주소~~~'/>"/>
 */
