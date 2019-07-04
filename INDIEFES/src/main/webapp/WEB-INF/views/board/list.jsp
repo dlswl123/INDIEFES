@@ -101,7 +101,6 @@ $(document).ready(function() {
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 <h1>Indiefes 게시판</h1>
-	<p>데이터확인= ${paginationDto}</p>
 	<select id="perPage">
 				<c:forEach var= "i" begin= "5" end= "20" step= "5">
 					<option
@@ -181,7 +180,7 @@ $(document).ready(function() {
 			</div>
 			<!--  페이지네이션(페이지클릭창) -->
 			<div class="row">
-		<div class="col-md-12 text-center">
+		<div class="col-md-12 text-center" style="float:center;">
 			<nav>
 				<ul class="pagination" >
 				<!-- 이전 -->
