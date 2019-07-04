@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -14,13 +15,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ks.domain.UserInfoVo;
+import com.kh.ks.domain.UserManagementPagingDto;
 import com.kh.ks.service.IUserInfoService;
+import com.kh.ts.domain.PaginationDto;
+import com.kh.ts.domain.PagingDto;
 
 @Controller
 @RequestMapping("/user/*")
@@ -226,6 +232,7 @@ public class LoginController {
 		
 	}
 	
+	// 회원탈퇴
 	@RequestMapping(value="/user-delete", method= {RequestMethod.POST, RequestMethod.GET})
 	public String userDelete(HttpSession session, RedirectAttributes rttr)throws Exception{
 		
@@ -237,6 +244,30 @@ public class LoginController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	
+	// 회원관리페이지
+	@RequestMapping(value="/user-management", method= {RequestMethod.POST, RequestMethod.GET})
+	public String userManagement(PagingDto pagingDto, Model model)throws Exception{
+		
+		System.out.println("회원관리폼 실행됨");
+		List<UserInfoVo> list = userInfoService.userInfo(pagingDto);
+		System.out.println("회원관리폼 결과값 : " + list);
+		model.addAttribute("list", list);
+		
+		PaginationDto paginationDto = new PaginationDto();
+		
+		paginationDto.setPagingDto(pagingDto);
+		int count = userInfoService.userCount(pagingDto);
+		System.out.println("LoginController userCount : " + count);
+		paginationDto.setTotalCount(count);
+		model.addAttribute("paginationDto", paginationDto);
+		
+		
+		
+		return "/user/user_management";
+	}
+	
 	
 	
 	

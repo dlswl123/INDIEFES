@@ -31,6 +31,14 @@
 					</a></h1>
 					</section>
 					
+					<c:if test="${userInfoVo.user_level == 0 || userInfoVo.user_level == 1}">
+					<h1><a href="/indiefes/user/user-management">
+						<font style="color:#ffffff;">회원관리페이지</font>
+					</a>
+					</h1>
+					
+					</c:if>
+					
 					<section id="userInfo">
 					<h1><a href="/indiefes/user/user-info-pwinput">
 						<font style="color:#ffffff;">회원정보</font>
