@@ -1,0 +1,50 @@
+@charset "UTF-8";
+@font-face {
+	/* 영문 블럭 기울인 폰트 */
+	font-family:"blox";
+	src: url("../fonts/Blox2.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face {
+	/* 영문 매트릭스 느낌 폰트 */
+	font-family:"bom";
+	src: url("../fonts/BOMBARD_.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face {
+	/* 한글 도트느낌 폰트 */
+	font-family:"dgm";
+	src: url("../fonts/DungGeunMo.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face {
+	/* 한글 비대칭 굵은 폰트 */
+	font-family:"hss";
+	src: url("../fonts/HS여름물빛체.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face {
+	/* 영문 스타워즈 느낌 폰트 */
+	font-family:"pdark";
+	src: url("../fonts/pdark.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face {
+	/* 영문 도트느낌 폰트1 */
+	font-family:"prstart";
+	src: url("../fonts/prstart.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face {
+	/* 영문 도트느낌 폰트1 */
+	font-family:"prstartk";
+	src: url("../fonts/prstartk.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
