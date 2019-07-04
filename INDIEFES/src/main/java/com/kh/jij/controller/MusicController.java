@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +62,7 @@ public class MusicController {
 			musicService.musicInsert(musicInfoVo);
 			String originalName = file.getOriginalFilename();
 			try {
-				FileUploadUtil.uploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
+				FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

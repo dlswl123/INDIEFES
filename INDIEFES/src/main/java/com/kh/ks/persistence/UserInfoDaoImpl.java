@@ -1,6 +1,7 @@
 package com.kh.ks.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ks.domain.UserInfoVo;
 import com.kh.ks.service.UserInfoServiceImpl;
+import com.kh.ts.domain.PagingDto;
 
 @Repository
 public class UserInfoDaoImpl implements IUserInfoDao {
@@ -81,6 +83,26 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		System.out.println(user_id);
 		sqlsession.delete(NAMESPACE + ".userDelete", user_id);
 	}
+
+	// 회원목록
+	@Override
+	public List<UserInfoVo> userInfo(PagingDto pagingDto) throws Exception {
+		System.out.println("userinfoimpl 실행됨");
+		List<UserInfoVo> list = sqlsession.selectList(NAMESPACE + ".userInfo", pagingDto);
+		return list;
+	}
+
+	// 회원수
+	@Override
+	public int userCount(PagingDto pagingDto) throws Exception {
+		int count = sqlsession.selectOne(NAMESPACE + ".userCount", pagingDto);
+		System.out.println("userDaoImpl userCount 실행됨 :" + count);
+		return count;
+	}
+
+	
+
+	
 
 	
 	

@@ -3,8 +3,8 @@ package com.kh.jij.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -25,9 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IMusicInfoDao;
-import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
@@ -97,7 +97,7 @@ public class ArtController {
 		// 파일 업로드(@RequestParam("file")MultipartFile file)
 		String originalName = file.getOriginalFilename();
 		try {
-			FileUploadUtil.uploadFile(uploadPath, originalName, artVo, file.getBytes());
+			FileUploadUtil.artUploadFile(uploadPath, originalName, artVo, file.getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -194,7 +194,7 @@ public class ArtController {
 		// 파일 업로드(@RequestParam("file")MultipartFile file)
 		String originalName = file.getOriginalFilename();
 		try {
-			FileUploadUtil.uploadFile(uploadPath, originalName, artVo, file.getBytes());
+			FileUploadUtil.artUploadFile(uploadPath, originalName, artVo, file.getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -252,6 +252,36 @@ public class ArtController {
 		model.addAttribute("teamList", teamList);
 	}
 
+	@RequestMapping(value="/artUploadAppro/{art_number}", method = RequestMethod.GET)
+	public String artUploadAppro(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		int team_number = artService.getIndieNumber(user_id);
+		if (userVo != null) {
+			artService.artUploadAppro(art_number, user_id);
+			musicService.musicUploadAppro(art_number, team_number);
+		}
+		return "redirect:/art/art_info/" + art_number + "/" + team_number;
+	}
 	
+	// 음악 추가 폼
+	@RequestMapping(value = "/music_input", method = RequestMethod.GET)
+	public void musicInput() {
+	}
+	// 음악 추가 처리
+	@RequestMapping(value = "/music_input", method = RequestMethod.POST)
+	public String registPost(MusicInfoVo musicInfoVo, @RequestParam("file") MultipartFile file, HttpSession session)
+			throws Exception {
+	System.out.println("musicInfoVo:"+musicInfoVo);
+	musicService.musicInsert(musicInfoVo);
+	// 파일 업로드(@RequestParam("file")MultipartFile file)
+	String originalName = file.getOriginalFilename();
+	try {
+		FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+		return null;
+	}
 	
 }

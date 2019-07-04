@@ -176,4 +176,16 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		List<ArtInfoVo> artList = artDao.goodList();
 		return artList;
 	}
+
+	// 앨범등록 승인요청
+	@Override
+	public void artUploadAppro(int art_number, String user_id) throws Exception {
+		artDao.artUploadAppro(art_number, user_id);
+	}
+	
+	// 앨범등록 승인
+	@Override
+	public void artUpload(int art_number) throws Exception {
+		artDao.artUpload(art_number);
+	}
 }
