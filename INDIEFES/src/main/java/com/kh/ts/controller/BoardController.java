@@ -49,7 +49,7 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void boardList(Model model, HttpSession session, PagingDto pagingDto) throws Exception {
 		System.out.println("BoardController, list, pagingDto:" + pagingDto);
-		// 지정된회원만 글쓰기버튼을 사용할수있도록 구현
+		// 지정된회원만 글쓰기버튼을 보여질수있도록 구현
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		
 		if (userInfoVo != null) {
@@ -83,6 +83,7 @@ public class BoardController {
 			String user_id = userInfoVo.getUser_id();
 			model.addAttribute("user_id", user_id);
 		}
+		
 		// int bno 전역변수를 하나 정해서 board_number를 저장
 		// 현재 호출된 board_number와 같으면 updateViewcnt를 실행하지 않게 함
 		if (bno != board_number) {

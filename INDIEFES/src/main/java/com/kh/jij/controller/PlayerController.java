@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.PlayListVo;
 import com.kh.jij.service.IArtInfoService;
+import com.kh.jij.service.IMusicInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
 
@@ -35,6 +37,8 @@ public class PlayerController {
 	
 	@Inject
 	IArtInfoService artService;
+	@Inject
+	IMusicInfoService musicService;
 	@Resource(name = "uploadPath")
 	private String uploadPath; // servlet-context.xml (id="uploadPath")
 	

@@ -103,6 +103,7 @@ $(document).ready(function() {
 <h1>Indiefes 게시판</h1>
 	${boardVo.user_id}
 	<select id="perPage">
+	
 				<c:forEach var= "i" begin= "5" end= "20" step= "5">
 					<option
 					value='<c:out value="${i}"/>'
@@ -110,6 +111,7 @@ $(document).ready(function() {
 					><c:out value="${i}"/>줄씩 보기</option>
 				</c:forEach>
 				</select>
+	
 	<select id="searchType">
 		<option value="subject"
 		<c:if test="${pagingDto.searchType == 'subject'}">
@@ -127,17 +129,18 @@ $(document).ready(function() {
 		</c:if>
 		>작성자</option>
 	</select>
-		
-		<input type="text" id = "keyword"
-				placeholder="검색어를 입력하세요"value="${pagingDto.keyword}"/>
-			<input type="button" value="검색버튼"id= "btnSearch"
-				class= "btn btn-danger"/>
-				
-			<!-- 로그인시에만 글쓰기버튼을 사용할수있도록 구현 -->
-			<c:if test="${user_id != null}">	
-			<input type="button" class="btn btn-success" value="글쓰기" id="btnRegist">
-		 	</c:if>
-				<div class="row">
+	
+			<input type="text" id = "keyword"
+					placeholder="검색어를 입력하세요"value="${pagingDto.keyword}"/>
+				<input type="button" value="검색버튼"id= "btnSearch"
+					class= "btn btn-danger"/>
+					
+				<!-- 로그인시에만 글쓰기버튼을 보여질수있도록 구현 -->
+				<c:if test="${user_id != null}">	
+				<input type="button" class="btn btn-success" value="글쓰기" id="btnRegist">
+			 	</c:if>
+			<br>
+			<div class="row">
 				<div class="col-md-12">
 				<table class="table">
 					<thead>
@@ -185,9 +188,10 @@ $(document).ready(function() {
 			</div>
 			<!--  페이지네이션(페이지클릭창) -->
 			<div class="row">
-		<div class="col-md-12 text-center">
-			<nav>
-				<ul class="pagination" >
+		<div class="col-md-12">
+			<div class="row">
+			<nav style="margin:auto;">
+				<ul class="pagination">
 				<!-- 이전 -->
 				<c:if test="${paginationDto.prev == true }">
 					<li class="page-item">
@@ -213,6 +217,7 @@ $(document).ready(function() {
 				</c:if>		
 				</ul>
 			</nav>
+			</div>
 		</div>
 	</div>
 </div>

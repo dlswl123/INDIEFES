@@ -77,7 +77,7 @@ $(document).ready(function(){
 	$("#btnReply").click(function(){
 		console.log("btnReply 클릭됨");
 		var board_number = "${boardVo.board_number}";
-		var content = $("#reply_text").val();
+		var content = $("#content_reply").val();
 		var user_id =$("#user_id").val();
 		var data = {
 				"board_number" : board_number,
@@ -102,17 +102,18 @@ $(document).ready(function(){
 	}); // $("#btnReply").click
 
 	// 댓글수정버튼
-	$("#replyList").on("click","btn-warning", function(){
-// 		//댓글수정버튼이 클릭되면 화면에 보이지않는 a태그가 클릭되게하는부분
-// 		$("#modal-721283").trigger("click"); // 연쇄반응
-// 		var content = $(this).attr("data-content");
-// 		var user_id = $(this).attr("data-user_id");
-// 		var reply_number = $(this).attr("data-reply_number");
-// 		var index = $(this).attr("data-index");
-// 		$("#modal_content").val(content);
-// 		$("#modal_user_id").val(user_id);
-// 		$("#modal_reply_number").val(reply_number);
-// 		$("#modal_index").val(index);
+	$("#replyList").on("click",".btn-warning", function() {
+		console.log(replyList);
+		//댓글수정버튼이 클릭되면 화면에 보이지않는 a태그가 클릭되게하는부분
+		$("#modal-721283").trigger("click"); // 연쇄반응
+		var content = $(this).attr("data-content");
+		var user_id = $(this).attr("data-user_id");
+		var reply_number = $(this).attr("data-reply_number");
+		var index = $(this).attr("data-index");
+		$("#modal_content").val(content);
+		$("#modal_user_id").val(user_id);
+		$("#modal_reply_number").val(reply_number);
+		$("#modal_index").val(index);
 	});
 	
 	// 댓글 삭제 버튼
@@ -137,45 +138,45 @@ $(document).ready(function(){
 					// 2. Traversing(트래버싱)
 					$("#replyList > tr").eq(index).fadeOut("1000");
 				}
-			}
-		});
-	});
+			} // "success" 
+		}); // $.ajax
+	}); // $("#replyList").on("click"
 	
-// 	// 모달창 작성완료 버튼
-// 	$("#btnModalReply").click(function() {
-// 		var content = $("#modal_content").val();
-// 		var user_id = $("#modal_user_id").val();
-// 		var reply_number = $("#modal_reply_number").val();
-// 		var data = {
-// 				"content" : content,
-// 				"user_id" : user_id,
-// 				"reply_number" : reply_number
-// 		};
-// // 		console.log(data);
-// 		var url = "/indiefes/reply/update/" + reply_number;
-// 		$.ajax({
-// 			"type" : "put",
-// 			"url" : url,
-// 			"headers" : {
-// 				"Content-Type" : "application/json",
-// 				"X-HTTP-Method-Override" : "put"
-// 			},
-// 			"dataType" : "text",
-// 			"data" : JSON.stringify(data),
-// 			"success" : function(receivedData) {
-// 				$("#btnModalReply").next().trigger("click"); // 모달창 사라지기
-// // 				getReplyList(); // 1. 새로 불러 들이기
-// 				// 2. 해당 댓글, 댓글러만 수정
-// 				var index = $("#modal_index").val();
-// 				// <tbody> 내의 해당 번째 <tr>
-// 				var target_tr = $("#replyList > tr").eq(index);
-// 				// <tr>의 1번째(두번째) <td> - 댓글내용
-// 				target_tr.find("td").eq(1).text(reply_text);
-// 				// <tr>의 2번째(세번째) <td> - 댓글러
-// 				target_tr.find("td").eq(2).text(replyer);
-// 			} // "success"
-// 		}); // $.ajax
-// 	}); // $("#btnModalReply").click
+	// 모달창 작성완료 버튼
+	$("#btnModalReply").click(function() {
+		var content = $("#modal_content").val();
+		var user_id = $("#modal_user_id").val();
+		var reply_number = $("#modal_reply_number").val();
+		var data = {
+				"content" : content,
+				"user_id" : user_id,
+				"reply_number" : reply_number
+		};
+		console.log(data);
+		var url = "/indiefes/reply/update/" + reply_number;
+		$.ajax({
+			"type" : "put",
+			"url" : url,
+			"headers" : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "put"
+			},
+			"dataType" : "text",
+			"data" : JSON.stringify(data),
+			"success" : function(receivedData) {
+				$("#btnModalReply").next().trigger("click"); // 모달창 사라지기
+// 				getReplyList(); // 1. 새로 불러 들이기
+				// 2. 해당 댓글, 댓글러만 수정
+				var index = $("#modal_index").val();
+				// <tbody> 내의 해당 번째 <tr>
+				var target_tr = $("#replyList > tr").eq(index);
+				// <tr>의 1번째(두번째) <td> - 댓글내용
+				target_tr.find("td").eq(1).text(content);
+				// <tr>의 2번째(세번째) <td> - 댓글러
+				target_tr.find("td").eq(2).text(user_id);
+			} // "success"
+		}); // $.ajax
+	}); // $("#btnModalReply").click
 	
 	//첨부파일 목록 가져오기
 	$.getJSON("/indiefes/board/getAttach/${boardVo.board_number}", function(list) {
@@ -197,7 +198,7 @@ $(document).ready(function(){
 				var href="";
 				
 				
-				divEl   += "<img src='/indiefes/upload/displayFile?fileName="  + thumbnailName + "'><br>"
+				divEl   += "<img src='/indiefes/upload/displayFile?fileName="  + fullName + "'><br>"
 						+ "<a target='blank' href='/upload/displayFile?fileName="
 						+ fullName + "'>" + fName + "</a>";
 						
@@ -217,6 +218,59 @@ $(document).ready(function(){
 	}); // $.getJSON
 }); // $(document).ready
 </script>
+<!-- 모달 -->
+	<div class="row">
+		<div class="col-md-12">
+			<!-- 클릭시 모달 띄우는 부분 -->
+			<a style="display:none;"
+				id="modal-721283" href="#modal-container-721283" 
+				role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+			
+
+			<!-- 모달 창 -->
+			<div class="modal fade" id="modal-container-721283" role="dialog" 
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								글 수정
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input type="hidden" id="modal_index">
+							<input type="hidden" id="modal_reply_number">
+							<div class="form-group">
+								<label for="title">댓글 내용</label>
+								<input type="text" class="form-control" id="modal_content"/>
+							</div>
+							<div class="form-group">
+								<label for="title">작성자</label>
+								<input type="text" class="form-control" id="modal_user_id"/>
+							</div>
+							
+						</div>
+						<div class="modal-footer">
+							 
+							<input type="button" class="btn btn-primary" id="btnModalReply"
+									value="작성완료"/>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+<!-- // 모달 -->
+
 <form id="pageForm" action="/indiefes/board/list">
 	<input type="hidden" name=board_number
 	 		value="${param.board_number}">
@@ -288,7 +342,7 @@ $(document).ready(function(){
 		 		<div class="col-md-12">
 		 			<div class="form-group">
 		 				<label for="title">댓글 내용</label>
-		 				<input type="text" class="form-control" id="reply_text"/>
+		 				<input type="text" class="form-control" id="content_reply"/>
 		 			</div>
 		 		</div>
 		 		<div class="col-md-12">
