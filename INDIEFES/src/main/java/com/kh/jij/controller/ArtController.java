@@ -28,6 +28,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IMusicInfoDao;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
@@ -251,24 +252,39 @@ public class ArtController {
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
 	}
-	// 음악 추가 폼
-	@RequestMapping(value = "/music_input", method = RequestMethod.GET)
-	public void musicInput() {
+	// 카트담기
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public String CartInput(HttpSession session,ArtInfoVo artVo,int music_number, String music_title) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		int team_number = artVo.getTeam_number();
+		int art_number = artVo.getArt_number();
+		PayLogVo vo = new PayLogVo();
+		vo.setUser_id(user_id);
+		vo.setMusic_number(music_number);
+		vo.setMusic_title(music_title);
+		System.out.println(vo);
+		artService.cartInput(vo);
+		
+		return "redirect:/art/art_info/"+art_number+"/"+team_number;
 	}
-	// 음악 추가 처리
-	@RequestMapping(value = "/music_input", method = RequestMethod.POST)
-	public String registPost(MusicInfoVo musicInfoVo, @RequestParam("file") MultipartFile file, HttpSession session)
-			throws Exception {
-	System.out.println("musicInfoVo:"+musicInfoVo);
-	musicService.musicInsert(musicInfoVo);
-	// 파일 업로드(@RequestParam("file")MultipartFile file)
-	String originalName = file.getOriginalFilename();
-	try {
-		FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
-	} catch (Exception e) {
-		e.printStackTrace();
+	// 결제 페이지
+	@RequestMapping(value = "/pay_info", method = RequestMethod.GET)
+	public void payInfo(HttpSession session,Model model) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		List<PayLogVo> payList = artService.payList(user_id);
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("payList", payList);
+		System.out.println("payList: "+payList);
 	}
-		return null;
+	// 결제 처리
+	@RequestMapping(value = "/pay_ok", method = RequestMethod.GET)
+	public String payOk(HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		artService.payOk(user_id);
+		return "redirect:/art/pay_info";
 	}
 	
 }

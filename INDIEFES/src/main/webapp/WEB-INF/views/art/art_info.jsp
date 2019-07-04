@@ -150,8 +150,9 @@ $(document).ready(function() {
 	// 음악리스트- 담기버튼
 	$("#tblMusicList").on("click", ".spMusicCart",function() {
 		var music_number = $(this).attr("data-music_number");
-		console.log(music_number);
-		
+		var music_title = $(this).attr("data-music_title");
+		location.href="/indiefes/art/cart?art_number=${artVo.art_number }&team_number=${artVo.team_number}&music_number="+music_number+"&music_title="+music_title;
+		alert(music_title+" 카트에 담기");
 	});
 	// 앨범정보- 좋아요버튼
 	$(".spLikedCount").click(function() {
@@ -286,7 +287,7 @@ $(document).ready(function() {
 	<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
 <%-- 									</c:otherwise> --%>
 <%-- 								</c:choose> --%>
-								<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-cart-plus"></i></span></td>
+								<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="fas fa-cart-plus"></i></span></td>
 							<tr>
 <%-- 							<a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}"></a> --%>
 						</c:forEach>

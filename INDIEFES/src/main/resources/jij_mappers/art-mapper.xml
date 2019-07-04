@@ -199,4 +199,21 @@
 		from art_info
 		where reg_art > (sysdate-7)
 	</select>
+	<!-- 카트에 담기 -->
+	<insert id="cartInput">
+		insert into pay_log (user_id, music_number, music_title)
+		values (#{user_id},#{music_number},#{music_title})
+	</insert>
+	<!-- 카트에 담은 목록 -->
+	<select id="cartList" resultType="PayLogVo">
+		select * from pay_log
+		where user_id = #{user_id}
+		order by music_title
+	</select>
+	<!-- 결제하기 -->
+	<update id="payOk">
+		update pay_log set
+			pay_ok = 1
+		where user_id = #{user_id}
+	</update>
 </mapper>

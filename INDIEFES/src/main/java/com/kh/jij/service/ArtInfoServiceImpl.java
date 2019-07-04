@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.domain.PlayListVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IArtInfoDao;
@@ -175,5 +176,21 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public List<ArtInfoVo> goodList() throws Exception {
 		List<ArtInfoVo> artList = artDao.goodList();
 		return artList;
+	}
+	// 카트에 담기
+	@Override
+	public void cartInput(PayLogVo payVo) throws Exception {
+		artDao.cartInput(payVo);
+	}
+	// 결제 리스트
+	@Override
+	public List<PayLogVo> payList(String user_id) throws Exception {
+		List<PayLogVo> payList = artDao.payList(user_id);
+		return payList;
+	}
+
+	@Override
+	public void payOk(String user_id) throws Exception {
+		artDao.payOk(user_id);
 	}
 }

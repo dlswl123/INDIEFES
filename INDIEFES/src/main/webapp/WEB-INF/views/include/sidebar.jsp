@@ -37,6 +37,12 @@
 					</a></h1>
 					</section>
 					
+					<section id="payInfo">
+					<h1><a href="/indiefes/art/pay_info">
+						<font style="color:#ffffff;">결제정보</font>
+					</a></h1>
+					</section>
+					
 					<section id="player">
 			    	<h1>
 				    <script type="text/javascript">

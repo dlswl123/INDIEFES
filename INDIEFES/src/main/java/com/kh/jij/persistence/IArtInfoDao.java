@@ -7,6 +7,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.domain.PlayListVo;
 
 public interface IArtInfoDao {
@@ -76,4 +77,13 @@ public interface IArtInfoDao {
 	
 	// 앨범 수
 	public int artCount(PagingDto pagingDto)throws Exception;
+	
+	// 카트에 담기
+	public void cartInput(PayLogVo payVo)throws Exception;
+	
+	// 결제 목록
+	public List<PayLogVo> payList(String user_id )throws Exception;
+	
+	// 결제 처리
+	public void payOk(String user_id)throws Exception;
 }
