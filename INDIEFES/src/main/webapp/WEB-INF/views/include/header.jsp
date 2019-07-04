@@ -16,8 +16,11 @@
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<!-- 아이콘 끝 -->
   	
-	 <!-- Latest compiled and minified CSS -->
+	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	
+	<!-- font set -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fonts.css">
 	
 <style>
 body {

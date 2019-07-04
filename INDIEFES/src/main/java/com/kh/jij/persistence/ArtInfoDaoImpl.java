@@ -183,14 +183,29 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.insert(NAMESPACE + ".cartInput", payVo);
 		
 	}
-	// 카트에 담은 목록
+	// 결제 목록
 	@Override
 	public List<PayLogVo> payList(String user_id) throws Exception {
 		List<PayLogVo> payList = sqlSession.selectList(NAMESPACE + ".cartList",user_id);
 		return payList;
 	}
+	// 결제 처리
 	@Override
 	public void payOk(String user_id) throws Exception {
 		sqlSession.update(NAMESPACE + ".payOk",user_id);
+	}
+	// 앨범등록 승인요청
+	@Override
+	public void artUploadAppro(int art_number, String user_id) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("art_number", art_number);
+		map.put("user_id", user_id);
+		sqlSession.update(NAMESPACE + ".artUploadAppro", map);
+	}
+	
+	// 앨범등록 승인
+	@Override
+	public void artUpload(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".artUpload", art_number);
 	}
 }

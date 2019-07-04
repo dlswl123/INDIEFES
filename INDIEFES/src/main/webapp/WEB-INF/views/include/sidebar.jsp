@@ -2,13 +2,78 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    
+<style>
+.sidebar font {
+	color: #00ff00;
+}
+.sidebar #home font {
+	font-family: blox;
+	font-size: 3.5rem;
+}
+.sidebar #login, #logout, #userInfo, #boardList, #artInfo, #concertInfo, #player font {
+	font-family: prstart;
+}
+.sidebar #home {
+	padding:20px;
+}
+.sidebar section {
+	padding-left:20px;
+}
+</style>
+
+<script>
+$(document).ready(function() {
+	$("#login font").hover(function() {
+		$(this).text("로그인 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("LOGIN").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#logout font").hover(function() {
+		$(this).text("로그아웃 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("LOGOUT").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#userInfo font").hover(function() {
+		$(this).text("회원정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("USER INFO").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#boardList font").hover(function() {
+		$(this).text("자유게시판 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("FREE BOARD").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#artInfo font").hover(function() {
+		$(this).text("앨범목록 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("ALBUM LIST").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#concertInfo font").hover(function() {
+		$(this).text("공연정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("CONCERT INFO").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#player font").hover(function() {
+		$(this).text("플레이어 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("PLAYER").css("font-family","prstart").css("font-size","1rem");
+	});
+});
+</script>
+    
 <div class="col-md-2">
 	<div class="sidebar" style="position:fixed;background-color:rgba(0,0,0,0.7);width:100%;height:100%;">
 		<aside id="sidebar">
 			<section id="home">
-				<h1><a href="/indiefes/">
-					<font style="color:#ffffff;">INDIEFES</font>
-				</a></h1>
+				<a href="/indiefes/">
+					<font>InDiEFeS</font>
+				</a>
 			</section>
 			
 			
@@ -17,25 +82,26 @@
 			 
 			    <c:when test="${userInfoVo eq null}">
 			        <section id="login">
-					<h1><a href="/indiefes/user/login">
-						<font style="color:#ffffff;">로그인</font>
-					</a></h1>
+					<a href="/indiefes/user/login">
+						<font>LOGIN</font>
+					</a>
 					</section>
 			    </c:when>
 			 
 			   	 
 			    <c:otherwise>
-			        <section id="login">
-					<h1><a href="/indiefes/user/logout">
-						<font style="color:#ffffff;">로그아웃</font>
-					</a></h1>
+			        <section id="logout">
+					<a href="/indiefes/user/logout">
+						<font>LOGOUT</font>
+					</a>
 					</section>
 					
 					<section id="userInfo">
-					<h1><a href="/indiefes/user/user-info-pwinput">
-						<font style="color:#ffffff;">회원정보</font>
-					</a></h1>
+					<a href="/indiefes/user/user-info-pwinput">
+						<font>USER INFO</font>
+					</a>
 					</section>
+<<<<<<< HEAD
 					
 					<section id="payInfo">
 					<h1><a href="/indiefes/art/pay_info">
@@ -53,24 +119,34 @@
 			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font style="color:#ffffff;">Player</font></a>
 			    	</h1>
 		    		</section>
+=======
+>>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 			    </c:otherwise>
 			 
 			</c:choose>
 					
 		    <section id="boardList">
-			    <h1><a href="/indiefes/board/list">
-			    	<font style="color:#ffffff;">자유게시판</font>
-			    </a></h1>
+			    <a href="/indiefes/board/list">
+			    	<font>FREE BOARD</font>
+			    </a>
 		    </section>
 		    <section id="artInfo">
-			    <h1><a href="/indiefes/art/art_list">
-			    	<font style="color:#ffffff;">앨범목록</font>
-			    </a></h1>
+			    <a href="/indiefes/art/art_list">
+			    	<font>ALBUM LIST</font>
+			    </a>
 		    </section>
 		    <section id="concertInfo">
-			    <h1><a href="/indiefes/concert/info">
-			    	<font style="color:#ffffff;">공연정보</font>
-			    </a></h1>
+			    <a href="/indiefes/concert/info">
+			    	<font>CONCERT INFO</font>
+			    </a>
+		    </section>
+		    <section id="player">
+			    <script type="text/javascript">
+					function musicPlayer() {
+						window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+					}
+				</script>
+		    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>
 		    </section>
 		</aside>
 	</div>

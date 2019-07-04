@@ -148,6 +148,10 @@
 	   		<if test="searchType == 'artGenre'">
 	   			where art.art_genre like '%' || #{keyword} || '%'
 	   		</if>
+	   		<if test="searchType == 'appro'">
+	   			 where upload_check=2
+	   		</if>
+	   		
        	</if>
 	</sql>
 	
@@ -204,16 +208,32 @@
 		insert into pay_log (user_id, music_number, music_title)
 		values (#{user_id},#{music_number},#{music_title})
 	</insert>
-	<!-- 카트에 담은 목록 -->
+	<!-- 결제 목록 -->
 	<select id="cartList" resultType="PayLogVo">
 		select * from pay_log
 		where user_id = #{user_id}
 		order by music_title
 	</select>
-	<!-- 결제하기 -->
+	<!-- 결제 하기 -->
 	<update id="payOk">
 		update pay_log set
 			pay_ok = 1
 		where user_id = #{user_id}
 	</update>
+	
+<!-- 	앨범승인요청 -->
+	<update id="artUploadAppro">
+		update art_info set
+			upload_check = 2
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</update>
+	
+	<!-- 	앨범 업로드승인 -->
+	<update id="artUpload">
+		update art_info set
+			upload_check = 1
+		where art_number = #{art_number}
+	</update>
+	
 </mapper>
