@@ -27,6 +27,7 @@ body {
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
+  	font-family: 스웨거 TTF;
 /*   	font-family: Ghang, Misdemeanor,Urban Jungle,FuturaBlack BT,Yj SHANALL,Yj WADAG; */
 }
 aside{
