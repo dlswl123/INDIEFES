@@ -56,7 +56,6 @@
 	<update id="update">
 		update board_info set
 			subject = #{subject},
-			user_id = #{user_id},
 			content = #{content}
 		where board_number = #{board_number}
 	</update>
