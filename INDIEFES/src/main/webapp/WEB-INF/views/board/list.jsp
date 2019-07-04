@@ -124,7 +124,7 @@ $(document).ready(function() {
 		</c:if>
 		>내용</option>
 		<option value="user_id"
-		<c:if test="${pagingDto.searchType == 'user_id' }">
+		<c:if test="${userInfoVo.user_nick }">
 			selected
 		</c:if>
 		>작성자</option>
@@ -171,7 +171,8 @@ $(document).ready(function() {
 								</c:if>
 							</td>		
 							<!-- 회원 -->
-							<td>${boardVo.user_id}</td>
+							<td>${boardVo.user_nick}</td>
+							<%--(${boardVo.user_id}) --%>
 							<!-- 작성일 -->
 							<td>
 							<%-- <fmt:formatDate value=" --%>
