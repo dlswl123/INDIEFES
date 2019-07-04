@@ -13,16 +13,18 @@
 	<!-- 글조회 -->
 	<select id="select" resultType="BoardVo">
 		select *
-		from board_info
-		where board_number=#{board_number}
+		from board_info b, user_info u
+		where b.user_id = u.user_id and board_number=#{board_number}		
 	</select>
 	
 	<!-- 글목록 -->
 	<select id="selectAll" resultType="BoardVo">
 		select *
 		from(select rownum rnum, a.*
-			from(select * from board_info
-				where is_del != 'Y'
+			from(select b.board_number, b.subject, b.reg_date, b.view_count, u.user_nick
+				 from board_info b, user_info u
+				 where b.user_id = u.user_id
+				 and is_del != 'Y'
 				<include refid="contentView"></include>
 				order by board_number desc)a)
 		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
