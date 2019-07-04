@@ -66,5 +66,22 @@
 		delete from user_info
 		where user_id = #{user_id}
 	</delete>
+	
+	<!-- 전체회원 불러오기 -->
+	<select id="userInfo" resultType="com.kh.ks.domain.UserInfoVo">
+		select * from
+		(select a.*, rownum as rnum from
+		(select * from user_info order by reg_date desc) a 
+		where rownum &lt;= #{endRow})
+		where rnum &gt;= #{startRow}
+	</select>
+	
+	<!-- 회원수 불러오기 -->
+	<select id="userCount" resultType="int">
+		select count(*) 
+		from user_info user_id
+	</select>
+	
+	
 
 </mapper>

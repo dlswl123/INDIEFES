@@ -194,12 +194,13 @@ $(document).ready(function() {
 // 		운영자용
 	// 승인
 	$("#btnAppro").click(function() {
-		
+		location.href="/indiefes/art/music_input?art_number=${artVo.art_number }&team_number=${artVo.team_number}&track_number=${musicInfoVo.track_number}";
 	});
 	
 	// 반려
 	$("#btnReturn").click(function() {
-		
+		var track_number = $("#track_number").length;
+		console.log(track_number);
 	});
 	// 운영자용 끝
 	

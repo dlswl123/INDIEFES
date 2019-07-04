@@ -97,7 +97,7 @@ public class ArtController {
 		// 파일 업로드(@RequestParam("file")MultipartFile file)
 		String originalName = file.getOriginalFilename();
 		try {
-			FileUploadUtil.uploadFile(uploadPath, originalName, artVo, file.getBytes());
+			FileUploadUtil.artUploadFile(uploadPath, originalName, artVo, file.getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -194,7 +194,7 @@ public class ArtController {
 		// 파일 업로드(@RequestParam("file")MultipartFile file)
 		String originalName = file.getOriginalFilename();
 		try {
-			FileUploadUtil.uploadFile(uploadPath, originalName, artVo, file.getBytes());
+			FileUploadUtil.artUploadFile(uploadPath, originalName, artVo, file.getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -262,6 +262,26 @@ public class ArtController {
 			musicService.musicUploadAppro(art_number, team_number);
 		}
 		return "redirect:/art/art_info/" + art_number + "/" + team_number;
+	}
+	
+	// 음악 추가 폼
+	@RequestMapping(value = "/music_input", method = RequestMethod.GET)
+	public void musicInput() {
+	}
+	// 음악 추가 처리
+	@RequestMapping(value = "/music_input", method = RequestMethod.POST)
+	public String registPost(MusicInfoVo musicInfoVo, @RequestParam("file") MultipartFile file, HttpSession session)
+			throws Exception {
+	System.out.println("musicInfoVo:"+musicInfoVo);
+	musicService.musicInsert(musicInfoVo);
+	// 파일 업로드(@RequestParam("file")MultipartFile file)
+	String originalName = file.getOriginalFilename();
+	try {
+		FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+		return null;
 	}
 	
 }

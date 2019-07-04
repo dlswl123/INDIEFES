@@ -62,7 +62,7 @@ public class MusicController {
 			musicService.musicInsert(musicInfoVo);
 			String originalName = file.getOriginalFilename();
 			try {
-				FileUploadUtil.uploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
+				FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -277,30 +277,6 @@ $(document).ready(function() {
 		}); // $.ajax
 		$("#modal-lyrics").modal("hide");
 	});
-	
-	
-	// 뮤지션용 끝
-	
-	// 음악 트랙리스트 가져오기
-	function getList() {
-		var url = "/indiefes/music/list?art_number=${param.art_number}&team_number=${param.team_number}";
-		$.getJSON(url, function(receivedData) {
-			console.log(receivedData);
-			var strHtml = "";
-			var team_name = "${team_name}";
-			$(receivedData).each(function(i) {
-				strHtml += "<tr>"
-			    	  + 	 "<td>" + this.track_number + "</td>"
-			    	  + 	 "<td class='song_name'>" + this.music_title + "</td>"
-			       	  + 	 "<td>" + this.file_path + "</td>"
-			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-success btnMusicLyric' id='btnLyricAdd'  data-music_number='" + this.music_number + "' >등록</Button></td>"
-			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-warning btnMusicMod' id='btnMusicUpdate' data-music_number='" + this.music_number + "' data-art_number='" + this.art_number + "'>수정</Button></td>"
-			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-danger btnMusicDel'  id='btnMusicDelete' data-music_number='" + this.music_number + "' data-art_number='" + this.art_number + "'>삭제</Button></td>"
-					  +  "</tr>";
-			});
-			$("#trackList").html(strHtml);
-		}); // $.getJSON
-	} // getReplyList()
 });
 </script>
 	
