@@ -51,14 +51,14 @@ public class BoardController {
 		System.out.println("BoardController, list, pagingDto:" + pagingDto);
 		// 지정된회원만 글쓰기버튼을 보여질수있도록 구현
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		
+		// -> 로그인한 사용자 정보
 		if (userInfoVo != null) {
 			String user_id = userInfoVo.getUser_id();
 			model.addAttribute("user_id", user_id);
 		}
 		
 		List<BoardVo> list = boardService.selectAll(pagingDto);
-		System.out.println("boardList");
+		System.out.println("BoardController, boardList(), list:	" + list);
 		model.addAttribute("list", list);
 		PaginationDto paginationDto = new PaginationDto();
 		
@@ -75,7 +75,7 @@ public class BoardController {
 			HttpSession session, PagingDto pagingDto)throws Exception {
 		System.out.println("BoardController, read, board_number:" + board_number);
 		BoardVo boardVo = boardService.select(board_number);
-	
+		System.out.println("BoardController, read(), boardVo:" + boardVo);
 		// 지정된회원만 수정,삭제버튼이 보이도록
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
 	
@@ -91,7 +91,7 @@ public class BoardController {
 			bno = board_number;
 		}
 		model.addAttribute("boardVo", boardVo);
-		
+	
 		model.addAttribute("pagingDto", pagingDto);
 	}
 	

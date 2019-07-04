@@ -294,7 +294,7 @@ $(document).ready(function(){
 				<div class="form-group">
 					<label for="user_id">작성자</label>
 					<input type="text" class="form-control" id="user_id"
-					name="user_id" value="${boardVo.user_id}" readonly/>
+					name="user_id" value="${boardVo.user_nick}" readonly/>
 				</div> 
 				<div class="form-group">
 					<label for="content">글내용</label>

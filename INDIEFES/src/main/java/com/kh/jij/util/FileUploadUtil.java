@@ -9,7 +9,7 @@ import com.kh.jij.domain.MusicInfoVo;
 
 public class FileUploadUtil {
 
-	public static String uploadFile(String uploadPath, String originalName, ArtInfoVo artVo,
+	public static String artUploadFile(String uploadPath, String originalName, ArtInfoVo artVo,
 			 byte[] fileData) throws Exception {
 		int teamNumber = artVo.getTeam_number();
 		int artNumber = artVo.getArt_number();
@@ -28,7 +28,7 @@ public class FileUploadUtil {
 		return fileName;
 	}
 	
-	public static String uploadFile(String uploadPath, String originalName, MusicInfoVo musicInfoVo,
+	public static String musicUploadFile(String uploadPath, String originalName, MusicInfoVo musicInfoVo,
 			 byte[] fileData) throws Exception {
 		int teamNumber = musicInfoVo.getTeam_number();
 		int artNumber = musicInfoVo.getArt_number();
