@@ -112,6 +112,7 @@
 		select * 
 		from team_member
 		where team_number = #{team_number}
+		order by member_number
 	</select>
 <!-- 	그룹앨범 리스트 가져오기 -->
 	<select id="teamArtList" resultType="ArtInfoVo">

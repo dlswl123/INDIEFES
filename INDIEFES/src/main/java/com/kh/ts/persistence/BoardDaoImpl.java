@@ -90,4 +90,10 @@ public class BoardDaoImpl implements IBoardDao {
 	public void updateReplycnt(int board_number) throws Exception {
 		sqlSession.update(Namespace + ".updateReplycnt", board_number);
 	}
+	
+	// 수정시파일첨부
+	@Override
+	public void attachUpdate(BoardVo vo) throws Exception {
+		sqlSession.insert(Namespace + ".attachUpdate", vo);
+	}
 }
