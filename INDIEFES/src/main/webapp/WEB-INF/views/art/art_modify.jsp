@@ -4,16 +4,18 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="../include/header.jsp" %>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js" ></script>
 <style>
 	th {
-    height: 100px;
+    height: 30px;
 	}
   .song_name {
     width: 50%;
   }
   .btn {border-radius: 12px;}
 </style>
+
+
 
 <script>
 $.fn.setPreview = function(opt){
@@ -89,8 +91,7 @@ $(document).ready(function() {
 	});
 	$("#inputMusicFile").change(function(e) {
 		$("#spanMusicFile").text(this.files[0].name);
-		var file = $("input[name='file_path']");
-		console.log(file);
+		 formData.append("file", this.files[0]);
 	});
 	
 	// 커버이미지 파일업로드버튼
@@ -109,11 +110,14 @@ $(document).ready(function() {
 	// 앨범등록 버튼
 	$("#btnArtAdd").click(function() {
 		var file = $("#art_cover").val().split("\\");
-		var art_cover = file[file.length-1]
-		$("input[name=art_cover]").val(art_cover);
+		if (file == "" || file == null) {
+			$("input[name=art_cover]").val("${artVo.art_cover}");
+		} else {
+			var art_cover = file[file.length-1]
+			$("input[name=art_cover]").val(art_cover);
+		}
 		var art_genre = $("#art_genre").val();
 		$("input[name=art_genre]").val(art_genre);
-		console.log(art_cover);
 		console.log(file);
 		// 폼을 전송
 		$("#art_info_input").submit();
@@ -124,15 +128,40 @@ $(document).ready(function() {
 		location.href="/indiefes/art/art_info/${artVo.art_number }/${artVo.team_number}";
 	});
 	
+	var formData = new FormData();
 	// 음악 추가 버튼
 	$("#btnMusicAdd").click(function() {
 		var tNum = $("#trackNumber").val();
-		var track_number = Number(tNum) + 1;
-		$("#trackNumber").attr("value", track_number);
-		
-		$("#musicForm").submit();
+	 	var track_number = Number(tNum) + 1;
+	 	var music_title = $("#songName");
+	 	var fileName = $("#spanMusicFile");
+	 	$("#trackNumber").attr("value", track_number);
+	    
+	    formData.append("art_number", "${artVo.art_number}");
+	    formData.append("team_number", "${artVo.team_number}");
+	    formData.append("track_number", $("#trackNumber").val());
+	    formData.append("music_title", music_title.val());
+	   
+	    var url = "/indiefes/music/insert";
+	    $.ajax({
+	       "url" : url,
+	        "type" : 'POST',
+	        "data" : formData,
+	        "dataType" : "text",
+	        "contentType" :false,
+	        "processData" :false,
+	    	"success" : function(receivedData){
+	    		console.log(receivedData);
+	    		if (receivedData == "success") {
+	    			music_title.val("");
+	    			fileName.text("");
+		    		getList();
+	    		} // if
+	    	} // "success"
+	    }); //  $.ajax
 	}); //$("#btnMusicAdd").click
 	// 음악추가버튼 끝
+	
 	
 	// 음악추가 취소 버튼
 	$("#btnMusicCancel").click(function() {
@@ -187,6 +216,8 @@ $(document).ready(function() {
 		var art_number = $(this).attr("data-art_number");
 		var music_number = $(this).attr("data-music_number");
 		var team_number = $(this).attr("data-team_number");
+		var tNum = $("#trackNumber").val();
+	 	var track_number = Number(tNum) - 1;
 // 		console.log(rno);
 		var url = "/indiefes/music/delete/" + art_number + "/" + music_number + "/" + team_number;
 		$.ajax({
@@ -199,6 +230,7 @@ $(document).ready(function() {
 			"success" : function(receivedData) {
 				console.log(receivedData); // success
 				if (receivedData.trim() == "success") {
+					$("#trackNumber").attr("value", track_number);
 					$("#trackList").empty();
 	 				getList();
 				}
@@ -244,7 +276,36 @@ $(document).ready(function() {
 		}); // $.ajax
 		$("#modal-lyrics").modal("hide");
 	});
+	
+	// 음악 트랙리스트 가져오기
+	function getList() {
+		var url = "/indiefes/music/list?art_number=${param.art_number}&team_number=${param.team_number}";
+		$.getJSON(url, function(receivedData) {
+			var strHtml = "";
+			var team_name = "${team_name}";
+			var i = 1;
+			console.log(receivedData);
+			$(receivedData).each(function(i) {
+				if(this.upload_check != 99) {
+				strHtml += "<tr>"
+			    	  + 	 "<td>" + ++i + "</td>"
+			    	  + 	 "<td class='song_name'>" + this.music_title + "</td>"
+			       	  + 	 "<td>" + this.file_path + "</td>"
+			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-success btnMusicLyric' id='btnLyricAdd'  data-music_number='" + this.music_number + "' >등록</Button></td>"
+			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-warning btnMusicMod' id='btnMusicUpdate' data-music_number='" + this.music_number + "' data-art_number='" + this.art_number + "'>수정</Button></td>"
+			      	  + 	 "<td><Button type='button' class='btn btn-sm btn-danger btnMusicDel'  id='btnMusicDelete' data-music_number='" + this.music_number + "' data-art_number='" + this.art_number + "' data-team_number='" + this.team_number + "'>삭제</Button></td>"
+					  +  "</tr>";
+				}
+			});
+			$("#trackList").html(strHtml);
+		}); // $.getJSON
+	}
+	
+
+	
 });
+
+
 </script>
 	
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
@@ -254,9 +315,8 @@ $(document).ready(function() {
 <!-- 			앨범 수정폼 -->
 			<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
 			<input type="hidden" name="art_genre" value="">
-			<input type="hidden" name="art_cover" value="">
+			<input type="hidden" name="art_cover" value="${artVo.art_cover }">
 			<input type="hidden" name="art_number" value="${artVo.art_number }">
-			<input type="hidden" name="team_number" value="${artVo.art_number }">
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
@@ -318,32 +378,30 @@ $(document).ready(function() {
 			<div class="row">
 				
 				<!-- 음악추가폼 -->
-				<div class="col-md-12">
-					<form id="musicForm" action="/indiefes/music/insert" method="post" enctype="multipart/form-data" class="form-inline">
+				<div class="col-md-12 form-inline">
+					<div class="col-md-9 form-group form-inline">
+					<form id="musicForm" name="musicForm" action="/indiefes/music/insert" method="post" enctype="multipart/form-data" class="form-inline">
 					<input type="hidden" name="track_number" value="${track_number}"  id="trackNumber" >
-					<input type="hidden" name="art_number" value="${artVo.art_number}"  id="artNumber" >
-					<input type="hidden" name="team_number" value="${artVo.team_number}"  id="teamNumber" >
-						<div class="col-md-9 form-group">
-							<div class="col-md-12  form-group row">
-								<div class="col-xs-7">
-									<label for="songName">노래제목</label>
-									<input type="text" id="songName" name="music_title" class="form-control">
-								</div>
-								<div  class="col-xs-5">
+						<div class="col-md-12 form-inline">
+							<div class="col-xs-10 " >
+								<label for="songName">노래제목</label>
+								<input type="text" id="songName" name="music_title" class="form-control">
+							</div>
+							<div  class="col-xs-2 ">
 								<label>&nbsp; &nbsp;</label>
-						        	<input type="file" name="file_path" id="inputMusicFile" accept=".mp3, .flac, .wav, .aac" style="display:none;">
-									<input type="button" value="파일찾기" id="btnMusicFile" class="btn btn-sm btn-success">
-									<span id="spanMusicFile"></span>
-									<button type="button" class="btn btn-sm btn-primary" id="btnMusicAdd">추가</button>
-									<button type="button" class="btn btn-sm btn-danger" id="btnMusicCancel">취소</button>
-								</div>
+					        	<input type="file" name="file_path" id="inputMusicFile" accept=".mp3, .flac, .wav, .aac" style="display:none;">
+								<input type="button" value="파일찾기" id="btnMusicFile" class="btn btn-sm btn-success">
+								<span id="spanMusicFile"></span>
+								<button type="button" class="btn btn-sm btn-primary" id="btnMusicAdd">추가</button>
+								<button type="button" class="btn btn-sm btn-danger" id="btnMusicCancel">취소</button>
 							</div>
 						</div>
-					    <div class="col-md-3 form-group" align="right">
-							<button type="button" class="btn btn-outline-success" id="btnArtAdd">수정완료</button>
-							<button type="button" class="btn btn-outline-danger" id="btnCancel">등록취소</button>
-						</div>
 				    </form>
+					</div>
+				    <div class="col-md-3 form-group" align="right">
+						<button type="button" class="btn btn-outline-success" id="btnArtAdd">수정완료</button>
+						<button type="button" class="btn btn-outline-danger" id="btnCancel">등록취소</button>
+					</div>
 				</div>
 			    <!-- 음악추가폼 끝 -->
 			</div>

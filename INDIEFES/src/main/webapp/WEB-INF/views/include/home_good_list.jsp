@@ -3,6 +3,7 @@
 <div class="row">
 	<ul  class="albumList">
 		<c:forEach items="${goodList}" var="artVo">
+		<c:if test="${artVo.upload_check == 1}">
 			<li class="art_info">
 				<figure class="albumInfo">
 					<div class="thumbnail">
@@ -29,6 +30,7 @@
 						<p>${count = count+1}위</p>
 				</figure>
 			</li>
+		</c:if>
 		</c:forEach>
 	</ul>
 </div>

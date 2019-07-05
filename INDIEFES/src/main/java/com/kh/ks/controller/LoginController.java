@@ -16,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.jij.service.IArtInfoService;
 import com.kh.ks.domain.UserInfoVo;
 import com.kh.ks.domain.UserManagementPagingDto;
 import com.kh.ks.service.IUserInfoService;
@@ -34,6 +34,9 @@ public class LoginController {
 	
 	@Inject
 	private IUserInfoService userInfoService;
+	
+	@Inject
+	IArtInfoService artService;
 	
 	
 	//로그인 폼
@@ -53,6 +56,15 @@ public class LoginController {
 //		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
 //		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
 		String redirectUrl = "";
+		
+		// 팀가입 여부
+		try {
+			int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
+			session.setAttribute("indieNum", indieNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// 팀가입 끝
 		if(userInfoVo != null) {
 			session.setAttribute("userInfoVo", userInfoVo);
 			redirectUrl = "redirect:/";

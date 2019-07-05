@@ -101,10 +101,9 @@ $(document).ready(function() {
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 <h1>Indiefes 게시판</h1>
-	${boardVo.user_id}
 	<select id="perPage">
 	
-				<c:forEach var= "i" begin= "5" end= "20" step= "5">
+				<c:forEach var= "i" begin= "5" end= "10" step= "5">
 					<option
 					value='<c:out value="${i}"/>'
 					<c:if test="${i == pagingDto.perPage}">selected</c:if>
@@ -124,7 +123,7 @@ $(document).ready(function() {
 		</c:if>
 		>내용</option>
 		<option value="user_id"
-		<c:if test="${userInfoVo.user_nick }">
+		<c:if test="${pagingDto.searchType == 'user_id'}">
 			selected
 		</c:if>
 		>작성자</option>
@@ -142,7 +141,8 @@ $(document).ready(function() {
 			<br>
 			<div class="row">
 				<div class="col-md-12">
-				<table class="table">
+				<!-- sytle부분 board_background 이미지사진으로 설정 -->
+				<table class="table" style="background : url('${pageContext.request.contextPath}/resources/bg_images/summer.png');">
 					<thead>
 						<tr>
 							<td>글번호</td>
@@ -163,9 +163,10 @@ $(document).ready(function() {
 								data-board_number="${boardVo.board_number}" -->
 								${boardVo.subject}</a>
 								<c:if test="${boardVo.reply_count != 0 }">
-								<span style="color: red;">[${ boardVo.reply_count }]</span>
+								<span style="color: red;">[${ boardVo.reply_count}]</span>
 								</c:if>
-								<c:if test="${boardVo.view_count >= 10 }">
+								
+								<c:if test="${boardVo.view_count >= 50 }">
 								<img src="<c:url value='/resources/images/heart_fill.png'/>" width="15">
 								<span style="color: red;">hot</span>
 								</c:if>

@@ -3,7 +3,18 @@
     pageEncoding="UTF-8"%>
 <%@ include file="include/header.jsp" %>
 
-
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#dgm {
+	font-family: dgm;
+	font-size: 2rem;
+	margin-left: 20px;
+}
+</style>
 
 		<script>
 			$(document).ready(function() {
@@ -18,24 +29,32 @@
 		});
 			
 		</script>
-		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+		<div class="col-md-10" style="margin:auto;padding:50px;">
 			<div>
-				<h1>
-					INDIEFES 
-				</h1>
-				
-				<section>
-					최신 앨범
+				<section id="logo" style="background-color:rgba(255,255,255,0.7);">
+					<div class="row">
+						<font>InDiEFeS</font>
+						<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+						매일매일 인디축제</span>
+					</div>
+				</section>
+				<hr style="background-color:rgba(255,255,255,0.7);">
+				<section style="background-color:rgba(255,255,255,0.7);">
+					<font id="dgm">
+						최신 앨범
+					</font>
 					<article class="art1">
 					<%@ include file="include/home_today_list.jsp" %>
 					</article>
 				</section>
-				
-				<section>
-					인기 앨범
-				<article class="art2">
+				<hr style="background-color:rgba(255,255,255,0.7);">
+				<section style="background-color:rgba(255,255,255,0.7);">
+					<font id="dgm">
+						인기 앨범
+					</font>
+					<article class="art2">
 					<%@ include file="include/home_good_list.jsp" %>
-				</article>
+					</article>
 				</section>
 			</div>
 		</div> <!-- col-md-10 / main -->

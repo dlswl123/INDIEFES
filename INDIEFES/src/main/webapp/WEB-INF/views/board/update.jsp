@@ -63,6 +63,12 @@ $(document).ready(function(){
 		}); // $.get(url, function(result)
 		
 	}); // $("#uploadedList").on("click", " .deleteFile", function(e)
+			
+	// 파일 추가 버튼
+// 	$("#btnFileAdd").click(function() {
+// 		var html = "<input type='file'>";
+// 		$("#fileDiv").append(html);
+// 	});
 }); // $(document).ready
 </script>
 <form id="pageForm" action="/indiefes/board/read">
@@ -75,7 +81,7 @@ $(document).ready(function(){
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 	<h1>글 수정</h1>
-	<form role="form" method="post" action="/indiefes/board/update">
+	<form role="form" method="post" action="/indiefes/board/update" enctype="multipart/form-data">
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">
 			<div class="form-group">
@@ -102,16 +108,26 @@ $(document).ready(function(){
 				<input type="text" class="form-control" id="reg_date" 
 					value="${boardVo.reg_date}" readonly/>
 			<div class="row">
-					<div class="col-md-12">
-						<label for="regdate">첨부파일</label> 
-						<div id="uploadedList">
-						
-						</div>
+				<div class="col-md-12">
+					<label for="uploadedList">첨부된 파일</label> 
+					<div id="uploadedList">
+					
 					</div>
 				</div>
-					<input type="submit" class="btn btn-success" value="수정완료" id="btnUpdate"/>
-					<button type="button" class="btn btn-warning" id="btnList">목록보기</button>
-			   </div>
+				<div class="row" style="height:80px; line-height:80px;vertical-align: middle;">
+				<div class="col-md-12" >
+<!-- 					<input type="button" value="파일 추가" class="btn btn-danger" -->
+<!-- 						id="btnFileAdd"/> -->
+				</div>
+			</div>
+			</div>
+					<div id="fileDiv"> 
+						<input type="file" name="file">
+					</div>
+				<input type="submit" class="btn btn-success" value="수정완료" id="btnUpdate"/>
+				<button type="button" class="btn btn-warning" id="btnList">목록보기</button>
+		   </div>
+		   
 		</form>
 	</div>
 

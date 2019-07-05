@@ -1,5 +1,6 @@
 package com.kh.jij.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -69,6 +70,21 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 	@Override
 	public void updateLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
 		sqlSession.update(NAMESPACE + ".updateLyrics", musicLyricsVo);
+	}
+	@Override
+	public void musicUploadApproReq(int art_number, int team_number) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("art_number", art_number);
+		map.put("team_number", team_number);
+		sqlSession.update(NAMESPACE + ".musicUploadApproReq", map);
+	}
+	@Override
+	public void musicUploadAppro(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicUploadAppro", art_number);
+	}
+	@Override
+	public void musicUploadReturn(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicUploadReturn", art_number);
 	}
 	
 }

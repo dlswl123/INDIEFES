@@ -78,6 +78,7 @@ $(document).ready(function() {
 <div class="row">
 	<ul  class="albumList">
 		<c:forEach items="${toDayList}" var="artVo">
+		<c:if test="${artVo.upload_check == 1}">
 			<li class="art_info">
 				<figure class="albumInfo">
 					<div class="thumbnail">
@@ -103,6 +104,7 @@ $(document).ready(function() {
 					</figcaption>
 				</figure>
 			</li>
+		</c:if>
 		</c:forEach>
 	</ul>
 </div>

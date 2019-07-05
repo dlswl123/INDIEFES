@@ -74,7 +74,7 @@ $(document).ready(function(){
 			} // success" : function(fullName)
 			
 		}); // $.ajax
- 	}); // $("#file_path").click
+ 	}); // $("#fileDrop").click
 
 	// 작성완료 버튼
 	$("#btnSubmit").click(function(){

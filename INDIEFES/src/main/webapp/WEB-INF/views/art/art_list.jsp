@@ -53,12 +53,21 @@ $(document).ready(function() {
 		setPage();
 		var genre = $(this).attr("data-genre");
 		console.log(genre);
-		$("input[name=searchType]").val("artGenre");
-		$("input[name=keyword]").val(genre);
+		if (genre == "appro") {
+			$("input[name=searchType]").val("appro");
+			$("input[name=keyword]").val(2);
+		} else if (genre == "working") {
+			$("input[name=searchType]").val("working");
+			$("input[name=keyword]").val(0);
+		} else if (genre == "delete") {
+			$("input[name=searchType]").val("delete");
+			$("input[name=keyword]").val(99);
+		} else {
+			$("input[name=searchType]").val("artGenre");
+			$("input[name=keyword]").val(genre);
+		}
 		$("#pageForm").submit(); // 폼 설정
-
-		
-});
+	});
 	
 	// 페이지
 	function setPage() {
@@ -66,8 +75,6 @@ $(document).ready(function() {
 			if (page == "") {
 				page = 1;
 		}
-// 		var perPage = 24;
-// 		console.log(perPage);
 		$("input[name=page]").val(page);
 // 		$("input[name=perPage]").val(perPage);
 	}
@@ -114,6 +121,7 @@ $(document).ready(function() {
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
   <div class="row">
+<!--   상단 장르 선택부 -->
 		<div class="col-md-12">
 			 <span class="badge badge-default">장르</span>
 			<nav>
@@ -169,16 +177,42 @@ $(document).ready(function() {
 							style="text-decoration: underline; color: red;"
 						</c:if>>기타</a>
 					</li>
-					<c:if test="${userInfoVo.user_level == 2 }">
+					<c:if test="${userInfoVo.user_level eq 2 }">
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_info_input">앨범등록</a>
+					</li>
+					</c:if>
+					<c:if test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}">
+					<li class="breadcrumb-item">
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="appro"
+						<c:if test="${paginationDto.pagingDto.searchType == 'appro'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>승인대기</a>
+					</li>
+					</c:if>
+					<c:if test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}">
+					<li class="breadcrumb-item">
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="delete"
+						<c:if test="${paginationDto.pagingDto.searchType == 'delete'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>삭제된 앨범</a>
+					</li>
+					</c:if>
+					<c:if test="${userInfoVo.user_level eq 2}">
+					<li class="breadcrumb-item">
+						<a href="/indiefes/art/art_list" class="art_genre" data-genre="working"
+						<c:if test="${paginationDto.pagingDto.searchType == 'working'}">
+							style="text-decoration: underline; color: red;"
+						</c:if>>작업중인 앨범</a>
 					</li>
 					</c:if>
 				</ol>
 			</nav>
 		</div>
+<!-- 		장르 선택 끝 -->
 	</div>
 	<div class="row">
+<!-- 	검색  -->
 		<div class ="col-md-12">
 			<div class="in-line">
 				 <select class="selectBox" id="searchType">
@@ -194,7 +228,7 @@ $(document).ready(function() {
 				</select>
 				<input type="text" id="keyword" 
 				<c:choose>
-					<c:when test="${paginationDto.pagingDto.searchType == 'artGenre'}">
+					<c:when test="${paginationDto.pagingDto.searchType == 'artGenre' or paginationDto.pagingDto.searchType == 'appro' or paginationDto.pagingDto.searchType == 'working' or paginationDto.pagingDto.searchType == 'delete'}">
 						value=""
 					</c:when>
 					<c:otherwise>
@@ -204,7 +238,8 @@ $(document).ready(function() {
 				<input type="button" class="btn btn-primary" id="btnSearch" value="검색">
 				<input type="button" class="btn btn-warning" id="btnAllSearch" value="전체조회">
 			</div>
-			</div>
+		</div>
+<!-- 		검색 끝 -->
 	</div>
 	
 	<div class="row">
@@ -214,9 +249,12 @@ $(document).ready(function() {
 <!-- 			앨범 리스트 -->
 				<ul  class="albumList">
 				<li>
+					
 			<c:choose>
 				<c:when test="${not empty artList}">
 					<c:forEach items="${artList}" var="artVo">
+					
+					<c:if test="${(artVo.upload_check eq 1)or(artVo.upload_check eq 2 and paginationDto.pagingDto.searchType eq 'appro')or(artVo.upload_check eq 0 and paginationDto.pagingDto.searchType eq 'working' and userVo.user_id eq artVo.user_id)or(artVo.upload_check eq 99 and paginationDto.pagingDto.searchType eq 'delete')}">
 					<li class="art_info">
 						<figure class="albumInfo">
 							<div class="thumbnail">
@@ -243,6 +281,7 @@ $(document).ready(function() {
 							</figcaption>
 						</figure>
 					</li>
+					</c:if>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>

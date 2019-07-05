@@ -10,6 +10,7 @@
 		select *
 		from music_info
 		where art_number = #{art_number}
+		and not upload_check = 99
 		order by track_number
 	</select>
 	
@@ -31,7 +32,7 @@
 <!--	 음악삭제 -->
 	<update id="musicDelete">
 		update music_info set
-			upload_check = 0
+			upload_check = 99
 		where art_number = #{art_number}
 		and music_number = #{music_number}
 		and team_number = #{team_number}
@@ -72,20 +73,26 @@
 		where art_number = #{art_number}
 	</select>
 	
-	
-<!-- 	음악 업로드승인 -->
-	<update id="musicUpload">
-		update music_info set
-			upload_check = 1
-		and art_number = #{art_number}
-	</update>
-	
 <!-- 	음악승인요청 -->
-	<update id="musicUploadAppro">
+	<update id="musicUploadApproReq">
 		update music_info set
 			upload_check = 2
-		and art_number = #{art_number}
+		where art_number = #{art_number}
+		and team_number = #{team_number}
 	</update>
 	
+<!-- 	음악 업로드승인 -->
+	<update id="musicUploadAppro">
+		update music_info set
+			upload_check = 1
+		where art_number = #{art_number}
+	</update>
+	
+<!-- 	음악 업로드반려 -->
+	<update id="musicUploadReturn">
+		update music_info set
+			upload_check = 0
+		where art_number = #{art_number}
+	</update>
 	
 </mapper>

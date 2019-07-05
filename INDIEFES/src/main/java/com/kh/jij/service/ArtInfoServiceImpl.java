@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.domain.PlayListVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IArtInfoDao;
+import com.kh.jij.persistence.IMusicInfoDao;
 import com.kh.ts.domain.PagingDto;
 
 
@@ -24,6 +26,9 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	@Inject
 	private IArtInfoDao artDao;
 
+	@Inject
+	private IMusicInfoDao musicDao;
+	
 	// 앨범정보입력
 	@Override
 	public void insert(ArtInfoVo vo) throws Exception {
@@ -43,8 +48,10 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void teamInsert(Map<String, Object> map) throws Exception {
 		IndieTeamVo teamVo = (IndieTeamVo)map.get("teamVo");
 		String user_id = (String)map.get("user_id");
+		String user_nick = (String)map.get("user_nick");
 		TeamMemberVo memberVo = new TeamMemberVo();
 		memberVo.setUser_id(user_id);
+		memberVo.setUser_nick(user_nick);
 		memberVo.setTeam_level(0);
 		artDao.teamInsert(teamVo);
 		artDao.teamInput(memberVo);
@@ -175,5 +182,49 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public List<ArtInfoVo> goodList() throws Exception {
 		List<ArtInfoVo> artList = artDao.goodList();
 		return artList;
+	}
+	// 카트에 담기
+	@Override
+	public void cartInput(PayLogVo payVo) throws Exception {
+		artDao.cartInput(payVo);
+	}
+	// 결제 리스트
+	@Override
+	public List<PayLogVo> payList(String user_id) throws Exception {
+		List<PayLogVo> payList = artDao.payList(user_id);
+		return payList;
+	}
+	// 결제 목록 삭제
+	@Override
+	public void payDelete(PayLogVo payVo) throws Exception {
+		artDao.payDelete(payVo);
+	}
+	// 결제 처리
+	@Override
+	public void payOk(String user_id) throws Exception {
+		artDao.payOk(user_id);
+	}
+	// 앨범등록 승인요청
+	@Transactional
+	@Override
+	public void artUploadApproReq(int art_number, String user_id, int team_number) throws Exception {
+		artDao.artUploadApproReq(art_number, user_id);
+		musicDao.musicUploadApproReq(art_number, team_number);
+	}
+	
+	// 앨범등록 승인
+	@Transactional
+	@Override
+	public void artUploadAppro(int art_number) throws Exception {
+		artDao.artUploadAppro(art_number);
+		musicDao.musicUploadAppro(art_number);
+	}
+
+	// 앨범등록 반려
+	@Transactional
+	@Override
+	public void artUploadReturn(int art_number) throws Exception {
+		artDao.artUploadReturn(art_number);
+		musicDao.musicUploadReturn(art_number);
 	}
 }

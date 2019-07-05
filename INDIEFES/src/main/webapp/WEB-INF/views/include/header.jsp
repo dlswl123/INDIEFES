@@ -16,8 +16,11 @@
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<!-- 아이콘 끝 -->
   	
-	 <!-- Latest compiled and minified CSS -->
+	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	
+	<!-- font set -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fonts.css">
 	
 <style>
 body {
@@ -27,11 +30,7 @@ body {
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
-  	font-family: 스웨거 TTF;
 /*   	font-family: Ghang, Misdemeanor,Urban Jungle,FuturaBlack BT,Yj SHANALL,Yj WADAG; */
-}
-aside{
-font-family: 영남일보체;
 }
 /* /resources 내의 자료 불러와지지 않을 때 사용법
 <script src="<c:url value='~~~주소~~~'/>"/>

@@ -64,7 +64,7 @@
 <!-- 	앨범 삭제하기 -->
 	<update id="artDelete">
 		update art_info set
-			upload_check = 0
+			upload_check = 99
 		where art_number = #{art_number}
 		and user_id = #{user_id}
 	</update>
@@ -73,7 +73,7 @@
 	<select id="artList" resultType="ArtInfoVo">
 		select *
 		from (select rownum rnum, a.*
-		      from (select art.* 
+		      from (select distinct art.* 
 		      		from art_info art
 		      <include refid="search"></include>
 		      order by art.art_number desc) a)
@@ -112,6 +112,7 @@
 		select * 
 		from team_member
 		where team_number = #{team_number}
+		order by member_number
 	</select>
 <!-- 	그룹앨범 리스트 가져오기 -->
 	<select id="teamArtList" resultType="ArtInfoVo">
@@ -147,6 +148,15 @@
 	   		</if>
 	   		<if test="searchType == 'artGenre'">
 	   			where art.art_genre like '%' || #{keyword} || '%'
+	   		</if>
+	   		<if test="searchType == 'appro'">
+	   			 where upload_check = #{keyword}
+	   		</if>
+	   		<if test="searchType == 'working'">
+	   			 where upload_check = #{keyword}
+	   		</if>
+	   		<if test="searchType == 'delete'">
+	   			 where upload_check = #{keyword}
 	   		</if>
        	</if>
 	</sql>
@@ -199,4 +209,98 @@
 		from art_info
 		where reg_art > (sysdate-7)
 	</select>
+	<!-- 카트에 담기 -->
+	<insert id="cartInput">
+		insert into pay_log (user_id, music_number, music_title)
+		values (#{user_id},#{music_number},#{music_title})
+	</insert>
+	<!-- 결제 목록 -->
+	<select id="payList" resultType="PayLogVo">
+		select * from pay_log
+		where user_id = #{user_id}
+		order by music_title
+	</select>
+	<!-- 결제 목록 삭제-->
+	<delete id="payDelete">
+		delete from pay_log
+		where user_id = #{user_id}
+		and music_number = #{music_number}
+		and pay_ok = 0
+	</delete>
+	<!-- 결제 하기 -->
+	<update id="payOk">
+		update pay_log set
+			pay_ok = 1,
+			pay_date = sysdate
+		where user_id = #{user_id}
+	</update>
+	
+<!-- 	앨범승인요청 -->
+	<update id="artUploadApproReq">
+		update art_info set
+			upload_check = 2
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</update>
+	
+	<!-- 	앨범 업로드승인 -->
+	<update id="artUploadAppro">
+		update art_info set
+			upload_check = 1,
+			reg_art = sysdate
+		where art_number = #{art_number}
+	</update>
+	
+	<!-- 	앨범 업로드반려 -->
+	<update id="artUploadReturn">
+		update art_info set
+			upload_check = 0
+		where art_number = #{art_number}
+	</update>
+	
+	<select id="artLikedCheck" resultType="Integer">
+		select count(*)
+		from like_log
+		where user_id = #{user_id}
+	</select>
+	
+	<update id="artLikedCount">
+		update art_info set
+			liked_count = #{liked_count}
+		where art_number = #{art_number}
+	</update>
+	
+	<insert id="artLikedInsert">
+		insert into like_log(user_id, art_number)	
+		values(#{user_id}, #{art_number})
+	</insert>
+	
+	<delete id="artLikedDelete">
+		delete from like_log
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</delete>
+		
+	<select id="artGoodCheck" resultType="Integer">
+		select count(*)
+		from like_log
+		where user_id = #{user_id}
+	</select>	
+		
+	<update id="artGoodCount">
+		update art_info set
+			good_count = #{good_count}
+		where art_number = #{art_number}
+	</update>
+	
+	<insert id="artGoodInsert">
+		insert into good_log(user_id, art_number)	
+		values(#{user_id}, #{art_number})
+	</insert>
+	
+	<delete id="artGoodDelete">
+		delete from good_log
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</delete>
 </mapper>

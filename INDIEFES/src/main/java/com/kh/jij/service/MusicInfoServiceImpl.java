@@ -61,5 +61,6 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 	public void updateLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
 		musicDao.updateLyrics(musicLyricsVo);
 	}
+
 	
 }
