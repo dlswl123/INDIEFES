@@ -112,7 +112,7 @@ public class ArtController {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		String user_id = userVo.getUser_id();
 		artService.artDelete(art_number, user_id);
-		return "redirect:/art/art_list";
+		return "redirect:/art/art_list?page=1&searchType=working&keyword=0";
 	}
 
 	// 앨범리스트 폼
@@ -125,7 +125,7 @@ public class ArtController {
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
-//		System.out.println("ArtController, ArtList, artList:" + artList);
+		System.out.println("ArtController, ArtList, artList:" + artList);
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
 		paginationDto.setPagingDto(pagingDto);

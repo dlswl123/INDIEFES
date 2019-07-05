@@ -223,13 +223,12 @@ $(document).ready(function() {
 				</div>
 				<div class="col-md-8">
 					<p>
-						<strong><label>곡 제목 :</label>
-								${artVo.art_title}</strong><br>
-						<strong><label>아티스트 :</label>
-								${teamName}</strong><br>
-						<small><label>앨범 소개 :</label>
-								${artVo.art_pr}</small>
+						<strong><label>곡 제목 :</label> ${artVo.art_title}</strong><br>
+						<label>아티스트 :</label> ${teamName}<br>
 					</p>
+						<small><label>앨범 소개 :</label></small><br>
+						<textarea rows="10" cols="80" readonly="readonly" style="background-color: transparent; border:0;">${artVo.art_pr}</textarea>
+								
 				</div>
 			</div>
 			
@@ -258,15 +257,15 @@ $(document).ready(function() {
 				</c:choose>
 				</div>
 			</div>
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-md-12" align="right"> -->
-<%-- 				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-heart fa-2x"></i></span> --%>
+			<div class="row">
+				<div class="col-md-12" align="right">
+				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-heart fa-2x"></i></span>
 <!-- 					<i class="fas fa-heart"></i> -->
-<%-- 				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span> --%>
+				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span>
 <!-- 					<i class="fas fa-thumbs-up"></i> -->
 				
-<!-- 				</div> -->
-<!-- 			</div> -->
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table">
@@ -283,11 +282,12 @@ $(document).ready(function() {
 							</tr>
 						</thead>
 						<tbody id="tblMusicList">
-						<c:forEach items="${musicList}" var="musicInfoVo">
+						<c:forEach items="${musicList}" var="musicInfoVo" varStatus="i">
 						<c:if test="${musicInfoVo.upload_check != 99 }">
+							
 							<tr>
 <!-- 								<td><input type="checkbox" /></td> -->
-								<td>${musicInfoVo.track_number}</td>
+								<td>${i.count}</td>
 								<td class="song_name" style="text-align: left;">${musicInfoVo.music_title}</td>
 								<td>${teamName}</td>
 								<td><a onclick="musicPlayer();" href="/indiefes/player/playInsert?music_number=${musicInfoVo.music_number}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" ><span class="spMusicPlay icon" style="color:blue;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-play"></i></span></a></td>

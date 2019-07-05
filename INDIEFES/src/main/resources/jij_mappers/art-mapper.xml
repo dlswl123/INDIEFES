@@ -73,7 +73,7 @@
 	<select id="artList" resultType="ArtInfoVo">
 		select *
 		from (select rownum rnum, a.*
-		      from (select art.* 
+		      from (select distinct art.* 
 		      		from art_info art
 		      <include refid="search"></include>
 		      order by art.art_number desc) a)
@@ -257,4 +257,49 @@
 		where art_number = #{art_number}
 	</update>
 	
+	<select id="artLikedCheck" resultType="Integer">
+		select count(*)
+		from like_log
+		where user_id = #{user_id}
+	</select>
+	
+	<update id="artLikedCount">
+		update art_info set
+			liked_count = #{liked_count}
+		where art_number = #{art_number}
+	</update>
+	
+	<insert id="artLikedInsert">
+		insert into like_log(user_id, art_number)	
+		values(#{user_id}, #{art_number})
+	</insert>
+	
+	<delete id="artLikedDelete">
+		delete from like_log
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</delete>
+		
+	<select id="artGoodCheck" resultType="Integer">
+		select count(*)
+		from like_log
+		where user_id = #{user_id}
+	</select>	
+		
+	<update id="artGoodCount">
+		update art_info set
+			good_count = #{good_count}
+		where art_number = #{art_number}
+	</update>
+	
+	<insert id="artGoodInsert">
+		insert into good_log(user_id, art_number)	
+		values(#{user_id}, #{art_number})
+	</insert>
+	
+	<delete id="artGoodDelete">
+		delete from good_log
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</delete>
 </mapper>
