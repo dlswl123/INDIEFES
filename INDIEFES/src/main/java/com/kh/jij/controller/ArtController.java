@@ -28,6 +28,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IMusicInfoDao;
+import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
@@ -68,9 +69,9 @@ public class ArtController {
 //		System.out.println(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 		String url = "";
-//		if (userVo != null) {
-//			String user_id = userVo.getUser_id();
-			String user_id = "indie1";
+		if (userVo != null) {
+			String user_id = userVo.getUser_id();
+//			String user_id = "indie1";
 //			System.out.println("ArtController, art_modify, userVo:" + userVo);
 //			System.out.println("ArtController, art_modify, teamName:" + teamName);
 			ArtInfoVo artVo = artService.artModifyForm(user_id, art_number);
@@ -81,9 +82,9 @@ public class ArtController {
 			model.addAttribute("userVo", userVo);
 			model.addAttribute("track_number", track_number);
 			url = "/art/art_modify";
-//		} else {
-//			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
-//		}
+		} else {
+			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
+		}
 		return url;
 	}
 	
@@ -220,7 +221,14 @@ public class ArtController {
 		map.put("user_id", userVo.getUser_id());
 		map.put("user_nick", userVo.getUser_nick());
 		artService.teamInsert(map);
-		return "redirect:/art/indie_team_input";
+		// 팀가입 여부
+		try {
+			int indieNum = artService.getIndieNumber(userVo.getUser_id());
+			session.setAttribute("indieNum", indieNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";
 	}
 
 	// 팀가입 처리
@@ -230,7 +238,14 @@ public class ArtController {
 		memberVo.setUser_id(userVo.getUser_id());
 		memberVo.setUser_nick(userVo.getUser_nick());
 		artService.teamInput(memberVo);
-		return "redirect:/art/indie_team_input";
+		// 팀가입 여부
+		try {
+			int indieNum = artService.getIndieNumber(userVo.getUser_id());
+			session.setAttribute("indieNum", indieNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";
 	}
 	
 	// 팀정보
@@ -254,7 +269,23 @@ public class ArtController {
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
 	}
-
+	// 카트담기
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public String CartInput(HttpSession session,ArtInfoVo artVo,int music_number, String music_title) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		int team_number = artVo.getTeam_number();
+		int art_number = artVo.getArt_number();
+		PayLogVo vo = new PayLogVo();
+		vo.setUser_id(user_id);
+		vo.setMusic_number(music_number);
+		vo.setMusic_title(music_title);
+		System.out.println(vo);
+		artService.cartInput(vo);
+		
+		return "redirect:/art/art_info/"+art_number+"/"+team_number;
+	}	
+	
 	// 승인요청 -> 인디팀 
 	@RequestMapping(value="/artUploadApproReq/{art_number}", method = RequestMethod.GET)
 	public String artUploadApproReq(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
@@ -274,13 +305,13 @@ public class ArtController {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		System.out.println("artController, artUploadAppro, userVo:" + userVo);
 		String url = "";
-//		if (userVo != null) {
+		if (userVo != null) {
 			artService.artUploadAppro(art_number);
 //			musicService.musicUploadAppro(art_number);
 			url = "redirect:/art/art_list?page=1&searchType=appro&keyword=2";
-//		} else {
-//			url = "redirect:/art/art_list";
-//		}
+		} else {
+			url = "redirect:/art/art_list";
+		}
 		return url;
 	}
 	
@@ -290,34 +321,44 @@ public class ArtController {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		System.out.println("artController, artUploadReturn, userVo:" + userVo);
 		String url = "";
-//		if (userVo != null) {
+		if (userVo != null) {
 			artService.artUploadReturn(art_number);
 //			musicService.musicUploadAppro(art_number);
 			url = "redirect:/art/art_list?page=1&searchType=appro&keyword=2";
-//		} else {
-//			url = "redirect:/art/art_list";
-//		}
+		} else {
+			url = "redirect:/art/art_list";
+		}
 		return url;
 	}
 	
-	// 음악 추가 폼
-	@RequestMapping(value = "/music_input", method = RequestMethod.GET)
-	public void musicInput() {
+	// 결제 페이지
+	@RequestMapping(value = "/pay_info", method = RequestMethod.GET)
+	public void payInfo(HttpSession session,Model model) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		List<PayLogVo> payList = artService.payList(user_id);
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("payList", payList);
+		System.out.println("payList: "+payList);
 	}
-	// 음악 추가 처리
-	@RequestMapping(value = "/music_input", method = RequestMethod.POST)
-	public String registPost(MusicInfoVo musicInfoVo, @RequestParam("file") MultipartFile file, HttpSession session)
-			throws Exception {
-	System.out.println("musicInfoVo:"+musicInfoVo);
-	musicService.musicInsert(musicInfoVo);
-	// 파일 업로드(@RequestParam("file")MultipartFile file)
-	String originalName = file.getOriginalFilename();
-	try {
-		FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
-	} catch (Exception e) {
-		e.printStackTrace();
+	// 결제 처리
+	@RequestMapping(value = "/pay_ok", method = RequestMethod.GET)
+	public String payOk(HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		artService.payOk(user_id);
+		return "redirect:/art/pay_info";
 	}
-		return null;
+	// 결제 목록 삭제
+	@RequestMapping(value = "/payDelete", method = RequestMethod.GET)
+	public String payDelete(HttpSession session,int music_number) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		PayLogVo payVo = new PayLogVo();
+		payVo.setUser_id(user_id);
+		payVo.setMusic_number(music_number);
+		artService.payDelete(payVo);
+		return "redirect:/art/pay_info";
 	}
 	
 }

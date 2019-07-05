@@ -13,6 +13,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
+import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.domain.PlayListVo;
 
 @Repository
@@ -176,7 +177,29 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".goodList");
 		return artList;
 	}
-	
+	// 카트에 담기
+	@Override
+	public void cartInput(PayLogVo payVo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".cartInput", payVo);
+		
+	}
+	// 결제 목록
+	@Override
+	public List<PayLogVo> payList(String user_id) throws Exception {
+		List<PayLogVo> payList = sqlSession.selectList(NAMESPACE + ".payList",user_id);
+		return payList;
+	}
+	// 결제 목록 삭제
+	@Override
+	public void payDelete(PayLogVo payVo) throws Exception {
+		sqlSession.delete(NAMESPACE + ".payDelete", payVo);
+		
+	}
+	// 결제 처리
+	@Override
+	public void payOk(String user_id) throws Exception {
+		sqlSession.update(NAMESPACE + ".payOk",user_id);
+	}
 	// 앨범등록 승인요청
 	@Override
 	public void artUploadApproReq(int art_number, String user_id) throws Exception {
