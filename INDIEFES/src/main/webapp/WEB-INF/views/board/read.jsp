@@ -39,7 +39,7 @@ $(document).ready(function(){
 				strHtml += "<tr>"
 					+		"<td>" + this.reply_number + "</td>"
 					+		"<td>" + this.content + "</td>"
-					+		"<td>" + this.user_id + "</td>"
+					+		"<td>" + this.user_nick + "</td>"
 					+		"<td>" + dateString(this.reg_date) + "</td>";
 				if (user_id == this.user_id) {
 					strHtml +=  "<td>"
@@ -371,7 +371,7 @@ $(document).ready(function(){
 		 					</tr>
 		 				</thead>
 		 				<!-- 여기에 댓글 목록 보임 -->
-		 				<tbody id="replyList">
+		 				<tbody id="replyList"style="background-color:rgba(255,255,255,0.7);">
 		 				
 		 				</tbody>
 		 			</table>

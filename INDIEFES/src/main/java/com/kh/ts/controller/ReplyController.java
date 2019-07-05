@@ -88,7 +88,7 @@ public class ReplyController {
 		ResponseEntity<List<ReplyVo>> entity = null;
 		try {
 			List<ReplyVo> list = replyService.list(board_number);
-//			System.out.println("ReplyController, list(), list:" + list);
+			System.out.println("ReplyController, list(), list:" + list);
 			entity = new ResponseEntity<List<ReplyVo>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

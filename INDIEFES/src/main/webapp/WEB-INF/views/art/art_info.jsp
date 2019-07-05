@@ -150,8 +150,9 @@ $(document).ready(function() {
 	// 음악리스트- 담기버튼
 	$("#tblMusicList").on("click", ".spMusicCart",function() {
 		var music_number = $(this).attr("data-music_number");
-		console.log(music_number);
-		
+		var music_title = $(this).attr("data-music_title");
+		location.href="/indiefes/art/cart?art_number=${artVo.art_number }&team_number=${artVo.team_number}&music_number="+music_number+"&music_title="+music_title;
+		alert(music_title+" 카트에 담기");
 	});
 	// 앨범정보- 좋아요버튼
 	$(".spLikedCount").click(function() {
@@ -178,17 +179,30 @@ $(document).ready(function() {
 	$("#btnArtDelete").click(function() {
 		location.href="/indiefes/art/art_delete/${artVo.art_number}";
 	});
+	
+	// 앨범 등록 요청 버튼
+	$("#btnArtAppro").click(function() {
+		var check = confirm("등록 요청할 경우 수정 및 삭제할수 없습니다. 그래도 진행하시겠습니까?");
+		if (check == true) {
+			location.href="/indiefes/art/artUploadApproReq/${artVo.art_number}";
+		} else if (check == false) {
+// 			alert("취소하셨습니다.");
+		}
+	});
+	
 	// 뮤지션용 끝
 	
 // 		운영자용
 	// 승인
 	$("#btnAppro").click(function() {
-		location.href="/indiefes/art/music_input?art_number=${artVo.art_number }&team_number=${artVo.team_number}&track_number=${musicInfoVo.track_number}";
+// 		location.href="/indiefes/art/music_input?art_number=${artVo.art_number }&team_number=${artVo.team_number}&track_number=${musicInfoVo.track_number}";
+		location.href = "/indiefes/art/artUploadAppro/${artVo.art_number}";
 	});
 	
 	// 반려
 	$("#btnReturn").click(function() {
-		var track_number = $("#track_number").length;
+// 		var track_number = $("#track_number").length;
+		location.href = "/indiefes/art/artUploadReturn/${artVo.art_number}";
 		console.log(track_number);
 	});
 	// 운영자용 끝
@@ -222,16 +236,17 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-md-12"  align="right">
 <!-- 				실행버튼 -->
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}"> --%>
+				<c:choose>
+					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1 and artVo.upload_check eq 2}">
 						<button type="button" class="btn btn-outline-secondary" id="btnAppro">승인</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnReturn">반려</button>
-<%-- 					</c:when> --%>
-<%-- 					<c:when test="${userInfoVo.user_level eq 2 and artVo.user_id eq userInfoVo.user_id}"> --%>
+					</c:when>
+					<c:when test="${userInfoVo.user_level eq 2 and artVo.user_id eq userInfoVo.user_id and artVo.upload_check eq 0}">
 						<button type="button" class="btn btn-outline-secondary" id="btnArtModify">앨범수정</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtDelete">앨범삭제</button>
-<%-- 					</c:when> --%>
-<%-- 					<c:otherwise> --%>
+						<button type="button" class="btn btn-outline-secondary" id="btnArtAppro">앨범등록</button>
+					</c:when>
+					<c:otherwise>
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button> -->
 						<!-- 담기로 구매한 사용자만 다운로드 가능함 -->
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnDown">다운</button> -->
@@ -239,8 +254,8 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-outline-secondary" id="btnAllListen">전체듣기</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllDown">전체다운</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllCart">전체담기</button>
-<%-- 					</c:otherwise> --%>
-<%-- 				</c:choose> --%>
+					</c:otherwise>
+				</c:choose>
 				</div>
 			</div>
 <!-- 			<div class="row"> -->
@@ -269,6 +284,7 @@ $(document).ready(function() {
 						</thead>
 						<tbody id="tblMusicList">
 						<c:forEach items="${musicList}" var="musicInfoVo">
+						<c:if test="${musicInfoVo.upload_check != 99 }">
 							<tr>
 <!-- 								<td><input type="checkbox" /></td> -->
 								<td>${musicInfoVo.track_number}</td>
@@ -286,9 +302,10 @@ $(document).ready(function() {
 	<%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
 <%-- 									</c:otherwise> --%>
 <%-- 								</c:choose> --%>
-								<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-cart-plus"></i></span></td>
+								<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="fas fa-cart-plus"></i></span></td>
 							<tr>
 <%-- 							<a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}"></a> --%>
+						</c:if>
 						</c:forEach>
 						</tbody>
 					</table>

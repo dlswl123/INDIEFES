@@ -9,12 +9,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.MusicLyricsVo;
@@ -54,12 +57,15 @@ public class MusicController {
 
 	// 음악 추가하기
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public ResponseEntity<String> insert(MusicInfoVo musicInfoVo, @RequestParam("file_path") MultipartFile file) throws Exception {
-		System.out.println("MusicController, insert, musicInfoVo:" + musicInfoVo);
+	@ResponseBody
+	public ResponseEntity<String> insert(MusicInfoVo musicInfoVo, MultipartHttpServletRequest req) throws Exception {
 		ResponseEntity<String> entity = null;
+		MultipartFile file = req.getFile("file");
 		try {
-			musicService.musicInsert(musicInfoVo);
 			String originalName = file.getOriginalFilename();
+			musicInfoVo.setFile_path(originalName);
+			System.out.println("MusicController, insert, musicInfoVo :" + musicInfoVo);
+			musicService.musicInsert(musicInfoVo);
 			try {
 				FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
 			} catch (Exception e) {

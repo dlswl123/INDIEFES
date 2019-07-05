@@ -26,9 +26,7 @@ $(document).ready(function() {
 					name="art_team" />
 			</div>
 			<input type="button" id="btnTeam" 
-				class="btn btn-success" value="작성완료"/>
-			<a href="">
-			<input type="button" class="btn btn-danger" value="작성취소"/></a> 
+				class="btn btn-success" value="완료"/>
 		</form>
 <br><br><br><br><br><br><br>
 <h1 style="color: #ffffff;">팀가입</h1>		
@@ -39,9 +37,7 @@ $(document).ready(function() {
 				name="team_number" />
 		</div>
 		<input type="button" id="btnMember" 
-			class="btn btn-success" value="작성완료"/>
-		<a href="">
-		<input type="button" class="btn btn-danger" value="작성취소"/></a> 
+			class="btn btn-success" value="완료"/>
 	</form>
 </div>
 <%@ include file="../include/sidebar.jsp" %>
