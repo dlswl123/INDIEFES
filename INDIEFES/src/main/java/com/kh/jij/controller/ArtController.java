@@ -218,7 +218,14 @@ public class ArtController {
 		map.put("user_id", userVo.getUser_id());
 		map.put("user_nick", userVo.getUser_nick());
 		artService.teamInsert(map);
-		return "redirect:/art/indie_team_input";
+		// 팀가입 여부
+		try {
+			int indieNum = artService.getIndieNumber(userVo.getUser_id());
+			session.setAttribute("indieNum", indieNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";
 	}
 
 	// 팀가입 처리
@@ -228,7 +235,14 @@ public class ArtController {
 		memberVo.setUser_id(userVo.getUser_id());
 		memberVo.setUser_nick(userVo.getUser_nick());
 		artService.teamInput(memberVo);
-		return "redirect:/art/indie_team_input";
+		// 팀가입 여부
+		try {
+			int indieNum = artService.getIndieNumber(userVo.getUser_id());
+			session.setAttribute("indieNum", indieNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";
 	}
 	
 	// 팀정보

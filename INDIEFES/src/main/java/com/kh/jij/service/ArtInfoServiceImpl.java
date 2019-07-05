@@ -44,8 +44,10 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void teamInsert(Map<String, Object> map) throws Exception {
 		IndieTeamVo teamVo = (IndieTeamVo)map.get("teamVo");
 		String user_id = (String)map.get("user_id");
+		String user_nick = (String)map.get("user_nick");
 		TeamMemberVo memberVo = new TeamMemberVo();
 		memberVo.setUser_id(user_id);
+		memberVo.setUser_nick(user_nick);
 		memberVo.setTeam_level(0);
 		artDao.teamInsert(teamVo);
 		artDao.teamInput(memberVo);

@@ -10,7 +10,7 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userInfo, #boardList, #artInfo, #concertInfo, #player,#payInfo font {
+.sidebar #login, #logout, #userInfo, #boardList, #artInfo, #concertInfo, #player,#payInfo,#teamInput,#teamInfo font {
 	font-family: prstart;
 }
 .sidebar #home {
@@ -69,6 +69,16 @@ $(document).ready(function() {
 	},function(){
 		$(this).text("PAY INFO").css("font-family","prstart").css("font-size","1rem");
 	});
+	$("#teamInput font").hover(function() {
+		$(this).text("팀생성 및 가입 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("TEAM INPUT").css("font-family","prstart").css("font-size","1rem");
+	});
+	$("#teamInfo font").hover(function() {
+		$(this).text("팀정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("TEAM INFO").css("font-family","prstart").css("font-size","1rem");
+	});
 });
 </script>
     
@@ -112,7 +122,22 @@ $(document).ready(function() {
 						<font>PAY INFO</font>
 					</a>
 					</section>
-					
+					<c:choose>
+				    	<c:when test="${indieNum eq null}">
+							<section id="teamInput">
+							<a href="/indiefes/art/indie_team_input">
+								<font>TEAM INPUT</font>
+							</a>
+							</section>
+						</c:when>
+						<c:otherwise>
+							<section id="teamInfo">
+							<a href="/indiefes/art/indie_team_info?team_number=${indieNum}">
+								<font>TEAM INFO</font>
+							</a>
+							</section>
+						</c:otherwise>
+					</c:choose>
 					<section id="player">
 				    <script type="text/javascript">
 						function musicPlayer() {

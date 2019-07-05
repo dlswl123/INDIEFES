@@ -224,7 +224,8 @@
 	<!-- 결제 하기 -->
 	<update id="payOk">
 		update pay_log set
-			pay_ok = 1
+			pay_ok = 1,
+			pay_date = sysdate
 		where user_id = #{user_id}
 	</update>
 	
