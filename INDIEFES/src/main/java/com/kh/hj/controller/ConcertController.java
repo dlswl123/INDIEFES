@@ -62,21 +62,28 @@ public class ConcertController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public void concertInfoWrite(Model model) throws Exception {
+	public String concertInfoWrite(Model model, HttpSession session) throws Exception {
 		// move to /concert/write.jsp
-		
+		// if not have userInfo, return to loginForm
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo == null) {
+			return "/user/login";
+		}
+		return "/concert/write";
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String concertInfoWriteRun(ConcertInfoVo vo, RedirectAttributes rttr, HttpSession session) throws Exception {
-
 		// get user_id by session
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		String user_id = userInfoVo.getUser_id();
-		vo.setUser_id(user_id);
-		
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			vo.setUser_id(user_id);
+		} else {
+			return "redirect:/user/login";
+		}
 		// Read ConcertInfoVo
-		System.out.println("vo : " + vo.toString());
+		System.out.println("writevo : " + vo.toString());
 
 		// insert into DBtable ConcertInfoVo information
 		service.insertConcertInfo(vo);
@@ -100,35 +107,39 @@ public class ConcertController {
 		model.addAttribute("list", list);
 	}
 	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String concertInfoDelete(@RequestParam("concert_number")int concert_number) throws Exception {
+		service.deleteConcertInfo(concert_number);
+		return "redirect:/concert/info";
+	}
+	
 	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<ConcertInfoVo> uploadAjax(/* MultipartFile file */ MultipartHttpServletRequest mhsr) throws Exception {
 		// file upload method
 		// get only img files
-
+		
+		
 		ResponseEntity<ConcertInfoVo> entity = null;
 		ConcertInfoVo vo = new ConcertInfoVo();
 		List<String> list = new ArrayList<>();
 		
+		Iterator<String> files = mhsr.getFileNames();
+			
 		String concertDate = mhsr.getParameter("concertDate"); // 공연 일자 YYYY/MM 형식으로 받아옴
 		System.out.println("concertDate : " + concertDate);
 		
 		MultipartFile file = mhsr.getFile("infoFile"); // 키 값에 따른 파일 가져오기
-		String originalName = file.getOriginalFilename(); // 파일명 얻기
-		System.out.println("originalName : " + originalName);
-		
-		String infoFilePath = FileUploadUtil.uploadFile(uploadPath, originalName, concertDate, file.getBytes());
-		String infoPath = infoFilePath.replace("\\", "/");
-		
-		vo.setInfo_file_path(infoPath);
-//		vo.setInfo_file_path(originalName);
-		
-		List<MultipartFile> fileList = mhsr.getFiles("posterFile");
-		System.out.println("fileList : " + fileList);
-		
-
-		Iterator<String> files = mhsr.getFileNames();
-		System.out.println("files : " + files);
+		System.out.println("file : " + file);
+		if (file != null) {
+			String originalName = file.getOriginalFilename(); // 파일명 얻기
+			System.out.println("originalName : " + originalName);
+			
+			String infoFilePath = FileUploadUtil.uploadFile(uploadPath, originalName, concertDate, file.getBytes());
+			String infoPath = infoFilePath.replace("\\", "/");
+			
+			vo.setInfo_file_path(infoPath);
+		}
 		
 		while (files.hasNext()) { //파일을 하나씩 불러온다.
 		 
@@ -146,15 +157,18 @@ public class ConcertController {
 	        System.out.println("fileFullPath : " + posterPath);
 	        
 	        list.add(posterPath);
-//	        list.add(originalFileName);
-		}
-		 
-		String[] str = new String[list.size()]; // 이름 변경한 리스트를 배열로 넣기
-		for (int i = 0; i < list.size(); i++) {
-			str[i] = list.get(i);
 		}
 		
-		vo.setFile_path(str);
+		if (!list.isEmpty()) {
+			String[] str = new String[list.size()]; // 이름 변경한 리스트를 배열로 넣기
+			for (int i = 0; i < list.size(); i++) {
+				str[i] = list.get(i);
+			}
+			
+			if (str != null) {
+				vo.setFile_path(str);
+			}
+		}
 		
 		System.out.println("vo : " + vo);
 		

@@ -86,6 +86,14 @@ $(document).ready(function() {
 		location.href = "/indiefes/concert/info";		
 	}); // $("#btnList").click(function(){});
 	
+	
+	$("#btnDel").click(function() {
+		location.href = "/indiefes/concert/delete?concert_number=${vo.concert_number}";
+	});
+	
+	$("#btnMod").click(function() {
+		location.href = "/indiefes/concert/modify?concert_number=${vo.concert_number}";
+	});
 });
 </script>
 
@@ -127,7 +135,7 @@ $(document).ready(function() {
 				
 				<div class="row">
 					<article style="text-align:right;padding:20px;">
-						<c:if test="${vo.user_id == user_id}">
+						<c:if test="${vo.user_id == user_id || user_level < 2}">
 							<input type="button" class="btn btn-danger" value="삭제" id="btnDel"/>
 							<input type="button" class="btn btn-warning" value="수정" id="btnMod"/>
 						</c:if>
