@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IMusicInfoDao;
@@ -123,8 +124,6 @@ public class ArtController {
 		pagingDto.setPerPage(24);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
-		model.addAttribute("artList", artList);
-		model.addAttribute("teamList", teamList);
 		System.out.println("ArtController, ArtList, artList:" + artList);
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
@@ -132,6 +131,8 @@ public class ArtController {
 		System.out.println("리스트:"+paginationDto);
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
+		model.addAttribute("artList", artList);
+		model.addAttribute("teamList", teamList);
 		model.addAttribute("paginationDto", paginationDto);
 		model.addAttribute("userVo", userVo);
 
@@ -359,6 +360,23 @@ public class ArtController {
 		payVo.setMusic_number(music_number);
 		artService.payDelete(payVo);
 		return "redirect:/art/pay_info";
+	}
+	
+	public ResponseEntity<String> likeChange(LikeLogVo likeVo, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		ResponseEntity<String> entity = null;
+		try {
+			if (userVo != null) {
+				String user_id = userVo.getUser_id();
+				likeVo.setUser_id(user_id);
+//				int count = artService.artLikedCheck(likeVo);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	
 }

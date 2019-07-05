@@ -231,6 +231,15 @@ $(document).ready(function() {
 								
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12" align="right">
+				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-heart fa-2x"></i></span>
+<!-- 					<i class="fas fa-heart"></i> -->
+				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span>
+<!-- 					<i class="fas fa-thumbs-up"></i> -->
+				
+				</div>
+			</div>
 			
 			<div class="row">
 				<div class="col-md-12"  align="right">
@@ -258,16 +267,9 @@ $(document).ready(function() {
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12" align="right">
-				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-heart fa-2x"></i></span>
-<!-- 					<i class="fas fa-heart"></i> -->
-				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span>
-<!-- 					<i class="fas fa-thumbs-up"></i> -->
-				
-				</div>
-			</div>
-			<div class="row">
 				<div class="col-md-12">
+			
+				
 					<table class="table">
 						<thead>
 							<tr>

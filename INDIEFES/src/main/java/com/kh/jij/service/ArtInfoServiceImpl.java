@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.GoodLogVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.domain.PlayListVo;
@@ -226,5 +228,45 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void artUploadReturn(int art_number) throws Exception {
 		artDao.artUploadReturn(art_number);
 		musicDao.musicUploadReturn(art_number);
+	}
+
+	@Override
+	public void artLikedCount(int liked_count, int art_number) throws Exception {
+		artDao.artLikedCount(liked_count, art_number);
+	}
+
+	@Override
+	public void artLikedCheck(LikeLogVo likeVo) throws Exception {
+		artDao.artLikedCheck(likeVo);
+	}
+
+	@Override
+	public void artLikedInsert(LikeLogVo likeVo) throws Exception {
+		artDao.artLikedInsert(likeVo);
+	}
+
+	@Override
+	public void artLikedDelete(LikeLogVo likeVo) throws Exception {
+		artDao.artLikedDelete(likeVo);
+	}
+
+	@Override
+	public void artGoodCount(int good_count, int art_number) throws Exception {
+		artDao.artGoodCount(good_count, art_number);
+	}
+
+	@Override
+	public void artGoodInsert(GoodLogVo goodVo) throws Exception {
+		artDao.artGoodInsert(goodVo);
+	}
+
+	@Override
+	public void artGoodDelete(GoodLogVo goodVo) throws Exception {
+		artDao.artGoodDelete(goodVo);
+	}
+
+	@Override
+	public void artGoodCheck(GoodLogVo goodVo) throws Exception {
+		artDao.artGoodCheck(goodVo);
 	}
 }

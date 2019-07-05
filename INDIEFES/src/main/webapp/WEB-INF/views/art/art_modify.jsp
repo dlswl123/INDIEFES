@@ -15,8 +15,6 @@
   .btn {border-radius: 12px;}
 </style>
 
-
-
 <script>
 $.fn.setPreview = function(opt){
     "use strict"
@@ -449,8 +447,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<!-- // Modal -->
-			
-			
 			
 			<div class="row">
 				<div class="col-md-12">
