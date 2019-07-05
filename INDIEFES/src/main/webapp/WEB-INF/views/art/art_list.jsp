@@ -88,6 +88,7 @@ $(document).ready(function() {
 			e.preventDefault();
 //			$(this).text();
 			setPage();
+			
 			var page = $(this).attr("data-page"); // 페이지 숫자 읽기
 			console.log(page);
 			$("input[name=page]").val(page); // 아래쪽 폼의 page에 설정

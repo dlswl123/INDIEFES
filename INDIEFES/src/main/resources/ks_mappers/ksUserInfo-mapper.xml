@@ -71,7 +71,7 @@
 	<select id="userInfo" resultType="com.kh.ks.domain.UserInfoVo">
 		select * from
 		(select a.*, rownum as rnum from
-		(select * from user_info order by reg_date desc) a 
+		(select * from user_info order by user_id desc) a 
 		where rownum &lt;= #{endRow})
 		where rnum &gt;= #{startRow}
 	</select>

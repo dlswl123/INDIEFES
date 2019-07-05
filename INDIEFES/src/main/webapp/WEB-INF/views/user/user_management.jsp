@@ -66,7 +66,40 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			
 		</div>
+		
+		<div class="row">
+		<div class="col-md-12">
+			<nav>
+				<ul class="pagination">
+					<li class="page-item">
+						<c:if test="${paginationDto.prev == true }">
+							<a class="page-link" href="#">Previous</a>
+						</c:if>
+						
+					</li>
+					<c:forEach var="i" begin="${paginationDto.startPage}" 
+									end="${paginationDto.endPage }">
+						<li class="page-item">
+							<a class="page-link" 
+							href="/indiefes/user/user-management?page=${i}">
+							${i}</a>
+						</li>			
+					</c:forEach>
+					
+					
+					<c:if test="${paginationDto.next == true }">
+						<li class="page-item">
+							<a class="page-link" href="#">Next</a>
+						</li>
+					</c:if>
+					
+				</ul>
+			</nav>
+		</div>
+	</div>
 	</div>
 
 
