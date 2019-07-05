@@ -64,7 +64,7 @@
 <!-- 	앨범 삭제하기 -->
 	<update id="artDelete">
 		update art_info set
-			upload_check = 0
+			upload_check = 99
 		where art_number = #{art_number}
 		and user_id = #{user_id}
 	</update>
@@ -150,9 +150,14 @@
 	   			where art.art_genre like '%' || #{keyword} || '%'
 	   		</if>
 	   		<if test="searchType == 'appro'">
-	   			 where upload_check=2
+	   			 where upload_check = #{keyword}
 	   		</if>
-	   		
+	   		<if test="searchType == 'working'">
+	   			 where upload_check = #{keyword}
+	   		</if>
+	   		<if test="searchType == 'delete'">
+	   			 where upload_check = #{keyword}
+	   		</if>
        	</if>
 	</sql>
 	
@@ -231,7 +236,7 @@
 	</update>
 	
 <!-- 	앨범승인요청 -->
-	<update id="artUploadAppro">
+	<update id="artUploadApproReq">
 		update art_info set
 			upload_check = 2
 		where art_number = #{art_number}
@@ -239,9 +244,17 @@
 	</update>
 	
 	<!-- 	앨범 업로드승인 -->
-	<update id="artUpload">
+	<update id="artUploadAppro">
 		update art_info set
-			upload_check = 1
+			upload_check = 1,
+			reg_art = sysdate
+		where art_number = #{art_number}
+	</update>
+	
+	<!-- 	앨범 업로드반려 -->
+	<update id="artUploadReturn">
+		update art_info set
+			upload_check = 0
 		where art_number = #{art_number}
 	</update>
 	

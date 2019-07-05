@@ -91,8 +91,10 @@ public interface IArtInfoDao {
 	public void payOk(String user_id)throws Exception;
 	
 	// 앨범승인요청
-	public void artUploadAppro(int art_number, String user_id) throws Exception;
+	public void artUploadApproReq(int art_number, String user_id) throws Exception;
 	// 업로드승인
-	public void artUpload(int art_number) throws Exception;
+	public void artUploadAppro(int art_number) throws Exception;
+	// 업로드반려
+	public void artUploadReturn(int art_number) throws Exception;
 	
 }

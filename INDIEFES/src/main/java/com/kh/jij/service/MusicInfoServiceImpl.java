@@ -62,14 +62,5 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 		musicDao.updateLyrics(musicLyricsVo);
 	}
 
-	@Override
-	public void musicUploadAppro(int art_number, int team_number) throws Exception {
-		musicDao.musicUploadAppro(art_number, team_number);
-	}
-
-	@Override
-	public void musicUpload(int art_number) throws Exception {
-		musicDao.musicUpload(art_number);
-	}
 	
 }

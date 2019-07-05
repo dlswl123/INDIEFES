@@ -202,16 +202,20 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	}
 	// 앨범등록 승인요청
 	@Override
-	public void artUploadAppro(int art_number, String user_id) throws Exception {
+	public void artUploadApproReq(int art_number, String user_id) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("art_number", art_number);
 		map.put("user_id", user_id);
-		sqlSession.update(NAMESPACE + ".artUploadAppro", map);
+		sqlSession.update(NAMESPACE + ".artUploadApproReq", map);
 	}
 	
 	// 앨범등록 승인
 	@Override
-	public void artUpload(int art_number) throws Exception {
-		sqlSession.update(NAMESPACE + ".artUpload", art_number);
+	public void artUploadAppro(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".artUploadAppro", art_number);
+	}
+	@Override
+	public void artUploadReturn(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".artUploadReturn", art_number);
 	}
 }

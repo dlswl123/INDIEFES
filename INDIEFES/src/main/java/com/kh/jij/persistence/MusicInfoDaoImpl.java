@@ -72,16 +72,19 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 		sqlSession.update(NAMESPACE + ".updateLyrics", musicLyricsVo);
 	}
 	@Override
-	public void musicUploadAppro(int art_number, int team_number) throws Exception {
+	public void musicUploadApproReq(int art_number, int team_number) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("art_number", art_number);
 		map.put("team_number", team_number);
-		sqlSession.update(NAMESPACE + ".musicUploadAppro", map);
+		sqlSession.update(NAMESPACE + ".musicUploadApproReq", map);
 	}
 	@Override
-	public void musicUpload(int art_number) throws Exception {
-		sqlSession.update(NAMESPACE + ".musicUpload", art_number);
-		
+	public void musicUploadAppro(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicUploadAppro", art_number);
+	}
+	@Override
+	public void musicUploadReturn(int art_number) throws Exception {
+		sqlSession.update(NAMESPACE + ".musicUploadReturn", art_number);
 	}
 	
 }
