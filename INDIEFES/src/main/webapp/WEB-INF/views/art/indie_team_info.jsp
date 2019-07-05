@@ -36,24 +36,40 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
+#member{
+	src: url("../fonts/DungGeunMo.ttf") format("truetype");
+	color : #00ff00;
+	font-style: normal;
+	font-weight: normal;
+	background-color:rgba(0,0,0,0.7);
+}
+h1{
+	font-size: 3.5rem;
+	color : #00ff00;
+}
+h3{
+color : #ffff00;
+}
+div{
+font-family: swag;
+}
+    
 </style>
 
 <script>
 $(document).ready(function() {
-	
-	
+	$(this).css("font-family","prstart").css("font-size","1rem");
 });
 </script>
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div class="row">
-				<h1>팀정보</h1><br><br><br>
+				<h1>${teamName}</h1><br><br><br>
 			</div>
 			<div class="row">
-				<div class="col-md-10">
-					<h3>${teamName}</h3><br>
+				<div class="col-md-10" id="member">
 					<c:forEach items="${memberList}" var="memberVo">
-						<c:if test="${memberVo.team_level==0}"><strong>${memberVo.user_nick}</strong><br></c:if>
-						<c:if test="${memberVo.team_level==1}"><small>${memberVo.user_nick}</small><br></c:if>
+						<c:if test="${memberVo.team_level==0}"><h3>${memberVo.user_nick}</h3><br></c:if>
+						<c:if test="${memberVo.team_level==1}"><h5>${memberVo.user_nick}</h5><br></c:if>
 					</c:forEach>
 				</div>
 			</div>
