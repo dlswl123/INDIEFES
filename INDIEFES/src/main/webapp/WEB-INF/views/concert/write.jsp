@@ -6,8 +6,8 @@
 $(document).ready(function() {
 	
 	// set input today to show_date
-	var today = new Date().toISOString().slice(0,16);
-	$("input[id=show_date]").val(today);
+	var today = new Date().toISOString();
+	$("input[id=show_date]").val(today.slice(0,16));
 	$("input[name=concert_date]").val(today.replace("T", " "));
 	
 	$("input[id=show_date]").on("change", function() {
@@ -15,12 +15,11 @@ $(document).ready(function() {
 		$("input[id=show_date]").val(show_date);
 		
 		$("input[name=concert_date]").val(show_date.replace("T", " "));
-		console.log($("input[name=concert_date]").val());
-		var nowDate = new Date().toISOString().slice(0,10);
-		var concertDate = replaceAll(nowDate, "-", "/");
-		formData.append("concertDate", concertDate);
+		var concertDate = replaceAll(show_date.slice(0,10), "-", "/");
+		formData.append("concertDate", concertDate);	
 	});
 	
+	// 날짜바꾸기
 	function replaceAll(str, searchStr, replaceStr) {
 	  return str.split(searchStr).join(replaceStr);
 	}
@@ -37,6 +36,7 @@ $(document).ready(function() {
 	
 	var files; // 파일 받는용
 	var formData = new FormData();
+	var i = 0;
 	
 	// 포스터 파일 업로드 버튼(내부 상세정보용)
 	$("#btnFiles").click(function() {
@@ -65,21 +65,31 @@ $(document).ready(function() {
 	
 	
 	function uploadPosterFiles(files) {
-		console.log("files : " + files);
 		
 		// 파일이 아무것도 없을경우 초기화
 		if ($("#filePosterList").text().trim() == "첨부할 파일을 끌어다 놓으세요") {
         	$("#filePosterList").text("");
         }
 		
-       	for (var i = 0; i < files.length; i++) {
-   			$("#filePosterList").append("<div>" + files[i].name + "</div>");
-   			console.log("fileName : " + files[i].name);
-
-   			formData.append("posterFile[" + i + "]", files[i]); // <input type="text" name="files">
+       	for (var j = 0; j < files.length; j++) {
+   			$("#filePosterList").append("<div class='uploadedFile'>" + files[j].name 
+   				+ "<a href='#' class='deleteFile' data-fileIndex='" + i 
+				+  "'>&times;</a></div>");
+   			
+   			formData.append("posterFile[" + i + "]", files[j]); // <input type="text" name="files">
+   			console.log("formData : " + formData.get("posterFile[" + i + "]"));
+   			i++;
 		}
 		
 	} // End of uploadPosterFiles();
+	
+	$("#filePosterList").on("click", ".deleteFile", function(e) {
+		e.preventDefault();
+		var that = $(this);
+		var fileIndex = $(this).attr("data-fileIndex");
+		formData.delete("posterFile[" + fileIndex + "]");
+		that.parents("div.uploadedFile").remove();
+	});
 	
 	$("#btnCancel").click(function() {
 		location.href = "/indiefes/concert/info";
@@ -87,34 +97,51 @@ $(document).ready(function() {
 	
 	$("#btnConfirm").click(function() {
 		
-// 		var formData = new FormData();
-// 		formData.append("file_path", files); // <input type="text" name="files">
-		
-		var url = "/indiefes/concert/uploadAjax";
-		
-		$.ajax({
-			"url" : url,
-			"data" : formData,
-			"processData" : false, // ?뒤의 데이터 보내지 않게
-			"contentType" : false, // enctype="multipart/form-data"
-			"type" : "post",
-			"success" : function(receivedData) {
-				if(receivedData != null) {
-					console.log("receivedData : " + receivedData);
-					
-					var infoFilePath = "<input type='hidden' name='info_file_path' value='" + receivedData.info_file_path + "'>"; 
-					$("#concertWriteForm").append(infoFilePath);
-					
-					var filePath = "<input type='hidden' name='file_path' value='" + receivedData.file_path + "'>"; 
-		   			$("#concertWriteForm").append(filePath);
-		   			
-		   			console.log("infoFilePath : " + infoFilePath);
-		   			console.log("filePath : " + filePath);
-
-					$("#concertWriteForm").submit();
+		if($("input[id=subject]").val() == "" || $("input[id=subject]").val() == null) {
+			alert("제목을 입력해 주세요.");
+			$(this).focus();
+		} else if ($("input[id=show_date]").val().slice(0,10) == today.slice(0,10)) {
+			alert("날짜를 선택해주세요.");
+		} else if ($("input[id=summary]").val() == "" || $("input[id=summary]").val() == null) {
+			alert("요약정보를 입력해 주세요.");
+			$(this).focus();
+		} else if ($("input[id=place_x]").val() == "" || $("input[id=place_x]").val() == null || $("input[id=place_y]").val() == "" || $("input[id=place_y]").val() == null) {
+			alert("장소를 선택해 주세요.");
+		} else if ($("input[id=place_name]").val() == "" || $("input[id=place_name]").val() == null) {
+			alert("장소명을 입력해 주세요.");
+			$(this).focus();
+		} else {
+			
+			var content = $("textarea[id=content]").val();
+			var text = content.replace(/(?:\r\n|\r|\n)/g,'<br/>');
+			$("textarea[id=content]").val(text);
+	
+			var url = "/indiefes/concert/uploadAjax";
+			
+			$.ajax({
+				"url" : url,
+				"data" : formData,
+				"processData" : false, // ?뒤의 데이터 보내지 않게
+				"contentType" : false, // enctype="multipart/form-data"
+				"type" : "post",
+				"success" : function(receivedData) {
+					if(receivedData != null) {
+						console.log("receivedData : " + receivedData);
+						
+						var infoFilePath = "<input type='hidden' name='info_file_path' value='" + receivedData.info_file_path + "'>"; 
+						$("#concertWriteForm").append(infoFilePath);
+						
+						if (receivedData.file_path != null) {
+							var filePath = "<input type='hidden' name='file_path' value='" + receivedData.file_path + "'>"; 
+				   			$("#concertWriteForm").append(filePath);
+						}
+			   			
+			   			$("#concertWriteForm").submit();
+					}
 				}
-			}
-		}); // $.ajax({});
+			}); // $.ajax({});
+			
+		} // else
 		
 	}); // $("#btnConfirm").click(function(){});
 	
@@ -157,15 +184,13 @@ $(document).ready(function() {
 					</div><br>
 					
 					<label id="content">공연 내용</label>
-					<textarea class="form-control" rows="10" cols="50" name="content"
-					 id="content" style="resize:none;">! 허위 정보를 입력할 경우 불이익이 발생할 수 있습니다.
+					<textarea class="form-control" rows="10" cols="50" wrap="hard" name="content"
+					 id="content" style="resize:none;">(! 공연에 관한 내용을 적어주세요.)
+일시 : 
 장소 : 
-설명 :
 참여팀 : 
-입장료 :
-공연날짜 :
-주의사항 :
-기타 : (주차, 보관소, 굿즈판매 안내 등)
+입장료 : 
+주의사항(굿즈, 주차문제 등) : 
 					</textarea><br>
 						
 					<%@ include file="../include/search_map.jsp" %>

@@ -7,10 +7,12 @@
 #logo font {
 	font-family: blox;
 	font-size: 3.5rem;
+	margin-left: 30px;
 }
 #dgm {
 	font-family: dgm;
 	font-size: 2rem;
+	margin-left: 20px;
 }
 </style>
 
@@ -27,15 +29,17 @@
 		});
 			
 		</script>
-		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+		<div class="col-md-10" style="margin:auto;padding:50px;">
 			<div>
-				<section id="logo">
-					<font>
-						InDiEFeS 
-					</font>
+				<section id="logo" style="background-color:rgba(255,255,255,0.7);">
+					<div class="row">
+						<font>InDiEFeS</font>
+						<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+						매일매일 인디축제</span>
+					</div>
 				</section>
-				<hr>
-				<section>
+				<hr style="background-color:rgba(255,255,255,0.7);">
+				<section style="background-color:rgba(255,255,255,0.7);">
 					<font id="dgm">
 						최신 앨범
 					</font>
@@ -43,8 +47,8 @@
 					<%@ include file="include/home_today_list.jsp" %>
 					</article>
 				</section>
-				<hr>
-				<section>
+				<hr style="background-color:rgba(255,255,255,0.7);">
+				<section style="background-color:rgba(255,255,255,0.7);">
 					<font id="dgm">
 						인기 앨범
 					</font>

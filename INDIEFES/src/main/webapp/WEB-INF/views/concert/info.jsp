@@ -41,7 +41,7 @@ $(document).ready(function() {
 			<h1>${vo.subject}</h1>
 			<a href="/indiefes/concert/read?concert_number=${vo.concert_number}">
 			<c:choose>
-				<c:when test="${vo.info_file_path != null}">
+				<c:when test="${vo.info_file_path != null && vo.info_file_path != 'null' && vo.info_file_path != ''}">
 					<img src="/indiefes/concert/displayFile?fileName=${vo.info_file_path}" style="max-width:1200px;max-height:350px;">
 				</c:when>
 				<c:otherwise>
