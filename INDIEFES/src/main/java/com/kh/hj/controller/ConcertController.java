@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -102,9 +103,44 @@ public class ConcertController {
 		if (userInfoVo != null) {
 			String user_id = userInfoVo.getUser_id();
 			model.addAttribute("user_id", user_id);
+			int user_level = userInfoVo.getUser_level();
+			model.addAttribute("user_level", user_level);
 		}
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public void concertInfoModify(@RequestParam("concert_number")int concert_number, HttpSession session, Model model) throws Exception {
+		ConcertInfoVo vo = service.getConcertInfo(concert_number);
+		List<String> list = service.getConcertInfoFiles(concert_number);
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+		}
+		model.addAttribute("vo", vo);
+		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String concertInfoModifyRun(ConcertInfoVo vo, RedirectAttributes rttr, HttpSession session, Model model) throws Exception {
+		
+		// TODO : update sql
+		
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+			int user_level = userInfoVo.getUser_level();
+			model.addAttribute("user_level", user_level);
+		} else {
+			return "redirect:/user/login";
+		}
+		
+		rttr.addFlashAttribute("resultMessage", "update_success");
+		
+		return "redirect:/concert/info";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -183,6 +219,38 @@ public class ConcertController {
 	}
 	
 	
+	// 첨부파일 목록
+	@RequestMapping(value="/getFiles/{concert_number}")
+	@ResponseBody
+	public List<String> getAttach(@PathVariable("concert_number") int concert_number) throws Exception {
+		List<String> list = service.getConcertInfoFiles(concert_number);
+		return list;
+	}
+	
+	// 파일 삭제
+	@RequestMapping(value="/deleteFile", method=RequestMethod.GET)
+	public ResponseEntity<String> deleteFile(@RequestParam("fileName") String fileName) throws Exception {
+		System.out.println("fileName:" + fileName);
+		ResponseEntity<String> entity = null;
+		try {
+			// 파일 삭제 처리
+			String realPath = uploadPath + File.separator + fileName;
+			File f = new File(realPath);
+			if (f.exists()) {
+				f.delete();
+			}
+			// DB 데이터 삭제
+			service.deleteConcertInfoFiles(realPath);
+			
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	// 이미지 보이기
 	@RequestMapping(value="/displayFile")
 	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName) throws Exception {
 //		System.out.println("fileName : " + fileName);
