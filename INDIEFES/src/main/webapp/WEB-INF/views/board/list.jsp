@@ -101,7 +101,6 @@ $(document).ready(function() {
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 <h1>Indiefes 게시판</h1>
-	${boardVo.user_id}
 	<select id="perPage">
 	
 				<c:forEach var= "i" begin= "5" end= "20" step= "5">
