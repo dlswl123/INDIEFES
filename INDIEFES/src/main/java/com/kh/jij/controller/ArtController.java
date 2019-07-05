@@ -69,9 +69,9 @@ public class ArtController {
 //		System.out.println(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 		String url = "";
-//		if (userVo != null) {
-//			String user_id = userVo.getUser_id();
-			String user_id = "indie1";
+		if (userVo != null) {
+			String user_id = userVo.getUser_id();
+//			String user_id = "indie1";
 //			System.out.println("ArtController, art_modify, userVo:" + userVo);
 //			System.out.println("ArtController, art_modify, teamName:" + teamName);
 			ArtInfoVo artVo = artService.artModifyForm(user_id, art_number);
@@ -82,9 +82,9 @@ public class ArtController {
 			model.addAttribute("userVo", userVo);
 			model.addAttribute("track_number", track_number);
 			url = "/art/art_modify";
-//		} else {
-//			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
-//		}
+		} else {
+			url = "redirect:/art/art_info/" + art_number + "/" + art_number;
+		}
 		return url;
 	}
 	
@@ -117,7 +117,9 @@ public class ArtController {
 
 	// 앨범리스트 폼
 	@RequestMapping(value = "/art_list", method = RequestMethod.GET)
-	public void artList(PagingDto pagingDto, Model model) throws Exception {
+	public void artList(PagingDto pagingDto, Model model, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
+		System.out.println(pagingDto);
 		pagingDto.setPerPage(24);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
@@ -127,10 +129,11 @@ public class ArtController {
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
 		paginationDto.setPagingDto(pagingDto);
-		System.out.println("리스트"+paginationDto);
+		System.out.println("리스트:"+paginationDto);
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
 		model.addAttribute("paginationDto", paginationDto);
+		model.addAttribute("userVo", userVo);
 
 	}
 	
@@ -218,7 +221,14 @@ public class ArtController {
 		map.put("user_id", userVo.getUser_id());
 		map.put("user_nick", userVo.getUser_nick());
 		artService.teamInsert(map);
-		return "redirect:/art/indie_team_input";
+		// 팀가입 여부
+		try {
+			int indieNum = artService.getIndieNumber(userVo.getUser_id());
+			session.setAttribute("indieNum", indieNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";
 	}
 
 	// 팀가입 처리
@@ -228,7 +238,14 @@ public class ArtController {
 		memberVo.setUser_id(userVo.getUser_id());
 		memberVo.setUser_nick(userVo.getUser_nick());
 		artService.teamInput(memberVo);
-		return "redirect:/art/indie_team_input";
+		// 팀가입 여부
+		try {
+			int indieNum = artService.getIndieNumber(userVo.getUser_id());
+			session.setAttribute("indieNum", indieNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";
 	}
 	
 	// 팀정보
@@ -268,16 +285,50 @@ public class ArtController {
 		
 		return "redirect:/art/art_info/"+art_number+"/"+team_number;
 	}	
-	@RequestMapping(value="/artUploadAppro/{art_number}", method = RequestMethod.GET)
-	public String artUploadAppro(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
+	
+	// 승인요청 -> 인디팀 
+	@RequestMapping(value="/artUploadApproReq/{art_number}", method = RequestMethod.GET)
+	public String artUploadApproReq(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		String user_id = userVo.getUser_id();
 		int team_number = artService.getIndieNumber(user_id);
 		if (userVo != null) {
-			artService.artUploadAppro(art_number, user_id);
-			musicService.musicUploadAppro(art_number, team_number);
+			artService.artUploadApproReq(art_number, user_id, team_number);
+//			musicService.musicUploadApproReq(art_number, team_number);
 		}
-		return "redirect:/art/art_info/" + art_number + "/" + team_number;
+		return "redirect:/art/art_list?page=1&searchType=working&keyword=0";
+	}
+	
+	// 요청 승인 -> 관리자
+	@RequestMapping(value="/artUploadAppro/{art_number}", method = RequestMethod.GET)
+	public String artUploadAppro(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		System.out.println("artController, artUploadAppro, userVo:" + userVo);
+		String url = "";
+		if (userVo != null) {
+			artService.artUploadAppro(art_number);
+//			musicService.musicUploadAppro(art_number);
+			url = "redirect:/art/art_list?page=1&searchType=appro&keyword=2";
+		} else {
+			url = "redirect:/art/art_list";
+		}
+		return url;
+	}
+	
+//	요청 반려 -> 관리자
+	@RequestMapping(value="/artUploadReturn/{art_number}", method = RequestMethod.GET)
+	public String artUploadReturn(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		System.out.println("artController, artUploadReturn, userVo:" + userVo);
+		String url = "";
+		if (userVo != null) {
+			artService.artUploadReturn(art_number);
+//			musicService.musicUploadAppro(art_number);
+			url = "redirect:/art/art_list?page=1&searchType=appro&keyword=2";
+		} else {
+			url = "redirect:/art/art_list";
+		}
+		return url;
 	}
 	
 	// 결제 페이지
@@ -296,6 +347,17 @@ public class ArtController {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		String user_id = userVo.getUser_id();
 		artService.payOk(user_id);
+		return "redirect:/art/pay_info";
+	}
+	// 결제 목록 삭제
+	@RequestMapping(value = "/payDelete", method = RequestMethod.GET)
+	public String payDelete(HttpSession session,int music_number) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		PayLogVo payVo = new PayLogVo();
+		payVo.setUser_id(user_id);
+		payVo.setMusic_number(music_number);
+		artService.payDelete(payVo);
 		return "redirect:/art/pay_info";
 	}
 	
