@@ -141,7 +141,7 @@ $(document).ready(function() {
 			<br>
 			<div class="row">
 				<div class="col-md-12">
-				<table class="table">
+				<table class="table" style="background : url('${pageContext.request.contextPath}/resources/bg_images/summer.png');">
 					<thead>
 						<tr>
 							<td>글번호</td>
