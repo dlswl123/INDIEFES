@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.PlayListVo;
 import com.kh.jij.service.IArtInfoService;
+import com.kh.jij.service.IMusicInfoService;
 import com.kh.jij.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
 
@@ -35,6 +37,8 @@ public class PlayerController {
 	
 	@Inject
 	IArtInfoService artService;
+	@Inject
+	IMusicInfoService musicService;
 	@Resource(name = "uploadPath")
 	private String uploadPath; // servlet-context.xml (id="uploadPath")
 	
@@ -59,7 +63,6 @@ public class PlayerController {
 		}
 		model.addAttribute("playList", playList);
 		model.addAttribute("uploadPath", uploadPath);
-		System.out.println("playList:"+playList);
 	}
 	
 	// 플레이리스트
@@ -69,7 +72,7 @@ public class PlayerController {
 		String realPath = uploadPath + File.separator + album + File.separator + team_number + File.separator + art_number + File.separator + filePath;
 		String formatName = FileUploadUtil.getFormatName(filePath).toUpperCase();
 		MediaType mediaType = null;
-		if (formatName.equals("MP3")) {
+		if (formatName.equals("MP3")||formatName.equals("WAV")||formatName.equals("OGG")||formatName.equals("FLAC")) {
 			mediaType = new MediaType("audio", "mp3");
 		} 
 
@@ -84,24 +87,22 @@ public class PlayerController {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		}
-//		System.out.println("realPath:"+realPath);
 		return entity;
 	}
-	// 등록
+	// 듣기(리스트에 곡 등록)
 	@RequestMapping(value="/playInsert", method=RequestMethod.GET)
-	public String playInsert(MusicInfoVo musicVo, HttpSession session) throws Exception {
+	public String playInsert(MusicInfoVo musicVo, HttpSession session,@RequestParam("team_number") int team_number,@RequestParam("art_number")  int art_number) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("musicVo", musicVo);
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		map.put("user_id", userVo.getUser_id());
 		artService.playInsert(map);
-		return "redirect:/player/player";
+		return "redirect:/art/art_info/"+art_number+"/"+team_number;
 	}
-	// 삭제
+	// 리스트에 곡 삭제
 	@RequestMapping(value="/playDelete", method=RequestMethod.GET)
 	public String Delete(int play_index) throws Exception {
 		artService.playDelete(play_index);
-//		System.out.println("삭제됨"+play_index);
 		return "redirect:/player/player";
 	}
 	@RequestMapping(value="/playList", method=RequestMethod.GET)

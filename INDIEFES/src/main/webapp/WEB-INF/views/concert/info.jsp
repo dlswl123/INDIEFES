@@ -24,34 +24,37 @@ $(document).ready(function() {
 	<div class="row">
 		<section style="padding:20px;width:100%;">
 			<h1>공연 정보</h1>
-	
-			<div style="float:right;">
-				<input type="button" class="btn btn-primary" value="글작성" id="btnWrite" />
-			</div>
+
+			<c:if test="${user_level < 3}">
+				<div style="float:right;">
+					<input type="button" class="btn btn-primary" value="글작성" id="btnWrite" />
+				</div>
+			</c:if>
 			
 		</section>
 	</div> <!-- row -->
 
-	<section style="background-color:rgba(255,255,255,0.7);">
+	<c:forEach var="vo" items="${list}">
+		<section style="background-color:rgba(255,255,255,0.7);">
+		
+			<article style="text-align:center;padding:20px;">
+			<h1>${vo.subject}</h1>
+			<a href="/indiefes/concert/read?concert_number=${vo.concert_number}">
+			<c:choose>
+				<c:when test="${vo.info_file_path != null}">
+					<img src="/indiefes/concert/displayFile?fileName=${vo.info_file_path}" style="max-width:1200px;max-height:350px;">
+				</c:when>
+				<c:otherwise>
+					<img src="${pageContext.request.contextPath}/resources/bg_images/concert.jpg" style="max-width:1200px;max-height:350px;">
+				</c:otherwise>
+			</c:choose>
+			</a>
+			<h4>${vo.summary} / ${vo.concert_date}</h4>
+			</article>
+		
+		</section>
+	</c:forEach>
 	
-		<article style="text-align:center;padding:20px;">
-		<h1>공연1</h1>
-		<img src="${pageContext.request.contextPath}/resources/bg_images/concert.jpg">
-		<h4>간단설명1</h4>
-		</article>
-	
-	</section>
-	
-	<section style="background-color:rgba(255,255,255,0.7);">
-	
-		<article style="text-align:center;padding:20px;margin:20px;">
-		<h1>공연2</h1>
-		<img src="${pageContext.request.contextPath}/resources/bg_images/concert.jpg">
-		<h4>간단설명1</h4>
-		</article>
-	
-	</section>
-
 </div> <!-- col-md-10 -->
 
 <%@ include file="../include/sidebar.jsp" %>

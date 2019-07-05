@@ -25,7 +25,9 @@ import com.kh.ks.service.UserInfoServiceImpl;
 import com.kh.ts.domain.BoardVo;
 import com.kh.ts.domain.PaginationDto;
 import com.kh.ts.domain.PagingDto;
+import com.kh.ts.domain.ReplyVo;
 import com.kh.ts.service.IBoardService;
+import com.kh.ts.service.IReplyService;
 import com.kh.ts.util.FileUploadUtil;
 
 @Controller
@@ -36,16 +38,27 @@ public class BoardController {
 	IBoardService boardService;
 	
 	@Inject
+	IReplyService replyService;
+	
+	@Inject
 	private IUserInfoService userInfoService;
 	
 	int bno;
 	
 	// 글목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void boardList(Model model, PagingDto pagingDto) throws Exception {
+	public void boardList(Model model, HttpSession session, PagingDto pagingDto) throws Exception {
 		System.out.println("BoardController, list, pagingDto:" + pagingDto);
+		// 지정된회원만 글쓰기버튼을 보여질수있도록 구현
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		// -> 로그인한 사용자 정보
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+		}
+		
 		List<BoardVo> list = boardService.selectAll(pagingDto);
-		System.out.println("boardList");
+		System.out.println("BoardController, boardList(), list:	" + list);
 		model.addAttribute("list", list);
 		PaginationDto paginationDto = new PaginationDto();
 		
@@ -62,17 +75,13 @@ public class BoardController {
 			HttpSession session, PagingDto pagingDto)throws Exception {
 		System.out.println("BoardController, read, board_number:" + board_number);
 		BoardVo boardVo = boardService.select(board_number);
-		// 회원아이디
-		String user_id = boardVo.getUser_id();
-		UserInfoVo userInfoVo = userInfoService.readWith(user_id);
-//		System.out.println("userInfoVo:" + userInfoVo);
-		String login_id = userInfoVo.getUser_id();
-		// 지정된회원
-		System.out.println("user_id:" + user_id);
-		System.out.println("login_id:" + login_id);
-		if (! user_id.equals(login_id)) {
-			System.out.println("update");
-			
+		System.out.println("BoardController, read(), boardVo:" + boardVo);
+		// 지정된회원만 수정,삭제버튼이 보이도록
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+	
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
 		}
 		
 		// int bno 전역변수를 하나 정해서 board_number를 저장
@@ -82,6 +91,7 @@ public class BoardController {
 			bno = board_number;
 		}
 		model.addAttribute("boardVo", boardVo);
+	
 		model.addAttribute("pagingDto", pagingDto);
 	}
 	
@@ -89,7 +99,7 @@ public class BoardController {
 	@RequestMapping(value="/regist", method=RequestMethod.GET)
 	public void registGet() throws Exception {
 		System.out.println("BoardController, registGet() 실행됨");
-		// /WEB-INF/indifes/board/regist.jsp
+	// /WEB-INF/indifes/board/regist.jsp
 	}
 	
 	// 글쓰기 처리 - /indiefes/board/regist(Post 불러오기)
@@ -147,24 +157,24 @@ public class BoardController {
 	}
 	
 	// 글삭제처리- /indiefes/board/delete(Post 처리)
-	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
-	public String deletePost(@RequestParam("board_number")int board_number,
-			RedirectAttributes rttr)throws Exception {
-					
-		// 글삭제처리
-		try {
-			List<String> list = boardService.getAttach(board_number);
-			for (String filePath : list) {
-				FileUploadUtil.deleteFile(filePath);
-			}
-			boardService.delete(board_number);
-			rttr.addFlashAttribute("message", "success_delete");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "redirect:/board/list?board_number=" + board_number;
-	}
+//	@RequestMapping(value="/delete-run", method=RequestMethod.POST)
+//	public String deletePost(@RequestParam("board_number")int board_number,
+//			RedirectAttributes rttr)throws Exception {
+//					
+//		// 글삭제처리
+//		try {
+//			List<String> list = boardService.getAttach(board_number);
+//			for (String filePath : list) {
+//				FileUploadUtil.deleteFile(filePath);
+//			}
+//			boardService.delete(board_number);
+//			rttr.addFlashAttribute("message", "success_delete");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return "redirect:/board/list?board_number=" + board_number;
+//	}
 	
 	// 첨부파일목록
 	@RequestMapping(value="/getAttach/{board_number}")
@@ -174,4 +184,5 @@ public class BoardController {
 		System.out.println("BoardController, getAttach, list:" + list);
 		return list;
 	}
+	
 }

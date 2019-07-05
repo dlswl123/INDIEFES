@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+   
 <div class="col-md-2">
 	<div class="sidebar" style="position:fixed;background-color:rgba(0,0,0,0.7);width:100%;height:100%;">
 		<aside id="sidebar">
@@ -18,7 +18,7 @@
 			    <c:when test="${userInfoVo eq null}">
 			        <section id="login">
 					<h1><a href="/indiefes/user/login">
-						<font style="color:#ffffff;">로그인폼</font>
+						<font style="color:#ffffff;">로그인</font>
 					</a></h1>
 					</section>
 			    </c:when>
@@ -31,11 +31,30 @@
 					</a></h1>
 					</section>
 					
+					<c:if test="${userInfoVo.user_level == 0 || userInfoVo.user_level == 1}">
+					<h1><a href="/indiefes/user/user-management">
+						<font style="color:#ffffff;">회원관리페이지</font>
+					</a>
+					</h1>
+					
+					</c:if>
+					
 					<section id="userInfo">
 					<h1><a href="/indiefes/user/user-info-pwinput">
 						<font style="color:#ffffff;">회원정보</font>
 					</a></h1>
 					</section>
+					
+					<section id="player">
+			    	<h1>
+				    <script type="text/javascript">
+						function musicPlayer() {
+							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+						}
+					</script>
+			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font style="color:#ffffff;">Player</font></a>
+			    	</h1>
+		    		</section>
 			    </c:otherwise>
 			 
 			</c:choose>
@@ -54,16 +73,6 @@
 			    <h1><a href="/indiefes/concert/info">
 			    	<font style="color:#ffffff;">공연정보</font>
 			    </a></h1>
-		    </section>
-		    <section id="player">
-			    <h1>
-				    <script type="text/javascript">
-						function musicPlayer() {
-							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
-						}
-					</script>
-			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font style="color:#ffffff;">플레이어</font></a>
-			    </h1>
 		    </section>
 		</aside>
 	</div>

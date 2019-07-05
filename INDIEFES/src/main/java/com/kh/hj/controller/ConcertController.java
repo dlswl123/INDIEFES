@@ -1,8 +1,12 @@
 package com.kh.hj.controller;
 
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -20,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.hj.domain.ConcertInfoVo;
 import com.kh.hj.service.IConcertService;
+import com.kh.hj.util.FileUploadUtil;
 import com.kh.ks.domain.UserInfoVo;
 //import com.kh.util.FileUploadUtil;
 
@@ -42,9 +48,17 @@ public class ConcertController {
 	
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public void concertInfo(Model model) throws Exception {
+	public void concertInfo(Model model, HttpSession session) throws Exception {
 		// move to /concert/info.jsp
+		List<ConcertInfoVo> list = service.getConcertInfoList();
 		
+		UserInfoVo vo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (vo != null) {
+			int user_level = vo.getUser_level();
+			model.addAttribute("user_level", user_level);
+		}
+		
+		model.addAttribute("list", list);
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -63,7 +77,7 @@ public class ConcertController {
 		
 		// Read ConcertInfoVo
 		System.out.println("vo : " + vo.toString());
-		
+
 		// insert into DBtable ConcertInfoVo information
 		service.insertConcertInfo(vo);
 		
@@ -73,89 +87,134 @@ public class ConcertController {
 		return "redirect:/concert/info";
 	}
 	
-//	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST, produces="text/plain; charset=UTF-8")
-//	@ResponseBody
-//	public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
-//		// file upload method
-//		// get only img files
-//		String originalName = file.getOriginalFilename();
-//		
-//		ResponseEntity<String> entity = null;
-//		
-//		try {
-//			String dirPath = FileUploadUtil.uploadFile(uploadPath, originalName, file.getBytes());
-//			String path = dirPath.replace("\\", "/");
-//			entity = new ResponseEntity<>(path, HttpStatus.OK);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			entity = new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
-//		}
-//		
-//		return entity;
-//	}
+	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	public void concertInfoRead(@RequestParam("concert_number")int concert_number, HttpSession session, Model model) throws Exception {
+		ConcertInfoVo vo = service.getConcertInfo(concert_number);
+		List<String> list = service.getConcertInfoFiles(concert_number);
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+		}
+		model.addAttribute("vo", vo);
+		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<ConcertInfoVo> uploadAjax(/* MultipartFile file */ MultipartHttpServletRequest mhsr) throws Exception {
+		// file upload method
+		// get only img files
+
+		ResponseEntity<ConcertInfoVo> entity = null;
+		ConcertInfoVo vo = new ConcertInfoVo();
+		List<String> list = new ArrayList<>();
+		
+		String concertDate = mhsr.getParameter("concertDate"); // 공연 일자 YYYY/MM 형식으로 받아옴
+		System.out.println("concertDate : " + concertDate);
+		
+		MultipartFile file = mhsr.getFile("infoFile"); // 키 값에 따른 파일 가져오기
+		String originalName = file.getOriginalFilename(); // 파일명 얻기
+		System.out.println("originalName : " + originalName);
+		
+		String infoFilePath = FileUploadUtil.uploadFile(uploadPath, originalName, concertDate, file.getBytes());
+		String infoPath = infoFilePath.replace("\\", "/");
+		
+		vo.setInfo_file_path(infoPath);
+//		vo.setInfo_file_path(originalName);
+		
+		List<MultipartFile> fileList = mhsr.getFiles("posterFile");
+		System.out.println("fileList : " + fileList);
+		
+
+		Iterator<String> files = mhsr.getFileNames();
+		System.out.println("files : " + files);
+		
+		while (files.hasNext()) { //파일을 하나씩 불러온다.
+		 
+			MultipartFile mpf = mhsr.getFile(files.next());	// 파일 가져오기
+			if(mpf == file) { // infoFile 인 경우 그냥 건너뛰기
+				continue;
+			}
+			System.out.println("multipartFile : " + mpf);
+	 
+	        String originalFileName = mpf.getOriginalFilename(); //파일명
+	        
+			String posterFilePath = FileUploadUtil.uploadFile(uploadPath, originalFileName, concertDate, mpf.getBytes());
+			String posterPath = posterFilePath.replace("\\", "/");
+	
+	        System.out.println("fileFullPath : " + posterPath);
+	        
+	        list.add(posterPath);
+//	        list.add(originalFileName);
+		}
+		 
+		String[] str = new String[list.size()]; // 이름 변경한 리스트를 배열로 넣기
+		for (int i = 0; i < list.size(); i++) {
+			str[i] = list.get(i);
+		}
+		
+		vo.setFile_path(str);
+		
+		System.out.println("vo : " + vo);
+		
+		try {
+			entity = new ResponseEntity<>(vo, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
 	
 	
-//	@RequestMapping(value="/displayFile")
-//	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName) throws Exception {
-////		System.out.println("fileName : " + fileName);
-//		// /2019/5/17/39a2dea2-1385-4016-a8b4-326b2d26c5af_Jellyfish.jpg
-//		String realPath = uploadPath + fileName;
-//		
-//		// 파일의 확장자 얻기
-//		String formatName = FileUploadUtil.getFormatName(fileName).toUpperCase();
-//		
-//
-//		
-//		// 이미지이면 섬네일 경로 출력
-////		if (isImage) {
-////			int slashIndex = realPath.lastIndexOf("/");
-////			String front = realPath.substring(0, slashIndex + 1);
-////			String rear = realPath.substring(slashIndex + 1);
-////			realPath = front + "s_" + rear;
-////		}
-//		
-//		MediaType mediaType = null;
-//		
-//		if (formatName.equals("JPG")) {
-//			mediaType = MediaType.IMAGE_JPEG;	// image/jpeg
-//		} else if (formatName.equals("PNG")) {
-//			mediaType = MediaType.IMAGE_PNG;	// image/png
-//		} else if (formatName.equals("GIF")) {
-//			mediaType = MediaType.IMAGE_GIF;	// image/gif
-//		} else {
-//			
-//		}
-//
-//		InputStream is = null;
-//		ResponseEntity<byte[]> entity = null;
-//		
-//		try {
-//			HttpHeaders headers = new HttpHeaders();
-//			// 이미지인지 확인
-//			boolean isImage = FileUploadUtil.isImage(formatName);
-//			
-//			if (isImage) {
-////				int slashIndex = realPath.lastIndexOf("/");
-////				String front = realPath.substring(0, slashIndex + 1); // 2019/5/17/
-////				String rear = realPath.substring(slashIndex + 1); // fb94d409-77e4-4ed1-a6b1-24253ffcf3c6_Chrysanthemum.jpg
-////				realPath = front + "s_" + rear;
-//				headers.setContentType(mediaType);
-//			} else {
-//				int underScoreIndex = fileName.lastIndexOf("_");
-//				String downloadName = fileName.substring(underScoreIndex + 1);
-//				// 8비트 데이터임을 명시
-//				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-//				headers.add("Content-disposition", "attachment; filename=" + downloadName);
-//			}
-//			
-//			is = new FileInputStream(realPath);
-//			// 서버에 보내는 데이터가 바이너리 데이터(byte[])임을 설정
-////			headers.add("Content-Disposition", headerValue);
-//			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), headers, HttpStatus.OK);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-//		}
-//		return entity;
-//	}
+	@RequestMapping(value="/displayFile")
+	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName) throws Exception {
+//		System.out.println("fileName : " + fileName);
+		// /2019/5/17/39a2dea2-1385-4016-a8b4-326b2d26c5af_Jellyfish.jpg
+		String realPath = uploadPath + File.separator + fileName;
+		
+		// 파일의 확장자 얻기
+		String formatName = FileUploadUtil.getFormatName(fileName).toUpperCase();
+		
+		MediaType mediaType = null;
+		
+		if (formatName.equals("JPG")) {
+			mediaType = MediaType.IMAGE_JPEG;	// image/jpeg
+		} else if (formatName.equals("PNG")) {
+			mediaType = MediaType.IMAGE_PNG;	// image/png
+		} else if (formatName.equals("GIF")) {
+			mediaType = MediaType.IMAGE_GIF;	// image/gif
+		} else {
+			mediaType = MediaType.ALL; // ALL
+		}
+
+		InputStream is = null;
+		ResponseEntity<byte[]> entity = null;
+		
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			// 이미지인지 확인
+			boolean isImage = FileUploadUtil.isImage(formatName);
+			
+			if (isImage) {
+				headers.setContentType(mediaType);
+			} else {
+				int underScoreIndex = fileName.lastIndexOf("_");
+				String downloadName = fileName.substring(underScoreIndex + 1);
+				// 8비트 데이터임을 명시
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.add("Content-disposition", "attachment; filename=" + downloadName);
+			}
+			
+			is = new FileInputStream(realPath);
+			// 서버에 보내는 데이터가 바이너리 데이터(byte[])임을 설정
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(is), headers, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
 }

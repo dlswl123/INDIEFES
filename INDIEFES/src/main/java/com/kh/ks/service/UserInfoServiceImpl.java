@@ -1,5 +1,7 @@
 package com.kh.ks.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ks.domain.UserInfoVo;
 import com.kh.ks.persistence.IUserInfoDao;
+import com.kh.ts.domain.PagingDto;
 
 @Service
 public class UserInfoServiceImpl implements IUserInfoService {
@@ -69,11 +72,32 @@ public class UserInfoServiceImpl implements IUserInfoService {
 		
 	}
 
+	// 회원탈퇴
 	@Override
 	public void userDelete(String user_id) throws Exception {
 		System.out.println(user_id);
 		userInfoDao.userDelete(user_id);
 		
 	}
+
+	// 회원목록
+	@Override
+	public List<UserInfoVo> userInfo(PagingDto pagingDto) throws Exception {
+		System.out.println("serviceImpl 실행됨");
+		List<UserInfoVo> list = userInfoDao.userInfo(pagingDto);
+		return list;
+	}
+
+	// 회원수
+	@Override
+	public int userCount(PagingDto pagingDto) throws Exception {
+		int count = userInfoDao.userCount(pagingDto);
+		System.out.println("userServiceImpl userCount 실행됨 : " + count);
+		return count;
+	}
+
+	
+
+	
 
 }

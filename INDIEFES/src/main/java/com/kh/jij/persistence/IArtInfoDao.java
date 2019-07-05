@@ -65,11 +65,15 @@ public interface IArtInfoDao {
 	// 리스트에서 곡 삭제
 	public void playDelete(int play_index) throws Exception;
 	
-	// 최신 앨범
+	// 최신앨범
 	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception;
+	
+	// 최신앨범 수
 	public int toDayCount()throws Exception;
-	// 인기 앨범
+	
+	// 인기앨범
 	public List<ArtInfoVo> goodList() throws Exception;
 	
+	// 앨범 수
 	public int artCount(PagingDto pagingDto)throws Exception;
 }

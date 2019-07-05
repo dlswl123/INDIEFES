@@ -81,52 +81,21 @@ $(document).ready(function() {
 		
 	} // End of uploadPosterFiles();
 	
-	$("#btnCancel").click(function() {
-		location.href = "/indiefes/concert/info";
-	});
 	
-	$("#btnConfirm").click(function() {
-		
-// 		var formData = new FormData();
-// 		formData.append("file_path", files); // <input type="text" name="files">
-		
-		var url = "/indiefes/concert/uploadAjax";
-		
-		$.ajax({
-			"url" : url,
-			"data" : formData,
-			"processData" : false, // ?뒤의 데이터 보내지 않게
-			"contentType" : false, // enctype="multipart/form-data"
-			"type" : "post",
-			"success" : function(receivedData) {
-				if(receivedData != null) {
-					console.log("receivedData : " + receivedData);
-					
-					var infoFilePath = "<input type='hidden' name='info_file_path' value='" + receivedData.info_file_path + "'>"; 
-					$("#concertWriteForm").append(infoFilePath);
-					
-					var filePath = "<input type='hidden' name='file_path' value='" + receivedData.file_path + "'>"; 
-		   			$("#concertWriteForm").append(filePath);
-		   			
-		   			console.log("infoFilePath : " + infoFilePath);
-		   			console.log("filePath : " + filePath);
-
-					$("#concertWriteForm").submit();
-				}
-			}
-		}); // $.ajax({});
-		
-	}); // $("#btnConfirm").click(function(){});
+	$("#btnList").click(function() {
+		location.href = "/indiefes/concert/info";		
+	}); // $("#btnList").click(function(){});
 	
 });
 </script>
 
 <div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-	<h1>공연 정보 등록</h1>
+	<h1>공연 상세 정보</h1>
 
 	<section style="background-color:rgba(255,255,255,0.7);margin:20px;">
 	
 		<article style="padding:20px;">
+			
 			<!-- // move to new concert info write form -->
 			<form role="form" action="/indiefes/concert/write" method="post" id="concertWriteForm" enctype="multipart/form-data">
 				<div class="form-group">
@@ -134,48 +103,35 @@ $(document).ready(function() {
 <!-- 					<input type="hidden" name="user_id" value="indie1" /> -->
 			
 					<label id="subject">공연 제목</label>
-					<input type="text" class="form-control" name="subject" id="subject" placeholder="공연명을 기입해주세요" required/><br>
+					<div>${vo.subject}</div><br>
 					
 					<label id="show_date">공연 일자</label>
-					<input type="datetime-local" class="form-control" id="show_date" />
-					<input type="hidden" name="concert_date" id="concert_date" /><br>
+					<div>${vo.concert_date}</div><br>
 					
 					<label id="summary">공연 요약 내용</label>
-					<input type="text" class="form-control" name="summary" id="summary" placeholder="목록에 보여질 내용을 한줄로 요약해서 기입해주세요" /><br>
-					
-					<label id="info_file_path">목록에 보일 홍보 요약 포스터(크기는 최대 1200x350)</label>
-					<input type="file" class="form-control" id="info_file" accept=".jpg, .gif, .png, .bmp, .jpeg" style="display:none;" />
-					<input type="button" value="파일찾기" id="btnInfoFile" class="btn btn-sm btn-success" />
-					<span id="spanInfoFile"></span><br><br>
+					<div>${vo.summary}</div><br>
 					
 					<label id="file_path">홍보 포스터</label>
-					<input type="file" class="form-control" id="poster_file" accept=".jpg, .gif, .png, .bmp, .jpeg" style="display:none;" multiple />
-					<input type="button" value="파일찾기" id="btnFiles" class="btn btn-sm btn-success" />
-					<!-- file drag&drop area and show file list -->
-					<div id="filePosterList" style="width:100%;height:100px;background-color:#ffffff;overflow:auto;">
-						첨부할 파일을 끌어다 놓으세요
+					<c:forEach var="image" items="${list}">
+					<div>
+						<img src="/indiefes/concert/displayFile?fileName=${image}" style="max-width:100%;">
 					</div><br>
+					</c:forEach>
 					
 					<label id="content">공연 내용</label>
-					<textarea class="form-control" rows="10" cols="50" name="content"
-					 id="content" style="resize:none;">! 허위 정보를 입력할 경우 불이익이 발생할 수 있습니다.
-장소 : 
-설명 :
-참여팀 : 
-입장료 :
-공연날짜 :
-주의사항 :
-기타 : (주차, 보관소, 굿즈판매 안내 등)
-					</textarea><br>
+					<div>${vo.content}</div><br>
 						
-					<%@ include file="../include/search_map.jsp" %>
+					<%@ include file="../include/show_map.jsp" %>
 					
 				</div>
 				
 				<div class="row">
 					<article style="text-align:right;padding:20px;">
-						<input type="Button" class="btn btn-primary" value="등록" id="btnConfirm"/>
-						<input type="Button" class="btn btn-danger" value="취소" id="btnCancel"/>
+						<c:if test="${vo.user_id == user_id}">
+							<input type="button" class="btn btn-danger" value="삭제" id="btnDel"/>
+							<input type="button" class="btn btn-warning" value="수정" id="btnMod"/>
+						</c:if>
+						<input type="button" class="btn btn-primary" value="목록보기" id="btnList"/>
 					</article>
 				</div> <!-- row -->
 				

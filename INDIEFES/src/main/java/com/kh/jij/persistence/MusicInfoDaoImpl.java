@@ -1,6 +1,5 @@
 package com.kh.jij.persistence;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +7,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.MusicLyricsVo;
 
@@ -20,18 +18,19 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 	@Inject
 	private SqlSession sqlSession;
 	
+	// 노래 정보 가져오기
 	@Override
 	public List<MusicInfoVo> musicRead(int art_number) throws Exception {
 		List<MusicInfoVo> musicList = sqlSession.selectList(NAMESPACE + ".musicRead", art_number);
 		return musicList;
 	}
-
+	// 노래 등록
 	@Override
 	public void musicInsert(MusicInfoVo musicInfoVo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".musicInsert", musicInfoVo);
 		
 	}
-
+	// 트랙넘버 가져오기
 	@Override
 	public int getMaxTrackNum(int art_number) throws Exception {
 		int track_number = 0;
@@ -43,24 +42,33 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 		}
 		return track_number;
 	}
-
+	// 노래 수정
 	@Override
 	public void musicUpdate(MusicInfoVo musicInfoVo) throws Exception {
 		sqlSession.update(NAMESPACE + ".musicUpdate", musicInfoVo);
 	}
-	
-
-
+	// 노래 삭제
 	@Override
 	public void musicDelete(MusicInfoVo musicInfoVo) throws Exception {
 		sqlSession.update(NAMESPACE + ".musicDelete", musicInfoVo);
 		
 	}
-
+	// 노래가사 입력
 	@Override
 	public void musicLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
 		sqlSession.insert(NAMESPACE + ".lyricsInsert", musicLyricsVo);
 		
+	}
+
+	@Override
+	public String getLyrics(int music_number) throws Exception {
+		String lyrics = sqlSession.selectOne(NAMESPACE + ".getLyrics", music_number);
+		return lyrics;
+	}
+
+	@Override
+	public void updateLyrics(MusicLyricsVo musicLyricsVo) throws Exception {
+		sqlSession.update(NAMESPACE + ".updateLyrics", musicLyricsVo);
 	}
 	
 }

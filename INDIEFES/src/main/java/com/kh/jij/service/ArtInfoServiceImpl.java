@@ -68,114 +68,112 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		List<ArtInfoVo> teamArtList = artDao.teamArtList(team_number);
 		return teamArtList;
 	}
-	@Override
-	public void attach(String file_path) throws Exception {
-		
-	}
-
+	// 앨범 읽기
 	@Override
 	public ArtInfoVo artRead(int art_number) throws Exception {
 		ArtInfoVo artVo = artDao.artRead(art_number);
 		return artVo;
 	}
-	
-	//  수정폼
+	// 앨범 수정폼
 	@Override
 	public ArtInfoVo artModifyForm(String user_id, int art_number) throws Exception {
 		ArtInfoVo artVo = artDao.artModifyFrom(user_id, art_number);
 		return artVo;
 	}
-
-	// 수정처리
+	// 앨범 수정처리
 	@Override
 	public void artModify(ArtInfoVo artInfoVo) throws Exception {
 		artDao.artModify(artInfoVo);
 	}
-	
-
+	// 앨범 삭제
 	@Override
 	public void artDelete(int art_number, String user_id) throws Exception {
 		artDao.artDelete(art_number, user_id);
 	}
-
+	// 앨범 리스트
 	@Override
 	public List<ArtInfoVo> allArtList(PagingDto pagingDto) throws Exception {
 		List<ArtInfoVo> artList = artDao.allArtList(pagingDto);
 		return artList;
 	}
-	
 	// 인디그룹 이름 가져오기
 	@Override
 	public List<IndieTeamVo> getIndieTeam() throws Exception {
 		List<IndieTeamVo> teamList = artDao.getIndieTeam();
 		return teamList;
 	}
+	// 앨범 커버이미지
 	@Override
 	public List<String> getCover() {
 		List<String> coverList =  artDao.getCover();
 		return coverList;
 	}
+	// 팀 넘버
 	@Override
 	public int getIndieNumber(String user_id) throws Exception {
 		int indieNumber = artDao.getIndieNumber(user_id);
 		return indieNumber;
 	}
+	// 팀 이름
 	@Override
 	public String getTeamName(int team_number) throws Exception {
 		String teamName = artDao.getTeamName(team_number);
 		return teamName;
 	}
-	
+	// 앨범 수
 	@Override
 	public int artCount(PagingDto pagingDto) throws Exception {
 		int artCount = artDao.artCount(pagingDto);
 		return artCount;
 	}
-	
 	// 플레이리스트
 	@Override
 	public List<PlayListVo> playListInfo(String user_id) throws Exception {
 		List<PlayListVo> playListInfo = artDao.playListInfo(user_id);
 		return playListInfo;
 	}
-	
 	// 리스트에 곡 가져오기
 	@Override
 	public List<MusicInfoVo> playList(String user_id) throws Exception {
 		List<MusicInfoVo> playList = artDao.playList(user_id);
 		return playList;
 	}
+	
 	// 리스트에서 곡 등록
 	@Override
 	public void playInsert(Map<String, Object> map) throws Exception {
 		MusicInfoVo musicVo = (MusicInfoVo)map.get("musicVo");
 		String user_id = (String)map.get("user_id");
+//		System.out.println(user_id);
+//		System.out.println(musicVo);
 		PlayListVo vo = new PlayListVo();
 		vo.setUser_id(user_id);
 		vo.setMusic_number(musicVo.getMusic_number());
+		System.out.println(vo);
 		artDao.playInsert(vo);
 		
 	}
-	
 	// 리스트에서 곡 삭제
 	@Override
 	public void playDelete(int play_index) throws Exception {
 		artDao.playDelete(play_index);
 	}
+	// 최신앨범
 	@Override
 	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
 		List<ArtInfoVo> artList = artDao.toDayList(pagingDto);
 		return artList;
 	}
-	@Override
-	public List<ArtInfoVo> goodList() throws Exception {
-		List<ArtInfoVo> artList = artDao.goodList();
-		return artList;
-	}
+	// 최신앨범 수
 	@Override
 	public int toDayCount() throws Exception {
 		int artCount = artDao.toDayCount();
 		return artCount;
 	}
-
+	// 인기앨범
+	@Override
+	public List<ArtInfoVo> goodList() throws Exception {
+		List<ArtInfoVo> artList = artDao.goodList();
+		return artList;
+	}
 }

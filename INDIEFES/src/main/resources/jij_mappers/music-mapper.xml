@@ -5,6 +5,7 @@
   	
 <mapper namespace="music">
 
+<!-- 	트랙리스트 가져오기 -->
 	<select id="musicRead" resultType="MusicInfoVo">
 		select *
 		from music_info
@@ -44,16 +45,47 @@
 		and team_number = #{team_number}
 	</update>
 	
+<!-- 	가사등록 -->
 	<insert id="lyricsInsert">
 		insert into music_lyrics (music_number, lyrics)
 		values(#{music_number},#{lyrics})
 	</insert>
 	
+<!-- 	가사찾기 -->
+	<select id="getLyrics" resultType="string">
+		select lyrics
+		from music_lyrics
+		where music_number = #{music_number}
+	</select>
 	
-<!-- 	트랙리스트 확인 -->
+<!-- 	가사수정 -->
+	<update id="updateLyrics">
+		update music_lyrics set
+			lyrics = #{lyrics}
+		where music_number = #{music_number}
+	</update>
+	
+<!-- 	트랙리스트수 확인 -->
 	<select id="getMaxTrackNum" resultType="string">
 		select max(track_number)
 		from music_info
 		where art_number = #{art_number}
 	</select>
+	
+	
+<!-- 	음악 업로드승인 -->
+	<update id="musicUpload">
+		update music_info set
+			upload_check = 1
+		and art_number = #{art_number}
+	</update>
+	
+<!-- 	음악승인요청 -->
+	<update id="musicUploadAppro">
+		update music_info set
+			upload_check = 2
+		and art_number = #{art_number}
+	</update>
+	
+	
 </mapper>
