@@ -49,11 +49,23 @@ public class ConcertDaoImpl implements IConcertDao {
 		List<String> list = sqlSession.selectList(NAMESPACE + ".getConcertInfoFiles", concert_number);
 		return list;
 	}
+	
+	@Override
+	public void deleteConcertInfoFiles(String file_path) throws Exception {
+		// 공연 홍보 글 파일 삭제
+		sqlSession.delete(NAMESPACE + ".deleteConcertInfoFiles", file_path);
+	}
 
 	@Override
 	public void deleteConcertInfo(int concert_number) throws Exception {
 		// 공연 홍보 글 삭제
 		sqlSession.update(NAMESPACE + ".deleteConcertInfo", concert_number);
+	}
+
+	@Override
+	public void modifyConcertInfo(ConcertInfoVo vo) throws Exception {
+		// 공연 홍보 글 수정
+		sqlSession.update(NAMESPACE + ".modifyConcertInfo", vo);
 	}
 
 }
