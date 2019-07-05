@@ -298,5 +298,16 @@ public class ArtController {
 		artService.payOk(user_id);
 		return "redirect:/art/pay_info";
 	}
+	// 결제 목록 삭제
+	@RequestMapping(value = "/payDelete", method = RequestMethod.GET)
+	public String payDelete(HttpSession session,int music_number) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = userVo.getUser_id();
+		PayLogVo payVo = new PayLogVo();
+		payVo.setUser_id(user_id);
+		payVo.setMusic_number(music_number);
+		artService.payDelete(payVo);
+		return "redirect:/art/pay_info";
+	}
 	
 }

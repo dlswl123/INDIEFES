@@ -186,8 +186,14 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	// 결제 목록
 	@Override
 	public List<PayLogVo> payList(String user_id) throws Exception {
-		List<PayLogVo> payList = sqlSession.selectList(NAMESPACE + ".cartList",user_id);
+		List<PayLogVo> payList = sqlSession.selectList(NAMESPACE + ".payList",user_id);
 		return payList;
+	}
+	// 결제 목록 삭제
+	@Override
+	public void payDelete(PayLogVo payVo) throws Exception {
+		sqlSession.delete(NAMESPACE + ".payDelete", payVo);
+		
 	}
 	// 결제 처리
 	@Override

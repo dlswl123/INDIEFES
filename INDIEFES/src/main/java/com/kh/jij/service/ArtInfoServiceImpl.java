@@ -188,6 +188,11 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		List<PayLogVo> payList = artDao.payList(user_id);
 		return payList;
 	}
+	// 결제 목록 삭제
+	@Override
+	public void payDelete(PayLogVo payVo) throws Exception {
+		artDao.payDelete(payVo);
+	}
 	// 결제 처리
 	@Override
 	public void payOk(String user_id) throws Exception {
