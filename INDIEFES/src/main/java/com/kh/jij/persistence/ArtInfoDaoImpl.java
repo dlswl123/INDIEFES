@@ -222,8 +222,8 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.update(NAMESPACE + ".artLikedCount", map);
 	}
 	@Override
-	public int artLikedCheck(LikeLogVo likeVo) throws Exception {
-		int count = sqlSession.selectOne(NAMESPACE + ".art_number", likeVo);
+	public int artLikedCheckById(LikeLogVo likeVo) throws Exception {
+		int count = sqlSession.selectOne(NAMESPACE + ".artLikedCheckById", likeVo);
 		return count;
 	}
 	@Override
@@ -250,8 +250,18 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.delete(NAMESPACE + ".artGoodDelete", goodVo);
 	}
 	@Override
-	public int artGoodCheck(GoodLogVo goodVo) throws Exception {
-		int count = sqlSession.delete(NAMESPACE + ".artGoodCheck", goodVo);
+	public int artGoodCheckById(GoodLogVo goodVo) throws Exception {
+		int count = sqlSession.selectOne(NAMESPACE + ".artGoodCheckById", goodVo);
 		return count;
+	}
+	@Override
+	public int artLikedCountCheck(int art_number) throws Exception {
+		int likedCount = sqlSession.selectOne(NAMESPACE + ".artLikedCountCheck", art_number);
+		return likedCount;
+	}
+	@Override
+	public int artGoodCountCheck(int art_number) throws Exception {
+		int goodCount = sqlSession.selectOne(NAMESPACE + ".artGoodCountCheck", art_number);
+		return goodCount;
 	}
 }

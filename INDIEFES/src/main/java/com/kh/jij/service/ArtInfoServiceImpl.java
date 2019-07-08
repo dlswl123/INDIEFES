@@ -230,8 +230,9 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 
 	@Override
-	public void artLikedCheck(LikeLogVo likeVo) throws Exception {
-		artDao.artLikedCheck(likeVo);
+	public int artLikedCheckById(LikeLogVo likeVo) throws Exception {
+		int count = artDao.artLikedCheckById(likeVo);
+		return count;
 	}
 
 	@Override
@@ -260,7 +261,20 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 
 	@Override
-	public void artGoodCheck(GoodLogVo goodVo) throws Exception {
-		artDao.artGoodCheck(goodVo);
+	public int artGoodCheckById(GoodLogVo goodVo) throws Exception {
+		int count = artDao.artGoodCheckById(goodVo);
+		return count;
+	}
+
+	@Override
+	public int artLikedCountCheck(int art_number) throws Exception {
+		int likedCount = artDao.artLikedCountCheck(art_number);
+		return likedCount;
+	}
+
+	@Override
+	public int artGoodCountCheck(int art_number) throws Exception {
+		int goodCount = artDao.artGoodCountCheck(art_number);
+		return goodCount;
 	}
 }
