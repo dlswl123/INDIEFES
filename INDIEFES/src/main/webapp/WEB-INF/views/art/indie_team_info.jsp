@@ -68,8 +68,8 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-md-10" id="member">
 					<c:forEach items="${memberList}" var="memberVo">
-						<c:if test="${memberVo.team_level==0}"><h3>${memberVo.user_nick}</h3><br></c:if>
-						<c:if test="${memberVo.team_level==1}"><h5>${memberVo.user_nick}</h5><br></c:if>
+						<c:if test="${memberVo.team_level==0}"><h3>${memberVo.user_nick}</h3></c:if>
+						<c:if test="${memberVo.team_level==1}"><h5>${memberVo.user_nick}</h5></c:if>
 					</c:forEach>
 				</div>
 			</div>

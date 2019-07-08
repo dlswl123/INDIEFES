@@ -44,19 +44,17 @@ $(document).ready(function() {
 				<div class="col-md-10">
 					<h3>PAY LIST</h3><br>
 					<c:forEach items="${payList}" var="payVo">
-						<c:if test="${payVo.pay_ok == 0}"><h5>${payVo.music_title} ◀<button data-music_number="${payVo.music_number}" data-music_title="${payVo.music_title}">삭제</button></h5><br></c:if>
+						<c:if test="${payVo.pay_ok == 0}"><h5>${payVo.music_title} ◀<button data-music_number="${payVo.music_number}" data-music_title="${payVo.music_title}" id="#">삭제</button></h5><br></c:if>
 					</c:forEach>
 				</div>
 				<script>
-					var index = $("button").index(this);
-					$("button:eq(" + index + ")").attr("id", index);
+				$("button").click(function(){
+					var music_number = $(this).attr("data-music_number");
+					var music_title = $(this).attr("data-music_title");
+					location.href="/indiefes/art/payDelete?music_number="+music_number;
+					alert(music_title+" 목록에서 삭제됩니다.");
 					
-					$("#"+index).click(function() {
-						var music_number = $(this).attr("data-music_number");
-						var music_title = $(this).attr("data-music_title");
-						location.href="/indiefes/art/payDelete?music_number="+music_number;
-						alert(music_title+" 목록에서 삭제됩니다.");
-					});
+				});
 				</script>
 				<div class="col-md-10">
 					결제금액 : <input name=price type="text" value="" readonly>
