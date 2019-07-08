@@ -102,11 +102,13 @@ public interface IArtInfoDao {
 	// 앨범에 좋아요 수정
 	public void artLikedCount(int liked_count, int art_number) throws Exception;
 	// 좋아요 체크
-	public int artLikedCheck(LikeLogVo likeVo) throws Exception;
+	public int artLikedCheckById(LikeLogVo likeVo) throws Exception;
 	// 좋아요 하기
 	public void artLikedInsert(LikeLogVo likeVo) throws Exception;
 	// 좋아요 취소
 	public void artLikedDelete(LikeLogVo likeVo) throws Exception;
+	// 해당앨범 좋아요수 체크
+	public int artLikedCountCheck(int art_number) throws Exception;
 	// 앨범에 추천수 수정
 	public void artGoodCount(int good_count, int art_number) throws Exception;
 	// 추천 하기
@@ -114,6 +116,7 @@ public interface IArtInfoDao {
 	// 추천 취소
 	public void artGoodDelete(GoodLogVo goodVo) throws Exception;
 	// 추천 체크
-	public int artGoodCheck(GoodLogVo goodVo) throws Exception; 
-	
+	public int artGoodCheckById(GoodLogVo goodVo) throws Exception; 
+	// 해당앨범 추천수 체크
+	public int artGoodCountCheck(int art_number) throws Exception;
 }

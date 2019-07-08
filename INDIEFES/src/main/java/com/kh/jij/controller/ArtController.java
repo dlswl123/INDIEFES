@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.GoodLogVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.MusicInfoVo;
@@ -51,11 +52,25 @@ public class ArtController {
 
 	// 앨범정보조회 폼
 	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
-	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model) throws Exception {
+	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model, HttpSession session) throws Exception {
 		String teamName = artService.getTeamName(team_number);
 		ArtInfoVo artVo = artService.artRead(art_number);
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
-		
+		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
+		if (userVo != null) {
+			String user_id = userVo.getUser_id();
+			LikeLogVo likeVo = new LikeLogVo();
+			likeVo.setUser_id(user_id);
+			likeVo.setArt_number(art_number);
+			GoodLogVo goodVo = new GoodLogVo();
+			goodVo.setUser_id(user_id);
+			goodVo.setArt_number(art_number);
+			int likedCount = artService.artLikedCheckById(likeVo);
+			int goodCount = artService.artGoodCheckById(goodVo);
+			model.addAttribute("likedCount", likedCount);
+			model.addAttribute("goodCount", goodCount);
+			
+		}
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("teamName", teamName);
@@ -362,6 +377,8 @@ public class ArtController {
 		return "redirect:/art/pay_info";
 	}
 	
+	// 좋아요 체크
+	@RequestMapping(value="/likedChange", method = RequestMethod.GET)
 	public ResponseEntity<String> likeChange(LikeLogVo likeVo, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		ResponseEntity<String> entity = null;
@@ -369,8 +386,56 @@ public class ArtController {
 			if (userVo != null) {
 				String user_id = userVo.getUser_id();
 				likeVo.setUser_id(user_id);
-//				int count = artService.artLikedCheck(likeVo);
-				
+				int count = artService.artLikedCheckById(likeVo);
+				int likedCount = artService.artLikedCountCheck(likeVo.getArt_number());
+				System.out.println("count:" + count);
+				System.out.println("likedCount:" + likedCount);
+				if (count > 0) {
+					artService.artLikedDelete(likeVo);
+					likedCount = likedCount - 1;
+					artService.artLikedCount(likedCount, likeVo.getArt_number());
+					entity = new ResponseEntity<String>("likeDelete", HttpStatus.OK);
+				} else {
+					artService.artLikedInsert(likeVo);
+					likedCount = likedCount + 1;
+					artService.artLikedCount(likedCount,  likeVo.getArt_number());
+					entity = new ResponseEntity<String>("likeInsert", HttpStatus.OK);
+				}	
+				System.out.println("likeVo:" + likeVo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@RequestMapping(value="/goodChange", method = RequestMethod.GET)
+	// 추천수 체크
+	public ResponseEntity<String> goodChange(GoodLogVo goodVo, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		ResponseEntity<String> entity = null;
+		try {
+			if (userVo != null) {
+				String user_id = userVo.getUser_id();
+				goodVo.setUser_id(user_id);
+				int count = artService.artGoodCheckById(goodVo);
+				int goodCount = artService.artGoodCountCheck(goodVo.getArt_number());
+				System.out.println("goodVo:" + goodVo);
+				System.out.println("count:" + count);
+				System.out.println("goodCount:" + goodCount);
+				if (count > 0) {
+					artService.artGoodDelete(goodVo);
+					goodCount = goodCount - 1;
+					artService.artGoodCount(goodCount, goodVo.getArt_number());
+					entity = new ResponseEntity<String>("goodDelete", HttpStatus.OK);
+				} else {
+					artService.artGoodInsert(goodVo);
+					goodCount = goodCount + 1;
+					artService.artGoodCount(goodCount,  goodVo.getArt_number());
+					entity = new ResponseEntity<String>("goodInsert", HttpStatus.OK);
+				}	
+				System.out.println("goodVo:" + goodVo);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -281,12 +281,20 @@
 	</delete>
 	
 <!-- 	좋아요 체크 -->
-	<select id="artLikedCheck" resultType="Integer">
+	<select id="artLikedCheckById" resultType="Integer">
 		select count(*)
 		from like_log
 		where user_id = #{user_id}
 		and art_number = #{art_number}
 	</select>
+		
+<!-- 	해당앨범의 좋아요수  -->
+	<select id="artLikedCountCheck" resultType="Integer">
+		select liked_count
+		from art_info
+		where art_number = #{art_number}
+	</select>
+		
 		
 <!--	앨범에 추천수 수정 -->
 	<update id="artGoodCount">
@@ -309,10 +317,17 @@
 	</delete>
 	
 <!-- 	추천 체크 -->
-	<select id="artGoodCheck" resultType="Integer">
+	<select id="artGoodCheckById" resultType="Integer">
 		select count(*)
 		from good_log
 		where user_id = #{user_id}
 		and art_number = #{art_number}
+	</select>
+	
+<!-- 	해당 앨범에 추천수 -->
+	<select id="artGoodCountCheck" resultType="Integer">
+		select good_count
+		from art_info
+		where art_number = #{art_number}
 	</select>
 </mapper>
