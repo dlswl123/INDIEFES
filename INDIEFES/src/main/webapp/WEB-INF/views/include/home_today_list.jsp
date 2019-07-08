@@ -35,17 +35,13 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
-    .art1{
+    .art1, .art2 {
     overflow: hidden;
-    width: 100%;
-    height: 400px;
-    background-color:rgba(255,255,255,0.7);
-    }
-    .art2{
-    overflow: hidden;
-    width: 100%;
-    height: 400px;
-    background-color:rgba(255,255,255,0.7);
+    width: 95%;
+    height: 350px;
+    background-color:rgba(255,255,255);
+    margin: auto;
+    box-shadow: 0px 5px 5px 5px grey;
     }
     .pagination{
     margin: 0 50;

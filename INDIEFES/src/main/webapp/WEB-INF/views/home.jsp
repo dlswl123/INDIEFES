@@ -14,6 +14,12 @@
 	font-size: 2rem;
 	margin-left: 20px;
 }
+#logo {
+/* 	background-color:rgba(255,255,255,0.7); */
+}
+#art1sec, #art2sec {
+	background-color:rgba(255,255,255,0.7);padding-bottom:20px;
+}
 </style>
 
 		<script>
@@ -31,15 +37,15 @@
 		</script>
 		<div class="col-md-10" style="margin:auto;padding:50px;">
 			<div>
-				<section id="logo" style="background-color:rgba(255,255,255,0.7);">
+				<section id="logo">
 					<div class="row">
 						<font>InDiEFeS</font>
 						<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
 						매일매일 인디축제</span>
 					</div>
 				</section>
-				<hr style="background-color:rgba(255,255,255,0.7);">
-				<section style="background-color:rgba(255,255,255,0.7);">
+				<hr style="background-color:rgba(255,255,255);">
+				<section id="art1sec">
 					<font id="dgm">
 						최신 앨범
 					</font>
@@ -47,8 +53,8 @@
 					<%@ include file="include/home_today_list.jsp" %>
 					</article>
 				</section>
-				<hr style="background-color:rgba(255,255,255,0.7);">
-				<section style="background-color:rgba(255,255,255,0.7);">
+				<hr style="background-color:rgba(255,255,255);">
+				<section id="art2sec">
 					<font id="dgm">
 						인기 앨범
 					</font>
