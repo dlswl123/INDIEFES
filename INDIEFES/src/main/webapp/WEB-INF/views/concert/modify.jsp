@@ -87,7 +87,7 @@ $(document).ready(function() {
 	
 	
 	// 첨부 파일 목록 가져오기
-	$.getJSON("/board/getFiles/${boardVo.bno}", function(list) {
+	$.getJSON("/indiefes/concert/getFiles/${vo.concert_number}", function(list) {
 		console.log(list);
 		$(list).each(function() {
 			var fullName = this; // 2019/5/21/0e6348d6-92d6-4f92-98e2-617ce4ba64ff_Chrysanthemum.jpg
