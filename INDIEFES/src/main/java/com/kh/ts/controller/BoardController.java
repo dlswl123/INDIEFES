@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.imgscalr.Scalr.Mode;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ks.domain.UserInfoVo;
@@ -33,6 +36,9 @@ import com.kh.ts.util.FileUploadUtil;
 @Controller
 @RequestMapping(value="/board/*")
 public class BoardController {
+	
+	@Resource(name="uploadPath")
+	private String uploadPath; // servlet-context.xml (id="uploadPath")
 
 	@Inject
 	IBoardService boardService;
@@ -129,11 +135,30 @@ public class BoardController {
 	
 	// 글수정처리 - /indiefes/board/update(Post 불러오기)
 	@RequestMapping(value="/update", method= RequestMethod.POST)
-	public String updatePost(BoardVo boardVo, RedirectAttributes rttr,@RequestParam(value="pagingDto", required=false) 
-		PagingDto pagingDto)throws Exception {
-		boardService.update(boardVo);
-		rttr.addFlashAttribute("message", "success_update");
-		rttr.addAttribute("pagingDto", pagingDto);
+	public String updatePost(BoardVo boardVo, RedirectAttributes rttr,@RequestParam(value="pagingDto", required=false)
+		PagingDto pagingDto, MultipartFile file)throws Exception {
+		
+		String originalName = file.getOriginalFilename();
+		System.out.println("BoardController, updatePost(), originalName:" + originalName);
+		
+		
+		try {
+			// dirPath -> 2019/5/17/fb94d409-77e4-4ed1-a6b1-24253ffcf3c6_Chrysanthemum.jpg
+			if (originalName != null && !originalName.equals("")) {
+				String dirPath = FileUploadUtil.uploadFile(uploadPath, originalName, file.getBytes());
+				System.out.println("BoardController, updatePost(), dirPath: " + dirPath);
+				String path = dirPath.replace("\\", "/");
+				boardVo.setFile_path(path);
+			}
+			System.out.println("BoardController, updatePost(), boardVo:" + boardVo);
+			boardService.update(boardVo);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+//		rttr.addFlashAttribute("message", "success_update");
+//		rttr.addAttribute("pagingDto", pagingDto);
 		
 		return "redirect:/board/read?board_number=" + boardVo.getBoard_number();
 	}

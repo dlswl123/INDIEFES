@@ -25,12 +25,12 @@
 <style>
 body {
 /* 	background: url("${pageContext.request.contextPath}/resources/bg_images/bgpage.jpg") no-repeat center center fixed; */
-	background: url("<c:url value='/resources/bg_images/bgpage.jpg'/>") no-repeat center center fixed;
+/* 	background: url("<c:url value='/resources/bg_images/bgpage.jpg'/>") no-repeat center center fixed; */
+	background-color: rgb(152,152,152);
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
-  	font-family: 스웨거 TTF;
 /*   	font-family: Ghang, Misdemeanor,Urban Jungle,FuturaBlack BT,Yj SHANALL,Yj WADAG; */
 }
 /* /resources 내의 자료 불러와지지 않을 때 사용법
@@ -43,11 +43,14 @@ html, body {
 	-moz-user-select:-moz-none;
 	user-select:none;
 }
+.col-md-10 {
+	margin:auto;padding:50px;
+}
 </style>
 
 </head>
 
-<body oncontextmenu='return false' ondragstart='return false' onselectstart='return false'>
+<!-- <body oncontextmenu='return false' ondragstart='return false' onselectstart='return false'> -->
 
 <div class="container-fluid">
 	<div class="row">

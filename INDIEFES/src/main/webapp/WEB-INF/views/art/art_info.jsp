@@ -68,7 +68,7 @@ $(document).ready(function() {
 	
 	// 음악리스트- 듣기버튼
 	$("#tblMusicList").on("click", ".spMusicPlay",function() {
-		
+		location.href="/indiefes/player/playInsert?artnumber=${artVo.art_number}&team_number={artVo.team_number}";
 	});
 	
 	// 음악리스트- 가사버튼
@@ -158,12 +158,59 @@ $(document).ready(function() {
 	$(".spLikedCount").click(function() {
 		var art_number = $(this).attr("data-art_number");
 		console.log(art_number);
-		
+		var url = "/indiefes/art/likedChange";
+		var data = {
+				"art_number" : art_number
+			};
+		$.ajax({
+			"type" : 'get',
+			"url" : url,
+			"headers" : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Overried" : "get"
+			},
+			"dataType" : "text",
+			"data" : data,
+			"success" : function(receivedData) {
+				console.log(receivedData); // success
+				if (receivedData.trim() == "likeInsert") {
+					$("#iconLiked").attr("class", "fas fa-heart");
+				} else if (receivedData.trim() == "likeDelete") {
+					$("#iconLiked").css("color", "red");
+					$("#iconLiked").attr("class", "far fa-heart");
+					
+				}
+			} // "success"
+		});
 	});
 	// 앨범정보- 추천버튼
 	$(".spGoodCount").click(function() {
 		var art_number = $(this).attr("data-art_number");
 		console.log(art_number);
+		var url = "/indiefes/art/goodChange";
+		var data = {
+				"art_number" : art_number
+			};
+		$.ajax({
+			"type" : 'get',
+			"url" : url,
+			"headers" : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Overried" : "get"
+			},
+			"dataType" : "text",
+			"data" : data,
+			"success" : function(receivedData) {
+				console.log(receivedData); // success
+				if (receivedData.trim() == "goodInsert") {
+					$("#iconGood").attr("class", "fas fa-thumbs-up");
+				} else if (receivedData.trim() == "goodDelete") {
+					$("#iconGood").css("color", "green");
+					$("#iconGood").attr("class", "far fa-thumbs-up");
+					
+				}
+			} // "success"
+		});
 		
 	});
 	
@@ -223,17 +270,16 @@ $(document).ready(function() {
 				</div>
 				<div class="col-md-8">
 					<p>
-						<strong><label>곡 제목 :</label>
-								${artVo.art_title}</strong><br>
-						<strong><label>아티스트 :</label>
-								${teamName}</strong><br>
-						<small><label>앨범 소개 :</label>
-								${artVo.art_pr}</small>
+						<strong><label>곡 제목 :</label> ${artVo.art_title}</strong><br>
+						<label>아티스트 :</label> ${teamName}<br>
 					</p>
+						<label>앨범 소개 :</label><br>
+						<textarea rows="10" cols="80" readonly="readonly" style="background-color: transparent;	 resize: none;">${artVo.art_pr}</textarea>
+								
 				</div>
 			</div>
 			
-			<div class="row">
+			<div class="row" style="padding-top: 20px;">
 				<div class="col-md-12"  align="right">
 <!-- 				실행버튼 -->
 				<c:choose>
@@ -247,6 +293,23 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-outline-secondary" id="btnArtAppro">앨범등록</button>
 					</c:when>
 					<c:otherwise>
+					<c:choose>
+						<c:when test="${likedCount > 0 }">
+							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
+						</c:when>
+						<c:otherwise>
+							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${goodCount > 0 }">
+							<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+						</c:when>
+						<c:otherwise>
+							<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+						</c:otherwise>
+					</c:choose>
+					
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button> -->
 						<!-- 담기로 구매한 사용자만 다운로드 가능함 -->
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnDown">다운</button> -->
@@ -258,17 +321,10 @@ $(document).ready(function() {
 				</c:choose>
 				</div>
 			</div>
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-md-12" align="right"> -->
-<%-- 				<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-heart fa-2x"></i></span> --%>
-<!-- 					<i class="fas fa-heart"></i> -->
-<%-- 				<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 30px;"><i class="far fa-thumbs-up fa-2x"	></i></span> --%>
-<!-- 					<i class="fas fa-thumbs-up"></i> -->
-				
-<!-- 				</div> -->
-<!-- 			</div> -->
 			<div class="row">
 				<div class="col-md-12">
+			
+				
 					<table class="table">
 						<thead>
 							<tr>
@@ -283,11 +339,12 @@ $(document).ready(function() {
 							</tr>
 						</thead>
 						<tbody id="tblMusicList">
-						<c:forEach items="${musicList}" var="musicInfoVo">
+						<c:forEach items="${musicList}" var="musicInfoVo" varStatus="i">
 						<c:if test="${musicInfoVo.upload_check != 99 }">
+							
 							<tr>
 <!-- 								<td><input type="checkbox" /></td> -->
-								<td>${musicInfoVo.track_number}</td>
+								<td>${i.count}</td>
 								<td class="song_name" style="text-align: left;">${musicInfoVo.music_title}</td>
 								<td>${teamName}</td>
 								<td><a onclick="musicPlayer();" href="/indiefes/player/playInsert?music_number=${musicInfoVo.music_number}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" ><span class="spMusicPlay icon" style="color:blue;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-play"></i></span></a></td>

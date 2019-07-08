@@ -73,7 +73,7 @@
 	<select id="artList" resultType="ArtInfoVo">
 		select *
 		from (select rownum rnum, a.*
-		      from (select art.* 
+		      from (select distinct art.* 
 		      		from art_info art
 		      <include refid="search"></include>
 		      order by art.art_number desc) a)
@@ -112,6 +112,7 @@
 		select * 
 		from team_member
 		where team_number = #{team_number}
+		order by member_number
 	</select>
 <!-- 	그룹앨범 리스트 가져오기 -->
 	<select id="teamArtList" resultType="ArtInfoVo">
@@ -257,4 +258,76 @@
 		where art_number = #{art_number}
 	</update>
 	
+
+	
+<!-- 	앨범에 좋아요 수정 -->
+	<update id="artLikedCount">
+		update art_info set
+			liked_count = #{liked_count}
+		where art_number = #{art_number}
+	</update>
+	
+<!-- 	좋아요 하기 -->
+	<insert id="artLikedInsert">
+		insert into like_log(user_id, art_number)	
+		values(#{user_id}, #{art_number})
+	</insert>
+	
+<!-- 	좋아요 취소 -->
+	<delete id="artLikedDelete">
+		delete from like_log
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</delete>
+	
+<!-- 	좋아요 체크 -->
+	<select id="artLikedCheckById" resultType="Integer">
+		select count(*)
+		from like_log
+		where user_id = #{user_id}
+		and art_number = #{art_number}
+	</select>
+		
+<!-- 	해당앨범의 좋아요수  -->
+	<select id="artLikedCountCheck" resultType="Integer">
+		select liked_count
+		from art_info
+		where art_number = #{art_number}
+	</select>
+		
+		
+<!--	앨범에 추천수 수정 -->
+	<update id="artGoodCount">
+		update art_info set
+			good_count = #{good_count}
+		where art_number = #{art_number}
+	</update>
+	
+<!-- 	추천 하기 -->
+	<insert id="artGoodInsert">
+		insert into good_log(user_id, art_number)	
+		values(#{user_id}, #{art_number})
+	</insert>
+	
+<!-- 	추천 취소 -->
+	<delete id="artGoodDelete">
+		delete from good_log
+		where art_number = #{art_number}
+		and user_id = #{user_id}
+	</delete>
+	
+<!-- 	추천 체크 -->
+	<select id="artGoodCheckById" resultType="Integer">
+		select count(*)
+		from good_log
+		where user_id = #{user_id}
+		and art_number = #{art_number}
+	</select>
+	
+<!-- 	해당 앨범에 추천수 -->
+	<select id="artGoodCountCheck" resultType="Integer">
+		select good_count
+		from art_info
+		where art_number = #{art_number}
+	</select>
 </mapper>

@@ -50,9 +50,15 @@ public class BoardServiceImpl implements IBoardService {
 		System.out.println("BoardServiceImp, updateViewcnt");
 	}
 	// 글수정
+	@Transactional
 	@Override
 	public void update(BoardVo vo) throws Exception {
-		boardDao.update(vo); // update
+		boardDao.update(vo); // update : 글제목, 글내용수정
+		// board_file 테이블에 인서트
+		String file_path = vo.getFile_path();
+		if (file_path != null) {
+			boardDao.attachUpdate(vo);
+		}
 	}
 	// 글삭제
 	@Transactional
@@ -76,13 +82,13 @@ public class BoardServiceImpl implements IBoardService {
 		List<String> list = boardDao.getAttach(board_number);
 		return list;
 	}
-	// 파일삭제
+	// 첨부파일삭제
 	@Override
 	public void deleteAttach(String file_path) throws Exception {
 		boardDao.deleteAttach(file_path);
 		
 	}
-	// 게시물파일삭제
+	// 게시글 첨부파일삭제
 	@Override
 	public void deleteAttachByBno(int board_number) throws Exception {
 		boardDao.deleteAttachByBno(board_number);

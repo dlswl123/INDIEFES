@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.GoodLogVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
@@ -217,5 +219,55 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	@Override
 	public void artUploadReturn(int art_number) throws Exception {
 		sqlSession.update(NAMESPACE + ".artUploadReturn", art_number);
+	}
+	@Override
+	public void artLikedCount(int liked_count, int art_number) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("liked_count", liked_count);
+		map.put("art_number", art_number);
+		sqlSession.update(NAMESPACE + ".artLikedCount", map);
+	}
+	@Override
+	public int artLikedCheckById(LikeLogVo likeVo) throws Exception {
+		int count = sqlSession.selectOne(NAMESPACE + ".artLikedCheckById", likeVo);
+		return count;
+	}
+	@Override
+	public void artLikedInsert(LikeLogVo likeVo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".artLikedInsert", likeVo);
+	}
+	@Override
+	public void artLikedDelete(LikeLogVo likeVo) throws Exception {
+		sqlSession.delete(NAMESPACE + ".artLikedDelete", likeVo);
+	}
+	@Override
+	public void artGoodCount(int good_count, int art_number) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("good_count", good_count);
+		map.put("art_number", art_number);
+		sqlSession.update(NAMESPACE + ".artGoodCount", map);
+	}
+	@Override
+	public void artGoodInsert(GoodLogVo goodVo) throws Exception {
+		sqlSession.insert(NAMESPACE + ".artGoodInsert", goodVo);
+	}
+	@Override
+	public void artGoodDelete(GoodLogVo goodVo) throws Exception {
+		sqlSession.delete(NAMESPACE + ".artGoodDelete", goodVo);
+	}
+	@Override
+	public int artGoodCheckById(GoodLogVo goodVo) throws Exception {
+		int count = sqlSession.selectOne(NAMESPACE + ".artGoodCheckById", goodVo);
+		return count;
+	}
+	@Override
+	public int artLikedCountCheck(int art_number) throws Exception {
+		int likedCount = sqlSession.selectOne(NAMESPACE + ".artLikedCountCheck", art_number);
+		return likedCount;
+	}
+	@Override
+	public int artGoodCountCheck(int art_number) throws Exception {
+		int goodCount = sqlSession.selectOne(NAMESPACE + ".artGoodCountCheck", art_number);
+		return goodCount;
 	}
 }

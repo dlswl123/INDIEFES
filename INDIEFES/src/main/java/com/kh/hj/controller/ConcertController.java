@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,21 +63,28 @@ public class ConcertController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public void concertInfoWrite(Model model) throws Exception {
+	public String concertInfoWrite(Model model, HttpSession session) throws Exception {
 		// move to /concert/write.jsp
-		
+		// if not have userInfo, return to loginForm
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo == null) {
+			return "/user/login";
+		}
+		return "/concert/write";
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String concertInfoWriteRun(ConcertInfoVo vo, RedirectAttributes rttr, HttpSession session) throws Exception {
-
 		// get user_id by session
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		String user_id = userInfoVo.getUser_id();
-		vo.setUser_id(user_id);
-		
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			vo.setUser_id(user_id);
+		} else {
+			return "redirect:/user/login";
+		}
 		// Read ConcertInfoVo
-		System.out.println("vo : " + vo.toString());
+		System.out.println("writevo : " + vo.toString());
 
 		// insert into DBtable ConcertInfoVo information
 		service.insertConcertInfo(vo);
@@ -95,9 +103,50 @@ public class ConcertController {
 		if (userInfoVo != null) {
 			String user_id = userInfoVo.getUser_id();
 			model.addAttribute("user_id", user_id);
+			int user_level = userInfoVo.getUser_level();
+			model.addAttribute("user_level", user_level);
 		}
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public void concertInfoModify(@RequestParam("concert_number")int concert_number, HttpSession session, Model model) throws Exception {
+		ConcertInfoVo vo = service.getConcertInfo(concert_number);
+		List<String> list = service.getConcertInfoFiles(concert_number);
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+		}
+		model.addAttribute("vo", vo);
+		model.addAttribute("list", list);
+	}
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String concertInfoModifyRun(ConcertInfoVo vo, RedirectAttributes rttr, HttpSession session, Model model) throws Exception {
+		
+		// TODO : update sql
+		
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo != null) {
+			String user_id = userInfoVo.getUser_id();
+			model.addAttribute("user_id", user_id);
+			int user_level = userInfoVo.getUser_level();
+			model.addAttribute("user_level", user_level);
+		} else {
+			return "redirect:/user/login";
+		}
+		
+		rttr.addFlashAttribute("resultMessage", "update_success");
+		
+		return "redirect:/concert/info";
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String concertInfoDelete(@RequestParam("concert_number")int concert_number) throws Exception {
+		service.deleteConcertInfo(concert_number);
+		return "redirect:/concert/info";
 	}
 	
 	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST, produces="application/json; charset=UTF-8")
@@ -105,30 +154,28 @@ public class ConcertController {
 	public ResponseEntity<ConcertInfoVo> uploadAjax(/* MultipartFile file */ MultipartHttpServletRequest mhsr) throws Exception {
 		// file upload method
 		// get only img files
-
+		
+		
 		ResponseEntity<ConcertInfoVo> entity = null;
 		ConcertInfoVo vo = new ConcertInfoVo();
 		List<String> list = new ArrayList<>();
 		
+		Iterator<String> files = mhsr.getFileNames();
+			
 		String concertDate = mhsr.getParameter("concertDate"); // 공연 일자 YYYY/MM 형식으로 받아옴
 		System.out.println("concertDate : " + concertDate);
 		
 		MultipartFile file = mhsr.getFile("infoFile"); // 키 값에 따른 파일 가져오기
-		String originalName = file.getOriginalFilename(); // 파일명 얻기
-		System.out.println("originalName : " + originalName);
-		
-		String infoFilePath = FileUploadUtil.uploadFile(uploadPath, originalName, concertDate, file.getBytes());
-		String infoPath = infoFilePath.replace("\\", "/");
-		
-		vo.setInfo_file_path(infoPath);
-//		vo.setInfo_file_path(originalName);
-		
-		List<MultipartFile> fileList = mhsr.getFiles("posterFile");
-		System.out.println("fileList : " + fileList);
-		
-
-		Iterator<String> files = mhsr.getFileNames();
-		System.out.println("files : " + files);
+		System.out.println("file : " + file);
+		if (file != null) {
+			String originalName = file.getOriginalFilename(); // 파일명 얻기
+			System.out.println("originalName : " + originalName);
+			
+			String infoFilePath = FileUploadUtil.uploadFile(uploadPath, originalName, concertDate, file.getBytes());
+			String infoPath = infoFilePath.replace("\\", "/");
+			
+			vo.setInfo_file_path(infoPath);
+		}
 		
 		while (files.hasNext()) { //파일을 하나씩 불러온다.
 		 
@@ -146,15 +193,18 @@ public class ConcertController {
 	        System.out.println("fileFullPath : " + posterPath);
 	        
 	        list.add(posterPath);
-//	        list.add(originalFileName);
-		}
-		 
-		String[] str = new String[list.size()]; // 이름 변경한 리스트를 배열로 넣기
-		for (int i = 0; i < list.size(); i++) {
-			str[i] = list.get(i);
 		}
 		
-		vo.setFile_path(str);
+		if (!list.isEmpty()) {
+			String[] str = new String[list.size()]; // 이름 변경한 리스트를 배열로 넣기
+			for (int i = 0; i < list.size(); i++) {
+				str[i] = list.get(i);
+			}
+			
+			if (str != null) {
+				vo.setFile_path(str);
+			}
+		}
 		
 		System.out.println("vo : " + vo);
 		
@@ -169,6 +219,38 @@ public class ConcertController {
 	}
 	
 	
+	// 첨부파일 목록
+	@RequestMapping(value="/getFiles/{concert_number}")
+	@ResponseBody
+	public List<String> getAttach(@PathVariable("concert_number") int concert_number) throws Exception {
+		List<String> list = service.getConcertInfoFiles(concert_number);
+		return list;
+	}
+	
+	// 파일 삭제
+	@RequestMapping(value="/deleteFile", method=RequestMethod.GET)
+	public ResponseEntity<String> deleteFile(@RequestParam("fileName") String fileName) throws Exception {
+		System.out.println("fileName:" + fileName);
+		ResponseEntity<String> entity = null;
+		try {
+			// 파일 삭제 처리
+			String realPath = uploadPath + File.separator + fileName;
+			File f = new File(realPath);
+			if (f.exists()) {
+				f.delete();
+			}
+			// DB 데이터 삭제
+			service.deleteConcertInfoFiles(realPath);
+			
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	// 이미지 보이기
 	@RequestMapping(value="/displayFile")
 	public ResponseEntity<byte[]> displayFile(@RequestParam("fileName") String fileName) throws Exception {
 //		System.out.println("fileName : " + fileName);

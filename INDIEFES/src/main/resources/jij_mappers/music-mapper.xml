@@ -10,6 +10,7 @@
 		select *
 		from music_info
 		where art_number = #{art_number}
+		and not upload_check = 99
 		order by track_number
 	</select>
 	

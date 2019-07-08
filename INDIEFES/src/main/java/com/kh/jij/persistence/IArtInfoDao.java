@@ -3,7 +3,9 @@ package com.kh.jij.persistence;
 import java.util.List;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.GoodLogVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
@@ -97,4 +99,24 @@ public interface IArtInfoDao {
 	// 업로드반려
 	public void artUploadReturn(int art_number) throws Exception;
 	
+	// 앨범에 좋아요 수정
+	public void artLikedCount(int liked_count, int art_number) throws Exception;
+	// 좋아요 체크
+	public int artLikedCheckById(LikeLogVo likeVo) throws Exception;
+	// 좋아요 하기
+	public void artLikedInsert(LikeLogVo likeVo) throws Exception;
+	// 좋아요 취소
+	public void artLikedDelete(LikeLogVo likeVo) throws Exception;
+	// 해당앨범 좋아요수 체크
+	public int artLikedCountCheck(int art_number) throws Exception;
+	// 앨범에 추천수 수정
+	public void artGoodCount(int good_count, int art_number) throws Exception;
+	// 추천 하기
+	public void artGoodInsert(GoodLogVo goodVo) throws Exception;
+	// 추천 취소
+	public void artGoodDelete(GoodLogVo goodVo) throws Exception;
+	// 추천 체크
+	public int artGoodCheckById(GoodLogVo goodVo) throws Exception; 
+	// 해당앨범 추천수 체크
+	public int artGoodCountCheck(int art_number) throws Exception;
 }

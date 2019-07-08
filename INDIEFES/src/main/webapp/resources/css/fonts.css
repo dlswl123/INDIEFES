@@ -48,3 +48,10 @@
 	font-style: normal;
 	font-weight: normal;
 }
+@font-face {
+	/* 스웨거 */
+	font-family:"swag";
+	src: url("../fonts/SDSwaggerTTF.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}

@@ -10,12 +10,12 @@
 		(concert_number, subject, user_id, summary, content, concert_date, place_name, place_x, place_y, info_file_path)
 		values 
 		(seq_concert.nextval, #{subject}, #{user_id}, #{summary}, #{content}, to_date(#{concert_date}, 'YYYY-MM-DD HH24:MI'),
-		#{place_name}, #{place_x}, #{place_y}, #{info_file_path})
+		#{place_name}, #{place_x}, #{place_y}, #{info_file_path, jdbcType=VARCHAR})
 	</insert>
 	
 	<!-- 홍포 포스터 등록 -->
 	<insert id="insertConcertInfoFiles">
-		insert into concert_file values (seq_concert.currval, #{file_path})
+		insert into concert_file values (seq_concert.currval, #{file_path, jdbcType=VARCHAR})
 	</insert>
 	
 	<!-- 공연 홍보 글 목록 가져오기 -->
@@ -32,6 +32,19 @@
 	<select id="getConcertInfoFiles" resultType="string">
 		select file_path from concert_file where concert_number = #{concert_number}
 	</select>
+	
+	<!-- 공연 홍보 글 파일 삭제 -->
+	<delete id="deleteConcertInfoFiles">
+		delete from concert_file where file_path = #{file_path}
+	</delete>
+	
+	<!-- 공연 홍보 글 수정 -->
+	<update id="modifyConcertInfo">
+		update concert_info set subject = #{subject}, summary = #{summary}, content = to_date(#{concert_date}, 'YYYY-MM-DD HH24:MI'),
+			concert_date = #{concert_date}, place_name = #{place_name}, place_x = #{place_x}, place_y = #{place_y},
+			info_file_path = #{info_file_path, jdbcType=VARCHAR}
+		where concert_number = #{concert_number}
+	</update>
 	
 	<!-- 공연 홍보 글 삭제 -->
 	<update id="deleteConcertInfo">

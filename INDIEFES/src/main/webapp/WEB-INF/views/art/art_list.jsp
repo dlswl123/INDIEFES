@@ -95,6 +95,7 @@ $(document).ready(function() {
 			e.preventDefault();
 //			$(this).text();
 			setPage();
+			
 			var page = $(this).attr("data-page"); // 페이지 숫자 읽기
 			console.log(page);
 			$("input[name=page]").val(page); // 아래쪽 폼의 page에 설정
@@ -248,9 +249,11 @@ $(document).ready(function() {
 <!-- 			앨범 리스트 -->
 				<ul  class="albumList">
 				<li>
+					
 			<c:choose>
 				<c:when test="${not empty artList}">
 					<c:forEach items="${artList}" var="artVo">
+					
 					<c:if test="${(artVo.upload_check eq 1)or(artVo.upload_check eq 2 and paginationDto.pagingDto.searchType eq 'appro')or(artVo.upload_check eq 0 and paginationDto.pagingDto.searchType eq 'working' and userVo.user_id eq artVo.user_id)or(artVo.upload_check eq 99 and paginationDto.pagingDto.searchType eq 'delete')}">
 					<li class="art_info">
 						<figure class="albumInfo">

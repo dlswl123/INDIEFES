@@ -60,6 +60,12 @@
 		where board_number = #{board_number}
 	</update>
 	
+	<!-- 수정에서 첨부파일경로 추가 -->
+	<insert id="attachUpdate">
+		insert into board_file(file_path, board_number)
+		values (#{file_path}, #{board_number})
+	</insert>
+	
 	<!-- 글삭제 -->
 	<delete id="delete">
 <!-- 		delete from board_info  -->
@@ -69,7 +75,7 @@
 	where board_number = #{board_number}
 	</delete>
 	
-	<!-- 첨부파일경로 추가 -->
+	<!-- 글쓰기에서 첨부파일경로 추가 -->
 	<insert id="attach">
 		insert into board_file(file_path, board_number)
 		values (#{file_path}, seq_board.currval)
@@ -87,6 +93,7 @@
 		delete from board_file
 		where file_path = #{file_path}
 	</delete>
+	
 	<!-- 게시글첨부파일삭제 -->
 	<delete id="deleteAttachByBno">
 		delete from board_file
