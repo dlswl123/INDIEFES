@@ -111,22 +111,27 @@ public class ConcertController {
 	}
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public void concertInfoModify(@RequestParam("concert_number")int concert_number, HttpSession session, Model model) throws Exception {
+	public String concertInfoModify(@RequestParam("concert_number")int concert_number, HttpSession session, Model model) throws Exception {
+		// modify concertInfo
+		
 		ConcertInfoVo vo = service.getConcertInfo(concert_number);
 		List<String> list = service.getConcertInfoFiles(concert_number);
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		if (userInfoVo != null) {
 			String user_id = userInfoVo.getUser_id();
 			model.addAttribute("user_id", user_id);
+		} else {
+			return "/user/login";
 		}
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
+		return "/concert/modify";
 	}
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String concertInfoModifyRun(ConcertInfoVo vo, RedirectAttributes rttr, HttpSession session, Model model) throws Exception {
 		
-		// TODO : update sql
+		service.modifyConcertInfo(vo);
 		
 		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		if (userInfoVo != null) {
@@ -233,14 +238,16 @@ public class ConcertController {
 		System.out.println("fileName:" + fileName);
 		ResponseEntity<String> entity = null;
 		try {
+			
 			// 파일 삭제 처리
 			String realPath = uploadPath + File.separator + fileName;
 			File f = new File(realPath);
 			if (f.exists()) {
 				f.delete();
 			}
+			
 			// DB 데이터 삭제
-			service.deleteConcertInfoFiles(realPath);
+			service.deleteConcertInfoFiles(fileName);
 			
 			entity = new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {

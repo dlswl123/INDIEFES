@@ -16,6 +16,9 @@ $(document).ready(function() {
 		
 		$("input[name=concert_date]").val(show_date.replace("T", " "));
 		var concertDate = replaceAll(show_date.slice(0,10), "-", "/");
+		if (formData.get("concertDate") != null) {
+			formData.delete("concertDate");
+		}
 		formData.append("concertDate", concertDate);	
 	});
 	
@@ -30,7 +33,9 @@ $(document).ready(function() {
 	});
 	$("#info_file").change(function(e) {
 		$("#spanInfoFile").text(this.files[0].name);
-		
+		if (formData.get("infoFile") != null) {
+			formData.delete("concertDate");			
+		}
 		formData.append("infoFile", this.files[0]);
 	});
 	
