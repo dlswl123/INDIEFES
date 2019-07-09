@@ -281,8 +281,14 @@
 	</delete>
 	
 <!-- 	좋아요 체크 -->
-	<select id="artLikedCheckById" resultType="Integer">
-		select count(*)
+<!-- 	<select id="artLikedCheckById" resultType="Integer"> -->
+<!-- 		select count(*) -->
+<!-- 		from like_log -->
+<!-- 		where user_id = #{user_id} -->
+<!-- 		and art_number = #{art_number} -->
+<!-- 	</select> -->
+	<select id="artLikedCheckById" resultType="LikeLogVo">
+		select *
 		from like_log
 		where user_id = #{user_id}
 		and art_number = #{art_number}

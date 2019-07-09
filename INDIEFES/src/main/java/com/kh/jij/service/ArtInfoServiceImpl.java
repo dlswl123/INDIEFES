@@ -236,9 +236,9 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 
 	@Override
-	public int artLikedCheckById(LikeLogVo likeVo) throws Exception {
-		int count = artDao.artLikedCheckById(likeVo);
-		return count;
+	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo) throws Exception {
+		List<LikeLogVo> list = artDao.artLikedCheckById(likeVo);
+		return list;
 	}
 
 	@Override

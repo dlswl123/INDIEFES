@@ -228,9 +228,9 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.update(NAMESPACE + ".artLikedCount", map);
 	}
 	@Override
-	public int artLikedCheckById(LikeLogVo likeVo) throws Exception {
-		int count = sqlSession.selectOne(NAMESPACE + ".artLikedCheckById", likeVo);
-		return count;
+	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo) throws Exception {
+		List<LikeLogVo> list = sqlSession.selectList(NAMESPACE + ".artLikedCheckById", likeVo);
+		return list;
 	}
 	@Override
 	public void artLikedInsert(LikeLogVo likeVo) throws Exception {

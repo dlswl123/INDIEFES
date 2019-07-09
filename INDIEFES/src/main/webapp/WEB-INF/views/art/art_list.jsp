@@ -275,7 +275,41 @@ $(document).ready(function() {
 								</c:if>
 								</c:forEach>
 								<br>
-								<time datetime="">${artVo.reg_art}</time>
+								<time datetime="">${artVo.reg_art}</time><br>
+								<c:choose>
+									<c:when test="${likedCount.user_id == userVo.user_id }">
+										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
+									</c:when>
+									<c:otherwise>
+										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${artVo.liked_count != 0 }">
+										[<span id="artLikedCountSpan">${artVo.liked_count }</span>]
+									</c:when>
+									<c:otherwise>
+										<span>&nbsp;&nbsp;</span>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${goodCount > 0 }">
+										<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+									</c:when>
+									<c:otherwise>
+										<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${artVo.good_count != 0 }">
+										[<span id="artGoodCountSpan">${artVo.good_count }</span>]
+									</c:when>
+									<c:otherwise>
+										<span>&nbsp;&nbsp;</span>
+									</c:otherwise>
+								</c:choose>
+								<c:if test="${artVo.good_count != 0 }">
+							</c:if>
 								</p>
 								</div>
 							</figcaption>
