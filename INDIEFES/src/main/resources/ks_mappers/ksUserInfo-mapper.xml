@@ -71,9 +71,11 @@
 	<select id="userInfo" resultType="com.kh.ks.domain.UserInfoVo">
 		select * from
 		(select a.*, rownum as rnum from
-		(select * from user_info order by user_id desc) a 
-		where rownum &lt;= #{endRow})
-		where rnum &gt;= #{startRow}
+		(select * from user_info order by user_id desc
+		) a
+		where <include refid="userSearch"></include>
+		rownum &lt;= #{endRow})
+		where rnum &gt;= #{startRow}		
 	</select>
 	
 	<!-- 회원수 불러오기 -->
@@ -82,6 +84,21 @@
 		from user_info user_id
 	</select>
 	
-	
+	<sql id="userSearch">
+		<if test="searchType != null">
+			<if test="searchType == 'user_id'">
+			 	user_id like '%' || #{keyword} ||'%' and
+			</if>
+			<if test="searchType == 'user_name'">
+			 	user_name like '%' || #{keyword} ||'%' and 
+			</if>
+			<if test="searchType == 'user_email'">
+			 	user_email like '%' || #{keyword} ||'%' and
+			</if>
+			<if test="searchType == 'user_nick'">
+			 	user_nick like '%' || #{keyword} ||'%' and
+			</if>
+		</if>
+	</sql>
 
 </mapper>
