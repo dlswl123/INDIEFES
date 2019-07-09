@@ -58,6 +58,7 @@ public class ArtController {
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 		if (userVo != null) {
+			String nowPage = "art_info";
 			String user_id = userVo.getUser_id();
 			LikeLogVo likeVo = new LikeLogVo();
 			likeVo.setUser_id(user_id);
@@ -65,7 +66,7 @@ public class ArtController {
 			GoodLogVo goodVo = new GoodLogVo();
 			goodVo.setUser_id(user_id);
 			goodVo.setArt_number(art_number);
-			List<LikeLogVo> likedCount = artService.artLikedCheckById(likeVo);
+			List<LikeLogVo> likedCount = artService.artLikedCheckById(likeVo, nowPage);
 			int goodCount = artService.artGoodCheckById(goodVo);
 			model.addAttribute("likedCount", likedCount);
 			model.addAttribute("goodCount", goodCount);
@@ -148,10 +149,11 @@ public class ArtController {
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
 		if (userVo != null) {
+			String nowPage = "art_list";
 			String user_id = userVo.getUser_id();
 			LikeLogVo likeVo = new LikeLogVo();
 			likeVo.setUser_id(user_id);
-			List<LikeLogVo> likeCount = artService.artLikedCheckById(likeVo);
+			List<LikeLogVo> likeCount = artService.artLikedCheckById(likeVo, nowPage);
 			model.addAttribute("likeCount", likeCount);
 			System.out.println("artController, likeCount" + likeCount);
 		}
@@ -408,8 +410,9 @@ public class ArtController {
 		try {
 			if (userVo != null) {
 				String user_id = userVo.getUser_id();
+				String nowPage = "art_info";
 				likeVo.setUser_id(user_id);
-				List<LikeLogVo> likeCountList = artService.artLikedCheckById(likeVo);
+				List<LikeLogVo> likeCountList = artService.artLikedCheckById(likeVo, nowPage);
 				int likedCount = artService.artLikedCountCheck(likeVo.getArt_number());
 				System.out.println("likeCountList:" + likeCountList);
 				System.out.println("likedCount:" + likedCount);

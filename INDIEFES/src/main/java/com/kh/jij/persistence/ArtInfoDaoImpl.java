@@ -222,8 +222,13 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.update(NAMESPACE + ".artLikedCount", map);
 	}
 	@Override
-	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo) throws Exception {
-		List<LikeLogVo> list = sqlSession.selectList(NAMESPACE + ".artLikedCheckById", likeVo);
+	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo, String nowPage) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("user_id", likeVo.getUser_id());
+		map.put("art_number", likeVo.getArt_number());
+		map.put("nowPage", nowPage);
+		System.out.println("ArtInfoDao, map:" + map);
+		List<LikeLogVo> list = sqlSession.selectList(NAMESPACE + ".artLikedCheckById", map);
 		return list;
 	}
 	@Override

@@ -1,6 +1,7 @@
 package com.kh.jij.service;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -230,8 +231,8 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 
 	@Override
-	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo) throws Exception {
-		List<LikeLogVo> list = artDao.artLikedCheckById(likeVo);
+	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo, String nowPage) throws Exception {
+		List<LikeLogVo> list = artDao.artLikedCheckById(likeVo, nowPage);
 		return list;
 	}
 
