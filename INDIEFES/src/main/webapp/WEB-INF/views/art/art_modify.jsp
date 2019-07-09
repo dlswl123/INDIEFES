@@ -2,7 +2,8 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ include file="../include/header.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js" ></script>
 <style>
@@ -407,7 +408,7 @@ $(document).ready(function() {
 			<!-- Modal -->
 	<div class="row" >
 		<div class="col-md-12">
-			<a id="modal-a" href="#modal-lyrics" role="button" class="btn" data-toggle="modal"></a>
+			<a id="modal-a" href="#modal-lyrics" role="button" class="btn" data-toggle="modal" style="display: none;"></a>
 			
 			<div class="modal fade" id="modal-lyrics" role="dialog" >
 				<div class="modal-dialog" role="document">

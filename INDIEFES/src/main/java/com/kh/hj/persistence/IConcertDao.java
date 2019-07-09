@@ -1,7 +1,9 @@
 package com.kh.hj.persistence;
 
 import java.util.List;
+import java.util.Map;
 
+import com.kh.hj.domain.ConcertInfoFileVo;
 import com.kh.hj.domain.ConcertInfoVo;
 
 public interface IConcertDao {
@@ -25,6 +27,9 @@ public interface IConcertDao {
 	
 	// 공연 홍보 글 수정
 	public void modifyConcertInfo(ConcertInfoVo vo) throws Exception;
+	
+	// 공연 홍보 글 작성시 포스터 파일경로 저장
+	public void updateConcertInfoFiles(Map<String, Object> map) throws Exception;
 	
 	// 공연 홍보 글 삭제
 	public void deleteConcertInfo(int concert_number) throws Exception;

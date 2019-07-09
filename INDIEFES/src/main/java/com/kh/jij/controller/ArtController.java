@@ -58,6 +58,7 @@ public class ArtController {
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 		if (userVo != null) {
+			String nowPage = "art_info";
 			String user_id = userVo.getUser_id();
 			LikeLogVo likeVo = new LikeLogVo();
 			likeVo.setUser_id(user_id);
@@ -65,7 +66,7 @@ public class ArtController {
 			GoodLogVo goodVo = new GoodLogVo();
 			goodVo.setUser_id(user_id);
 			goodVo.setArt_number(art_number);
-			int likedCount = artService.artLikedCheckById(likeVo);
+			List<LikeLogVo> likedCount = artService.artLikedCheckById(likeVo, nowPage);
 			int goodCount = artService.artGoodCheckById(goodVo);
 			model.addAttribute("likedCount", likedCount);
 			model.addAttribute("goodCount", goodCount);
@@ -139,6 +140,7 @@ public class ArtController {
 		pagingDto.setPerPage(24);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
+		
 		System.out.println("ArtController, ArtList, artList:" + artList);
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
@@ -146,11 +148,19 @@ public class ArtController {
 		System.out.println("리스트:"+paginationDto);
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
+		if (userVo != null) {
+			String nowPage = "art_list";
+			String user_id = userVo.getUser_id();
+			LikeLogVo likeVo = new LikeLogVo();
+			likeVo.setUser_id(user_id);
+			List<LikeLogVo> likeCount = artService.artLikedCheckById(likeVo, nowPage);
+			model.addAttribute("likeCount", likeCount);
+			System.out.println("artController, likeCount" + likeCount);
+		}
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
 		model.addAttribute("paginationDto", paginationDto);
 		model.addAttribute("userVo", userVo);
-
 	}
 	
 	// 앨범 이미지 가져오기
@@ -400,12 +410,14 @@ public class ArtController {
 		try {
 			if (userVo != null) {
 				String user_id = userVo.getUser_id();
+				String nowPage = "art_info";
 				likeVo.setUser_id(user_id);
-				int count = artService.artLikedCheckById(likeVo);
+				List<LikeLogVo> likeCountList = artService.artLikedCheckById(likeVo, nowPage);
 				int likedCount = artService.artLikedCountCheck(likeVo.getArt_number());
-				System.out.println("count:" + count);
+				System.out.println("likeCountList:" + likeCountList);
 				System.out.println("likedCount:" + likedCount);
-				if (count > 0) {
+				boolean check = likeCountList.isEmpty();
+				if (likeCountList != null && check == false) {
 					artService.artLikedDelete(likeVo);
 					likedCount = likedCount - 1;
 					artService.artLikedCount(likedCount, likeVo.getArt_number());

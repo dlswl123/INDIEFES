@@ -10,8 +10,9 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userInfo, #boardList, #artInfo, #concertInfo, #player,#payInfo,#teamInput,#teamInfo font {
+.sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
 	font-family: prstart;
+	margin-bottom: 10px;
 }
 .sidebar #home {
 	padding:20px;

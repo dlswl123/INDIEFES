@@ -99,7 +99,7 @@ public interface IArtInfoDao {
 	// 앨범에 좋아요 수정
 	public void artLikedCount(int liked_count, int art_number) throws Exception;
 	// 좋아요 체크
-	public int artLikedCheckById(LikeLogVo likeVo) throws Exception;
+	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo, String nowPage) throws Exception;
 	// 좋아요 하기
 	public void artLikedInsert(LikeLogVo likeVo) throws Exception;
 	// 좋아요 취소

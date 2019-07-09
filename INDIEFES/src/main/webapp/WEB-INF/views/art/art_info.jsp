@@ -157,6 +157,7 @@ $(document).ready(function() {
 	// 앨범정보- 좋아요버튼
 	$(".spLikedCount").click(function() {
 		var art_number = $(this).attr("data-art_number");
+		
 		console.log(art_number);
 		var url = "/indiefes/art/likedChange";
 		var data = {
@@ -173,12 +174,14 @@ $(document).ready(function() {
 			"data" : data,
 			"success" : function(receivedData) {
 				console.log(receivedData); // success
+				var artLikedCountSpan = $("#artLikedCountSpan");
+				var likeCount = parseInt(artLikedCountSpan.text	().trim());
 				if (receivedData.trim() == "likeInsert") {
 					$("#iconLiked").attr("class", "fas fa-heart");
+					artLikedCountSpan.text(likeCount + 1);
 				} else if (receivedData.trim() == "likeDelete") {
-					$("#iconLiked").css("color", "red");
 					$("#iconLiked").attr("class", "far fa-heart");
-					
+					artLikedCountSpan.text(likeCount - 1);
 				}
 			} // "success"
 		});
@@ -202,11 +205,14 @@ $(document).ready(function() {
 			"data" : data,
 			"success" : function(receivedData) {
 				console.log(receivedData); // success
+				var artGoodCountSpan = $("#artGoodCountSpan");
+				var goodCount = parseInt(artGoodCountSpan.text().trim());
 				if (receivedData.trim() == "goodInsert") {
 					$("#iconGood").attr("class", "fas fa-thumbs-up");
+					artGoodCountSpan.text(goodCount + 1);
 				} else if (receivedData.trim() == "goodDelete") {
-					$("#iconGood").css("color", "green");
 					$("#iconGood").attr("class", "far fa-thumbs-up");
+					artGoodCountSpan.text(goodCount - 1);
 					
 				}
 			} // "success"
@@ -293,22 +299,29 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-outline-secondary" id="btnArtAppro">앨범등록</button>
 					</c:when>
 					<c:otherwise>
+<%-- 					${likedCount } --%>
 					<c:choose>
-						<c:when test="${likedCount > 0 }">
-							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
-						</c:when>
-						<c:otherwise>
+						<c:when test="${empty likedCount || likedCount == null}">
 							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
-						</c:otherwise>
-					</c:choose>
-					<c:choose>
-						<c:when test="${goodCount > 0 }">
-							<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
 						</c:when>
 						<c:otherwise>
-							<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
 						</c:otherwise>
 					</c:choose>
+<%-- 					<c:if test="${artVo.liked_count != 0 }"> --%>
+<%-- 						[<span id="artLikedCountSpan">${artVo.liked_count }</span>] --%>
+<%-- 					</c:if> --%>
+					<c:choose>
+						<c:when test="${goodCount == 0 || empty goodCount || goodCount == ''}">
+							<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+						</c:when>
+						<c:otherwise>
+							<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+						</c:otherwise>
+					</c:choose>
+<%-- 					<c:if test="${artVo.good_count != 0 }"> --%>
+<%-- 						[<span id="artGoodCountSpan">${artVo.good_count }</span>] --%>
+<%-- 					</c:if> --%>
 					
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnListen">듣기</button> -->
 						<!-- 담기로 구매한 사용자만 다운로드 가능함 -->
