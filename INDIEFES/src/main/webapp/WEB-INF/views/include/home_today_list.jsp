@@ -26,6 +26,7 @@
     .albumInfo {
      border: 1px solid;
      margin: 20 0 0 15;
+     position: relative;
     }
 /*     한줄라인 글자수 제한 */
     .info{
@@ -35,20 +36,25 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
-    .art1{
-    overflow: hidden;
-    width: 100%;
-    height: 400px;
-    background-color:rgba(255,255,255,0.7);
-    }
-    .art2{
-    overflow: hidden;
-    width: 100%;
-    height: 400px;
-    background-color:rgba(255,255,255,0.7);
+    .art1, .art2 {
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space:nowrap;
+    width: 95%;
+    height: 600px;
+    background-color:rgba(255,255,255);
+    margin: auto;
+    box-shadow: 0px 5px 5px 5px grey;
     }
     .pagination{
     margin: 0 50;
+    }
+    .Count{
+    position: absolute;
+	top: 0%;
+	right: 0%;
+	color: #00ff00;
+	background-color:rgba(0,0,0);
     }
 </style>
 <script>
@@ -107,35 +113,4 @@ $(document).ready(function() {
 		</c:if>
 		</c:forEach>
 	</ul>
-</div>
-<form id="pageForm" action="/indiefes/">
-<input type="hidden" name="page"
-value="${toDayPaging.pagingDto.page}"/>
-</form>
-<div class="row">
-	<nav>
-		<ul class="pagination" >
-		<!-- 이전 -->
-		<c:if test="${toDayPaging.prev == true }">
-			<li class="page-item">
-				<a class="page-link a_pagination" href="#"
-					data-page="${toDayPaging.startPage - 1}">이전</a>
-			</li>
-		</c:if>	
-		<!-- 페이징 -->
-		<c:forEach var="i" begin="${toDayPaging.startPage}" 
-							end="${toDayPaging.endPage }">
-			<li class="page-item
-			<c:if test="${toDayPaging.pagingDto.page == i}">active</c:if>	
-		">
-				<a class="page-link a_pagination" href="#" data-page="${i}">${i}</a>
-			</li>
-		</c:forEach>
-		<c:if test="${toDayPaging.next == true }">
-			<li class="page-item">
-				<a class="page-link a_pagination"  href="#" data-page="${toDayPaging.endPage +1}">다음</a>
-			</li>		
-		</c:if>		
-		</ul>
-	</nav>
 </div>

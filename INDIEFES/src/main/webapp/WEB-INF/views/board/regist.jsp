@@ -34,7 +34,6 @@ $(document).ready(function(){
 
 		var formData = new FormData();
 		formData.append("file", file); // <input type="file" name"file_path">
-		
 		var url= "/indiefes/upload/uploadAjax";
 
 		$.ajax({

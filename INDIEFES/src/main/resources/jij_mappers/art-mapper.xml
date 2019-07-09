@@ -129,38 +129,6 @@
 		<include refid="search"></include>
 	</select>
 	
-<!-- 	검색 중복부분 -->
-	<sql id="search">
-       	<if test="searchType != null">
-       		<if test="searchType == 'albumName'">
-            	where art_title like '%' || #{keyword} || '%'
-   			</if>
-	   		<if test="searchType == 'song'">
-	   			, music_info m
-	            where art.art_number = m.art_number
-	            and m.music_title like '%' || #{keyword} || '%'
-	   		</if>
-	   		<if test="searchType == 'indieTeam'">
-	            where art.team_number = (select team_number
-	                                     from indie_team i
-	                                     where i.art_team like '%' || #{keyword} || '%'
-	                                     group by i.team_number)
-	   		</if>
-	   		<if test="searchType == 'artGenre'">
-	   			where art.art_genre like '%' || #{keyword} || '%'
-	   		</if>
-	   		<if test="searchType == 'appro'">
-	   			 where upload_check = #{keyword}
-	   		</if>
-	   		<if test="searchType == 'working'">
-	   			 where upload_check = #{keyword}
-	   		</if>
-	   		<if test="searchType == 'delete'">
-	   			 where upload_check = #{keyword}
-	   		</if>
-       	</if>
-	</sql>
-	
 <!-- 	리스트에 노래 가져오기 -->
 	<select id="playList" resultType="MusicInfoVo">
 		select *
@@ -188,26 +156,16 @@
 	</delete>
 <!-- 	최신 앨범 -->
 	<select id="toDayList" resultType="ArtInfoVo">
-		
-		select *
-		from (select rownum rnum, a.*
-		      from (select art.* from art_info art
-		      		where art.reg_art > (sysdate-7)
-		      order by art.art_number desc) a)
-		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
+		select * from art_info
+		where reg_art > (sysdate-7)
+		order by art_number desc
 	</select>
 <!-- 	인기 앨범 -->
 	<select id="goodList" resultType="ArtInfoVo">
 		select *
 		from art_info
-		where rownum &lt; 10
+		where rownum &lt; 100
 		order by good_count desc
-	</select>
-	<!-- 	페이징갯수 -->
-	<select id="toDayCount" resultType="int">
-		select count(*) 
-		from art_info
-		where reg_art > (sysdate-7)
 	</select>
 	<!-- 카트에 담기 -->
 	<insert id="cartInput">
@@ -258,49 +216,124 @@
 		where art_number = #{art_number}
 	</update>
 	
-	<select id="artLikedCheck" resultType="Integer">
-		select count(*)
-		from like_log
-		where user_id = #{user_id}
-	</select>
-	
+<!-- 	앨범에 좋아요 수정 -->
 	<update id="artLikedCount">
 		update art_info set
 			liked_count = #{liked_count}
 		where art_number = #{art_number}
 	</update>
 	
+<!-- 	좋아요 하기 -->
 	<insert id="artLikedInsert">
 		insert into like_log(user_id, art_number)	
 		values(#{user_id}, #{art_number})
 	</insert>
 	
+<!-- 	좋아요 취소 -->
 	<delete id="artLikedDelete">
 		delete from like_log
 		where art_number = #{art_number}
 		and user_id = #{user_id}
 	</delete>
-		
-	<select id="artGoodCheck" resultType="Integer">
-		select count(*)
+	
+<!-- 	좋아요 체크 -->
+<!-- 	<select id="artLikedCheckById" resultType="Integer"> -->
+<!-- 		select count(*) -->
+<!-- 		from like_log -->
+<!-- 		where user_id = #{user_id} -->
+<!-- 		and art_number = #{art_number} -->
+<!-- 	</select> -->
+	<select id="artLikedCheckById" resultType="LikeLogVo">
+		select *
 		from like_log
-		where user_id = #{user_id}
-	</select>	
+		<include refid="checkById"></include>
+	</select>
 		
+<!-- 	해당앨범의 좋아요수  -->
+	<select id="artLikedCountCheck" resultType="Integer">
+		select liked_count
+		from art_info
+		where art_number = #{art_number}
+	</select>
+		
+		
+<!--	앨범에 추천수 수정 -->
 	<update id="artGoodCount">
 		update art_info set
 			good_count = #{good_count}
 		where art_number = #{art_number}
 	</update>
 	
+<!-- 	추천 하기 -->
 	<insert id="artGoodInsert">
 		insert into good_log(user_id, art_number)	
 		values(#{user_id}, #{art_number})
 	</insert>
 	
+<!-- 	추천 취소 -->
 	<delete id="artGoodDelete">
 		delete from good_log
 		where art_number = #{art_number}
 		and user_id = #{user_id}
 	</delete>
+	
+<!-- 	추천 체크 -->
+	<select id="artGoodCheckById" resultType="Integer">
+		select count(*)
+		from good_log
+		where user_id = #{user_id}
+		and art_number = #{art_number}
+<!-- 		<include refid="checkById"></include> -->
+	</select>
+	
+<!-- 	해당 앨범에 추천수 -->
+	<select id="artGoodCountCheck" resultType="Integer">
+		select good_count
+		from art_info
+		where art_number = #{art_number}
+	</select>
+	
+	<!-- 	검색 중복부분 -->
+	<sql id="search">
+       	<if test="searchType != null">
+       		<if test="searchType == 'albumName'">
+            	where art_title like '%' || #{keyword} || '%'
+   			</if>
+	   		<if test="searchType == 'song'">
+	   			, music_info m
+	            where art.art_number = m.art_number
+	            and m.music_title like '%' || #{keyword} || '%'
+	   		</if>
+	   		<if test="searchType == 'indieTeam'">
+	            where art.team_number = (select team_number
+	                                     from indie_team i
+	                                     where i.art_team like '%' || #{keyword} || '%'
+	                                     group by i.team_number)
+	   		</if>
+	   		<if test="searchType == 'artGenre'">
+	   			where art.art_genre like '%' || #{keyword} || '%'
+	   		</if>
+	   		<if test="searchType == 'appro'">
+	   			 where upload_check = #{keyword}
+	   		</if>
+	   		<if test="searchType == 'working'">
+	   			 where upload_check = #{keyword}
+	   		</if>
+	   		<if test="searchType == 'delete'">
+	   			 where upload_check = #{keyword}
+	   		</if>
+       	</if>
+	</sql>
+	
+	<sql id="checkById">
+		<if test="nowPage != null">
+			<if test="nowPage == 'art_list'">
+				where user_id = #{user_id}
+			</if>
+			<if test="nowPage == 'art_info'">
+				where user_id = #{user_id}
+				and art_number = #{art_number}
+			</if>
+		</if>
+	</sql>
 </mapper>

@@ -33,6 +33,25 @@
 		select file_path from concert_file where concert_number = #{concert_number}
 	</select>
 	
+	<!-- 공연 홍보 글 파일 삭제 -->
+	<delete id="deleteConcertInfoFiles">
+		delete from concert_file where file_path = #{file_path}
+	</delete>
+	
+	<!-- 공연 홍보 글 수정 -->
+	<update id="modifyConcertInfo">
+		update concert_info set subject = #{subject}, summary = #{summary}, content = #{content},
+			concert_date = to_date(#{concert_date}, 'YYYY-MM-DD HH24:MI'),
+			place_name = #{place_name}, place_x = #{place_x}, place_y = #{place_y},
+			info_file_path = #{info_file_path, jdbcType=VARCHAR}
+		where concert_number = #{concert_number}
+	</update>
+	
+	<!-- 홍포 포스터 수정추가 -->
+	<insert id="updateConcertInfoFiles">
+		insert into concert_file values (#{concert_number}, #{file_path, jdbcType=VARCHAR})
+	</insert>
+	
 	<!-- 공연 홍보 글 삭제 -->
 	<update id="deleteConcertInfo">
 		update concert_info set deleted = 'Y' where concert_number = #{concert_number}

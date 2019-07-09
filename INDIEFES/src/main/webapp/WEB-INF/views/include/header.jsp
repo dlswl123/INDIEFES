@@ -25,7 +25,8 @@
 <style>
 body {
 /* 	background: url("${pageContext.request.contextPath}/resources/bg_images/bgpage.jpg") no-repeat center center fixed; */
-	background: url("<c:url value='/resources/bg_images/bgpage.jpg'/>") no-repeat center center fixed;
+/* 	background: url("<c:url value='/resources/bg_images/bgpage.jpg'/>") no-repeat center center fixed; */
+	background-color: rgb(152,152,152);
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
@@ -41,6 +42,9 @@ html, body {
 	-webkit-user-select:none;
 	-moz-user-select:-moz-none;
 	user-select:none;
+}
+.col-md-10 {
+	margin:auto;padding:50px;
 }
 </style>
 

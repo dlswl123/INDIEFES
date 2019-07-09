@@ -190,10 +190,9 @@ $(document).ready(function() {
 			</div>
 			<!--  페이지네이션(페이지클릭창) -->
 			<div class="row">
-		<div class="col-md-12">
-			<div class="row">
-			<nav style="margin:auto;">
-				<ul class="pagination">
+		<div class="col-md-12 text-center" style="float:center;">
+			<nav>
+				<ul class="pagination" >
 				<!-- 이전 -->
 				<c:if test="${paginationDto.prev == true }">
 					<li class="page-item">

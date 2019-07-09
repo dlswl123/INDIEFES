@@ -1,6 +1,7 @@
 package com.kh.jij.service;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.GoodLogVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.PayLogVo;
 import com.kh.jij.domain.PlayListVo;
@@ -167,15 +170,9 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 	// 최신앨범
 	@Override
-	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
-		List<ArtInfoVo> artList = artDao.toDayList(pagingDto);
+	public List<ArtInfoVo> toDayList() throws Exception {
+		List<ArtInfoVo> artList = artDao.toDayList();
 		return artList;
-	}
-	// 최신앨범 수
-	@Override
-	public int toDayCount() throws Exception {
-		int artCount = artDao.toDayCount();
-		return artCount;
 	}
 	// 인기앨범
 	@Override
@@ -226,5 +223,59 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public void artUploadReturn(int art_number) throws Exception {
 		artDao.artUploadReturn(art_number);
 		musicDao.musicUploadReturn(art_number);
+	}
+
+	@Override
+	public void artLikedCount(int liked_count, int art_number) throws Exception {
+		artDao.artLikedCount(liked_count, art_number);
+	}
+
+	@Override
+	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo, String nowPage) throws Exception {
+		List<LikeLogVo> list = artDao.artLikedCheckById(likeVo, nowPage);
+		return list;
+	}
+
+	@Override
+	public void artLikedInsert(LikeLogVo likeVo) throws Exception {
+		artDao.artLikedInsert(likeVo);
+	}
+
+	@Override
+	public void artLikedDelete(LikeLogVo likeVo) throws Exception {
+		artDao.artLikedDelete(likeVo);
+	}
+
+	@Override
+	public void artGoodCount(int good_count, int art_number) throws Exception {
+		artDao.artGoodCount(good_count, art_number);
+	}
+
+	@Override
+	public void artGoodInsert(GoodLogVo goodVo) throws Exception {
+		artDao.artGoodInsert(goodVo);
+	}
+
+	@Override
+	public void artGoodDelete(GoodLogVo goodVo) throws Exception {
+		artDao.artGoodDelete(goodVo);
+	}
+
+	@Override
+	public int artGoodCheckById(GoodLogVo goodVo) throws Exception {
+		int count = artDao.artGoodCheckById(goodVo);
+		return count;
+	}
+
+	@Override
+	public int artLikedCountCheck(int art_number) throws Exception {
+		int likedCount = artDao.artLikedCountCheck(art_number);
+		return likedCount;
+	}
+
+	@Override
+	public int artGoodCountCheck(int art_number) throws Exception {
+		int goodCount = artDao.artGoodCountCheck(art_number);
+		return goodCount;
 	}
 }

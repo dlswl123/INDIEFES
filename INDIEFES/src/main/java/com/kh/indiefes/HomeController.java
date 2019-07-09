@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.service.IArtInfoService;
-import com.kh.ts.domain.PaginationDto;
-import com.kh.ts.domain.PagingDto;
 
 
 /**
@@ -34,7 +32,7 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model,PagingDto pagingDto) throws Exception{
+	public String home(Locale locale, Model model) throws Exception{
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -46,16 +44,10 @@ public class HomeController {
 		
 //		model.addAttribute("serverTime", formattedDate );
 		// 최신앨범
-		pagingDto.setPerPage(9);
-		List<ArtInfoVo> toDayList = artService.toDayList(pagingDto);
+		List<ArtInfoVo> toDayList = artService.toDayList();
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
-		PaginationDto toDayPaging = new PaginationDto();
-		int toDayCount = artService.toDayCount();
-		toDayPaging.setPagingDto(pagingDto);
-		toDayPaging.setTotalCount(toDayCount);
 		model.addAttribute("toDayList", toDayList);
 		model.addAttribute("teamList", teamList);
-		model.addAttribute("toDayPaging", toDayPaging);
 		// 인기앨범
 		List<ArtInfoVo> goodList = artService.goodList();
 		model.addAttribute("goodList", goodList);

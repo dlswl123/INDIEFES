@@ -3,7 +3,9 @@ package com.kh.jij.persistence;
 import java.util.List;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.GoodLogVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.ts.domain.PagingDto;
 import com.kh.jij.domain.MusicInfoVo;
@@ -67,10 +69,7 @@ public interface IArtInfoDao {
 	public void playDelete(int play_index) throws Exception;
 	
 	// 최신앨범
-	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception;
-	
-	// 최신앨범 수
-	public int toDayCount()throws Exception;
+	public List<ArtInfoVo> toDayList() throws Exception;
 	
 	// 인기앨범
 	public List<ArtInfoVo> goodList() throws Exception;
@@ -97,4 +96,24 @@ public interface IArtInfoDao {
 	// 업로드반려
 	public void artUploadReturn(int art_number) throws Exception;
 	
+	// 앨범에 좋아요 수정
+	public void artLikedCount(int liked_count, int art_number) throws Exception;
+	// 좋아요 체크
+	public List<LikeLogVo> artLikedCheckById(LikeLogVo likeVo, String nowPage) throws Exception;
+	// 좋아요 하기
+	public void artLikedInsert(LikeLogVo likeVo) throws Exception;
+	// 좋아요 취소
+	public void artLikedDelete(LikeLogVo likeVo) throws Exception;
+	// 해당앨범 좋아요수 체크
+	public int artLikedCountCheck(int art_number) throws Exception;
+	// 앨범에 추천수 수정
+	public void artGoodCount(int good_count, int art_number) throws Exception;
+	// 추천 하기
+	public void artGoodInsert(GoodLogVo goodVo) throws Exception;
+	// 추천 취소
+	public void artGoodDelete(GoodLogVo goodVo) throws Exception;
+	// 추천 체크
+	public int artGoodCheckById(GoodLogVo goodVo) throws Exception; 
+	// 해당앨범 추천수 체크
+	public int artGoodCountCheck(int art_number) throws Exception;
 }

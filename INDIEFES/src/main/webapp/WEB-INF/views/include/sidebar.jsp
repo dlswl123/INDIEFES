@@ -10,8 +10,9 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userInfo, #boardList, #artInfo, #concertInfo, #player,#payInfo,#teamInput,#teamInfo font {
+.sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
 	font-family: prstart;
+	margin-bottom: 10px;
 }
 .sidebar #home {
 	padding:20px;
@@ -106,7 +107,13 @@ $(document).ready(function() {
 			   	 
 			    <c:otherwise>
 			        <section id="logout">
-					<a href="/indiefes/user/logout">
+			        <script type="text/javascript">
+						function closePlayer() {
+							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+							new_popup.close();
+						}
+					</script>
+					<a href="/indiefes/user/logout" onclick="closePlayer();">
 						<font>LOGOUT</font>
 					</a>
 					</section>
@@ -141,7 +148,7 @@ $(document).ready(function() {
 					<section id="player">
 				    <script type="text/javascript">
 						function musicPlayer() {
-							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 						}
 					</script>
 			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>

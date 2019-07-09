@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.jij.domain.ArtInfoVo;
+import com.kh.jij.domain.GoodLogVo;
 import com.kh.jij.domain.IndieTeamVo;
+import com.kh.jij.domain.LikeLogVo;
 import com.kh.jij.domain.MusicInfoVo;
 import com.kh.jij.domain.TeamMemberVo;
 import com.kh.jij.persistence.IMusicInfoDao;
@@ -50,11 +52,26 @@ public class ArtController {
 
 	// 앨범정보조회 폼
 	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
-	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model) throws Exception {
+	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model, HttpSession session) throws Exception {
 		String teamName = artService.getTeamName(team_number);
 		ArtInfoVo artVo = artService.artRead(art_number);
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
-		
+		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
+		if (userVo != null) {
+			String nowPage = "art_info";
+			String user_id = userVo.getUser_id();
+			LikeLogVo likeVo = new LikeLogVo();
+			likeVo.setUser_id(user_id);
+			likeVo.setArt_number(art_number);
+			GoodLogVo goodVo = new GoodLogVo();
+			goodVo.setUser_id(user_id);
+			goodVo.setArt_number(art_number);
+			List<LikeLogVo> likedCount = artService.artLikedCheckById(likeVo, nowPage);
+			int goodCount = artService.artGoodCheckById(goodVo);
+			model.addAttribute("likedCount", likedCount);
+			model.addAttribute("goodCount", goodCount);
+			
+		}
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
 		model.addAttribute("teamName", teamName);
@@ -123,8 +140,7 @@ public class ArtController {
 		pagingDto.setPerPage(24);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
-		model.addAttribute("artList", artList);
-		model.addAttribute("teamList", teamList);
+		
 		System.out.println("ArtController, ArtList, artList:" + artList);
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
@@ -132,9 +148,19 @@ public class ArtController {
 		System.out.println("리스트:"+paginationDto);
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
+		if (userVo != null) {
+			String nowPage = "art_list";
+			String user_id = userVo.getUser_id();
+			LikeLogVo likeVo = new LikeLogVo();
+			likeVo.setUser_id(user_id);
+			List<LikeLogVo> likeCount = artService.artLikedCheckById(likeVo, nowPage);
+			model.addAttribute("likeCount", likeCount);
+			System.out.println("artController, likeCount" + likeCount);
+		}
+		model.addAttribute("artList", artList);
+		model.addAttribute("teamList", teamList);
 		model.addAttribute("paginationDto", paginationDto);
 		model.addAttribute("userVo", userVo);
-
 	}
 	
 	// 앨범 이미지 가져오기
@@ -181,8 +207,12 @@ public class ArtController {
 
 	// 앨범정보 입력폼
 	@RequestMapping(value = "/art_info_input", method = RequestMethod.GET)
-	public void artInfoInput() {
-//		System.out.println("ArtInfoInput()");
+	public String artInfoInput(HttpSession session) {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
+		return null;
 	}
 
 	// 앨범정보 처리
@@ -208,8 +238,12 @@ public class ArtController {
 
 	// 팀생성 및 가입 폼
 	@RequestMapping(value = "/indie_team_input", method = RequestMethod.GET)
-	public void teamInput() {
-		System.out.println("TeamInput()");
+	public String teamInput(HttpSession session) {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
+		return null;
 	}
 
 	// 팀생성처리
@@ -250,25 +284,28 @@ public class ArtController {
 	
 	// 팀정보
 	@RequestMapping(value = "/indie_team_info", method = RequestMethod.GET)
-	public void teamInfo(HttpSession session,Model model,int team_number) throws Exception {
+	public String teamInfo(HttpSession session,Model model,int team_number) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
 		List<TeamMemberVo> memberList = artService.teamInfo(team_number);
 		String teamName = artService.getTeamName(team_number);
 		List<ArtInfoVo> teamArtList = artService.teamArtList(team_number);
-		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("teamName", teamName);
 		model.addAttribute("teamArtList", teamArtList);
 		model.addAttribute("userVo", userVo);
-		
+		return null;
 	}
 	// 팀정보
-	@RequestMapping(value = "/home_art_list", method = RequestMethod.GET)
-	public void HomeArtList(PagingDto pagingDto,Model model) throws Exception {
-		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
-		List<IndieTeamVo> teamList = artService.getIndieTeam();
-		model.addAttribute("artList", artList);
-		model.addAttribute("teamList", teamList);
-	}
+//	@RequestMapping(value = "/home_art_list", method = RequestMethod.GET)
+//	public void HomeArtList(PagingDto pagingDto,Model model) throws Exception {
+//		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
+//		List<IndieTeamVo> teamList = artService.getIndieTeam();
+//		model.addAttribute("artList", artList);
+//		model.addAttribute("teamList", teamList);
+//	}
 	// 카트담기
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String CartInput(HttpSession session,ArtInfoVo artVo,int music_number, String music_title) throws Exception {
@@ -333,13 +370,17 @@ public class ArtController {
 	
 	// 결제 페이지
 	@RequestMapping(value = "/pay_info", method = RequestMethod.GET)
-	public void payInfo(HttpSession session,Model model) throws Exception {
+	public String payInfo(HttpSession session,Model model) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
 		String user_id = userVo.getUser_id();
 		List<PayLogVo> payList = artService.payList(user_id);
 		model.addAttribute("userVo", userVo);
 		model.addAttribute("payList", payList);
 		System.out.println("payList: "+payList);
+		return null;
 	}
 	// 결제 처리
 	@RequestMapping(value = "/pay_ok", method = RequestMethod.GET)
@@ -359,6 +400,75 @@ public class ArtController {
 		payVo.setMusic_number(music_number);
 		artService.payDelete(payVo);
 		return "redirect:/art/pay_info";
+	}
+	
+	// 좋아요 체크
+	@RequestMapping(value="/likedChange", method = RequestMethod.GET)
+	public ResponseEntity<String> likeChange(LikeLogVo likeVo, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		ResponseEntity<String> entity = null;
+		try {
+			if (userVo != null) {
+				String user_id = userVo.getUser_id();
+				String nowPage = "art_info";
+				likeVo.setUser_id(user_id);
+				List<LikeLogVo> likeCountList = artService.artLikedCheckById(likeVo, nowPage);
+				int likedCount = artService.artLikedCountCheck(likeVo.getArt_number());
+				System.out.println("likeCountList:" + likeCountList);
+				System.out.println("likedCount:" + likedCount);
+				boolean check = likeCountList.isEmpty();
+				if (likeCountList != null && check == false) {
+					artService.artLikedDelete(likeVo);
+					likedCount = likedCount - 1;
+					artService.artLikedCount(likedCount, likeVo.getArt_number());
+					entity = new ResponseEntity<String>("likeDelete", HttpStatus.OK);
+				} else {
+					artService.artLikedInsert(likeVo);
+					likedCount = likedCount + 1;
+					artService.artLikedCount(likedCount,  likeVo.getArt_number());
+					entity = new ResponseEntity<String>("likeInsert", HttpStatus.OK);
+				}	
+				System.out.println("likeVo:" + likeVo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@RequestMapping(value="/goodChange", method = RequestMethod.GET)
+	// 추천수 체크
+	public ResponseEntity<String> goodChange(GoodLogVo goodVo, HttpSession session) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		ResponseEntity<String> entity = null;
+		try {
+			if (userVo != null) {
+				String user_id = userVo.getUser_id();
+				goodVo.setUser_id(user_id);
+				int count = artService.artGoodCheckById(goodVo);
+				int goodCount = artService.artGoodCountCheck(goodVo.getArt_number());
+				System.out.println("goodVo:" + goodVo);
+				System.out.println("count:" + count);
+				System.out.println("goodCount:" + goodCount);
+				if (count > 0) {
+					artService.artGoodDelete(goodVo);
+					goodCount = goodCount - 1;
+					artService.artGoodCount(goodCount, goodVo.getArt_number());
+					entity = new ResponseEntity<String>("goodDelete", HttpStatus.OK);
+				} else {
+					artService.artGoodInsert(goodVo);
+					goodCount = goodCount + 1;
+					artService.artGoodCount(goodCount,  goodVo.getArt_number());
+					entity = new ResponseEntity<String>("goodInsert", HttpStatus.OK);
+				}	
+				System.out.println("goodVo:" + goodVo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 	
 }

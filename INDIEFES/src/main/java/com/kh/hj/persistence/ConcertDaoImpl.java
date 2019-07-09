@@ -1,12 +1,14 @@
 package com.kh.hj.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hj.domain.ConcertInfoFileVo;
 import com.kh.hj.domain.ConcertInfoVo;
 
 @Repository
@@ -49,11 +51,29 @@ public class ConcertDaoImpl implements IConcertDao {
 		List<String> list = sqlSession.selectList(NAMESPACE + ".getConcertInfoFiles", concert_number);
 		return list;
 	}
+	
+	@Override
+	public void deleteConcertInfoFiles(String file_path) throws Exception {
+		// 공연 홍보 글 파일 삭제
+		sqlSession.delete(NAMESPACE + ".deleteConcertInfoFiles", file_path);
+	}
 
 	@Override
 	public void deleteConcertInfo(int concert_number) throws Exception {
 		// 공연 홍보 글 삭제
 		sqlSession.update(NAMESPACE + ".deleteConcertInfo", concert_number);
+	}
+
+	@Override
+	public void modifyConcertInfo(ConcertInfoVo vo) throws Exception {
+		// 공연 홍보 글 수정
+		sqlSession.update(NAMESPACE + ".modifyConcertInfo", vo);
+	}
+	
+	@Override
+	public void updateConcertInfoFiles(Map<String, Object> map) throws Exception {
+		// 공연 홍보 글 수정시 새 파일 업로드
+		sqlSession.insert(NAMESPACE + ".updateConcertInfoFiles", map);
 	}
 
 }

@@ -1,12 +1,15 @@
 package com.kh.hj.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.hj.domain.ConcertInfoFileVo;
 import com.kh.hj.domain.ConcertInfoVo;
 import com.kh.hj.persistence.IConcertDao;
 
@@ -48,6 +51,29 @@ public class ConcertServiceImpl implements IConcertService {
 		// 공연 홍보 글 파일 불러오기
 		List<String> list = dao.getConcertInfoFiles(concert_number);
 		return list;
+	}
+	
+	@Override
+	public void deleteConcertInfoFiles(String file_path) throws Exception {
+		// 공연 홍보 글 파일 삭제
+		dao.deleteConcertInfoFiles(file_path);
+	}
+	
+	@Override
+	public void modifyConcertInfo(ConcertInfoVo vo) throws Exception {
+		// 공연 홍보 글 수정
+		dao.modifyConcertInfo(vo);
+		if (vo.getFile_path() != null) {
+			for (String file_path : vo.getFile_path()) {
+				Map<String, Object> map = new HashMap<>();
+				map.put("concert_number", vo.getConcert_number());
+				map.put("file_path", file_path);
+//				ConcertInfoFileVo fileVo = new ConcertInfoFileVo();
+//				fileVo.setConcert_number(vo.getConcert_number());
+//				fileVo.setFile_path(file_path);
+				dao.updateConcertInfoFiles(map);
+			}
+		}
 	}
 
 	@Override
