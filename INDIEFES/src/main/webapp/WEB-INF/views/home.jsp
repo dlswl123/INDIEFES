@@ -13,12 +13,15 @@
 	font-family: dgm;
 	font-size: 2rem;
 	margin-left: 20px;
+	color: #292929;
 }
 #logo {
-/* 	background-color:rgba(255,255,255,0.7); */
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
 }
 #art1sec, #art2sec {
-	background-color:rgba(255,255,255,0.7);padding-bottom:20px;
+	background-color:#ffffff;padding-bottom:20px;
 }
 /* 탭 */
 ul.tabs {
@@ -32,6 +35,7 @@ ul.tabs {
     width: 100%;
     font-family:"dotum";
     font-size:12px;
+    background: #fafafa;
 }
 ul.tabs li {
     float: left;
@@ -48,15 +52,15 @@ ul.tabs li {
     position: relative;
 }
 ul.tabs li.active {
-    background: #FFFFFF;
-    border-bottom: 1px solid #FFFFFF;
+    background: #ffffff;
+    border-bottom: 1px solid #ffffff;
 }
 .tab_container {
     border: 1px solid #eee;
     border-top: none;
     clear: both;
     width: 100%;
-    background: #FFFFFF;
+    background: #ffffff;
 }
 .tab_content {
     padding: 5px;
