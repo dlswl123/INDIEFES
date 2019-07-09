@@ -33,6 +33,11 @@
 	});
 	</script>
 	
+	
+
+
+
+	
 	<form id="pageForm" action="/indiefes/user/user-management">
 	<!-- 	<input type="hidden" name="perPage"  -->
 	<%-- 		value="${paginationDto.pagingDto.perPage}"> --%>
@@ -43,9 +48,8 @@
 	<input type="hidden" name="keyword" 
 		value="${paginationDto.pagingDto.keyword}">
 	</form>
+	
 	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,0.7);">
-	${pagingDto}<br>
-	${paginationDto}
 		<div class="col-md-12">
 			<table class="table">
 				<thead>
@@ -55,6 +59,9 @@
 						</th>
 						<th>
 							이름
+						</th>
+						<th>
+							닉네임
 						</th>
 						<th>
 							email
@@ -72,6 +79,7 @@
 					<tr>
 						<td>${userInfoVo.user_id}</td>
 						<td>${userInfoVo.user_name}</td>
+						<td>${userInfoVo.user_nick}</td>
 						<td>${userInfoVo.user_email}</td>
 						<td>
 						<c:if test="${userInfoVo.user_gender eq 'M'}">
@@ -109,7 +117,7 @@
 			
 		</div>
 		
-		<div class="row">
+		<div class="row" style="margin: auto;">
 		<div class="col-md-12">
 			<nav>
 				<ul class="pagination">
@@ -148,29 +156,30 @@
 	
 	<div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- 		<div class="col-md-12"> -->
+<!-- 			<nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
 				 
 				
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<!-- 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
 					
 						
-						<select class="selectBox" id="searchType">
-						<option value="user_id">아이디</option>
-						<option value="user_name">이름</option>
-						<option value="user_email">email</option>
-						</select>
 					
-					<form class="form-inline">
-						<input class="form-control mr-sm-2" type="text" /> 
-						<button class="btn btn-primary my-2 my-sm-0" type="submit">
-							Search
-						</button>
+				
+					<form class="form-inline" style="margin: auto;">
+						<select class="form-control" id="searchType">
+							<option value="user_id">아이디</option>
+							<option value="user_name">이름</option>
+							<option value="user_email">email</option>
+							<option value="user_nick">닉네임</option>
+						</select>
+						<input class="form-control mr-sm-2" type="text" id="keyword" value="${paginationDto.pagingDto.keyword}" /> 
+						<input type="button" class="btn btn-primary my-2 my-sm-0" id="btnSearch" value="검색" />
+						
 					</form>
 					
-				</div>
-			</nav>
-		</div>
+<!-- 				</div> -->
+<!-- 			</nav> -->
+<!-- 		</div> -->
 	</div>
 </div>
 	

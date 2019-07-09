@@ -14,7 +14,7 @@
 	<select id="select" resultType="BoardVo">
 		select *
 		from board_info b, user_info u
-		where b.user_id = u.user_id and board_number=#{board_number}		
+		where b.user_id = u.user_id and board_number=#{board_number}	
 	</select>
 	
 	<!-- 글목록 -->
