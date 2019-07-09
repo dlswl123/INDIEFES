@@ -221,6 +221,6 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-</div>
 <%@ include file="../include/sidebar.jsp" %>
+</div>
 <%@ include file="../include/footer.jsp" %>
