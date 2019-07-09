@@ -33,24 +33,19 @@ $(document).ready(function() {
 					<!-- Session으로 유저 정보 받아오기 -->
 <!-- 					<input type="hidden" name="user_id" value="indie1" /> -->
 			
-					<label id="subject">공연 제목</label>
-					<div>${vo.subject}</div><br>
+					<div><h1>${vo.subject}</h1></div><hr>
 					
-					<label id="show_date">공연 일자</label>
-					<div>${vo.concert_date}</div><br>
+					<div>${vo.concert_date}</div><hr>
 					
-					<label id="summary">공연 요약 내용</label>
-					<div>${vo.summary}</div><br>
+					<div>${vo.summary}</div><hr>
 					
-					<label id="file_path">홍보 포스터</label>
 					<c:forEach var="image" items="${list}">
 					<div>
 						<img src="/indiefes/concert/displayFile?fileName=${image}" style="max-width:100%;">
 					</div><br>
 					</c:forEach>
 					
-					<label id="content">공연 내용</label>
-					<div>${vo.content}</div><br>
+					<div>${vo.content}</div><hr>
 						
 					<%@ include file="../include/show_map.jsp" %>
 					

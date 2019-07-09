@@ -146,7 +146,7 @@ $(document).ready(function() {
 		if ($("#spanInfoFile").text() != uploadedInfoFileName) {
 			$.get("/indiefes/concert/deleteFile?fileName=" + uploadedInfoFile, function(result) {
 				if (result == "success") {
-					alert("fileDeleteSuccess");
+					console.log("success");
 				}
 			});
 		}
