@@ -188,26 +188,16 @@
 	</delete>
 <!-- 	최신 앨범 -->
 	<select id="toDayList" resultType="ArtInfoVo">
-		
-		select *
-		from (select rownum rnum, a.*
-		      from (select art.* from art_info art
-		      		where art.reg_art > (sysdate-7)
-		      order by art.art_number desc) a)
-		where rnum &gt;= #{startRow} and rnum &lt;= #{endRow}
+		select * from art_info
+		where reg_art > (sysdate-7)
+		order by art_number desc
 	</select>
 <!-- 	인기 앨범 -->
 	<select id="goodList" resultType="ArtInfoVo">
 		select *
 		from art_info
-		where rownum &lt; 10
+		where rownum &lt; 100
 		order by good_count desc
-	</select>
-	<!-- 	페이징갯수 -->
-	<select id="toDayCount" resultType="int">
-		select count(*) 
-		from art_info
-		where reg_art > (sysdate-7)
 	</select>
 	<!-- 카트에 담기 -->
 	<insert id="cartInput">

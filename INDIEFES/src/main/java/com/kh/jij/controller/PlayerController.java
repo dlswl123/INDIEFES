@@ -44,8 +44,11 @@ public class PlayerController {
 	
 	// 플레이어
 	@RequestMapping(value="/player", method=RequestMethod.GET)
-	public void Player(HttpSession session,Model model) throws Exception {
+	public String Player(HttpSession session,Model model) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
 		List<PlayListVo> playListInfo = artService.playListInfo(userVo.getUser_id());
 		List<MusicInfoVo> playList = artService.playList(userVo.getUser_id());
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
@@ -63,6 +66,7 @@ public class PlayerController {
 		}
 		model.addAttribute("playList", playList);
 		model.addAttribute("uploadPath", uploadPath);
+		return null;
 	}
 	
 	// 플레이리스트

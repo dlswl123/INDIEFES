@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="row">
-	<ul  class="albumList">
+<div class="row" id="divX">
+	<ul  class="albumList" id="albumList1">
 		<c:forEach items="${goodList}" var="artVo">
 		<c:if test="${artVo.upload_check == 1}">
 			<li class="art_info">
@@ -12,6 +12,9 @@
 						<span class="mask"></span>
 						<img id="img_art_cover"class="art_images" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" alt="${artVo.art_title} 앨범 대표이미지">
 						</a>
+					</div>
+					<div class="count">
+						<span>${count = count+1}위</span>
 					</div>
 				<figcaption class="info">
 					<a href="/indiefes/art/art_info/${artVo.art_number }/${artVo.team_number}" class="albumTitle" title="artInfoVo.art_title" onclick="" target="_self">${artVo.art_title}</a>
@@ -27,7 +30,6 @@
 						</p>
 						</div>
 					</figcaption>
-						<p>${count = count+1}위</p>
 				</figure>
 			</li>
 		</c:if>

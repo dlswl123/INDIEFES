@@ -163,15 +163,9 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 	
 	// 최신 앨범 
 	@Override
-	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
-		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".toDayList",pagingDto);
+	public List<ArtInfoVo> toDayList() throws Exception {
+		List<ArtInfoVo> artList = sqlSession.selectList(NAMESPACE + ".toDayList");
 		return artList;
-	}
-	// 최신앨범 수
-	@Override
-	public int toDayCount() throws Exception {
-		int artCount = sqlSession.selectOne(NAMESPACE + ".toDayCount");
-		return artCount;
 	}
 	// 인기 앨범
 	@Override

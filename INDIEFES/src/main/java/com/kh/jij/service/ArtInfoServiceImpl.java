@@ -169,15 +169,9 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 	// 최신앨범
 	@Override
-	public List<ArtInfoVo> toDayList(PagingDto pagingDto) throws Exception {
-		List<ArtInfoVo> artList = artDao.toDayList(pagingDto);
+	public List<ArtInfoVo> toDayList() throws Exception {
+		List<ArtInfoVo> artList = artDao.toDayList();
 		return artList;
-	}
-	// 최신앨범 수
-	@Override
-	public int toDayCount() throws Exception {
-		int artCount = artDao.toDayCount();
-		return artCount;
 	}
 	// 인기앨범
 	@Override

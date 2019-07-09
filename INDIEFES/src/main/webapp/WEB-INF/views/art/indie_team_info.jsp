@@ -51,9 +51,12 @@ h3{
 color : #ffff00;
 }
 div{
-font-family: swag;
+font-family: dgm;
 }
-    
+#list{
+font-size: 1.5em;
+color : #00ff00;
+}
 </style>
 
 <script>
@@ -69,13 +72,13 @@ $(document).ready(function() {
 				<div class="col-md-10" id="member">
 					<c:forEach items="${memberList}" var="memberVo">
 						<c:if test="${memberVo.team_level==0}"><h3>${memberVo.user_nick}</h3></c:if>
-						<c:if test="${memberVo.team_level==1}"><h5>${memberVo.user_nick}</h5></c:if>
+						<c:if test="${memberVo.team_level==1}">${memberVo.user_nick}&nbsp;&nbsp;</c:if>
 					</c:forEach>
 				</div>
 			</div>
 	<div class="row">
 		<div class="col-md-12">
-			 <span class="badge badge-default">앨범 목록</span>
+			 <span id="list">앨범 목록</span>
 			<div class="row">
 				<ul  class="albumList">
 				<li>
