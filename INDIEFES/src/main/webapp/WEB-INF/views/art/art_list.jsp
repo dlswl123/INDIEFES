@@ -252,7 +252,6 @@ $(document).ready(function() {
 <!-- 			앨범 리스트 -->
 				<ul  class="albumList">
 				<li>
-					
 			<c:choose>
 				<c:when test="${not empty artList}">
 					<c:forEach items="${artList}" var="artVo">
@@ -278,30 +277,25 @@ $(document).ready(function() {
 								</c:forEach>
 								<br>
 								<time datetime="">${artVo.reg_art}</time><br>
+<!-- 								좋아요 체크 -->
+								<c:set var="flag" value="0" />
+								<c:if test="${userVo != null}">
+									<c:forEach items="${likeCount}" var="likeCount">
+										<c:if test="${artVo.art_number == likeCount.art_number}">
+											<c:set var="flag" value="1" />
+										</c:if>
+									</c:forEach>
+								</c:if>
 								<c:choose>
-									<c:when test="${artVo.art_number == likeCount.art_number}">
+									<c:when test="${flag == 1}">
 										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
 									</c:when>
 									<c:otherwise>
 										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
 									</c:otherwise>
 								</c:choose>
-<%-- 								<c:ifC test="${}"> --%>
-								
-<%-- 								<c:forEach items="${likeCount}" var="likeVo"> --%>
-<%-- 									<c:if test="${!empty likeVo}"> --%>
-<%-- 										<c:choose> --%>
-<%-- 											<c:when test="${likeVo.art_number == artVo.art_number}"> --%>
-<%-- 												<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
-<%-- 											</c:when> --%>
-<%-- 											<c:otherwise> --%>
-<%--  												<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
-<%--  											</c:otherwise> --%>
-<%-- 										</c:choose> --%>
-<%-- 									</c:if> --%>
-<%-- 								</c:forEach> --%>
-<%-- 								<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
-<%-- 								</c:if> --%>
+<!-- 								좋아요 체크 끝 -->
+<!-- 								좋아요 count 수 -->
 								<c:choose>
 									<c:when test="${artVo.liked_count != 0 }">
 										<span id="artLikedCountSpan">${artVo.liked_count }</span>
@@ -310,6 +304,9 @@ $(document).ready(function() {
 										<span>&nbsp;&nbsp;</span>
 									</c:otherwise>
 								</c:choose>
+<!-- 								좋아요 count 수 끝 -->
+								
+<!-- 								추천수 체크 -->
 								<c:choose>
 									<c:when test="${goodCount > 0 }">
 										<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
@@ -326,8 +323,9 @@ $(document).ready(function() {
 										<span>&nbsp;&nbsp;</span>
 									</c:otherwise>
 								</c:choose>
-								<c:if test="${artVo.good_count != 0 }">
-							</c:if>
+<%-- 								<c:if test="${artVo.good_count != 0 }"> --%>
+<%-- 									<span id="artGoodcountSpan">${artVo.good_count }</span> --%>
+<%-- 								</c:if> --%>
 								</p>
 								</div>
 							</figcaption>
