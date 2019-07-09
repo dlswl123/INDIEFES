@@ -205,8 +205,12 @@ public class ArtController {
 
 	// 앨범정보 입력폼
 	@RequestMapping(value = "/art_info_input", method = RequestMethod.GET)
-	public void artInfoInput() {
-//		System.out.println("ArtInfoInput()");
+	public String artInfoInput(HttpSession session) {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
+		return null;
 	}
 
 	// 앨범정보 처리
@@ -232,8 +236,12 @@ public class ArtController {
 
 	// 팀생성 및 가입 폼
 	@RequestMapping(value = "/indie_team_input", method = RequestMethod.GET)
-	public void teamInput() {
-		System.out.println("TeamInput()");
+	public String teamInput(HttpSession session) {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
+		return null;
 	}
 
 	// 팀생성처리
@@ -274,25 +282,28 @@ public class ArtController {
 	
 	// 팀정보
 	@RequestMapping(value = "/indie_team_info", method = RequestMethod.GET)
-	public void teamInfo(HttpSession session,Model model,int team_number) throws Exception {
+	public String teamInfo(HttpSession session,Model model,int team_number) throws Exception {
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
 		List<TeamMemberVo> memberList = artService.teamInfo(team_number);
 		String teamName = artService.getTeamName(team_number);
 		List<ArtInfoVo> teamArtList = artService.teamArtList(team_number);
-		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("teamName", teamName);
 		model.addAttribute("teamArtList", teamArtList);
 		model.addAttribute("userVo", userVo);
-		
+		return null;
 	}
 	// 팀정보
-	@RequestMapping(value = "/home_art_list", method = RequestMethod.GET)
-	public void HomeArtList(PagingDto pagingDto,Model model) throws Exception {
-		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
-		List<IndieTeamVo> teamList = artService.getIndieTeam();
-		model.addAttribute("artList", artList);
-		model.addAttribute("teamList", teamList);
-	}
+//	@RequestMapping(value = "/home_art_list", method = RequestMethod.GET)
+//	public void HomeArtList(PagingDto pagingDto,Model model) throws Exception {
+//		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
+//		List<IndieTeamVo> teamList = artService.getIndieTeam();
+//		model.addAttribute("artList", artList);
+//		model.addAttribute("teamList", teamList);
+//	}
 	// 카트담기
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String CartInput(HttpSession session,ArtInfoVo artVo,int music_number, String music_title) throws Exception {
@@ -357,13 +368,17 @@ public class ArtController {
 	
 	// 결제 페이지
 	@RequestMapping(value = "/pay_info", method = RequestMethod.GET)
-	public void payInfo(HttpSession session,Model model) throws Exception {
+	public String payInfo(HttpSession session,Model model) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		if (userVo == null) {
+			return "/user/login";
+		}
 		String user_id = userVo.getUser_id();
 		List<PayLogVo> payList = artService.payList(user_id);
 		model.addAttribute("userVo", userVo);
 		model.addAttribute("payList", payList);
 		System.out.println("payList: "+payList);
+		return null;
 	}
 	// 결제 처리
 	@RequestMapping(value = "/pay_ok", method = RequestMethod.GET)

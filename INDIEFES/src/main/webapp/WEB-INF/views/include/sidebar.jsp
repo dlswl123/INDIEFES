@@ -106,7 +106,13 @@ $(document).ready(function() {
 			   	 
 			    <c:otherwise>
 			        <section id="logout">
-					<a href="/indiefes/user/logout">
+			        <script type="text/javascript">
+						function closePlayer() {
+							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+							new_popup.close();
+						}
+					</script>
+					<a href="/indiefes/user/logout" onclick="closePlayer();">
 						<font>LOGOUT</font>
 					</a>
 					</section>
@@ -141,7 +147,7 @@ $(document).ready(function() {
 					<section id="player">
 				    <script type="text/javascript">
 						function musicPlayer() {
-							window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 						}
 					</script>
 			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>
