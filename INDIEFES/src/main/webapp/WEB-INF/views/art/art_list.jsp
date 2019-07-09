@@ -104,6 +104,8 @@ $(document).ready(function() {
 			
 	}); // $(".a_pagination").click
 	
+	
+
 });
 
 </script>
@@ -213,7 +215,7 @@ $(document).ready(function() {
 	</div>
 	<div class="row">
 <!-- 	검색  -->
-likeCount : ${likeCount}
+<%-- likeCount : ${likeCount} --%>
 		<div class ="col-md-12">
 			<div class="in-line">
 				 <select class="selectBox" id="searchType">
@@ -276,27 +278,30 @@ likeCount : ${likeCount}
 								</c:forEach>
 								<br>
 								<time datetime="">${artVo.reg_art}</time><br>
-								<c:forEach items="${likeCount}" var="likeVo">
-									<c:choose>
-										<c:when test="${!empty likeVo}">
-											<c:if test=""${likeVo.art_number == artVo.art_number}>
-												<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
-											</c:if>
-										</c:when>
-										<c:otherwise>
-											<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
-										</c:otherwise>
-									
-									</c:choose>
-								</c:forEach>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${likeCount.art_number == artVo.art_number }"> --%>
-<%-- 										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<%-- 										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
+								<c:choose>
+									<c:when test="${artVo.art_number == likeCount.art_number}">
+										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
+									</c:when>
+									<c:otherwise>
+										<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
+									</c:otherwise>
+								</c:choose>
+<%-- 								<c:ifC test="${}"> --%>
+								
+<%-- 								<c:forEach items="${likeCount}" var="likeVo"> --%>
+<%-- 									<c:if test="${!empty likeVo}"> --%>
+<%-- 										<c:choose> --%>
+<%-- 											<c:when test="${likeVo.art_number == artVo.art_number}"> --%>
+<%-- 												<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
+<%-- 											</c:when> --%>
+<%-- 											<c:otherwise> --%>
+<%--  												<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
+<%--  											</c:otherwise> --%>
+<%-- 										</c:choose> --%>
+<%-- 									</c:if> --%>
+<%-- 								</c:forEach> --%>
+<%-- 								<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span> --%>
+<%-- 								</c:if> --%>
 								<c:choose>
 									<c:when test="${artVo.liked_count != 0 }">
 										<span id="artLikedCountSpan">${artVo.liked_count }</span>
