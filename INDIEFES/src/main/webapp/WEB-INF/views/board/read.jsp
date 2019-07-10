@@ -342,7 +342,11 @@ $(document).ready(function(){
 		 		<div class="col-md-12">
 		 			<div class="form-group">
 		 				<label for="title">댓글 내용</label>
-		 				<input type="text" class="form-control" id="content_reply"/>
+		 				<input type="text" class="form-control" id="content_reply"
+		 				<c:if test="${userInfoVo == null}">
+		 				placeholder="로그인 후 댓글을 작성하여주십시오 ." 
+		 				readonly
+		 				</c:if> />
 		 			</div>
 		 		</div>
 		 		<div class="col-md-12">
