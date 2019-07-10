@@ -84,7 +84,7 @@ $(document).ready(function() {
 </script>
     
 <div class="col-md-2">
-	<div class="sidebar" style="position:fixed;background-color:rgba(0,0,0,0.7);width:100%;height:100%;">
+	<div class="sidebar" style="position:fixed;background-color:#292929;width:100%;height:100%;">
 		<aside id="sidebar">
 			<section id="home">
 				<a href="/indiefes/">
