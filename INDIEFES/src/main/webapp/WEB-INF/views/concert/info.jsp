@@ -19,11 +19,33 @@ $(document).ready(function() {
 });
 </script>
 <style>
+.infoSize { max-width:1200px;max-height:350px;overflow:hidden;margin:auto; }
 .infoImage {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
 	display: block;
+}
+img {
+	width: auto;
+	max-height: 350px;
+	filter: gray();
+	-webkit-filter: grayscale(100%);
+	transform: scale(1);
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	-o-transform: scale(1);
+	transition: all 0.3s ease-in-out;  
+}
+img:hover {
+	filter: none;
+	transform: scale(1.05);
+	-webkit-transform: scale(1.05);
+	-moz-transform: scale(1.05);
+	-ms-transform: scale(1.05);
+	-o-transform: scale(1.05);
+	-webkit-filter:none;
 }
 h1.concertTitle {
 	z-index: 2;
@@ -45,6 +67,7 @@ h1.concertTitle {
 }
 article {
 	background-color: #292929;
+	font-family:dgm;
 }
 #logo font {
 	font-family: blox;
@@ -60,37 +83,43 @@ article {
 
 <div class="col-md-10">
 
-	<div class="row">
 		<section id="logo" style="padding:20px;width:100%;">
+			<div class="row">
 			<font>InDiEFeS</font>
-			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 30px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
 			공연정보</span>
 			<c:if test="${user_level < 3}">
-				<div style="float:right;">
+				<div style="float:right;margin-bottom:0px;margin-top:auto;">
 					<input type="button" class="btn btn-primary" value="홍보글작성" id="btnWrite" />
 				</div>
 			</c:if>
 			
+			</div>
 		</section>
-	</div>
 
 	<c:forEach var="vo" items="${list}">
 		<section class="concertList">
 		
 			<article style="text-align:center;padding:20px;">
-				<div class="infoImage">
-					<a href="/indiefes/concert/read?concert_number=${vo.concert_number}">
-					<c:choose>
-						<c:when test="${vo.info_file_path != null && vo.info_file_path != 'null' && vo.info_file_path != ''}">
-							<img src="/indiefes/concert/displayFile?fileName=${vo.info_file_path}" style="max-width:1200px;max-height:350px;">
-						</c:when>
-						<c:otherwise>
-							<img src="${pageContext.request.contextPath}/resources/bg_images/concert.jpg" style="max-width:1200px;max-height:350px;">
-						</c:otherwise>
-					</c:choose>
-					<h1 class="concertTitle">${vo.subject}</h1>
-					<div class="concertSummary">요약내용 : ${vo.summary}<br>일시 : ${vo.concert_date}</div>
-					</a>
+				<div class="infoSize">
+					<div class="infoImage">
+						<a href="/indiefes/concert/read?concert_number=${vo.concert_number}">
+						<c:choose>
+							<c:when test="${vo.info_file_path != null && vo.info_file_path != 'null' && vo.info_file_path != ''}">
+								<img src="/indiefes/concert/displayFile?fileName=${vo.info_file_path}">
+							</c:when>
+							<c:otherwise>
+								<img src="${pageContext.request.contextPath}/resources/bg_images/concert.jpg">
+							</c:otherwise>
+						</c:choose>
+						</a>
+						<h1 class="concertTitle"><a href="/indiefes/concert/read?concert_number=${vo.concert_number}" style="color:#ffffff;">
+						${vo.subject}
+						</a></h1>
+						<div class="concertSummary"><a href="/indiefes/concert/read?concert_number=${vo.concert_number}" style="color:#ffffff;">
+						요약내용 : ${vo.summary}<br>일시 : ${vo.concert_date}
+						</a></div>
+					</div>
 				</div>
 			</article>
 			

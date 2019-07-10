@@ -20,10 +20,9 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-	<h1>공연 상세 정보</h1>
+<div class="col-md-10">
 
-	<section style="background-color:rgba(255,255,255,0.7);margin:20px;">
+	<section style="background-color:#292929;margin:20px;color:#00ff00;font-family:dgm;">
 	
 		<article style="padding:20px;">
 			
@@ -35,7 +34,7 @@ $(document).ready(function() {
 			
 					<div><h1>${vo.subject}</h1></div><hr>
 					
-					<div>${vo.concert_date}</div><hr>
+					<div>공연일시 : ${vo.concert_date}</div><hr>
 					
 					<div>${vo.summary}</div><hr>
 					
