@@ -16,7 +16,7 @@ $(document).ready(function() {
 	});
 });
 </script>
-<div class="col-md-10">
+<div class="col-md-10" style="background:#292929; color:#00ff00; font-family:dgm; margin-top:4.2%;">
 	<h1>팀생성</h1>
 		<form role="form" method="post" id="team1">
 		<input type="hidden" name="team_level" value="0">
