@@ -292,7 +292,6 @@ $(document).ready(function() {
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div class="row">
 				<h1>앨범 정보</h1>
-				<button>버튼</button>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
@@ -349,7 +348,7 @@ $(document).ready(function() {
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnCart">담기</button> -->
 						<button type="button" class="btn btn-outline-secondary" id="btnAllListen">전체듣기</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllDown">전체다운</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnAllCart">전체담기</button>
+<!-- 						<button type="button" class="btn btn-outline-secondary" id="btnAllCart">전체담기</button> -->
 					</c:otherwise>
 				</c:choose>
 				</div>
