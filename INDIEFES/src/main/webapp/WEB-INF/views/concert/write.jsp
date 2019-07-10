@@ -82,7 +82,6 @@ $(document).ready(function() {
 				+  "'>&times;</a></div>");
    			
    			formData.append("posterFile[" + i + "]", files[j]); // <input type="text" name="files">
-   			console.log("formData : " + formData.get("posterFile[" + i + "]"));
    			i++;
 		}
 		
@@ -131,7 +130,6 @@ $(document).ready(function() {
 				"type" : "post",
 				"success" : function(receivedData) {
 					if(receivedData != null) {
-						console.log("receivedData : " + receivedData);
 						
 						var infoFilePath = "<input type='hidden' name='info_file_path' value='" + receivedData.info_file_path + "'>"; 
 						$("#concertWriteForm").append(infoFilePath);
