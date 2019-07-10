@@ -18,13 +18,11 @@
 	.icon {
 	cursor: pointer;
 	}
-  
 </style>
 <script>
 $(document).ready(function() {
 	
 // 		사용자용
-
 	// 듣기버튼
 	$("#btnListen").click(function() {
 		location.href="/indiefes/player/playInsertAll/${artVo.art_number}";
@@ -69,8 +67,8 @@ $(document).ready(function() {
 			 var result = "";
 			 result += 	index + ":" + item;
 			 console.log(result);
-		  });
-	});
+		  }); // $('#musicTable tr').each
+	}); // $("#btnAllCart").click
 		
 	
 // 	// 체크박스 전체 선택, 전체 선택 해제
@@ -237,10 +235,8 @@ $(document).ready(function() {
 					alert("로그인한 유저만 사용가능합니다.");
 				}
 			} // "success"
-		});
-		
-	});
-	
+		}); // $.ajax
+	}); // $(".spGoodCount").click
 	// 사용자용 끝
 	
 // 		뮤지션(리더)용
@@ -262,22 +258,18 @@ $(document).ready(function() {
 		} else if (check == false) {
 // 			alert("취소하셨습니다.");
 		}
-	});
-	
+	}); // $("#btnArtAppro").click
 	// 뮤지션용 끝
 	
 // 		운영자용
 	// 승인
 	$("#btnAppro").click(function() {
-// 		location.href="/indiefes/art/music_input?art_number=${artVo.art_number }&team_number=${artVo.team_number}&track_number=${musicInfoVo.track_number}";
 		location.href = "/indiefes/art/artUploadAppro/${artVo.art_number}";
 	});
 	
 	// 반려
 	$("#btnReturn").click(function() {
-// 		var track_number = $("#track_number").length;
 		location.href = "/indiefes/art/artUploadReturn/${artVo.art_number}";
-// 		console.log(track_number);
 	});
 	// 운영자용 끝
 	
@@ -285,7 +277,7 @@ $(document).ready(function() {
 	function musicPlayer() {
 		window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 	}
-});
+}); // $(document).ready
 </script>
 <style>
 #logo font {
@@ -323,7 +315,6 @@ $(document).ready(function() {
 						<label>앨범 소개 :</label><br>
 						<textarea rows="10" cols="80" readonly="readonly"
 						 style="background-color: transparent;	 resize: none; color: #fafafa;font-family:dgm;">${artVo.art_pr}</textarea>
-								
 				</div>
 			</div>
 			
@@ -375,11 +366,7 @@ $(document).ready(function() {
 			<br>
 			<div class="row">
 				<div class="col-md-12">
-<<<<<<< HEAD
-					<table class="table" style="color: #fafafa;">
-=======
-					<table class="table" id="musicTable">
->>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
+					<table class="table" style="color: #fafafa;" id="musicTable">
 						<thead>
 							<tr>
 <!-- 								<th><input type="checkbox" id="allCheckbox" /></th> -->
@@ -430,7 +417,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 			</div>
-			</div>
+		</div>
 <!-- 			Modal -->
 			<div class="row" >
 				<div class="col-md-12">
@@ -460,9 +447,7 @@ $(document).ready(function() {
 									</button>
 								</div>
 							</div>
-							
 						</div>
-						
 					</div>
 				</div>
 			</div>

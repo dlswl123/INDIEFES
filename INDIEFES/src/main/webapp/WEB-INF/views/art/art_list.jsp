@@ -43,8 +43,6 @@
 		alert("로그인한 유저만 사용가능합니다.");
 	}
 $(document).ready(function() {
-	
-	
 	// 검색버튼
 	$("#btnSearch").click(function(){
 		setPage();
@@ -91,9 +89,8 @@ $(document).ready(function() {
 				page = 1;
 		}
 		$("input[name=page]").val(page);
-// 		$("input[name=perPage]").val(perPage);
-	}
-
+// 		$("input[name=perPage]").val(21);
+	} // setPage()
 	
 	// 검색
 	function setSearch() {
@@ -103,7 +100,7 @@ $(document).ready(function() {
 // 		console.log("keyword:" + keyword);
 		$("input[name=searchType]").val(searchType);
 		$("input[name=keyword]").val(keyword);
-	}
+	} // setSearch()
 	
 	// 페이지 번호클릭
 	$(".a_pagination").click(function(e){
@@ -115,13 +112,8 @@ $(document).ready(function() {
 // 			console.log(page);
 			$("input[name=page]").val(page); // 아래쪽 폼의 page에 설정
 			$("#pageForm").submit(); // 폼 설정
-
-			
 	}); // $(".a_pagination").click
-	
-	
-
-});
+}); // 
 
 </script>
 <style>
@@ -150,12 +142,10 @@ figcaption {
 	<input type="hidden" name="keyword" 
 		value="${paginationDto.pagingDto.keyword}">
 </form>
-
 <div class="col-md-10">
   <div class="row">
 <!--   상단 장르 선택부 -->
 		<div class="col-md-12">
-<<<<<<< HEAD
 		<section id="logo" style="padding:20px;width:100%;">
 			<div class="row">
 				<font>InDiEFeS</font>
@@ -163,9 +153,7 @@ figcaption {
 				앨범정보</span>
 			</div>
 		</section><hr>
-=======
 <!-- 			 <span class="badge badge-default">장르</span> -->
->>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
@@ -389,13 +377,10 @@ figcaption {
 <!-- 				앨범리스트 끝 -->
 			</div>
 			<div class="row">
-<<<<<<< HEAD
 				<div class="col-md-12">
 					<div class="row">
 						<div style="margin:auto;">
-=======
-				<div class="col-md-12" style="">
->>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
+						<div class="col-md-12" style="">
 					<nav>
 						<ul class="pagination" >
 						<!-- 이전 -->
@@ -424,13 +409,12 @@ figcaption {
 						</ul>
 					</nav>
 						</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

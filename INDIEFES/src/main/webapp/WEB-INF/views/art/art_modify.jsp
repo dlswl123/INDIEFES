@@ -26,18 +26,15 @@ $.fn.setPreview = function(opt){
         h: 282
     };
     $.extend(defaultOpt, opt);
- 
     var previewImage = function(){
         if (!defaultOpt.inputFile || !defaultOpt.img) return;
  
         var inputFile = defaultOpt.inputFile.get(0);
         var img       = defaultOpt.img.get(0);
- 
         // FileReader
         if (window.FileReader) {
             // image 파일만
             if (!inputFile.files[0].type.match(/image\//)) return;
- 
             // preview
             try {
                 var reader = new FileReader();
@@ -66,7 +63,6 @@ $.fn.setPreview = function(opt){
             // Safari5, ...
         }
     };
- 
     // onchange
     $(this).change(function(){
         previewImage();
@@ -79,7 +75,6 @@ $(document).ready(function() {
 	        w: 282,
 	        h: 282
 	    };
-	 	
 	    $('#art_cover').setPreview(opt);
 	    
 	getList();
@@ -92,19 +87,6 @@ $(document).ready(function() {
 		$("#spanMusicFile").text(this.files[0].name);
 		 formData.append("file", this.files[0]);
 	});
-	
-	// 커버이미지 파일업로드버튼
-// 	$("#btnImageFile").click(function(e) {
-// 		$("#art_cover").trigger("click");
-// 	});
-// 	$("#art_cover").change(function(e) {
-// 		console.log(e);
-// 		var imageId="#art_cover";
-// 		$("#spanImageFile").text(this.files[0].name);
-// 	    $("#img_cover").css("display","none");
-// 		$("#img_preview").css("display","");
-// 		imgPreview();
-// 	});
 	
 	// 앨범등록 버튼
 	$("#btnArtAdd").click(function() {
@@ -161,7 +143,6 @@ $(document).ready(function() {
 	}); //$("#btnMusicAdd").click
 	// 음악추가버튼 끝
 	
-	
 	// 음악추가 취소 버튼
 	$("#btnMusicCancel").click(function() {
 		$("#spanMusicFile").text("");
@@ -185,7 +166,6 @@ $(document).ready(function() {
 	 			"art_number" : art_number,
 	 			"music_number" : music_number
 	 		};
-	 		
 	 		var url = "/indiefes/music/update/" + music_number;
 	 		$.ajax({
 				"type" : "put",
@@ -203,7 +183,6 @@ $(document).ready(function() {
 	 				td.eq(5).html("<Button type='button' class='btn btn-sm btn-warning btnMusicMod' id='btnMusicUpdate' data-track_number='" + this.track_number + "data-'>수정</Button>");
 				} // "success"
 			}); // $.ajax
-	 		
 		}); // $("#btnUpdate").click
 
 	}); //$("#trackList").on("click", ".btnMusicMod",function()
@@ -235,7 +214,7 @@ $(document).ready(function() {
 				}
 			}
 		}); // $.ajax
-	});
+	}); // $("#trackList").on("click", "#btnMusicDelete"
 	
 	// 가사 등록 버튼
 	$("#trackList").on("click", ".btnMusicLyric", function() {
@@ -299,12 +278,7 @@ $(document).ready(function() {
 			$("#trackList").html(strHtml);
 		}); // $.getJSON
 	}
-	
-
-	
 });
-
-
 </script>
 	
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
@@ -329,7 +303,6 @@ $(document).ready(function() {
 						<div class="form-group">
 								<label for="art_title" style="color: #ffffff;">앨범제목</label>
 								<input type="text" class="form-control" id="art_title" name="art_title" value="${artVo.art_title}" />
-								
 						</div>
 <!-- 						장르선택  -->
 						<div class="form-group">
@@ -374,9 +347,9 @@ $(document).ready(function() {
 				</div>
 			</form>
 <!-- 			앨범수정폼 END -->
-			<div class="row">
-				
+
 				<!-- 음악추가폼 -->
+			<div class="row">
 				<div class="col-md-12 form-inline">
 					<div class="col-md-9 form-group form-inline">
 					<form id="musicForm" name="musicForm" action="/indiefes/music/insert" method="post" enctype="multipart/form-data" class="form-inline">
@@ -402,8 +375,8 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-outline-danger" id="btnCancel">등록취소</button>
 					</div>
 				</div>
-			    <!-- 음악추가폼 끝 -->
 			</div>
+			    <!-- 음악추가폼 끝 -->
 			
 			<!-- Modal -->
 	<div class="row" >
@@ -426,7 +399,6 @@ $(document).ready(function() {
 						</textarea>
 						</div>
 						<div class="modal-footer">
-							 
 							<button type="button" class="btn btn-primary" id="btnModalLyric"
 								data-music_number="" data-add-lyric="">
 								등록
@@ -436,11 +408,8 @@ $(document).ready(function() {
 							</button>
 						</div>
 					</div>
-					
 				</div>
-				
 			</div>
-			
 		</div>
 	</div>
 	<!-- // Modal -->

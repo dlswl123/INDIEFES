@@ -86,7 +86,7 @@ public class ArtController {
 			url = "art/art_info";
 		} else {
 			rttr.addFlashAttribute("message", "login_check");
-			url = "redirect:/art/art_list";
+			url = "redirect:/art/art_list?page=1&searchType=&keyword=";
 		}
 		return url;
 	}
@@ -148,7 +148,7 @@ public class ArtController {
 	public void artList(PagingDto pagingDto, Model model, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 //		System.out.println(pagingDto);
-		pagingDto.setPerPage(24);
+		pagingDto.setPerPage(21);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		

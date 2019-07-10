@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.jij.service.IArtInfoService;
 import com.kh.ks.domain.UserInfoVo;
-import com.kh.ks.domain.UserManagementPagingDto;
+
 import com.kh.ks.service.IUserInfoService;
 import com.kh.ts.domain.PaginationDto;
 import com.kh.ts.domain.PagingDto;
@@ -45,7 +45,7 @@ public class LoginController {
 		System.out.println("loginForm() 실행됨");
 	}
 	
-	//로그인 성공
+	//로그인 동작
 	@RequestMapping(value="/login-run", method=RequestMethod.POST)
 	public String loginRun(String user_id, String user_pw, HttpSession session, RedirectAttributes rttr)throws Exception{
 		System.out.println("LoginController, loginRun, user_id/user_pw:" + user_id + "/" + user_pw); // 1.로그인폼에서 넘어온 데이터 -> service로 넘겨줌
@@ -57,29 +57,25 @@ public class LoginController {
 //		UserInfoVo userInfoVo1 = userInfoService.readWith(user_id);
 //		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
 //		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
-		String redirectUrl = "";
-		
 		// 팀가입 여부
 		try {
-			int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
-			if (indieNum > 0) {
-				session.setAttribute("indieNum", indieNum);
-			}
+			if(userInfoVo != null) {
+				session.setAttribute("userInfoVo", userInfoVo);
+				int indieNum = -1;
+				indieNum = artService.getIndieNumber(userInfoVo.getUser_id()); 
+				if (indieNum > -1) {
+					session.setAttribute("indieNum", indieNum);
+				}
+				if(deleted.equals("O")) {
+					rttr.addFlashAttribute("message", "login_fail");
+					return "redirect:/user/login";
+				}
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// 팀가입 끝
-		if(userInfoVo != null) {
-			session.setAttribute("userInfoVo", userInfoVo);
-			if(deleted.equals("O")) {
-				rttr.addFlashAttribute("message", "login_fail");
-				redirectUrl = "redirect:/user/login";
-			}
-			redirectUrl = "redirect:/";
-		}
-		
-		return redirectUrl;
-		
+		return "redirect:/";
 	}
 	
 	//회원가입
