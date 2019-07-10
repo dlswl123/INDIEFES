@@ -142,49 +142,49 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="발라드" 
 						<c:if test="${paginationDto.pagingDto.keyword == '발라드'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>발라드</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="댄스"
 						<c:if test="${paginationDto.pagingDto.keyword == '댄스'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>댄스</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="랩/힙합"
 						<c:if test="${paginationDto.pagingDto.keyword == '랩/힙합'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>랩/힙합</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="R&B/Soul"
 						<c:if test="${paginationDto.pagingDto.keyword == 'R&B/Soul'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>R&B/Soul</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="재즈"
 						<c:if test="${paginationDto.pagingDto.keyword == '재즈'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>재즈</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="록/메탈"
 						<c:if test="${paginationDto.pagingDto.keyword == '록/메탈'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>록/메탈</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="포크/블루스" 
 						<c:if test="${paginationDto.pagingDto.keyword == '포크/블루스'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>포크/블루스</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="기타"
 						<c:if test="${paginationDto.pagingDto.keyword == '기타'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>기타</a>
 					</li>
 					<c:if test="${userInfoVo.user_level eq 2 }">
@@ -196,7 +196,7 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="appro"
 						<c:if test="${paginationDto.pagingDto.searchType == 'appro'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>승인대기</a>
 					</li>
 					</c:if>
@@ -204,7 +204,7 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="delete"
 						<c:if test="${paginationDto.pagingDto.searchType == 'delete'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>삭제된 앨범</a>
 					</li>
 					</c:if>
@@ -212,7 +212,7 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="working"
 						<c:if test="${paginationDto.pagingDto.searchType == 'working'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>작업중인 앨범</a>
 					</li>
 					</c:if>
