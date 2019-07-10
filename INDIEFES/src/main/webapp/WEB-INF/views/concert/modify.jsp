@@ -98,7 +98,6 @@ $(document).ready(function() {
 	
 	// 첨부 파일 목록 가져오기
 	$.getJSON("/indiefes/concert/getFiles/${vo.concert_number}", function(list) {
-		console.log(list);
 		$(list).each(function() {
 			var fullName = this; // 2019/5/21/0e6348d6-92d6-4f92-98e2-617ce4ba64ff_Chrysanthemum.jpg
 			
@@ -127,7 +126,6 @@ $(document).ready(function() {
 		} else {
 			var url = "/indiefes/concert/deleteFile?fileName=" + fileList[fileIndex];
 			$.get(url, function(result) {
-				console.log(result);
 				if (result == "success") {
 					that.parents("div.uploadedFile").remove();
 				}
@@ -178,13 +176,6 @@ $(document).ready(function() {
 				"type" : "post",
 				"success" : function(receivedData) {
 					if(receivedData != null) {
-						console.log("receivedData : " + receivedData);
-						
-						console.log(typeof(receivedData.info_file_path));
-						console.log(receivedData.info_file_path);
-						
-						console.log(typeof(receivedData.file_path));
-						console.log(receivedData.file_path);
 						
 						if (receivedData.info_file_path != null) {
 							var infoFilePath = "<input type='hidden' name='info_file_path' value='" + receivedData.info_file_path + "'>"; 
