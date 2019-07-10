@@ -380,7 +380,7 @@ figcaption {
 				<div class="col-md-12">
 					<div class="row">
 						<div style="margin:auto;">
-				<div class="col-md-12" style="">
+						<div class="col-md-12" style="">
 					<nav>
 						<ul class="pagination" >
 						<!-- 이전 -->
@@ -408,6 +408,7 @@ figcaption {
 						</c:if>		
 						</ul>
 					</nav>
+						</div>
 						</div>
 					</div>
 				</div>
