@@ -366,7 +366,7 @@ $(document).ready(function(){
 					
 				</div> <!-- class="col-md-12"-->
 		 	</div> <!-- class="row"> -->
-		 	<hr>
+		 	<hr style="background-color: #fafafa;color: #fafafa;border-color: #fafafa;">
 		 	
 		 	<!--  댓글작성 -->
 		 	<div class="row" style="background-color: #545454">
@@ -387,7 +387,7 @@ $(document).ready(function(){
 		 		</div>
 		 		</div>
 		 	</div>
-		 	<hr style="background-color: #fafafa;">
+		 	<hr style="background-color: #fafafa;color: #fafafa;border-color: #fafafa;">
 		 	<!-- 댓글 목록 -->
 		 	<div class="row">
 		 		<div class="col-md-12">
