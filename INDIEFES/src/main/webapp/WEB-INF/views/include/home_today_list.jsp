@@ -25,8 +25,9 @@
     }
     .albumInfo {
      border: 1px solid;
-     margin: 20 0 0 15;
+     margin: 10 39 10 39;
      position: relative;
+     box-shadow: 0px 5px 5px 2px grey;
     }
 /*     한줄라인 글자수 제한 */
     .info{
@@ -44,7 +45,6 @@
     height: 600px;
     background-color:rgba(255,255,255);
     margin: auto;
-    box-shadow: 0px 5px 5px 5px grey;
     -ms-overflow-style: none;
     }
     .pagination{
