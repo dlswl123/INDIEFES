@@ -13,12 +13,15 @@
 	font-family: dgm;
 	font-size: 2rem;
 	margin-left: 20px;
+	color: #00ff00;
 }
 #logo {
-/* 	background-color:rgba(255,255,255,0.7); */
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
 }
 #art1sec, #art2sec {
-	background-color:rgba(255,255,255,0.7);padding-bottom:20px;
+	background-color:#292929;padding-bottom:20px;
 }
 /* 탭 */
 ul.tabs {
@@ -32,6 +35,7 @@ ul.tabs {
     width: 100%;
     font-family:"dotum";
     font-size:12px;
+    background: #fafafa;
 }
 ul.tabs li {
     float: left;
@@ -48,15 +52,16 @@ ul.tabs li {
     position: relative;
 }
 ul.tabs li.active {
-    background: #FFFFFF;
-    border-bottom: 1px solid #FFFFFF;
+    background: #292929;
+    border-bottom: 1px solid #ffffff;
+    color: #00ff00;
 }
 .tab_container {
     border: 1px solid #eee;
     border-top: none;
     clear: both;
     width: 100%;
-    background: #FFFFFF;
+    background: #292929;
 }
 .tab_content {
     padding: 5px;
@@ -93,9 +98,9 @@ ul.tabs li.active {
 			    $(".tab_content:first").show();
 
 			    $("ul.tabs li").click(function () {
-			        $("ul.tabs li").removeClass("active").css("color", "#333");
+			        $("ul.tabs li").removeClass("active").css("color", "#292929");
 			        //$(this).addClass("active").css({"color": "darkred","font-weight": "bolder"});
-			        $(this).addClass("active").css("color", "darkred");
+			        $(this).addClass("active").css("color", "#00ff00");
 			        $(".tab_content").hide()
 			        var activeTab = $(this).attr("rel");
 			        $("#" + activeTab).fadeIn()

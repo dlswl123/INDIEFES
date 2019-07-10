@@ -19,7 +19,7 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+<div class="col-md-10">
 
 	<div class="row">
 		<section style="padding:20px;width:100%;">
@@ -38,7 +38,7 @@ $(document).ready(function() {
 		<section style="background-color:rgba(255,255,255,0.7);">
 		
 			<article style="text-align:center;padding:20px;">
-			<h1>${vo.subject}</h1>
+			<h1 class="concertTitle">${vo.subject}</h1>
 			<a href="/indiefes/concert/read?concert_number=${vo.concert_number}">
 			<c:choose>
 				<c:when test="${vo.info_file_path != null && vo.info_file_path != 'null' && vo.info_file_path != ''}">

@@ -189,8 +189,9 @@ $(document).ready(function() {
 				</div>
 			</div>
 			<!--  페이지네이션(페이지클릭창) -->
+		<div class="col-md-12 text-center">
 			<div class="row">
-		<div class="col-md-12 text-center" style="float:center;">
+			<div style="margin-left:auto;margin-right:auto;">
 			<nav>
 				<ul class="pagination" >
 				<!-- 이전 -->
@@ -219,8 +220,8 @@ $(document).ready(function() {
 				</ul>
 			</nav>
 			</div>
+			</div>
 		</div>
 	</div>
 <%@ include file="../include/sidebar.jsp" %>
-</div>
 <%@ include file="../include/footer.jsp" %>

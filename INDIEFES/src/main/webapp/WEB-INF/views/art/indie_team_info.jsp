@@ -25,7 +25,7 @@
     }
     .art_info {
      border: 1px solid;
-     margin: 20 20 20 20;
+     margin: 10 10 10 0;
      float: left;
     }
 /*     한줄라인 글자수 제한 */
@@ -41,7 +41,7 @@
 	color : #00ff00;
 	font-style: normal;
 	font-weight: normal;
-	background-color:rgba(0,0,0,0.7);
+	background-color:#292929;
 }
 h1{
 	font-size: 3.5rem;
@@ -64,12 +64,10 @@ $(document).ready(function() {
 	$(this).css("font-family","prstart").css("font-size","1rem");
 });
 </script>
-		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-			<div class="row">
-				<h1>${teamName}</h1><br><br><br>
-			</div>
+		<div class="col-md-10">
 			<div class="row">
 				<div class="col-md-10" id="member">
+				<h1>${teamName}</h1>
 					<c:forEach items="${memberList}" var="memberVo">
 						<c:if test="${memberVo.team_level==0}"><h3>${memberVo.user_nick}</h3></c:if>
 						<c:if test="${memberVo.team_level==1}">${memberVo.user_nick}&nbsp;&nbsp;</c:if>
@@ -78,8 +76,7 @@ $(document).ready(function() {
 			</div>
 	<div class="row">
 		<div class="col-md-12">
-			 <span id="list">앨범 목록</span>
-			<div class="row">
+			<div class="row" >
 				<ul  class="albumList">
 				<li>
 					<c:forEach items="${teamArtList}" var="artVo">

@@ -27,6 +27,14 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
+.breadcrumb{
+	background-color: #292929;
+}
+.breadcrumb a{
+	font-family: dgm;
+	font-size: 1rem;
+	color: #00ff00;
+}
 </style>
 <script>
 $(document).ready(function() {
@@ -121,7 +129,7 @@ $(document).ready(function() {
 		value="${paginationDto.pagingDto.keyword}">
 </form>
 
-<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+<div class="col-md-10">
   <div class="row">
 <!--   상단 장르 선택부 -->
 		<div class="col-md-12">
@@ -247,7 +255,6 @@ $(document).ready(function() {
 	
 	<div class="row">
 		<div class="col-md-12">
-			 <span class="badge badge-default">앨범 목록</span>
 			<div class="row">
 <!-- 			앨범 리스트 -->
 				<ul  class="albumList">

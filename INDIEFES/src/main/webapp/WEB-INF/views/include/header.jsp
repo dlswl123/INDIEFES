@@ -26,7 +26,7 @@
 body {
 /* 	background: url("${pageContext.request.contextPath}/resources/bg_images/bgpage.jpg") no-repeat center center fixed; */
 /* 	background: url("<c:url value='/resources/bg_images/bgpage.jpg'/>") no-repeat center center fixed; */
-	background-color: rgb(152,152,152);
+	background-color: #fafafa;
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;

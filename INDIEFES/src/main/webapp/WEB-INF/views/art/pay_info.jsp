@@ -46,10 +46,7 @@ $(document).ready(function() {
 });
 </script>
 		<div class="col-md-10">
-			<div class="row">
-				<h1>PAY INFO</h1><br><br><br>
-			</div>
-			<div class="row" style="background-color:rgba(0,0,0,0.7);">
+			<div class="row" style="background-color:#292929;">
 				<div class="col-md-10">
 					<h3>PAY LIST</h3><br>
 					<c:forEach items="${payList}" var="payVo">
