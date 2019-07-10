@@ -86,7 +86,7 @@ public class ArtController {
 			url = "art/art_info";
 		} else {
 			rttr.addFlashAttribute("message", "login_check");
-			url = "redirect:/art/art_list";
+			url = "redirect:/art/art_list?page=1&searchType=&keyword=";
 		}
 		return url;
 	}

@@ -321,7 +321,7 @@
 	   			 where upload_check = #{keyword}
 	   		</if>
        	</if>
-       	<if test="searchType == ''">
+       	<if test="searchType == '' || searchType == null">
        		 where upload_check = 1
        	</if>
 	</sql>
