@@ -271,21 +271,42 @@ $(document).ready(function() {
 	}
 });
 </script>
-		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+</style>
+		<div class="col-md-10">
+		<section id="logo" style="padding:20px;width:100%;">
 			<div class="row">
-				<h1>앨범 정보</h1>
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				앨범정보</span>
 			</div>
+		</section><hr>
+			<div style="background-color: #292929;color: #00ff00;font-family:dgm;">
+			<div class="col-md-11" style="margin:auto;">
 			<div class="row">
+
 				<div class="col-md-4">
+					<br>
 					<img alt="${artVo.art_title} 앨범 대표이미지" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" width="282" height="282" class="rounded" />
 				</div>
 				<div class="col-md-8">
-					<p>
-						<strong><label>곡 제목 :</label> ${artVo.art_title}</strong><br>
-						<label>아티스트 :</label> ${teamName}<br>
-					</p>
+					<div>
+						<h1 style="color:#fafafa;">${artVo.art_title}</h1>
+						<label>아티스트 :</label> ${teamName}
+					</div>
 						<label>앨범 소개 :</label><br>
-						<textarea rows="10" cols="80" readonly="readonly" style="background-color: transparent;	 resize: none;">${artVo.art_pr}</textarea>
+						<textarea rows="10" cols="80" readonly="readonly"
+						 style="background-color: transparent;	 resize: none; color: #fafafa;font-family:dgm;">${artVo.art_pr}</textarea>
 								
 				</div>
 			</div>
@@ -332,9 +353,10 @@ $(document).ready(function() {
 				</c:choose>
 				</div>
 			</div>
+			<br>
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table">
+					<table class="table" style="color: #fafafa;">
 						<thead>
 							<tr>
 <!-- 								<th><input type="checkbox" id="allCheckbox" /></th> -->
@@ -384,6 +406,8 @@ $(document).ready(function() {
 					</table>
 				</div>
 			</div>
+			</div>
+			</div>
 <!-- 			Modal -->
 			<div class="row" >
 				<div class="col-md-12">
@@ -418,7 +442,6 @@ $(document).ready(function() {
 						</div>
 						
 					</div>
-					
 				</div>
 			</div>
 <!-- 			 Modal End -->
