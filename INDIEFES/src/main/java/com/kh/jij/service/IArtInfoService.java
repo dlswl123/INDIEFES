@@ -114,7 +114,7 @@ public interface IArtInfoService {
 	// 추천 취소
 	public void artGoodDelete(GoodLogVo goodVo) throws Exception;
 	// 추천 체크
-	public int artGoodCheckById(GoodLogVo goodVo) throws Exception;
+	public List<GoodLogVo> artGoodCheckById(GoodLogVo goodVo, String nowPage) throws Exception;
 	// 해당 앨범 추천수
 	public int artGoodCountCheck(int art_number) throws Exception;
 	

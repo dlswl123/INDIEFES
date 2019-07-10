@@ -60,7 +60,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		setPage();
 		var genre = $(this).attr("data-genre");
-		console.log(genre);
+// 		console.log(genre);
 		if (genre == "appro") {
 			$("input[name=searchType]").val("appro");
 			$("input[name=keyword]").val(2);
@@ -92,8 +92,8 @@ $(document).ready(function() {
 	function setSearch() {
 		var searchType = $("#searchType").val();
 		var keyword = $("#keyword").val();
-		console.log("searchType:" + searchType);
-		console.log("keyword:" + keyword);
+// 		console.log("searchType:" + searchType);
+// 		console.log("keyword:" + keyword);
 		$("input[name=searchType]").val(searchType);
 		$("input[name=keyword]").val(keyword);
 	}
@@ -105,7 +105,7 @@ $(document).ready(function() {
 			setPage();
 			
 			var page = $(this).attr("data-page"); // 페이지 숫자 읽기
-			console.log(page);
+// 			console.log(page);
 			$("input[name=page]").val(page); // 아래쪽 폼의 page에 설정
 			$("#pageForm").submit(); // 폼 설정
 
@@ -142,49 +142,49 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="발라드" 
 						<c:if test="${paginationDto.pagingDto.keyword == '발라드'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>발라드</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="댄스"
 						<c:if test="${paginationDto.pagingDto.keyword == '댄스'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>댄스</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="랩/힙합"
 						<c:if test="${paginationDto.pagingDto.keyword == '랩/힙합'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>랩/힙합</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="R&B/Soul"
 						<c:if test="${paginationDto.pagingDto.keyword == 'R&B/Soul'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>R&B/Soul</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="재즈"
 						<c:if test="${paginationDto.pagingDto.keyword == '재즈'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>재즈</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="록/메탈"
 						<c:if test="${paginationDto.pagingDto.keyword == '록/메탈'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>록/메탈</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="포크/블루스" 
 						<c:if test="${paginationDto.pagingDto.keyword == '포크/블루스'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>포크/블루스</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="기타"
 						<c:if test="${paginationDto.pagingDto.keyword == '기타'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>기타</a>
 					</li>
 					<c:if test="${userInfoVo.user_level eq 2 }">
@@ -196,7 +196,7 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="appro"
 						<c:if test="${paginationDto.pagingDto.searchType == 'appro'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>승인대기</a>
 					</li>
 					</c:if>
@@ -204,7 +204,7 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="delete"
 						<c:if test="${paginationDto.pagingDto.searchType == 'delete'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>삭제된 앨범</a>
 					</li>
 					</c:if>
@@ -212,7 +212,7 @@ $(document).ready(function() {
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="working"
 						<c:if test="${paginationDto.pagingDto.searchType == 'working'}">
-							style="text-decoration: underline; color: red;"
+							style="text-decoration: underline; color: yellow;"
 						</c:if>>작업중인 앨범</a>
 					</li>
 					</c:if>
@@ -258,7 +258,7 @@ $(document).ready(function() {
 			<div class="row">
 <!-- 			앨범 리스트 -->
 				<ul  class="albumList">
-				<li>
+<!-- 				<li> -->
 			<c:choose>
 				<c:when test="${not empty artList}">
 					<c:forEach items="${artList}" var="artVo">
@@ -273,10 +273,10 @@ $(document).ready(function() {
 								</a>
 <!-- 								<button onclick="" class="btnPlay" aria-label="새창">듣기</button> -->
 							</div>
-							<figcaption class="info">
+							<figcaption class="info" style="padding-left: 10px; padding-top: 10px;">
 								<a href="/indiefes/art/art_info/${artVo.art_number }/${artVo.team_number}" class="albumTitle" title="artInfoVo.art_title" onclick="" target="_self">${artVo.art_title}</a>
 								<div class="subInfo">
-								<p class="artist">
+<!-- 								<p class="artist"> -->
 								<c:forEach items="${teamList}" var="teamList">
 								<c:if test="${artVo.team_number == teamList.team_number}">
 									<a href="/indiefes/art/indie_team_info?team_number=${teamList.team_number}" class="artistTitle" title="${teamList.art_team}" onclick="" target="_self">${teamList.art_team}</a>
@@ -314,12 +314,20 @@ $(document).ready(function() {
 <!-- 								좋아요 count 수 끝 -->
 								
 <!-- 								추천수 체크 -->
+								<c:set var="flag" value="0" />
+								<c:if test="${userVo != null}">
+									<c:forEach items="${goodCount}" var="goodCount">
+										<c:if test="${artVo.art_number == goodCount.art_number}">
+											<c:set var="flag" value="1" />
+										</c:if>
+									</c:forEach>
+								</c:if>
 								<c:choose>
-									<c:when test="${goodCount > 0 }">
-										<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+									<c:when test="${flag == 1}">
+										<span class="spGoodCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
 									</c:when>
 									<c:otherwise>
-										<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+										<span class="spGoodCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
 									</c:otherwise>
 								</c:choose>
 								<c:choose>
@@ -330,10 +338,7 @@ $(document).ready(function() {
 										<span>&nbsp;&nbsp;</span>
 									</c:otherwise>
 								</c:choose>
-<%-- 								<c:if test="${artVo.good_count != 0 }"> --%>
-<%-- 									<span id="artGoodcountSpan">${artVo.good_count }</span> --%>
-<%-- 								</c:if> --%>
-								</p>
+<!-- 								</p> -->
 								</div>
 							</figcaption>
 						</figure>
@@ -345,7 +350,7 @@ $(document).ready(function() {
 					<span>검색결과가 존재하지 않습니다.</span>
 				</c:otherwise>
 			</c:choose>
-				</li>
+<!-- 				</li> -->
 				</ul>
 <!-- 				앨범리스트 끝 -->
 			</div>

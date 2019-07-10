@@ -113,7 +113,7 @@ public interface IArtInfoDao {
 	// 추천 취소
 	public void artGoodDelete(GoodLogVo goodVo) throws Exception;
 	// 추천 체크
-	public int artGoodCheckById(GoodLogVo goodVo) throws Exception; 
+	public List<GoodLogVo> artGoodCheckById(GoodLogVo goodVo, String nowPage) throws Exception; 
 	// 해당앨범 추천수 체크
 	public int artGoodCountCheck(int art_number) throws Exception;
 }

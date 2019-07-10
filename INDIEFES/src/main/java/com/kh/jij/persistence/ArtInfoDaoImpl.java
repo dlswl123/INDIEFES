@@ -227,7 +227,7 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		map.put("user_id", likeVo.getUser_id());
 		map.put("art_number", likeVo.getArt_number());
 		map.put("nowPage", nowPage);
-		System.out.println("ArtInfoDao, map:" + map);
+//		System.out.println("ArtInfoDao, map:" + map);
 		List<LikeLogVo> list = sqlSession.selectList(NAMESPACE + ".artLikedCheckById", map);
 		return list;
 	}
@@ -255,9 +255,13 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		sqlSession.delete(NAMESPACE + ".artGoodDelete", goodVo);
 	}
 	@Override
-	public int artGoodCheckById(GoodLogVo goodVo) throws Exception {
-		int count = sqlSession.selectOne(NAMESPACE + ".artGoodCheckById", goodVo);
-		return count;
+	public List<GoodLogVo> artGoodCheckById(GoodLogVo goodVo, String nowPage) throws Exception {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("user_id", goodVo.getUser_id());
+		map.put("art_number", goodVo.getArt_number());
+		map.put("nowPage", nowPage);
+		List<GoodLogVo> goodList = sqlSession.selectList(NAMESPACE + ".artGoodCheckById", map);
+		return goodList;
 	}
 	@Override
 	public int artLikedCountCheck(int art_number) throws Exception {
