@@ -15,8 +15,9 @@
     }
     .art_info {
      border: 1px solid;
-     margin: 20 20 20 20;
+     margin: 20 26 20 26;
      float: left;
+     box-shadow: 0px 5px 5px 2px grey;
     }
     
 /*     한줄라인 글자수 제한 */

@@ -25,8 +25,9 @@
     }
     .art_info {
      border: 1px solid;
-     margin: 10 10 10 0;
+     margin: 25 26 25 26;
      float: left;
+     box-shadow: 0px 5px 5px 2px grey;
     }
 /*     한줄라인 글자수 제한 */
     .info{
@@ -42,6 +43,7 @@
 	font-style: normal;
 	font-weight: normal;
 	background-color:#292929;
+	margin-bottom: 30px;
 }
 h1{
 	font-size: 3.5rem;
@@ -78,7 +80,6 @@ $(document).ready(function() {
 		<div class="col-md-12">
 			<div class="row" >
 				<ul  class="albumList">
-				<li>
 					<c:forEach items="${teamArtList}" var="artVo">
 					<li class="art_info">
 						<figure class="albumInfo">
@@ -100,7 +101,6 @@ $(document).ready(function() {
 						</figure>
 					</li>
 					</c:forEach>
-				</li>
 				</ul>
 			</div>
 		</div>
