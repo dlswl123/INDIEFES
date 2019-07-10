@@ -10,7 +10,7 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
+.sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput, font {
 	font-family: prstart;
 	margin-bottom: 10px;
 	line-height: 20px;
@@ -85,7 +85,7 @@ $(document).ready(function() {
 </script>
     
 <div class="col-md-2">
-	<div class="sidebar" style="position:fixed;background-color:rgba(0,0,0,0.7);width:100%;height:100%;">
+	<div class="sidebar" style="position:fixed;background-color:#292929;width:100%;height:100%;">
 		<aside id="sidebar">
 			<section id="home">
 				<a href="/indiefes/">
@@ -152,7 +152,9 @@ $(document).ready(function() {
 							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 						}
 					</script>
-			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>
+			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player">
+			    	<font>PLAYER</font>
+			    	</a>
 		    		</section>
 			    </c:otherwise>
 			 
