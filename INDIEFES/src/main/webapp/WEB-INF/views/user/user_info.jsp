@@ -113,7 +113,7 @@
 		});
 		
 		$("#btnDeleteUser").click(function() {
-			console.log("회원탈퇴");
+// 			console.log("회원탈퇴");
 			var result = confirm('회원탈퇴를 하시겠습니까?'); 
 			
 			if(result){
@@ -123,26 +123,59 @@
 				location.replace("/indiefes/user/user-info");
 			}
 		});
+		
+		$("#btnTeamSub").click(function() {
+// 			console.log("인디팀가입");
+			var result = confirm('인디팀 가입신청을 하시겠습니까?'); 
+			
+			if(result){
+				location.href="/indiefes/user/indie-team-subscription";
+			}
+			else{
+				location.replace("/indiefes/user/user-info");
+			}
+		});
 
 		
 	});
 	</script>
+	<style>
+	#logo font {
+		font-family: blox;
+		font-size: 3.5rem;
+		margin-left: 30px;
+		color: #00ff00;
+	}
+	#logo {
+		color: #00ff00;	
+	 	text-shadow: 1px 1px 0px lightgrey;
+	}
+	table td {
+		font-family: dgm;
+		color: #00ff00;
+	}
+	</style>
+	
             <div class="container">
-    <div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color: #26d263;">
+    <div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color: #292929;">
         <div class="col-sm-12">
             <div class="col-sm-2"></div>
-                <div class="col-sm-9">
-                    <h2 class="text-center">회원 정보</h2>
-                     
+                <div class="col-sm-9" style="margin:auto;">
+                    <section id="logo" style="padding:20px;width:100%;">
+					<div class="row">
+						<font>InDiEFeS</font>
+						<span style="font-size:1.25rem;font-family:hss;margin-bottom: 10px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+						회원정보</span>
+					</div>
+					</section>
+			                     
                     <form action="/indiefes/user/user-info-adjust">
                      
                     <table class="table table-striped">
                       <tr>
                         <td>아이디</td>
-                        <td><input type="text" id = "user_id" name="user_id" value="${userInfoVo.user_id}" readonly></td>
+                        <td><input type="text" id = "user_id" name="user_id" class="form-control" value="${userInfoVo.user_id}" readonly></td>
                       </tr>
-                       
-                     
                        
                       <tr>
                         <td>비밀번호</td>
@@ -233,6 +266,7 @@
                        
                     <tr>
                          <td colspan="2" class="text-center">
+                         <input type="button" id=btnTeamSub class="btn btn-warning" value="인디팀신청" style="float: left;" />
                          <input type="submit" id="submit" disabled="disabled" value="완료" class="btn btn-success">
  						 <button type="button" id="btnCancel" class="btn btn-warning" >취소</button>
  						 <input type="hidden" id="nickCheck" name="nickCheck" value="N"/>

@@ -49,8 +49,8 @@
 					<div class="map_wrap">
 						<div id="map" style="width:100%;height:500px;position:relative;overflow:hidden;"></div>
 						<div class="hAddr">
-					        <span class="title">지도중심기준 행정동 주소정보</span>
-					        <span id="centerAddr"></span>
+					        <span class="title" style="color:#000000;">지도중심기준 행정동 주소정보</span>
+					        <span id="centerAddr" style="color:#000000;"></span>
 					    </div>
 					</div>
 					 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
@@ -96,7 +96,7 @@
 						marker.setMap(map);
 						
 						
-						var iwContent = '<div style="padding:5px;">' + pN + '<br><a href="https://map.kakao.com/link/map/' + pN + ',' + pY + ',' + pX + '" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/' + pN + ',' + pY + ',' + pX + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+						var iwContent = '<div style="padding:5px;color:#000000;">' + pN + '<br><a href="https://map.kakao.com/link/map/' + pN + ',' + pY + ',' + pX + '" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/' + pN + ',' + pY + ',' + pX + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 					    iwPosition = new kakao.maps.LatLng(pY, pX); //인포윈도우 표시 위치입니다
 
 						// 인포윈도우를 생성합니다

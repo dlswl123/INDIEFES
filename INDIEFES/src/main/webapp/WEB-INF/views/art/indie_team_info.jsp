@@ -25,8 +25,9 @@
     }
     .art_info {
      border: 1px solid;
-     margin: 10 10 10 0;
+     margin: 25 26 25 26;
      float: left;
+     box-shadow: 0px 5px 5px 2px grey;
     }
 /*     한줄라인 글자수 제한 */
     .info{
@@ -42,6 +43,7 @@
 	font-style: normal;
 	font-weight: normal;
 	background-color:#292929;
+	margin-bottom: 30px;
 }
 h1{
 	font-size: 3.5rem;
@@ -58,13 +60,31 @@ font-size: 1.5em;
 color : #00ff00;
 }
 </style>
-
+	<style>
+	#logo font {
+		font-family: blox;
+		font-size: 3.5rem;
+		margin-left: 30px;
+		color: #292929;
+	}
+	#logo {
+		color: #292929;	
+	 	text-shadow: 1px 1px 0px lightgrey;
+	}
+	</style>
 <script>
 $(document).ready(function() {
 	$(this).css("font-family","prstart").css("font-size","1rem");
 });
 </script>
 		<div class="col-md-10">
+			<section id="logo" style="padding:20px;width:100%;">
+			<div class="row">
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 10px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				내 팀 정보</span>
+			</div>
+			</section><hr>
 			<div class="row">
 				<div class="col-md-10" id="member">
 				<h1>${teamName}</h1>
@@ -78,7 +98,6 @@ $(document).ready(function() {
 		<div class="col-md-12">
 			<div class="row" >
 				<ul  class="albumList">
-				<li>
 					<c:forEach items="${teamArtList}" var="artVo">
 					<li class="art_info">
 						<figure class="albumInfo">
@@ -100,7 +119,6 @@ $(document).ready(function() {
 						</figure>
 					</li>
 					</c:forEach>
-				</li>
 				</ul>
 			</div>
 		</div>

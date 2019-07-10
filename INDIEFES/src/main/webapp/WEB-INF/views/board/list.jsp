@@ -85,7 +85,18 @@ $(document).ready(function() {
 	}); // $(".a_pagination").click
 }); // $(document)
 </script>
-
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+</style>
 <form id="pageForm" action="/indiefes/board/list">
 	<input type="hidden" name="board_number" 
 			value="${param.board_number}">
@@ -99,17 +110,32 @@ $(document).ready(function() {
 			value="${paginationDto.pagingDto.keyword}">
 </form>
 
-<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-<h1>Indiefes 게시판</h1>
+<div class="col-md-10">
+	<section id="logo" style="padding:20px;width:100%;">
+		<div class="row">
+			<font>InDiEFeS</font>
+			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+			자유게시판</span>
+			<c:if test="${user_level < 3}">
+				<div style="float:right;margin-bottom:0px;margin-top:auto;">
+					<input type="button" class="btn btn-primary" value="홍보글작성" id="btnWrite" />
+				</div>
+			</c:if>
+			
+		</div>
+	</section><hr>
+<div style="background-color:#292929;font-family:dgm;">
+	<div class="col-md-11" style="margin:auto;">
+	<br>
 	<select id="perPage">
 	
-				<c:forEach var= "i" begin= "5" end= "10" step= "5">
-					<option
-					value='<c:out value="${i}"/>'
-					<c:if test="${i == pagingDto.perPage}">selected</c:if>
-					><c:out value="${i}"/>줄씩 보기</option>
-				</c:forEach>
-				</select>
+		<c:forEach var= "i" begin= "5" end= "10" step= "5">
+			<option
+			value='<c:out value="${i}"/>'
+			<c:if test="${i == pagingDto.perPage}">selected</c:if>
+			><c:out value="${i}"/>줄씩 보기</option>
+		</c:forEach>
+	</select>
 	
 	<select id="searchType">
 		<option value="subject"
@@ -131,18 +157,18 @@ $(document).ready(function() {
 	
 			<input type="text" id = "keyword"
 					placeholder="검색어를 입력하세요"value="${pagingDto.keyword}"/>
-				<input type="button" value="검색버튼"id= "btnSearch"
-					class= "btn btn-danger"/>
+			<input type="button" value="검색버튼"id= "btnSearch"
+				class= "btn btn-danger"/>
 					
 				<!-- 로그인시에만 글쓰기버튼을 보여질수있도록 구현 -->
 				<c:if test="${user_id != null}">	
 				<input type="button" class="btn btn-success" value="글쓰기" id="btnRegist">
 			 	</c:if>
-			<br>
+			<br><br>
 			<div class="row">
 				<div class="col-md-12">
 				<!-- sytle부분 board_background 이미지사진으로 설정 -->
-				<table class="table" style="background : url('${pageContext.request.contextPath}/resources/bg_images/summer.png');">
+				<table class="table" style="background:url('${pageContext.request.contextPath}/resources/bg_images/summer.png') no-repeat 0 center;">
 					<thead>
 						<tr>
 							<td>글번호</td>
@@ -166,7 +192,7 @@ $(document).ready(function() {
 								<span style="color: red;">[${ boardVo.reply_count}]</span>
 								</c:if>
 								
-								<c:if test="${boardVo.view_count >= 50 }">
+								<c:if test="${boardVo.view_count >= 100 }">
 								<img src="<c:url value='/resources/images/heart_fill.png'/>" width="15">
 								<span style="color: red;">hot</span>
 								</c:if>
@@ -221,6 +247,8 @@ $(document).ready(function() {
 			</nav>
 			</div>
 			</div>
+			</div>
+		</div>
 		</div>
 	</div>
 <%@ include file="../include/sidebar.jsp" %>
