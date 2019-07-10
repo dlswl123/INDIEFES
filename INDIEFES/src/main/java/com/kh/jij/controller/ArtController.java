@@ -332,7 +332,7 @@ public class ArtController {
 		vo.setUser_id(user_id);
 		vo.setMusic_number(music_number);
 		vo.setMusic_title(music_title);
-		System.out.println(vo);
+//		System.out.println(vo);
 		artService.cartInput(vo);
 		
 		return "redirect:/art/art_info/"+art_number+"/"+team_number;
@@ -387,7 +387,7 @@ public class ArtController {
 	@RequestMapping(value="/artUploadAppro/{art_number}", method = RequestMethod.GET)
 	public String artUploadAppro(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		System.out.println("artController, artUploadAppro, userVo:" + userVo);
+//		System.out.println("artController, artUploadAppro, userVo:" + userVo);
 		String url = "";
 		if (userVo != null) {
 			artService.artUploadAppro(art_number);
@@ -403,7 +403,7 @@ public class ArtController {
 	@RequestMapping(value="/artUploadReturn/{art_number}", method = RequestMethod.GET)
 	public String artUploadReturn(@PathVariable("art_number") int art_number, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		System.out.println("artController, artUploadReturn, userVo:" + userVo);
+//		System.out.println("artController, artUploadReturn, userVo:" + userVo);
 		String url = "";
 		if (userVo != null) {
 			artService.artUploadReturn(art_number);
@@ -426,7 +426,7 @@ public class ArtController {
 		List<PayLogVo> payList = artService.payList(user_id);
 		model.addAttribute("userVo", userVo);
 		model.addAttribute("payList", payList);
-		System.out.println("payList: "+payList);
+//		System.out.println("payList: "+payList);
 		return null;
 	}
 	// 결제 처리
@@ -461,8 +461,8 @@ public class ArtController {
 				likeVo.setUser_id(user_id);
 				List<LikeLogVo> likeCountList = artService.artLikedCheckById(likeVo, nowPage);
 				int likedCount = artService.artLikedCountCheck(likeVo.getArt_number());
-				System.out.println("likeCountList:" + likeCountList);
-				System.out.println("likedCount:" + likedCount);
+//				System.out.println("likeCountList:" + likeCountList);
+//				System.out.println("likedCount:" + likedCount);
 				boolean check = likeCountList.isEmpty();
 				if (likeCountList != null && check == false) {
 					artService.artLikedDelete(likeVo);
@@ -475,7 +475,7 @@ public class ArtController {
 					artService.artLikedCount(likedCount,  likeVo.getArt_number());
 					entity = new ResponseEntity<String>("likeInsert", HttpStatus.OK);
 				}	
-				System.out.println("likeVo:" + likeVo);
+//				System.out.println("likeVo:" + likeVo);
 			} else {
 				entity = new ResponseEntity<String>("login_check", HttpStatus.OK);
 			}
@@ -498,9 +498,9 @@ public class ArtController {
 				String nowPage = "art_info";
 				List<GoodLogVo> goodCountList = artService.artGoodCheckById(goodVo, nowPage);
 				int goodCount = artService.artGoodCountCheck(goodVo.getArt_number());
-				System.out.println("goodVo:" + goodVo);
-				System.out.println("goodCountList:" + goodCountList);
-				System.out.println("goodCount:" + goodCount);
+//				System.out.println("goodVo:" + goodVo);
+//				System.out.println("goodCountList:" + goodCountList);
+//				System.out.println("goodCount:" + goodCount);
 				boolean check = goodCountList.isEmpty();
 				if (goodCountList != null && check == false) {
 					artService.artGoodDelete(goodVo);

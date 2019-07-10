@@ -108,7 +108,7 @@ $(document).ready(function() {
 					$("#txaLyrics").val(receivedData);
 					$("#btnModalLyric").attr("data-modify_lyric", receivedData);
 				} else {
-					$("#txaLyrics").val("");
+					$("#txaLyrics").val("가사를 입력해주세요.");
 					$("#btnModalLyric").attr("data-modify_lyric", "");
 				}
 			} // "success"
@@ -420,7 +420,7 @@ $(document).ready(function() {
 									</button>
 								</div>
 								<div class="modal-body">
-								<textarea  rows="10" cols="80" id="txaLyrics" class="form-control" name="lyrics">가사를 입력해주세요.</textarea>
+								<textarea  rows="10" cols="80" id="txaLyrics" class="form-control" name="lyrics"></textarea>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary" id="btnModalLyric"

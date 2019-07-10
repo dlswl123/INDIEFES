@@ -422,11 +422,7 @@ $(document).ready(function() {
 							</button>
 						</div>
 						<div class="modal-body">
-						<textarea  rows="10" cols="80" id="lyrics" class="form-control" name="lyrics">
-							<c:choose>
-								<c:when test="${musicLysicsVo.lysics == null}">가사를 입력해 주세요.</c:when>
-								<c:otherwise> ${musicLysicsVo.lysics} </c:otherwise>
-							</c:choose>
+						<textarea  rows="10" cols="80" id="lyrics" class="form-control" name="lyrics"><c:choose><c:when test="${musicLysicsVo.lysics == null}">가사를 입력해 주세요.</c:when><c:otherwise> ${musicLysicsVo.lysics} </c:otherwise></c:choose>
 						</textarea>
 						</div>
 						<div class="modal-footer">
