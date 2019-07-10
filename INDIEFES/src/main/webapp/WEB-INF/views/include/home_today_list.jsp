@@ -45,6 +45,7 @@
     background-color:rgba(255,255,255);
     margin: auto;
     box-shadow: 0px 5px 5px 5px grey;
+    -ms-overflow-style: none;
     }
     .pagination{
     margin: 0 50;
@@ -56,6 +57,9 @@
 	color: #00ff00;
 	background-color:rgba(0,0,0);
     }
+    ::-webkit-scrollbar {
+	display:none;
+	}
 </style>
 <script>
 $(document).ready(function() {
