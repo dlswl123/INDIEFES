@@ -37,6 +37,12 @@ $(document).ready(function() {
 		$(this).text("LOGOUT").css("font-family","prstart").css("font-size","1rem");
 	});
 	
+	$("#userManagament font").hover(function() {
+		$(this).text("회원관리 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("USER MANAGEMENT").css("font-family","prstart").css("font-size","1rem");
+	});
+	
 	$("#userInfo font").hover(function() {
 		$(this).text("회원정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
 	},function(){
@@ -105,14 +111,23 @@ $(document).ready(function() {
 					</section>
 			    </c:when>
 			 
+			 	
 			   	 
 			    <c:otherwise>
-			    
+			    	
 			        <section id="logout">
 					<a href="/indiefes/user/logout" onclick="closePlayer();">
 						<font>LOGOUT</font>
 					</a>
 					</section>
+					
+					<c:if test="${userInfoVo.user_level == 0 || userInfoVo.user_level == 1}">
+			 		<section id="userManagament">
+					<a href="/indiefes/user/user-management">
+						<font>USER MANAGEMENT</font>
+					</a>
+					</section>
+			 		</c:if>
 					
 					<section id="userInfo">
 					<a href="/indiefes/user/user-info-pwinput">

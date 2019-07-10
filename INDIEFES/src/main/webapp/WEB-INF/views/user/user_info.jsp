@@ -113,11 +113,23 @@
 		});
 		
 		$("#btnDeleteUser").click(function() {
-			console.log("회원탈퇴");
+// 			console.log("회원탈퇴");
 			var result = confirm('회원탈퇴를 하시겠습니까?'); 
 			
 			if(result){
 				location.href="/indiefes/user/user-delete";
+			}
+			else{
+				location.replace("/indiefes/user/user-info");
+			}
+		});
+		
+		$("#btnTeamSub").click(function() {
+// 			console.log("인디팀가입");
+			var result = confirm('인디팀 가입신청을 하시겠습니까?'); 
+			
+			if(result){
+				location.href="/indiefes/user/indie-team-subscription";
 			}
 			else{
 				location.replace("/indiefes/user/user-info");
@@ -254,6 +266,7 @@
                        
                     <tr>
                          <td colspan="2" class="text-center">
+                         <input type="button" id=btnTeamSub class="btn btn-warning" value="인디팀신청" style="float: left;" />
                          <input type="submit" id="submit" disabled="disabled" value="완료" class="btn btn-success">
  						 <button type="button" id="btnCancel" class="btn btn-warning" >취소</button>
  						 <input type="hidden" id="nickCheck" name="nickCheck" value="N"/>
