@@ -95,7 +95,7 @@ article {
 			</c:if>
 			
 			</div>
-		</section>
+		</section><hr>
 
 	<c:forEach var="vo" items="${list}">
 		<section class="concertList">

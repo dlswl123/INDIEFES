@@ -45,7 +45,26 @@ $(document).ready(function() {
 	});
 });
 </script>
+	<style>
+	#logo font {
+		font-family: blox;
+		font-size: 3.5rem;
+		margin-left: 30px;
+		color: #292929;
+	}
+	#logo {
+		color: #292929;	
+	 	text-shadow: 1px 1px 0px lightgrey;
+	}
+	</style>
 		<div class="col-md-10">
+		<section id="logo" style="padding:20px;width:100%;">
+		<div class="row">
+			<font>InDiEFeS</font>
+			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;color:#292929;">
+			결제정보</span>
+		</div>
+		</section><hr>
 			<div class="row" style="background-color:#292929;">
 				<div class="col-md-10">
 					<h3>PAY LIST</h3><br>
