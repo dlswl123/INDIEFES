@@ -6,14 +6,15 @@
 	
 	<script>
 	
-		$(document).ready(function() {
-			
-			var user_info_winput_run_result = "${user-info-pwinput-run}";
-			if (user_info_winput_run_result == 'fail') {
-				alert("비밀번호가 틀렸습니다");
-			}
-			
-		});
+	var message = "${message}";
+	
+// 	if(message == "create_accout_success"){
+// 		alert("회원가입성공");
+// 	} 
+	console.log(message);
+	if (message == "fail") {
+		alert("비밀번호가 틀렸습니다");
+	}
 	</script>	
 	<style>
 	#logo font {
@@ -43,7 +44,7 @@
 		</section>
 		</div>
 		<div class="col-md-12">
-			<form role="form" action="/indiefes/user/user-info-pwinput-run" method="post">
+			<form role="form" action="/indiefes/user/indie-team-subscription-run" method="post">
 			
 				<div class="form-group">
 					 <input type="hidden" name="user_id" value="${userInfoVo.user_id}">
