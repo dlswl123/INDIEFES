@@ -321,6 +321,9 @@
 	   			 where upload_check = #{keyword}
 	   		</if>
        	</if>
+       	<if test="searchType == ''">
+       		 where upload_check = 1
+       	</if>
 	</sql>
 	
 	<sql id="checkById">

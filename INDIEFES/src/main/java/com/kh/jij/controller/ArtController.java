@@ -148,7 +148,7 @@ public class ArtController {
 	public void artList(PagingDto pagingDto, Model model, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 //		System.out.println(pagingDto);
-		pagingDto.setPerPage(24);
+		pagingDto.setPerPage(21);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		

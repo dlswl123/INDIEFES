@@ -89,7 +89,7 @@ $(document).ready(function() {
 				page = 1;
 		}
 		$("input[name=page]").val(page);
-// 		$("input[name=perPage]").val(perPage);
+// 		$("input[name=perPage]").val(21);
 	} // setPage()
 	
 	// 검색
