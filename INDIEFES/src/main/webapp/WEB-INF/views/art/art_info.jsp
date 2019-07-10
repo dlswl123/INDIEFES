@@ -54,7 +54,7 @@ $(document).ready(function() {
 				"X-HTTP-Method-Overried" : "post"
 			},
 			"success" : function(receivedData) {
-				console.log(receivedData); // success
+// 				console.log(receivedData); // success
 				if (receivedData.trim() == "success") {
 					window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 				} // if
@@ -92,7 +92,7 @@ $(document).ready(function() {
 				"X-HTTP-Method-Overried" : "get"
 			},
 			"success" : function(receivedData) {
-				console.log(receivedData); // success
+// 				console.log(receivedData); // success
 				if(receivedData != "") {
 					$("#txaLyrics").val(receivedData);
 					$("#btnModalLyric").attr("data-modify_lyric", receivedData);
@@ -109,9 +109,9 @@ $(document).ready(function() {
 		var music_number = $(this).attr("data-music_number");
 		var txaLyrics = $(this).attr("data-modify_lyric");
 		var lyrics = $("#txaLyrics").val();
-		console.log("txaLyrics:" + txaLyrics);
-		console.log("lyrics:" + lyrics);
-		console.log(music_number);
+// 		console.log("txaLyrics:" + txaLyrics);
+// 		console.log("lyrics:" + lyrics);
+// 		console.log(music_number);
 		var url = "";
 		var type = "";
 		if (txaLyrics == "") {
@@ -121,7 +121,7 @@ $(document).ready(function() {
 			url = "/indiefes/music/updateLyrics/" + music_number;
 			type = "put";
 		}
-		console.log("type:" + type);
+// 		console.log("type:" + type);
 		var data = {
 			"music_number" : music_number,
 			"lyrics" : lyrics
@@ -136,11 +136,11 @@ $(document).ready(function() {
 			"dataType" : "text",
 			"data" : JSON.stringify(data),
 			"success" : function(receivedData) {
-				console.log(receivedData); // success
+// 				console.log(receivedData); // success
 				if (receivedData.trim() == "success") {
 					$("#txaLyrics").val(lyrics);
 				} // if
-				console.log("lyrics" + lyrics);
+// 				console.log("lyrics" + lyrics);
 			} // "success"
 		}); // $.ajax
 		$("#modal-lyrics").modal("hide");
@@ -149,7 +149,7 @@ $(document).ready(function() {
 	// 음악리스트- 다운버튼
 	$("#tblMusicList").on("click", ".spMusicDown",function() {
 		var music_number = $(this).attr("data-music_number");
-		console.log(music_number);
+// 		console.log(music_number);
 	});
 	
 	// 음악리스트- 담기버튼
@@ -163,7 +163,7 @@ $(document).ready(function() {
 	$(".spLikedCount").click(function() {
 		var art_number = $(this).attr("data-art_number");
 		
-		console.log(art_number);
+// 		console.log(art_number);
 		var url = "/indiefes/art/likedChange";
 		var data = {
 				"art_number" : art_number
@@ -178,7 +178,7 @@ $(document).ready(function() {
 			"dataType" : "text",
 			"data" : data,
 			"success" : function(receivedData) {
-				console.log(receivedData); // success
+// 				console.log(receivedData); // success
 				var artLikedCountSpan = $("#artLikedCountSpan");
 				var likeCount = parseInt(artLikedCountSpan.text	().trim());
 				if (receivedData.trim() == "likeInsert") {
@@ -194,7 +194,7 @@ $(document).ready(function() {
 	// 앨범정보- 추천버튼
 	$(".spGoodCount").click(function() {
 		var art_number = $(this).attr("data-art_number");
-		console.log(art_number);
+// 		console.log(art_number);
 		var url = "/indiefes/art/goodChange";
 		var data = {
 				"art_number" : art_number
@@ -209,7 +209,7 @@ $(document).ready(function() {
 			"dataType" : "text",
 			"data" : data,
 			"success" : function(receivedData) {
-				console.log(receivedData); // success
+// 				console.log(receivedData); // success
 				var artGoodCountSpan = $("#artGoodCountSpan");
 				var goodCount = parseInt(artGoodCountSpan.text().trim());
 				if (receivedData.trim() == "goodInsert") {
@@ -261,7 +261,7 @@ $(document).ready(function() {
 	$("#btnReturn").click(function() {
 // 		var track_number = $("#track_number").length;
 		location.href = "/indiefes/art/artUploadReturn/${artVo.art_number}";
-		console.log(track_number);
+// 		console.log(track_number);
 	});
 	// 운영자용 끝
 	
@@ -363,7 +363,6 @@ $(document).ready(function() {
 								<c:if test="${userVo != null}">
 									<c:forEach items="${payList}" var="PayLogVo">
 										<c:if test="${musicInfoVo.music_number == PayLogVo.music_number}">
-										console.log("작동중...");
 											<c:set var="flag" value="1" />
 										</c:if>
 									</c:forEach>

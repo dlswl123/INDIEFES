@@ -117,7 +117,7 @@ $(document).ready(function() {
 		}
 		var art_genre = $("#art_genre").val();
 		$("input[name=art_genre]").val(art_genre);
-		console.log(file);
+// 		console.log(file);
 		// 폼을 전송
 		$("#art_info_input").submit();
 	});
@@ -150,7 +150,7 @@ $(document).ready(function() {
 	        "contentType" :false,
 	        "processData" :false,
 	    	"success" : function(receivedData){
-	    		console.log(receivedData);
+// 	    		console.log(receivedData);
 	    		if (receivedData == "success") {
 	    			music_title.val("");
 	    			fileName.text("");

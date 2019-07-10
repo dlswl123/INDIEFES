@@ -60,7 +60,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		setPage();
 		var genre = $(this).attr("data-genre");
-		console.log(genre);
+// 		console.log(genre);
 		if (genre == "appro") {
 			$("input[name=searchType]").val("appro");
 			$("input[name=keyword]").val(2);
@@ -92,8 +92,8 @@ $(document).ready(function() {
 	function setSearch() {
 		var searchType = $("#searchType").val();
 		var keyword = $("#keyword").val();
-		console.log("searchType:" + searchType);
-		console.log("keyword:" + keyword);
+// 		console.log("searchType:" + searchType);
+// 		console.log("keyword:" + keyword);
 		$("input[name=searchType]").val(searchType);
 		$("input[name=keyword]").val(keyword);
 	}
@@ -105,7 +105,7 @@ $(document).ready(function() {
 			setPage();
 			
 			var page = $(this).attr("data-page"); // 페이지 숫자 읽기
-			console.log(page);
+// 			console.log(page);
 			$("input[name=page]").val(page); // 아래쪽 폼의 page에 설정
 			$("#pageForm").submit(); // 폼 설정
 
@@ -258,7 +258,7 @@ $(document).ready(function() {
 			<div class="row">
 <!-- 			앨범 리스트 -->
 				<ul  class="albumList">
-				<li>
+<!-- 				<li> -->
 			<c:choose>
 				<c:when test="${not empty artList}">
 					<c:forEach items="${artList}" var="artVo">
@@ -273,10 +273,10 @@ $(document).ready(function() {
 								</a>
 <!-- 								<button onclick="" class="btnPlay" aria-label="새창">듣기</button> -->
 							</div>
-							<figcaption class="info">
+							<figcaption class="info" style="padding-left: 10px; padding-top: 10px;">
 								<a href="/indiefes/art/art_info/${artVo.art_number }/${artVo.team_number}" class="albumTitle" title="artInfoVo.art_title" onclick="" target="_self">${artVo.art_title}</a>
 								<div class="subInfo">
-								<p class="artist">
+<!-- 								<p class="artist"> -->
 								<c:forEach items="${teamList}" var="teamList">
 								<c:if test="${artVo.team_number == teamList.team_number}">
 									<a href="/indiefes/art/indie_team_info?team_number=${teamList.team_number}" class="artistTitle" title="${teamList.art_team}" onclick="" target="_self">${teamList.art_team}</a>
@@ -338,10 +338,7 @@ $(document).ready(function() {
 										<span>&nbsp;&nbsp;</span>
 									</c:otherwise>
 								</c:choose>
-<%-- 								<c:if test="${artVo.good_count != 0 }"> --%>
-<%-- 									<span id="artGoodcountSpan">${artVo.good_count }</span> --%>
-<%-- 								</c:if> --%>
-								</p>
+<!-- 								</p> -->
 								</div>
 							</figcaption>
 						</figure>
@@ -353,7 +350,7 @@ $(document).ready(function() {
 					<span>검색결과가 존재하지 않습니다.</span>
 				</c:otherwise>
 			</c:choose>
-				</li>
+<!-- 				</li> -->
 				</ul>
 <!-- 				앨범리스트 끝 -->
 			</div>
