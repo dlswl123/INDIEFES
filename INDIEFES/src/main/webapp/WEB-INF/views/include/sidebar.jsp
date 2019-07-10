@@ -10,7 +10,7 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
+.sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput, font {
 	font-family: prstart;
 	margin-bottom: 10px;
 }
@@ -151,7 +151,9 @@ $(document).ready(function() {
 							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
 						}
 					</script>
-			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>
+			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player">
+			    	<font>PLAYER</font>
+			    	</a>
 		    		</section>
 			    </c:otherwise>
 			 
