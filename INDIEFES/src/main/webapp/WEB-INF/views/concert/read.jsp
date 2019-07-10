@@ -38,12 +38,6 @@ $(document).ready(function() {
 			<font>InDiEFeS</font>
 			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
 			공연정보</span>
-			<c:if test="${user_level < 3}">
-				<div style="float:right;margin-bottom:0px;margin-top:auto;">
-					<input type="button" class="btn btn-primary" value="홍보글작성" id="btnWrite" />
-				</div>
-			</c:if>
-			
 		</div>
 	</section><hr>
 

@@ -60,6 +60,11 @@
     ::-webkit-scrollbar {
 	display:none;
 	}
+	figcaption {
+	font-family: dgm;
+	padding-left: 10px;
+	padding-top: 10px;
+	}
 </style>
 <script>
 $(document).ready(function() {

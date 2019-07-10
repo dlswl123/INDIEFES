@@ -124,6 +124,21 @@ $(document).ready(function() {
 });
 
 </script>
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+figcaption {
+	font-family: dgm;
+}
+</style>
 
 <form id="pageForm" action="/indiefes/art/art_list">
 <!-- 	<input type="hidden" name="perPage"  -->
@@ -140,7 +155,17 @@ $(document).ready(function() {
   <div class="row">
 <!--   상단 장르 선택부 -->
 		<div class="col-md-12">
+<<<<<<< HEAD
+		<section id="logo" style="padding:20px;width:100%;">
+			<div class="row">
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				앨범정보</span>
+			</div>
+		</section><hr>
+=======
 <!-- 			 <span class="badge badge-default">장르</span> -->
+>>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
@@ -232,7 +257,7 @@ $(document).ready(function() {
 <!-- 	검색  -->
 <%-- likeCount : ${likeCount} --%>
 		<div class ="col-md-12">
-			<div class="in-line">
+			<div class="in-line" style="font-family: dgm;">
 				 <select class="selectBox" id="searchType">
 					<option value="albumName" <c:if test="${paginationDto.pagingDto.searchType == 'albumName'}">
 								selected
@@ -364,7 +389,13 @@ $(document).ready(function() {
 <!-- 				앨범리스트 끝 -->
 			</div>
 			<div class="row">
+<<<<<<< HEAD
+				<div class="col-md-12">
+					<div class="row">
+						<div style="margin:auto;">
+=======
 				<div class="col-md-12" style="">
+>>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 					<nav>
 						<ul class="pagination" >
 						<!-- 이전 -->
@@ -392,6 +423,8 @@ $(document).ready(function() {
 						</c:if>		
 						</ul>
 					</nav>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
