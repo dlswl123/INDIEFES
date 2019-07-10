@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.jij.domain.ArtInfoVo;
 import com.kh.jij.domain.GoodLogVo;
@@ -52,8 +53,8 @@ public class ArtController {
 
 	// 앨범정보조회 폼
 	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
-	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model, HttpSession session) throws Exception {
-		String teamName = artService.getTeamName(team_number);
+	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
+		
 		ArtInfoVo artVo = artService.artRead(art_number);
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
@@ -67,14 +68,20 @@ public class ArtController {
 			goodVo.setUser_id(user_id);
 			goodVo.setArt_number(art_number);
 			List<LikeLogVo> likedCount = artService.artLikedCheckById(likeVo, nowPage);
-			int goodCount = artService.artGoodCheckById(goodVo);
+			List<GoodLogVo> goodCount = artService.artGoodCheckById(goodVo, nowPage);
+			String teamName = artService.getTeamName(team_number);
+			List<PayLogVo> payList = artService.payList(user_id);
 			model.addAttribute("likedCount", likedCount);
 			model.addAttribute("goodCount", goodCount);
-			
+			model.addAttribute("teamName", teamName);
+			model.addAttribute("payList", payList);
+			model.addAttribute("userVo", userVo);
+			System.out.println("artController, art_info, payList" + payList);
+		} else {
+			rttr.addFlashAttribute("message", "login_check");
 		}
 		model.addAttribute("artVo", artVo);
 		model.addAttribute("musicList", musicList);
-		model.addAttribute("teamName", teamName);
 //		System.out.println("ArtController, artVo : " + artVo);
 //		System.out.println("ArtController, musicList : " + musicList);
 		return "art/art_info";
@@ -136,16 +143,16 @@ public class ArtController {
 	@RequestMapping(value = "/art_list", method = RequestMethod.GET)
 	public void artList(PagingDto pagingDto, Model model, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
-		System.out.println(pagingDto);
+//		System.out.println(pagingDto);
 		pagingDto.setPerPage(24);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		
-		System.out.println("ArtController, ArtList, artList:" + artList);
+//		System.out.println("ArtController, ArtList, artList:" + artList);
 //		System.out.println("ArtController, ArtList, teamList:" + teamList);
 		PaginationDto paginationDto = new PaginationDto();
 		paginationDto.setPagingDto(pagingDto);
-		System.out.println("리스트:"+paginationDto);
+//		System.out.println("리스트:"+paginationDto);
 		int artCount = artService.artCount(pagingDto);
 		paginationDto.setTotalCount(artCount);
 		if (userVo != null) {
@@ -154,8 +161,12 @@ public class ArtController {
 			LikeLogVo likeVo = new LikeLogVo();
 			likeVo.setUser_id(user_id);
 			List<LikeLogVo> likeCount = artService.artLikedCheckById(likeVo, nowPage);
+			GoodLogVo goodVo = new GoodLogVo();
+			goodVo.setUser_id(user_id);
+			List<GoodLogVo> goodCount = artService.artGoodCheckById(goodVo, nowPage);
 			model.addAttribute("likeCount", likeCount);
-			System.out.println("artController, likeCount" + likeCount);
+			model.addAttribute("goodCount", goodCount);
+//			System.out.println("artController, likeCount" + likeCount);
 		}
 		model.addAttribute("artList", artList);
 		model.addAttribute("teamList", teamList);
@@ -446,12 +457,14 @@ public class ArtController {
 			if (userVo != null) {
 				String user_id = userVo.getUser_id();
 				goodVo.setUser_id(user_id);
-				int count = artService.artGoodCheckById(goodVo);
+				String nowPage = "art_info";
+				List<GoodLogVo> goodCountList = artService.artGoodCheckById(goodVo, nowPage);
 				int goodCount = artService.artGoodCountCheck(goodVo.getArt_number());
 				System.out.println("goodVo:" + goodVo);
-				System.out.println("count:" + count);
+				System.out.println("goodCountList:" + goodCountList);
 				System.out.println("goodCount:" + goodCount);
-				if (count > 0) {
+				boolean check = goodCountList.isEmpty();
+				if (goodCountList != null && check == false) {
 					artService.artGoodDelete(goodVo);
 					goodCount = goodCount - 1;
 					artService.artGoodCount(goodCount, goodVo.getArt_number());

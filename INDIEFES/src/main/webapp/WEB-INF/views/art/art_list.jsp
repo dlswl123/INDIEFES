@@ -307,12 +307,20 @@ $(document).ready(function() {
 <!-- 								좋아요 count 수 끝 -->
 								
 <!-- 								추천수 체크 -->
+								<c:set var="flag" value="0" />
+								<c:if test="${userVo != null}">
+									<c:forEach items="${goodCount}" var="goodCount">
+										<c:if test="${artVo.art_number == goodCount.art_number}">
+											<c:set var="flag" value="1" />
+										</c:if>
+									</c:forEach>
+								</c:if>
 								<c:choose>
-									<c:when test="${goodCount > 0 }">
-										<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+									<c:when test="${flag == 1}">
+										<span class="spGoodCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="fas fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
 									</c:when>
 									<c:otherwise>
-										<span class="spGoodCount icon"  data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
+										<span class="spGoodCount icon" data-art_number="${artVo.art_number}" style="text-align: center;"><i class="far fa-thumbs-up" style="font-size: 20px; color: green;" id="iconGood"></i></span>
 									</c:otherwise>
 								</c:choose>
 								<c:choose>
