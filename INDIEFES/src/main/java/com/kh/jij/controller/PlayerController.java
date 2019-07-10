@@ -121,14 +121,18 @@ public class PlayerController {
 		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 		Map<String, Object> map = new HashMap<>();
 		try {
-			for (int i = 0; i < musicList.size(); i++) {
-				MusicInfoVo musicVo = musicList.get(i);
-				map.put("user_id", userVo.getUser_id());
-				map.put("musicVo", musicVo);
-				artService.playInsert(map);
-				map.remove("user_id");
-				map.remove("musicVo");
-				entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			if (userVo != null) {
+				for (int i = 0; i < musicList.size(); i++) {
+					MusicInfoVo musicVo = musicList.get(i);
+					map.put("user_id", userVo.getUser_id());
+					map.put("musicVo", musicVo);
+					artService.playInsert(map);
+					map.remove("user_id");
+					map.remove("musicVo");
+					entity = new ResponseEntity<String>("success", HttpStatus.OK);
+				}
+			} else {
+				entity = new ResponseEntity<String>("login_check", HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

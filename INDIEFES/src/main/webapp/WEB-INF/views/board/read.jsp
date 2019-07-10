@@ -218,6 +218,23 @@ $(document).ready(function(){
 	}); // $.getJSON
 }); // $(document).ready
 </script>
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+.col-md-11 label, .table th {
+	font-family: dgm;
+	color: #00ff00;
+}
+</style>
+
 <!-- 모달 -->
 	<div class="row">
 		<div class="col-md-12">
@@ -283,8 +300,22 @@ $(document).ready(function(){
 	<input type="hidden" name=keyword
 	 		value="${param.keyword}">
 </form>	 	
-<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-			<h1>글 조회</h1>
+<div class="col-md-10">
+	<section id="logo" style="padding:20px;width:100%;">
+		<div class="row">
+			<font>InDiEFeS</font>
+			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+			자유게시판</span>
+			<c:if test="${user_level < 3}">
+				<div style="float:right;margin-bottom:0px;margin-top:auto;">
+					<input type="button" class="btn btn-primary" value="홍보글작성" id="btnWrite" />
+				</div>
+			</c:if>
+			
+		</div>
+	</section><hr>
+	<div class="row" style="background-color:#292929;">
+		<div class="col-md-11" style="margin:auto;">
 			<form role="form" method="post">
 				<div class="form-group">
 					<label for="subject">글제목</label>
@@ -335,10 +366,10 @@ $(document).ready(function(){
 					
 				</div> <!-- class="col-md-12"-->
 		 	</div> <!-- class="row"> -->
-		 	<hr>
+		 	<hr style="background-color: #fafafa;color: #fafafa;border-color: #fafafa;">
 		 	
 		 	<!--  댓글작성 -->
-		 	<div class="row" style="background-color: #bfd2ef">
+		 	<div class="row" style="background-color: #545454">
 		 		<div class="col-md-12">
 		 			<div class="form-group">
 		 				<label for="title">댓글 내용</label>
@@ -356,7 +387,7 @@ $(document).ready(function(){
 		 		</div>
 		 		</div>
 		 	</div>
-		 	<hr>
+		 	<hr style="background-color: #fafafa;color: #fafafa;border-color: #fafafa;">
 		 	<!-- 댓글 목록 -->
 		 	<div class="row">
 		 		<div class="col-md-12">
@@ -381,8 +412,10 @@ $(document).ready(function(){
 		 			</table>
 		 		</div>
 		 	</div>
-		 	
-		 </div>  <!-- class="col-md-10"   -->
+	 	</div>
+	</div>
+	 	
+ </div>  <!-- class="col-md-10"   -->
 	
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>
