@@ -23,6 +23,7 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 	
 	private static final String NAMESPACE = "userinfo";
 	
+	// 회원로그인
 	@Override
 	public UserInfoVo readWithPw(String user_id, String user_pw) throws Exception {
 		System.out.println("UserInfoDaoImpl, readWithPw, user_id:" + user_id); 
@@ -35,6 +36,7 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 		return userInfoVo;
 	}
 
+	// 회원정보조회
 	@Override
 	public UserInfoVo readWith(String user_id) throws Exception {
 		HashMap<String, Object> paramMap = new HashMap<>();
@@ -81,7 +83,7 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 	@Override
 	public void userDelete(String user_id) throws Exception {
 		System.out.println(user_id);
-		sqlsession.delete(NAMESPACE + ".userDelete", user_id);
+		sqlsession.update(NAMESPACE + ".userDelete", user_id);
 	}
 
 	// 회원목록

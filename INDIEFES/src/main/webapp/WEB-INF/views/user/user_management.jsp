@@ -70,7 +70,10 @@
 							성별
 						</th>
 						<th>
-							유저등급
+							회원등급
+						</th>
+						<th>
+							회원탈퇴여부
 						</th>
 					</tr>
 				</thead>
@@ -89,8 +92,6 @@
 						<c:if test="${userInfoVo.user_gender eq 'F'}">
 						여
 						</c:if>
-						
-						
 						</td>
 						<td>
 						<c:if test="${userInfoVo.user_level == 0}">
@@ -108,7 +109,8 @@
 						<c:if test="${userInfoVo.user_level == 3}">
 						일반유저
 						</c:if>
-						
+						</td>
+						<td>${userInfoVo.deleted}</td>
 					</tr>
 					</c:forEach>
 				</tbody>
