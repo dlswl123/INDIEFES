@@ -168,7 +168,7 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-md-12">
 				<!-- sytle부분 board_background 이미지사진으로 설정 -->
-				<table class="table" style="background:url('${pageContext.request.contextPath}/resources/bg_images/summer.png') no-repeat 0 center fixed;">
+				<table class="table" style="background:url('${pageContext.request.contextPath}/resources/bg_images/summer.png') no-repeat 0 center;">
 					<thead>
 						<tr>
 							<td>글번호</td>
