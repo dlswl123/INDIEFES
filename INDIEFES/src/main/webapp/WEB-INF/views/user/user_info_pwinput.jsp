@@ -8,8 +8,8 @@
 	
 		$(document).ready(function() {
 			
-			var user_info_winput_run_result = "${user-info-pwinput-run}";
-			if (user_info_winput_run_result == 'fail') {
+			var user_info_pwinput_run_result = "${user-info-pwinput-run}";
+			if (user_info_pwinput_run_result == 'fail') {
 				alert("비밀번호가 틀렸습니다");
 			}
 			

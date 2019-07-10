@@ -38,7 +38,13 @@
 }
 </style>
 <script>
+	var message = "${message}";
+	if (message == "login_check") {
+		alert("로그인한 유저만 사용가능합니다.");
+	}
 $(document).ready(function() {
+	
+	
 	// 검색버튼
 	$("#btnSearch").click(function(){
 		setPage();
@@ -149,6 +155,7 @@ figcaption {
   <div class="row">
 <!--   상단 장르 선택부 -->
 		<div class="col-md-12">
+<<<<<<< HEAD
 		<section id="logo" style="padding:20px;width:100%;">
 			<div class="row">
 				<font>InDiEFeS</font>
@@ -156,6 +163,9 @@ figcaption {
 				앨범정보</span>
 			</div>
 		</section><hr>
+=======
+<!-- 			 <span class="badge badge-default">장르</span> -->
+>>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
@@ -307,6 +317,7 @@ figcaption {
 								<br>
 								<time datetime="">${artVo.reg_art}</time><br>
 <!-- 								좋아요 체크 -->
+								<c:if test="${paginationDto.pagingDto.searchType != 'delete' && paginationDto.pagingDto.searchType != 'appro' && paginationDto.pagingDto.searchType != 'working'}">
 								<c:set var="flag" value="0" />
 								<c:if test="${userVo != null}">
 									<c:forEach items="${likeCount}" var="likeCount">
@@ -360,6 +371,7 @@ figcaption {
 										<span>&nbsp;&nbsp;</span>
 									</c:otherwise>
 								</c:choose>
+								</c:if>
 <!-- 								</p> -->
 								</div>
 							</figcaption>
@@ -377,9 +389,13 @@ figcaption {
 <!-- 				앨범리스트 끝 -->
 			</div>
 			<div class="row">
+<<<<<<< HEAD
 				<div class="col-md-12">
 					<div class="row">
 						<div style="margin:auto;">
+=======
+				<div class="col-md-12" style="">
+>>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 					<nav>
 						<ul class="pagination" >
 						<!-- 이전 -->

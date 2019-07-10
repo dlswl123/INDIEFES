@@ -22,10 +22,6 @@
 </style>
 <script>
 $(document).ready(function() {
-	var message = "${message}";
-	if (message == "login_check") {
-		alert("로그인한 유저만 사용가능합니다.");
-	}
 	
 // 		사용자용
 
@@ -35,9 +31,11 @@ $(document).ready(function() {
 	});
 	// 전체 다운
 	$("#btnAllDown").click(function() {
-		var id = 3;
-		for (var i = 1; i <= id ; i++) {
+		var id = "${musicList}";
+		for (var i = 1; i <= id.length ; i++) {
 			$("#"+i).get(0).click();
+// 			var chk = $("#"+i);
+// 			console.log(chk);
 		}
 // 		location.href="";
 	});
@@ -57,10 +55,23 @@ $(document).ready(function() {
 // 				console.log(receivedData); // success
 				if (receivedData.trim() == "success") {
 					window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
-				} // if
+				} else if (receivedData.trim() == "login_check"){
+					alert("로그인한 유저만 사용가능합니다.");
+				}
 			} // "success"
 		}); // $.ajax
 	}); // $("#btnAllListen").click
+	
+// 	전체 담기
+	$("#btnAllCart").click(function() {
+		var check = "${musicList}";
+		 $('#musicTable tr').each(function(index, item) {
+			 var result = "";
+			 result += 	index + ":" + item;
+			 console.log(result);
+		  });
+	});
+		
 	
 // 	// 체크박스 전체 선택, 전체 선택 해제
 // 	$("#allCheckbox").click(function() {
@@ -139,7 +150,9 @@ $(document).ready(function() {
 // 				console.log(receivedData); // success
 				if (receivedData.trim() == "success") {
 					$("#txaLyrics").val(lyrics);
-				} // if
+				} else if (receivedData.trim() == "login_check") {
+					alert("로그인한 사용자만 사용가능합니다.");
+				}
 // 				console.log("lyrics" + lyrics);
 			} // "success"
 		}); // $.ajax
@@ -187,6 +200,8 @@ $(document).ready(function() {
 				} else if (receivedData.trim() == "likeDelete") {
 					$("#iconLiked").attr("class", "far fa-heart");
 					artLikedCountSpan.text(likeCount - 1);
+				} else if (receivedData.trim() == "login_check") {
+					alert("로그인한 유저만 사용가능합니다.");
 				}
 			} // "success"
 		});
@@ -218,7 +233,8 @@ $(document).ready(function() {
 				} else if (receivedData.trim() == "goodDelete") {
 					$("#iconGood").attr("class", "far fa-thumbs-up");
 					artGoodCountSpan.text(goodCount - 1);
-					
+				} else if (receivedData.trim() == "login_check") {
+					alert("로그인한 유저만 사용가능합니다.");
 				}
 			} // "success"
 		});
@@ -324,11 +340,14 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-outline-secondary" id="btnArtDelete">앨범삭제</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtAppro">앨범등록</button>
 					</c:when>
+					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1 and artVo.upload_check eq 99}">
+						<button type="button" class="btn btn-outline-secondary" id="btnReturn">복구</button>
+					</c:when>
 					<c:otherwise>
 					<c:choose>
 						<c:when test="${empty likedCount || likedCount == null}">
 							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
-						</c:when>
+						</c:when> 
 						<c:otherwise>
 							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
 						</c:otherwise>
@@ -348,7 +367,7 @@ $(document).ready(function() {
 <!-- 						<button type="button" class="btn btn-outline-secondary" id="btnCart">담기</button> -->
 						<button type="button" class="btn btn-outline-secondary" id="btnAllListen">전체듣기</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnAllDown">전체다운</button>
-						<button type="button" class="btn btn-outline-secondary" id="btnAllCart">전체담기</button>
+<!-- 						<button type="button" class="btn btn-outline-secondary" id="btnAllCart">전체담기</button> -->
 					</c:otherwise>
 				</c:choose>
 				</div>
@@ -356,7 +375,11 @@ $(document).ready(function() {
 			<br>
 			<div class="row">
 				<div class="col-md-12">
+<<<<<<< HEAD
 					<table class="table" style="color: #fafafa;">
+=======
+					<table class="table" id="musicTable">
+>>>>>>> branch 'master' of https://github.com/dlswl123/INDIEFES.git
 						<thead>
 							<tr>
 <!-- 								<th><input type="checkbox" id="allCheckbox" /></th> -->
@@ -391,8 +414,8 @@ $(document).ready(function() {
 								</c:if>
 								<c:choose>
 									<c:when test="${flag == 1}">
-										<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
-										<td><span style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="fas fa-cart-plus"></i></span></td>
+										<td><a id="${count = count+1}" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
+										<td><span style="color:red;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
 									</c:when>
 									<c:otherwise>
 										<td><span style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
@@ -425,8 +448,7 @@ $(document).ready(function() {
 									</button>
 								</div>
 								<div class="modal-body">
-								<textarea  rows="10" cols="80" id="txaLyrics" class="form-control" name="lyrics">
-								</textarea>
+								<textarea  rows="10" cols="80" id="txaLyrics" class="form-control" name="lyrics">가사를 입력해주세요.</textarea>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary" id="btnModalLyric"

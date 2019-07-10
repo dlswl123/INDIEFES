@@ -124,11 +124,16 @@ public class MusicController {
 
 	// 가사입력하기
 	@RequestMapping(value = "/lyrics", method = RequestMethod.POST)
-	public ResponseEntity<String> musicLyrics(@RequestBody MusicLyricsVo musicLyricsVo) throws Exception {
+	public ResponseEntity<String> musicLyrics(@RequestBody MusicLyricsVo musicLyricsVo, HttpSession session) throws Exception {
 		ResponseEntity<String> entity = null;
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		try {
-			musicService.musicLyrics(musicLyricsVo);
-			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			if (userVo != null) {
+				musicService.musicLyrics(musicLyricsVo);
+				entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			} else {
+				entity = new ResponseEntity<String>("login_check", HttpStatus.OK);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
