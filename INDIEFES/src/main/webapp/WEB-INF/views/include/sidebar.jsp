@@ -12,7 +12,8 @@
 }
 .sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
 	font-family: prstart;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
+	line-height: 20px;
 }
 .sidebar #home {
 	padding:20px;
@@ -84,7 +85,7 @@ $(document).ready(function() {
 </script>
     
 <div class="col-md-2">
-	<div class="sidebar" style="position:fixed;background-color:rgba(0,0,0,0.7);width:100%;height:100%;">
+	<div class="sidebar" style="position:fixed;background-color:#292929;width:100%;height:100%;">
 		<aside id="sidebar">
 			<section id="home">
 				<a href="/indiefes/">
@@ -106,13 +107,8 @@ $(document).ready(function() {
 			 
 			   	 
 			    <c:otherwise>
+			    
 			        <section id="logout">
-			        <script type="text/javascript">
-						function closePlayer() {
-							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
-							new_popup.close();
-						}
-					</script>
 					<a href="/indiefes/user/logout" onclick="closePlayer();">
 						<font>LOGOUT</font>
 					</a>
@@ -147,11 +143,18 @@ $(document).ready(function() {
 					</c:choose>
 					<section id="player">
 				    <script type="text/javascript">
+				   		var new_popup;
+				   		
 						function musicPlayer() {
-							var new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
+							new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no,menubar=no,toolbar=no,directories=no,location=no,status=no");
+						}
+						function closePlayer() {
+								new_popup.close();
 						}
 					</script>
-			    	<a href="#" onclick="musicPlayer();" class="N=a:lml.player"><font>PLAYER</font></a>
+			    	<a href="#" onclick="musicPlayer();">
+			    	<font>PLAYER</font>
+			    	</a>
 		    		</section>
 			    </c:otherwise>
 			 

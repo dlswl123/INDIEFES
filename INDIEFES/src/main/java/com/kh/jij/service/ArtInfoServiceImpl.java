@@ -262,9 +262,9 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	}
 
 	@Override
-	public int artGoodCheckById(GoodLogVo goodVo) throws Exception {
-		int count = artDao.artGoodCheckById(goodVo);
-		return count;
+	public List<GoodLogVo> artGoodCheckById(GoodLogVo goodVo, String nowPage) throws Exception {
+		List<GoodLogVo> goodList = artDao.artGoodCheckById(goodVo, nowPage);
+		return goodList;
 	}
 
 	@Override
