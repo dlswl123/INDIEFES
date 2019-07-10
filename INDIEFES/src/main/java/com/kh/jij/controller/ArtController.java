@@ -55,10 +55,12 @@ public class ArtController {
 	@RequestMapping(value = "/art_info/{art_number}/{team_number}")
 	public String artInfo(@PathVariable("art_number") int art_number, @PathVariable("team_number") int team_number, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
 		
-		ArtInfoVo artVo = artService.artRead(art_number);
-		List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
+		String url = "";
+		
 		if (userVo != null) {
+			ArtInfoVo artVo = artService.artRead(art_number);
+			List<MusicInfoVo> musicList = musicService.musicRead(art_number);
 			String nowPage = "art_info";
 			String user_id = userVo.getUser_id();
 			LikeLogVo likeVo = new LikeLogVo();
@@ -76,15 +78,17 @@ public class ArtController {
 			model.addAttribute("teamName", teamName);
 			model.addAttribute("payList", payList);
 			model.addAttribute("userVo", userVo);
-//			System.out.println("artController, art_info, payList" + payList);
+			model.addAttribute("artVo", artVo);
+			model.addAttribute("musicList", musicList);
+	//		System.out.println("ArtController, artVo : " + artVo);
+	//		System.out.println("ArtController, musicList : " + musicList);
+	//		System.out.println("artController, art_info, payList" + payList);
+			url = "art/art_info";
 		} else {
 			rttr.addFlashAttribute("message", "login_check");
+			url = "redirect:/art/art_list";
 		}
-		model.addAttribute("artVo", artVo);
-		model.addAttribute("musicList", musicList);
-//		System.out.println("ArtController, artVo : " + artVo);
-//		System.out.println("ArtController, musicList : " + musicList);
-		return "art/art_info";
+		return url;
 	}
 
 //	 앨범정보 수정 폼

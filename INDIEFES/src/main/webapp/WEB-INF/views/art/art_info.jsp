@@ -22,10 +22,6 @@
 </style>
 <script>
 $(document).ready(function() {
-	var message = "${message}";
-	if (message == "login_check") {
-		alert("로그인한 유저만 사용가능합니다.");
-	}
 	
 // 		사용자용
 
@@ -154,7 +150,9 @@ $(document).ready(function() {
 // 				console.log(receivedData); // success
 				if (receivedData.trim() == "success") {
 					$("#txaLyrics").val(lyrics);
-				} // if
+				} else if (receivedData.trim() == "login_check") {
+					alert("로그인한 사용자만 사용가능합니다.");
+				}
 // 				console.log("lyrics" + lyrics);
 			} // "success"
 		}); // $.ajax
@@ -422,8 +420,7 @@ $(document).ready(function() {
 									</button>
 								</div>
 								<div class="modal-body">
-								<textarea  rows="10" cols="80" id="txaLyrics" class="form-control" name="lyrics">
-								</textarea>
+								<textarea  rows="10" cols="80" id="txaLyrics" class="form-control" name="lyrics">가사를 입력해주세요.</textarea>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary" id="btnModalLyric"

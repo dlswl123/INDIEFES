@@ -38,7 +38,13 @@
 }
 </style>
 <script>
+	var message = "${message}";
+	if (message == "login_check") {
+		alert("로그인한 유저만 사용가능합니다.");
+	}
 $(document).ready(function() {
+	
+	
 	// 검색버튼
 	$("#btnSearch").click(function(){
 		setPage();
