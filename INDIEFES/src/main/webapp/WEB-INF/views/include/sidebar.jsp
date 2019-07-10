@@ -12,7 +12,7 @@
 }
 .sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
 	font-family: prstart;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	line-height: 20px;
 }
 .sidebar #home {
