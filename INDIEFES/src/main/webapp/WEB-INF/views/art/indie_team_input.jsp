@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 <script>
+
+
 $(document).ready(function() {
 	
 	// 작성완료 버튼

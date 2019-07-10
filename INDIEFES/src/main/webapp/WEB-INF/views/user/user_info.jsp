@@ -266,7 +266,10 @@
                        
                     <tr>
                          <td colspan="2" class="text-center">
+                         <c:if test = "${userInfoVo.user_level == 3}">
                          <input type="button" id=btnTeamSub class="btn btn-warning" value="인디팀신청" style="float: left;" />
+                         </c:if>
+                         
                          <input type="submit" id="submit" disabled="disabled" value="완료" class="btn btn-success">
  						 <button type="button" id="btnCancel" class="btn btn-warning" >취소</button>
  						 <input type="hidden" id="nickCheck" name="nickCheck" value="N"/>
