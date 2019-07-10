@@ -64,7 +64,7 @@ public class MusicController {
 		try {
 			String originalName = file.getOriginalFilename();
 			musicInfoVo.setFile_path(originalName);
-			System.out.println("MusicController, insert, musicInfoVo :" + musicInfoVo);
+//			System.out.println("MusicController, insert, musicInfoVo :" + musicInfoVo);
 			musicService.musicInsert(musicInfoVo);
 			try {
 				FileUploadUtil.musicUploadFile(uploadPath, originalName, musicInfoVo, file.getBytes());
@@ -124,11 +124,16 @@ public class MusicController {
 
 	// 가사입력하기
 	@RequestMapping(value = "/lyrics", method = RequestMethod.POST)
-	public ResponseEntity<String> musicLyrics(@RequestBody MusicLyricsVo musicLyricsVo) throws Exception {
+	public ResponseEntity<String> musicLyrics(@RequestBody MusicLyricsVo musicLyricsVo, HttpSession session) throws Exception {
 		ResponseEntity<String> entity = null;
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		try {
-			musicService.musicLyrics(musicLyricsVo);
-			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			if (userVo != null) {
+				musicService.musicLyrics(musicLyricsVo);
+				entity = new ResponseEntity<String>("success", HttpStatus.OK);
+			} else {
+				entity = new ResponseEntity<String>("login_check", HttpStatus.OK);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -142,7 +147,7 @@ public class MusicController {
 		ResponseEntity<String> entity = null;
 		try {
 			String lyrics = musicService.getLyrics(music_number);
-			System.out.println(lyrics);
+//			System.out.println(lyrics);
 			entity = new ResponseEntity<String>(lyrics, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,7 +161,7 @@ public class MusicController {
 	public ResponseEntity<String> updateLyrics(@PathVariable("music_number") int music_number, @RequestBody MusicLyricsVo musicLyricsVo) throws Exception {
 		ResponseEntity<String> entity = null;
 		try {
-			System.out.println(musicLyricsVo);
+//			System.out.println(musicLyricsVo);
 			musicService.updateLyrics(musicLyricsVo);
 			entity = new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {

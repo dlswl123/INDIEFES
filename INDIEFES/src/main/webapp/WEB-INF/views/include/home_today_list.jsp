@@ -32,7 +32,9 @@
 /*     한줄라인 글자수 제한 */
     .info{
       width:150px;
-      padding:0 2px;
+      font-family: dgm;
+	  padding-left: 10px;
+	  padding-top: 10px;
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;

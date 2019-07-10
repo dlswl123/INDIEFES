@@ -84,7 +84,7 @@ public class ConcertController {
 			return "redirect:/user/login";
 		}
 		// Read ConcertInfoVo
-		System.out.println("writevo : " + vo.toString());
+//		System.out.println("writevo : " + vo.toString());
 
 		// insert into DBtable ConcertInfoVo information
 		service.insertConcertInfo(vo);
@@ -168,13 +168,13 @@ public class ConcertController {
 		Iterator<String> files = mhsr.getFileNames();
 			
 		String concertDate = mhsr.getParameter("concertDate"); // 공연 일자 YYYY/MM 형식으로 받아옴
-		System.out.println("concertDate : " + concertDate);
+//		System.out.println("concertDate : " + concertDate);
 		
 		MultipartFile file = mhsr.getFile("infoFile"); // 키 값에 따른 파일 가져오기
 		System.out.println("file : " + file);
 		if (file != null) {
 			String originalName = file.getOriginalFilename(); // 파일명 얻기
-			System.out.println("originalName : " + originalName);
+//			System.out.println("originalName : " + originalName);
 			
 			String infoFilePath = FileUploadUtil.uploadFile(uploadPath, originalName, concertDate, file.getBytes());
 			String infoPath = infoFilePath.replace("\\", "/");
@@ -188,14 +188,14 @@ public class ConcertController {
 			if(mpf == file) { // infoFile 인 경우 그냥 건너뛰기
 				continue;
 			}
-			System.out.println("multipartFile : " + mpf);
+//			System.out.println("multipartFile : " + mpf);
 	 
 	        String originalFileName = mpf.getOriginalFilename(); //파일명
 	        
 			String posterFilePath = FileUploadUtil.uploadFile(uploadPath, originalFileName, concertDate, mpf.getBytes());
 			String posterPath = posterFilePath.replace("\\", "/");
 	
-	        System.out.println("fileFullPath : " + posterPath);
+//	        System.out.println("fileFullPath : " + posterPath);
 	        
 	        list.add(posterPath);
 		}
@@ -235,7 +235,7 @@ public class ConcertController {
 	// 파일 삭제
 	@RequestMapping(value="/deleteFile", method=RequestMethod.GET)
 	public ResponseEntity<String> deleteFile(@RequestParam("fileName") String fileName) throws Exception {
-		System.out.println("fileName:" + fileName);
+//		System.out.println("fileName:" + fileName);
 		ResponseEntity<String> entity = null;
 		try {
 			
