@@ -83,9 +83,9 @@ $(document).ready(function() {
 		$(this).text("TEAM INPUT").css("font-family","prstart").css("font-size","1rem");
 	});
 	$("#teamInfo font").hover(function() {
-		$(this).text("팀정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
+		$(this).text("내 팀정보 ◀").css("font-family","dgm").css("font-size","1.5rem");
 	},function(){
-		$(this).text("TEAM INFO").css("font-family","prstart").css("font-size","1rem");
+		$(this).text("MY TEAM INFO").css("font-family","prstart").css("font-size","1rem");
 	});
 });
 </script>
@@ -151,7 +151,7 @@ $(document).ready(function() {
 						<c:otherwise>
 							<section id="teamInfo">
 							<a href="/indiefes/art/indie_team_info?team_number=${indieNum}">
-								<font>TEAM INFO</font>
+								<font>MY TEAM INFO</font>
 							</a>
 							</section>
 						</c:otherwise>

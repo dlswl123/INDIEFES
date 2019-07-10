@@ -116,7 +116,7 @@ ul.tabs li.active {
 			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
 			매일매일 인디축제</span>
 		</div>
-    </section>
+    </section><hr>
 				
     <ul class="tabs">
         <li class="active" rel="tab1">최신앨범</li>

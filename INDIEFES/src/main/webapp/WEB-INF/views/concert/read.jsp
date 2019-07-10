@@ -19,8 +19,33 @@ $(document).ready(function() {
 	});
 });
 </script>
-
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+</style>
 <div class="col-md-10">
+
+	<section id="logo" style="padding:20px;width:100%;">
+		<div class="row">
+			<font>InDiEFeS</font>
+			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+			공연정보</span>
+			<c:if test="${user_level < 3}">
+				<div style="float:right;margin-bottom:0px;margin-top:auto;">
+					<input type="button" class="btn btn-primary" value="홍보글작성" id="btnWrite" />
+				</div>
+			</c:if>
+			
+		</div>
+	</section><hr>
 
 	<section style="background-color:#292929;margin:20px;color:#00ff00;font-family:dgm;">
 	
@@ -36,7 +61,7 @@ $(document).ready(function() {
 					
 					<div>공연일시 : ${vo.concert_date}</div><hr>
 					
-					<div>${vo.summary}</div><hr>
+<%-- 					<div>${vo.summary}</div><hr> --%>
 					
 					<c:forEach var="image" items="${list}">
 					<div>
