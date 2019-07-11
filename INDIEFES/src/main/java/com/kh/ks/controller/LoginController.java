@@ -70,8 +70,11 @@ public class LoginController {
 					rttr.addFlashAttribute("message", "login_fail");
 					return "redirect:/user/login";
 				}
-				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
-				session.setAttribute("indieNum", indieNum);
+				int count = artService.getIndieNumberCount(userInfoVo.getUser_id());
+				if (count > 0) {
+					int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
+					session.setAttribute("indieNum", indieNum);
+				}
 				return "redirect:/";
 			} 
 		} catch (Exception e) {

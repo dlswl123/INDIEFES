@@ -75,6 +75,9 @@ public interface IArtInfoService {
 	// 팀 넘버
 	public int getIndieNumber(String user_id) throws Exception;
 	
+	// 팀 넘버 갯수
+	public int getIndieNumberCount(String user_id) throws Exception;
+	
 	// 팀 이름
 	public String getTeamName (int team_number) throws Exception;
 	
