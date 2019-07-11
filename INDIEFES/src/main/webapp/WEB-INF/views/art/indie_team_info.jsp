@@ -97,9 +97,9 @@ $(document).ready(function() {
 		<div class="col-md-12">
 			<div class="row" >
 				<ul  class="albumList">
+					<h5>대기앨범</h5>
 					<c:forEach items="${teamArtList}" var="artVo">
 					<c:if test="${artVo.upload_check==0}">
-					<h5>대기앨범</h5>
 					<li class="art_info">
 						<figure class="albumInfo">
 							<div class="thumbnail">
@@ -120,8 +120,11 @@ $(document).ready(function() {
 						</figure>
 					</li>
 					</c:if>
-					<c:if test="${artVo.upload_check==1}">
+					</c:forEach>
+					<hr style="border: double 10px #292929;">
 					<h5>정식앨범</h5>
+					<c:forEach items="${teamArtList}" var="artVo">
+					<c:if test="${artVo.upload_check==1}">
 					<li class="art_info">
 						<figure class="albumInfo">
 							<div class="thumbnail">
