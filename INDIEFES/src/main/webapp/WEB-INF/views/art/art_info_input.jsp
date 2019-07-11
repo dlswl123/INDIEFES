@@ -79,9 +79,35 @@ $(document).ready(function() {
 	});
 });
 </script>
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+#registAlbum {
+	background-color: #292929;
+	font-family: dgm;
+	color: #00ff00;
+	padding: 20px;
+}
+</style>
+
 <div class="col-md-10">
-<h1>앨범정보입력</h1>
+	<section id="logo" style="padding:20px;width:100%;">
+		<div class="row">
+			<font>InDiEFeS</font>
+			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+			앨범정보입력</span>
+		</div>
+	</section><hr>
 			<!-- form action 속성 생략시 현재 경로(board/regist)가 액션 -->
+	<div id="registAlbum">
 	<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
 	<input type="hidden" name="art_genre" value="">
 	<input type="hidden" name="art_cover" value="">
@@ -127,6 +153,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</form>
+	</div>
 </div>
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>
