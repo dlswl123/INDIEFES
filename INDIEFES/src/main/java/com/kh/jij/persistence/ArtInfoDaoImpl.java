@@ -288,5 +288,12 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		return goodCount;
 	}
 	
+	// 팀넘버 갯수 가져오기
+	@Override
+	public int getIndieNumberCount(String user_id) throws Exception {
+		int count = sqlSession.selectOne(NAMESPACE + ".getIndieNumberCount", user_id);
+		return count;
+	}
+	
 	
 }

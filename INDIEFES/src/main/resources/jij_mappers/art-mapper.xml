@@ -101,6 +101,13 @@
 		where user_id = #{user_id, jdbcType=VARCHAR}
 	</select>
 	
+<!-- 	그룹넘버 갯수 가져오기 -->
+	<select id="getIndieNumberCount" resultType="integer">
+		select count(*)
+		from team_member
+		where user_id = #{user_id, jdbcType=VARCHAR}
+	</select>
+	
 <!-- 리더 그룹넘버 가져오기 -->
 	<select id="getIndieNumberByLeader" resultType="integer">
 		select team_number

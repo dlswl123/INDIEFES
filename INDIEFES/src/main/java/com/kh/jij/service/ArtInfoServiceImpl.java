@@ -294,4 +294,11 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 		}
 		return teamList;
 	}
+
+	// 팀 넘버 갯수
+	@Override
+	public int getIndieNumberCount(String user_id) throws Exception {
+		int count = artDao.getIndieNumberCount(user_id);
+		return count;
+	}
 }
