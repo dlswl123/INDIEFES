@@ -171,4 +171,17 @@ public class MusicController {
 		return entity;
 	}
 	
+	@RequestMapping(value="/payCount", method=RequestMethod.GET)
+	public ResponseEntity<String> payCount(@RequestBody int music_number) throws Exception{
+		ResponseEntity<String> entity = null;
+		try {
+			musicService.payCount(music_number);
+			entity = new ResponseEntity<>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 }

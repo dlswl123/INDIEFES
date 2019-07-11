@@ -139,10 +139,13 @@ $(document).ready(function() {
 		var tNum = $("#trackNumber").val();
 	 	var track_number = Number(tNum) + 1;
 	 	var music_title = $("input[name=music_title]").val();
+	 	if (music_title == "" || music_title == null) {
+	 		alert("노래 제목을 입력해주세요.");
+	 	}
 	 	var fileName = $("#spanMusicFile").text();
 	 	$("#trackNumber").attr("value", track_number);
-	 	console.log(music_title);
-	 	console.log(fileName);
+// 	 	console.log(music_title);
+// 	 	console.log(fileName);
 	    formData.set("art_number", "${artVo.art_number}");
 	    formData.set("team_number", "${artVo.team_number}");
 	    formData.set("track_number", $("#trackNumber").val());
@@ -158,7 +161,7 @@ $(document).ready(function() {
 	        "processData" :false,
 	    	"success" : function(receivedData){
 	    		if (receivedData == "success") {
-	    			console.log(receivedData);
+// 	    			console.log(receivedData);
 	    			$("input[name=music_title]").val("");
 	    			$("#spanMusicFile").text("");
 		    		getList();
@@ -387,7 +390,7 @@ $(document).ready(function() {
 						<div class="col-md-12 form-inline">
 							<div class="col-xs-10 " >
 								<label>노래제목</label>
-								<input type="text" id="songName" name="music_title" class="form-control">
+								<input type="text" id="songName" name="music_title" class="form-control" placeholder="노래 제목을 입력해주세요.">
 							</div>
 							<div  class="col-xs-2 ">
 								<label>&nbsp; &nbsp;</label>
@@ -402,7 +405,7 @@ $(document).ready(function() {
 					</div>
 				    <div class="col-md-3 form-group" align="right">
 						<button type="button" class="btn btn-outline-success" id="btnArtAdd">수정완료</button>
-						<button type="button" class="btn btn-outline-danger" id="btnCancel">등록취소</button>
+						<button type="button" class="btn btn-outline-danger" id="btnCancel">수정취소</button>
 					</div>
 				</div>
 			</div>
