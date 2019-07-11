@@ -99,6 +99,7 @@ $(document).ready(function() {
 				<ul  class="albumList">
 					<h5>대기앨범</h5>
 					<c:forEach items="${teamArtList}" var="artVo">
+					<c:if test="${userVo.user_id==artVo.user_id}">
 					<c:if test="${artVo.upload_check==0}">
 					<li class="art_info">
 						<figure class="albumInfo">
@@ -120,8 +121,13 @@ $(document).ready(function() {
 						</figure>
 					</li>
 					</c:if>
+					</c:if>
 					</c:forEach>
+				</ul>
+			</div>
 					<hr style="border: double 10px #292929;">
+			<div class="row" >
+				<ul  class="albumList">
 					<h5>정식앨범</h5>
 					<c:forEach items="${teamArtList}" var="artVo">
 					<c:if test="${artVo.upload_check==1}">
