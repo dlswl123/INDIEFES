@@ -10,7 +10,7 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userManagament, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
+.sidebar #login, #logout, #userManagament, #userInfo, #teamInfo, #albumInput, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
 	font-family: prstart;
 	margin-bottom: 20px;
 	line-height: 20px;
@@ -92,6 +92,11 @@ $(document).ready(function() {
 	},function(){
 		$(this).text("MY TEAM INFO").css("font-family","prstart").css("font-size","1rem");
 	});
+	$("#albumInput font").hover(function() {
+		$(this).text("앨범 작성 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("ALBUM INPUT").css("font-family","prstart").css("font-size","1rem");
+	});
 });
 </script>
     
@@ -161,6 +166,11 @@ $(document).ready(function() {
 							<section id="teamInfo">
 							<a href="/indiefes/art/indie_team_info?team_number=${indieNum}">
 								<font>MY TEAM INFO</font>
+							</a>
+							</section>
+							<section id="albumInput">
+							<a href="/indiefes/art/art_info_input">
+								<font>ALBUM INPUT</font>
 							</a>
 							</section>
 						</c:otherwise>
