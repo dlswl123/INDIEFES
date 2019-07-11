@@ -201,13 +201,31 @@ $(document).ready(function() {
 	
 });
 </script>
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+	text-shadow: 1px 1px 0px lightgrey;
+}
+</style>
 
-<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
-	<h1>공연 정보 등록</h1>
+<div class="col-md-10">
+	<section id="logo" style="padding:20px;width:100%;">
+		<div class="row">
+			<font>InDiEFeS</font>
+			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+			공연 정보 수정</span>
+		</div>
+	</section><hr>
 
-	<section style="background-color:rgba(255,255,255,0.7);margin:20px;">
+	<section style="background-color:#292929;margin:20px;">
 	
-		<article style="padding:20px;">
+		<article style="padding:20px;font-family:dgm;color:#00ff00;">
 			<!-- // move to new concert info write form -->
 			<form role="form" action="/indiefes/concert/modify" method="post" id="concertModForm" enctype="multipart/form-data">
 				<div class="form-group">
@@ -233,7 +251,7 @@ $(document).ready(function() {
 					<input type="file" class="form-control" id="poster_file" accept=".jpg, .gif, .png, .bmp, .jpeg" style="display:none;" multiple />
 					<input type="button" value="파일찾기" id="btnFiles" class="btn btn-sm btn-success" />
 					<!-- file drag&drop area and show file list -->
-					<div id="filePosterList" style="width:100%;height:100px;background-color:#ffffff;overflow:auto;">
+					<div id="filePosterList" style="width:100%;height:100px;background-color:#ffffff;overflow:auto;color:#292929;">
 					<!-- 파일 목록 -->
 					</div><br>
 					

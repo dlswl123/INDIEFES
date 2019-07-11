@@ -47,7 +47,7 @@
     
     
 				<label id="concerthall">공연장 위치</label>
-					<div class="map_wrap">
+					<div class="map_wrap" style="color:#292929;">
 						<div id="map" style="width:100%;height:500px;position:relative;overflow:hidden;"></div>
 						<div class="hAddr">
 					        <span class="title">지도중심기준 행정동 주소정보</span>

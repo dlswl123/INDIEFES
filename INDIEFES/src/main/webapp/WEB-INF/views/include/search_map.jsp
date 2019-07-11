@@ -47,7 +47,7 @@
     
     
 				<label id="concerthall">공연장 위치</label>
-					<div class="map_wrap">
+					<div class="map_wrap" style="color:#292929;">
 						<div id="map" style="width:100%;height:500px;position:relative;overflow:hidden;"></div>
 						<div class="hAddr">
 					        <span class="title">지도중심기준 행정동 주소정보</span>
@@ -441,7 +441,7 @@
 						// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 						// 인포윈도우에 장소명을 표시합니다
 						function displayInfowindow(marker, title) {
-						    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+						    var content = '<div style="padding:5px;z-index:1;overflow:hidden;height:auto;">' + title + '</div>';
 
 						 	// 마커의 중심으로 이동
 						    map.panTo(marker.getPosition());
