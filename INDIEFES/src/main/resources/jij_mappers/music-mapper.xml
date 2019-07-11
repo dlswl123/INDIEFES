@@ -95,4 +95,11 @@
 		where art_number = #{art_number}
 	</update>
 	
+<!-- 	음악 다운로드시 pay_count -->
+	<update id="payCount">
+		update music_info set
+			pay_count = pay_count + 1
+		where music_number = #{music_number}
+	</update>
+	
 </mapper>

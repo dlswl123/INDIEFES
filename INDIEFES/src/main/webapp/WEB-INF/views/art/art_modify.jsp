@@ -85,7 +85,7 @@ $(document).ready(function() {
 	});
 	$("#inputMusicFile").change(function(e) {
 		$("#spanMusicFile").text(this.files[0].name);
-		 formData.append("file", this.files[0]);
+		 formData.set("file", this.files[0]);
 	});
 	
 	// 앨범등록 버튼
@@ -114,14 +114,15 @@ $(document).ready(function() {
 	$("#btnMusicAdd").click(function() {
 		var tNum = $("#trackNumber").val();
 	 	var track_number = Number(tNum) + 1;
-	 	var music_title = $("#songName");
-	 	var fileName = $("#spanMusicFile");
+	 	var music_title = $("input[name=music_title]").val();
+	 	var fileName = $("#spanMusicFile").text();
 	 	$("#trackNumber").attr("value", track_number);
-	    
-	    formData.append("art_number", "${artVo.art_number}");
-	    formData.append("team_number", "${artVo.team_number}");
-	    formData.append("track_number", $("#trackNumber").val());
-	    formData.append("music_title", music_title.val());
+	 	console.log(music_title);
+	 	console.log(fileName);
+	    formData.set("art_number", "${artVo.art_number}");
+	    formData.set("team_number", "${artVo.team_number}");
+	    formData.set("track_number", $("#trackNumber").val());
+	    formData.set("music_title", music_title);
 	   
 	    var url = "/indiefes/music/insert";
 	    $.ajax({
@@ -132,10 +133,10 @@ $(document).ready(function() {
 	        "contentType" :false,
 	        "processData" :false,
 	    	"success" : function(receivedData){
-// 	    		console.log(receivedData);
 	    		if (receivedData == "success") {
-	    			music_title.val("");
-	    			fileName.text("");
+	    			console.log(receivedData);
+	    			$("input[name=music_title]").val("");
+	    			$("#spanMusicFile").text("");
 		    		getList();
 	    		} // if
 	    	} // "success"
@@ -356,7 +357,7 @@ $(document).ready(function() {
 					<input type="hidden" name="track_number" value="${track_number}"  id="trackNumber" >
 						<div class="col-md-12 form-inline">
 							<div class="col-xs-10 " >
-								<label for="songName">노래제목</label>
+								<label>노래제목</label>
 								<input type="text" id="songName" name="music_title" class="form-control">
 							</div>
 							<div  class="col-xs-2 ">

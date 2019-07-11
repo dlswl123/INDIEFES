@@ -207,11 +207,11 @@ figcaption {
 							style="text-decoration: underline; color: yellow;"
 						</c:if>>기타</a>
 					</li>
-					<c:if test="${userInfoVo.user_level eq 2 }">
-					<li class="breadcrumb-item">
-						<a href="/indiefes/art/art_info_input">앨범등록</a>
-					</li>
-					</c:if>
+<%-- 					<c:if test="${userInfoVo.user_level eq 2 }"> --%>
+<!-- 					<li class="breadcrumb-item"> -->
+<!-- 						<a href="/indiefes/art/art_info_input">앨범등록</a> -->
+<!-- 					</li> -->
+<%-- 					</c:if> --%>
 					<c:if test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1}">
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="appro"
