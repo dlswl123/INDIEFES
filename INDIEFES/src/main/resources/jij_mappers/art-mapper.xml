@@ -317,33 +317,37 @@
        	<if test="searchType != null">
        		<if test="searchType == 'albumName'">
             	where art_title like '%' || #{keyword} || '%'
+            	and art.upload_check = 1
    			</if>
 	   		<if test="searchType == 'song'">
 	   			, music_info m
 	            where art.art_number = m.art_number
 	            and m.music_title like '%' || #{keyword} || '%'
+	            and m.upload_check = 1
 	   		</if>
 	   		<if test="searchType == 'indieTeam'">
 	            where art.team_number = (select team_number
 	                                     from indie_team i
 	                                     where i.art_team like '%' || #{keyword} || '%'
+	                                     and m.upload_check = 1
 	                                     group by i.team_number)
 	   		</if>
 	   		<if test="searchType == 'artGenre'">
 	   			where art.art_genre like '%' || #{keyword} || '%'
+	   			and art.upload_check = 1
 	   		</if>
 	   		<if test="searchType == 'appro'">
-	   			 where upload_check = #{keyword}
+	   			 where art.upload_check = #{keyword}
 	   		</if>
 	   		<if test="searchType == 'working'">
-	   			 where upload_check = #{keyword}
+	   			 where art.upload_check = #{keyword}
 	   		</if>
 	   		<if test="searchType == 'delete'">
-	   			 where upload_check = #{keyword}
+	   			 where art.upload_check = #{keyword}
 	   		</if>
        	</if>
        	<if test="searchType == '' || searchType == null">
-       		 where upload_check = 1
+       		 where art.upload_check = 1
        	</if>
 	</sql>
 	
