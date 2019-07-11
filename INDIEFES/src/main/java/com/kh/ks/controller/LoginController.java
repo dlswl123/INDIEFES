@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.jij.domain.IndieTeamVo;
 import com.kh.jij.service.IArtInfoService;
 import com.kh.ks.domain.UserInfoVo;
 
@@ -36,7 +37,7 @@ public class LoginController {
 	private IUserInfoService userInfoService;
 	
 	@Inject
-	IArtInfoService artService;
+	private IArtInfoService artService;
 	
 	
 	//로그인 폼
@@ -53,27 +54,35 @@ public class LoginController {
 //		String user_pw = userInfoVo.getUser_pw();
 		UserInfoVo userInfoVo = userInfoService.readWithPw(user_id, user_pw);
 		System.out.println("userInfoVo : " + userInfoVo);
-		String deleted = userInfoVo.getDeleted();
+		String deleted = "";
+		
+		
+		
 //		UserInfoVo userInfoVo1 = userInfoService.readWith(user_id);
 //		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
 //		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
 		// 팀가입 여부
 		try {
 			if(userInfoVo != null) {
+				deleted = userInfoVo.getDeleted();
 				session.setAttribute("userInfoVo", userInfoVo);
-				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id()); 
-				System.out.println("indieNum : " + indieNum);
-				session.setAttribute("indieNum", indieNum);
 				if(deleted.equals("O")) {
 					rttr.addFlashAttribute("message", "login_fail");
 					return "redirect:/user/login";
 				}
+				int count = artService.getIndieNumberCount(userInfoVo.getUser_id());
+				if (count > 0) {
+					int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
+					session.setAttribute("indieNum", indieNum);
+				}
+				return "redirect:/";
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// 팀가입 끝
-		return "redirect:/";
+		rttr.addFlashAttribute("message", "login_fail");
+		return "redirect:/user/login";
 	}
 	
 	//회원가입
@@ -174,9 +183,14 @@ public class LoginController {
 	
 	// 회원정보
 	@RequestMapping(value="/user-info", method=RequestMethod.GET)
-	public String userInfo()throws Exception{
+	public String userInfo(HttpSession session, Model model)throws Exception{
+		UserInfoVo vo = (UserInfoVo)session.getAttribute("userInfoVo");
+		String user_id = vo.getUser_id();
+		
+		List<IndieTeamVo> teamList = artService.getIndieTeamByLeader(user_id);
+		model.addAttribute("indieTeamList", teamList);
+		
 		return "/user/user_info";
-
 	}
 	
 	// 회원정보 비밀번호확인
@@ -247,6 +261,7 @@ public class LoginController {
 		
 		if(sessionUserpw.equals(user_pw)) {
 			userInfoService.userIndieUpdate(sessionUserid);
+			userInfoVo = userInfoService.readWith(sessionUserid);
 			URI = "redirect:/art/indie_team_input";
 			session.setAttribute("userInfoVo", userInfoVo);
 			rttr.addFlashAttribute("message", "success");
