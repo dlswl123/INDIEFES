@@ -134,7 +134,7 @@ $(document).ready(function() {
   <div class="row">
 <!--   상단 장르 선택부 -->
 		<div class="col-md-12">
-			 <span class="badge badge-default">장르</span>
+<!-- 			 <span class="badge badge-default">장르</span> -->
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
@@ -286,6 +286,7 @@ $(document).ready(function() {
 								<br>
 								<time datetime="">${artVo.reg_art}</time><br>
 <!-- 								좋아요 체크 -->
+								<c:if test="${paginationDto.pagingDto.searchType != 'delete' && paginationDto.pagingDto.searchType != 'appro' && paginationDto.pagingDto.searchType != 'working'}">
 								<c:set var="flag" value="0" />
 								<c:if test="${userVo != null}">
 									<c:forEach items="${likeCount}" var="likeCount">
@@ -339,6 +340,7 @@ $(document).ready(function() {
 										<span>&nbsp;&nbsp;</span>
 									</c:otherwise>
 								</c:choose>
+								</c:if>
 <!-- 								</p> -->
 								</div>
 							</figcaption>
@@ -356,7 +358,7 @@ $(document).ready(function() {
 <!-- 				앨범리스트 끝 -->
 			</div>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-12" style="">
 					<nav>
 						<ul class="pagination" >
 						<!-- 이전 -->

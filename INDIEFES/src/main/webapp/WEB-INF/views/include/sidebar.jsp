@@ -10,7 +10,7 @@
 	font-family: blox;
 	font-size: 3.5rem;
 }
-.sidebar #login, #logout, #userInfo, #teamInfo, #boardList, #artInfo, #teamInput, #player, #payInfo, #concertInfo font {
+.sidebar #login, #logout, #userManagament, #userInfo, #teamInfo, #boardList, #artInfo, #concertInfo, #player, #payInfo, #teamInput font {
 	font-family: prstart;
 	margin-bottom: 20px;
 	line-height: 20px;
@@ -20,6 +20,11 @@
 }
 .sidebar section {
 	padding-left:20px;
+}
+.sidebar hr {
+	color: #00ff00;
+	border-color: #00ff00;
+	background-color: #00ff00;
 }
 </style>
 
@@ -35,6 +40,12 @@ $(document).ready(function() {
 		$(this).text("로그아웃 ◀").css("font-family","dgm").css("font-size","1.5rem");
 	},function(){
 		$(this).text("LOGOUT").css("font-family","prstart").css("font-size","1rem");
+	});
+	
+	$("#userManagament font").hover(function() {
+		$(this).text("회원관리 ◀").css("font-family","dgm").css("font-size","1.5rem");
+	},function(){
+		$(this).text("USER MANAGEMENT").css("font-family","prstart").css("font-size","1rem");
 	});
 	
 	$("#userInfo font").hover(function() {
@@ -105,15 +116,26 @@ $(document).ready(function() {
 					</section>
 			    </c:when>
 			 
+			 	
 			   	 
 			    <c:otherwise>
-			    
+			    	
 			        <section id="logout">
 					<a href="/indiefes/user/logout" onclick="closePlayer();">
 						<font>LOGOUT</font>
 					</a>
 					</section>
 					
+					<c:if test="${userInfoVo.user_level == 0 || userInfoVo.user_level == 1}">
+					<hr>
+			 		<section id="userManagament">
+					<a href="/indiefes/user/user-management">
+						<font>USER MANAGEMENT</font>
+					</a>
+					</section>
+			 		</c:if>
+					
+					<hr>
 					<section id="userInfo">
 					<a href="/indiefes/user/user-info-pwinput">
 						<font>USER INFO</font>
@@ -127,6 +149,7 @@ $(document).ready(function() {
 					</section>
 					<c:choose>
 				    	<c:when test="${indieNum eq null}">
+				    	<hr>
 							<section id="teamInput">
 							<a href="/indiefes/art/indie_team_input">
 								<font>TEAM INPUT</font>
@@ -134,6 +157,7 @@ $(document).ready(function() {
 							</section>
 						</c:when>
 						<c:otherwise>
+						<hr>
 							<section id="teamInfo">
 							<a href="/indiefes/art/indie_team_info?team_number=${indieNum}">
 								<font>MY TEAM INFO</font>
@@ -141,6 +165,7 @@ $(document).ready(function() {
 							</section>
 						</c:otherwise>
 					</c:choose>
+					<hr>
 					<section id="player">
 				    <script type="text/javascript">
 				   		var new_popup;
@@ -159,7 +184,7 @@ $(document).ready(function() {
 			    </c:otherwise>
 			 
 			</c:choose>
-					
+			<hr>
 		    <section id="boardList">
 			    <a href="/indiefes/board/list">
 			    	<font>FREE BOARD</font>

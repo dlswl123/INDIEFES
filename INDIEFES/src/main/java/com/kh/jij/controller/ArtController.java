@@ -76,7 +76,7 @@ public class ArtController {
 			model.addAttribute("teamName", teamName);
 			model.addAttribute("payList", payList);
 			model.addAttribute("userVo", userVo);
-			System.out.println("artController, art_info, payList" + payList);
+//			System.out.println("artController, art_info, payList" + payList);
 		} else {
 			rttr.addFlashAttribute("message", "login_check");
 		}
@@ -144,7 +144,7 @@ public class ArtController {
 	public void artList(PagingDto pagingDto, Model model, HttpSession session) throws Exception {
 		UserInfoVo userVo = (UserInfoVo) session.getAttribute("userInfoVo");
 //		System.out.println(pagingDto);
-		pagingDto.setPerPage(24);
+		pagingDto.setPerPage(30);
 		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
 		List<IndieTeamVo> teamList = artService.getIndieTeam();
 		
@@ -309,14 +309,6 @@ public class ArtController {
 		model.addAttribute("userVo", userVo);
 		return null;
 	}
-	// 팀정보
-//	@RequestMapping(value = "/home_art_list", method = RequestMethod.GET)
-//	public void HomeArtList(PagingDto pagingDto,Model model) throws Exception {
-//		List<ArtInfoVo> artList = artService.allArtList(pagingDto);
-//		List<IndieTeamVo> teamList = artService.getIndieTeam();
-//		model.addAttribute("artList", artList);
-//		model.addAttribute("teamList", teamList);
-//	}
 	// 카트담기
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String CartInput(HttpSession session,ArtInfoVo artVo,int music_number, String music_title) throws Exception {
@@ -333,6 +325,38 @@ public class ArtController {
 		
 		return "redirect:/art/art_info/"+art_number+"/"+team_number;
 	}	
+	
+	@RequestMapping(value = "/cartAll", method = RequestMethod.POST)
+	public ResponseEntity<String> CartAllInput(HttpSession session) throws Exception {
+		ResponseEntity<String> entity = null;
+		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
+		try {
+//			String user_id = userVo.getUser_id();
+//			int team_number = artVo.getTeam_number();
+//			int art_number = artVo.getArt_number();
+//			List<PayLogVo> payList = artService.payList(user_id);
+//			for (int i = 0; i < musicList.size(); i++) {
+				
+//			}
+			
+//			System.out.println(musicList);
+//			PayLogVo vo = new PayLogVo();
+//			vo.setUser_id(user_id);
+//			vo.setMusic_number(music_number);
+//			vo.setMusic_title(music_title);
+//			System.out.println(vo);
+//			artService.cartInput(vo);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}	
+	
+	
+	
 	
 	// 승인요청 -> 인디팀 
 	@RequestMapping(value="/artUploadApproReq/{art_number}", method = RequestMethod.GET)
@@ -440,6 +464,8 @@ public class ArtController {
 					entity = new ResponseEntity<String>("likeInsert", HttpStatus.OK);
 				}	
 				System.out.println("likeVo:" + likeVo);
+			} else {
+				entity = new ResponseEntity<String>("login_check", HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -474,8 +500,9 @@ public class ArtController {
 					goodCount = goodCount + 1;
 					artService.artGoodCount(goodCount,  goodVo.getArt_number());
 					entity = new ResponseEntity<String>("goodInsert", HttpStatus.OK);
-				}	
-				System.out.println("goodVo:" + goodVo);
+				}
+			} else {
+				entity = new ResponseEntity<String>("login_check", HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

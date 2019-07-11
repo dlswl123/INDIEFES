@@ -280,6 +280,12 @@ public class LoginController {
 		return "/user/user_management";
 	}
 	
+	// 인디팀 가입신청시 비밀번호 확인
+	@RequestMapping(value="/indie-team-subscription", method= {RequestMethod.POST, RequestMethod.GET})
+	public String userManagement() throws Exception{
+		return "/user/indie_team_subscription";
+	}
+	
 	
 	
 	

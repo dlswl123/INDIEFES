@@ -35,9 +35,11 @@ $(document).ready(function() {
 	});
 	// 전체 다운
 	$("#btnAllDown").click(function() {
-		var id = 3;
-		for (var i = 1; i <= id ; i++) {
+		var id = "${musicList}";
+		for (var i = 1; i <= id.length ; i++) {
 			$("#"+i).get(0).click();
+// 			var chk = $("#"+i);
+// 			console.log(chk);
 		}
 // 		location.href="";
 	});
@@ -57,10 +59,23 @@ $(document).ready(function() {
 // 				console.log(receivedData); // success
 				if (receivedData.trim() == "success") {
 					window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
-				} // if
+				} else if (receivedData.trim() == "login_check"){
+					alert("로그인한 유저만 사용가능합니다.");
+				}
 			} // "success"
 		}); // $.ajax
 	}); // $("#btnAllListen").click
+	
+// 	전체 담기
+	$("#btnAllCart").click(function() {
+		var check = "${musicList}";
+		 $('#musicTable tr').each(function(index, item) {
+			 var result = "";
+			 result += 	index + ":" + item;
+			 console.log(result);
+		  });
+	});
+		
 	
 // 	// 체크박스 전체 선택, 전체 선택 해제
 // 	$("#allCheckbox").click(function() {
@@ -187,6 +202,8 @@ $(document).ready(function() {
 				} else if (receivedData.trim() == "likeDelete") {
 					$("#iconLiked").attr("class", "far fa-heart");
 					artLikedCountSpan.text(likeCount - 1);
+				} else if (receivedData.trim() == "login_check") {
+					alert("로그인한 유저만 사용가능합니다.");
 				}
 			} // "success"
 		});
@@ -218,7 +235,8 @@ $(document).ready(function() {
 				} else if (receivedData.trim() == "goodDelete") {
 					$("#iconGood").attr("class", "far fa-thumbs-up");
 					artGoodCountSpan.text(goodCount - 1);
-					
+				} else if (receivedData.trim() == "login_check") {
+					alert("로그인한 유저만 사용가능합니다.");
 				}
 			} // "success"
 		});
@@ -274,6 +292,7 @@ $(document).ready(function() {
 		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
 			<div class="row">
 				<h1>앨범 정보</h1>
+				<button>버튼</button>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
@@ -303,11 +322,14 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-outline-secondary" id="btnArtDelete">앨범삭제</button>
 						<button type="button" class="btn btn-outline-secondary" id="btnArtAppro">앨범등록</button>
 					</c:when>
+					<c:when test="${userInfoVo.user_level eq 0 or userInfoVo.user_level eq 1 and artVo.upload_check eq 99}">
+						<button type="button" class="btn btn-outline-secondary" id="btnReturn">복구</button>
+					</c:when>
 					<c:otherwise>
 					<c:choose>
 						<c:when test="${empty likedCount || likedCount == null}">
 							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="far fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
-						</c:when>
+						</c:when> 
 						<c:otherwise>
 							<span class="spLikedCount icon" data-art_number="${artVo.art_number}" style="padding-right: 15px; text-align: center;"><i class="fas fa-heart" style="font-size: 20px; color: red;" id="iconLiked"></i></span>
 						</c:otherwise>
@@ -334,7 +356,7 @@ $(document).ready(function() {
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table">
+					<table class="table" id="musicTable">
 						<thead>
 							<tr>
 <!-- 								<th><input type="checkbox" id="allCheckbox" /></th> -->
@@ -369,8 +391,8 @@ $(document).ready(function() {
 								</c:if>
 								<c:choose>
 									<c:when test="${flag == 1}">
-										<td><a href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
-										<td><span style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="fas fa-cart-plus"></i></span></td>
+										<td><a id="${count = count+1}" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
+										<td><span style="color:red;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
 									</c:when>
 									<c:otherwise>
 										<td><span style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
