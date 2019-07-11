@@ -33,6 +33,9 @@ public interface IArtInfoService {
 	// 팀앨범 리스트 가져오기
 	public List<ArtInfoVo> teamArtList(int team_number) throws Exception;
 	
+	// 리더 팀 정보 가져오기
+	public List<IndieTeamVo> getIndieTeamByLeader(String user_id) throws Exception;
+	
 	// 앨범 정보 가져오기
 	public ArtInfoVo artRead(int art_number) throws Exception;
 	

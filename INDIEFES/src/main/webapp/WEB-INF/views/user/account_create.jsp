@@ -64,7 +64,7 @@
 		// 아이디 inputbox 값 변동
 		$("#user_id").keyup(function(){
 			 $(".resultId .msgId").text("아이디 중복 체크를 해주십시오");
-			 $(".resultId .msgId").attr("style", "color:#000");
+			 $(".resultId .msgId").attr("style", "color:#fafafa");
 			 
 			 $("#idCheck").attr("value", "N");
 			 
@@ -106,7 +106,7 @@
 		// 닉네임 inputbox 값 변동
 		$("#user_nick").keyup(function(){
 			 $(".resultNick .msgNick").text("닉네임 중복 체크를 해주십시오");
-			 $(".resultNick .msgNick").attr("style", "color:#000");
+			 $(".resultNick .msgNick").attr("style", "color:#fafafa");
 			 
 			 $("#nickCheck").attr("value", "N");
 				 

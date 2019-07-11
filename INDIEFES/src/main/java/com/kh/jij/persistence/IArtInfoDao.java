@@ -52,6 +52,11 @@ public interface IArtInfoDao {
 	
 	// 팀넘버 가져오기
 	public int getIndieNumber(String user_id) throws Exception;
+
+	// 리더팀넘버 가져오기
+	public List<Integer> getIndieNumberByLeader(String user_id) throws Exception;
+	// 리더 팀 목록 가져오기
+	public IndieTeamVo getIndieTeamByLeader(int team_number) throws Exception;
 	
 	// 팀이름 가져오기
 	public String getTeamName (int team_number) throws Exception;

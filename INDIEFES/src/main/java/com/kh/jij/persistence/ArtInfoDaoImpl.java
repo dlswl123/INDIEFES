@@ -118,6 +118,20 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		int indieNumber = sqlSession.selectOne(NAMESPACE + ".getIndieNumber", user_id);
 		return indieNumber;
 	}
+	
+	// 리더인디번호 가져오기
+	@Override
+	public List<Integer> getIndieNumberByLeader(String user_id) throws Exception {
+		List<Integer> indieNumber = sqlSession.selectList(NAMESPACE + ".getIndieNumber", user_id);
+		return indieNumber;
+	}
+	
+	// 리더 팀 목록 가져오기
+	@Override
+	public IndieTeamVo getIndieTeamByLeader(int team_number) throws Exception {
+		IndieTeamVo vo = sqlSession.selectOne(NAMESPACE + ".getIndieTeamByLeader", team_number);
+		return vo;
+	}
 
 	// 인디팀명 가져오기
 	@Override
@@ -273,4 +287,6 @@ public class ArtInfoDaoImpl implements IArtInfoDao {
 		int goodCount = sqlSession.selectOne(NAMESPACE + ".artGoodCountCheck", art_number);
 		return goodCount;
 	}
+	
+	
 }

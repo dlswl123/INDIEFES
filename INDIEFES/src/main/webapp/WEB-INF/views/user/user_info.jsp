@@ -262,6 +262,18 @@
                         </td>
                       </tr>
                       
+                      <c:if test="${userInfoVo.user_level < 3}">
+                      <tr>
+                      	<td>팀 번호</td>
+                      	<td>
+                      	<c:if test="${indieTeamList != null}">
+                      		<c:forEach items="${indieTeamList}" var="list">
+                      			&nbsp;| ${list.art_team} : ${list.team_number}&nbsp; 
+                      		</c:forEach>
+                      	</c:if>
+                      	</td>
+                      </tr>
+                      </c:if>
                       
                        
                     <tr>

@@ -1,6 +1,7 @@
 package com.kh.jij.service;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -277,5 +278,20 @@ public class ArtInfoServiceImpl implements IArtInfoService {
 	public int artGoodCountCheck(int art_number) throws Exception {
 		int goodCount = artDao.artGoodCountCheck(art_number);
 		return goodCount;
+	}
+
+	// 리더 팀 정보 가져오기
+	@Transactional
+	@Override
+	public List<IndieTeamVo> getIndieTeamByLeader(String user_id) throws Exception {
+		List<Integer> list = artDao.getIndieNumberByLeader(user_id);
+		List<IndieTeamVo> teamList = new ArrayList<>();
+		if (list != null) {
+			for (int team_number : list) {
+				IndieTeamVo vo = artDao.getIndieTeamByLeader(team_number);
+				teamList.add(vo);
+			}
+		}
+		return teamList;
 	}
 }
