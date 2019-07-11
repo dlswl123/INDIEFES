@@ -124,7 +124,7 @@ $(document).ready(function() {
 			 	
 			   	 
 			    <c:otherwise>
-			    	<span style="color: #00ff00; font-family: dgm; margin-left: 20px; ">(${userInfoVo.user_nick})님 환영합니다.</span>
+			    	<span style="color: #00ff00; font-family: dgm; margin-left: 20px;line-height: 50px; ">(${userInfoVo.user_nick})님 환영합니다.</span>
 			        <section id="logout">
 					<a href="/indiefes/user/logout" onclick="closePlayer();">
 						<font>LOGOUT</font>
