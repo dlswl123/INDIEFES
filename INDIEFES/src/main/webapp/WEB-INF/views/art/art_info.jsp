@@ -18,6 +18,16 @@
 	.icon {
 	cursor: pointer;
 	}
+	#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+	}
+	#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+	}
 </style>
 <script>
 $(document).ready(function() {
@@ -279,18 +289,6 @@ $(document).ready(function() {
 	}
 }); // $(document).ready
 </script>
-<style>
-#logo font {
-	font-family: blox;
-	font-size: 3.5rem;
-	margin-left: 30px;
-}
-#logo {
-	margin-bottom: 30px;
-	color: #292929;	
- 	text-shadow: 1px 1px 0px lightgrey;
-}
-</style>
 		<div class="col-md-10">
 		<section id="logo" style="padding:20px;width:100%;">
 			<div class="row">

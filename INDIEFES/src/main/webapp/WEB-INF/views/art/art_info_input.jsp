@@ -94,6 +94,7 @@ $(document).ready(function() {
 	background-color: #292929;
 	font-family: dgm;
 	color: #00ff00;
+	padding: 20px;
 }
 </style>
 

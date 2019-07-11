@@ -14,6 +14,30 @@
     width: 50%;
   }
   .btn {border-radius: 12px;}
+  #logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+	}
+	#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+	}
+	#updateAlbum {
+	background-color: #292929;
+	font-family: dgm;
+	color: #00ff00;
+	padding: 20px;
+	}
+	.table th {
+	font-family: dgm;
+	color: #00ff00;
+	}
+	.table td {
+	font-family: dgm;
+	color: #fafafa;
+	}
 </style>
 
 <script>
@@ -281,11 +305,16 @@ $(document).ready(function() {
 });
 </script>
 	
-		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+		<div class="col-md-10">
+		<section id="logo" style="padding:20px;width:100%;">
 			<div class="row">
-					<h1>앨범 수정</h1>
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				앨범수정</span>
 			</div>
+		</section><hr>
 <!-- 			앨범 수정폼 -->
+		<div id="updateAlbum">
 			<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
 			<input type="hidden" name="art_genre" value="">
 			<input type="hidden" name="art_cover" value="${artVo.art_cover }">
@@ -378,6 +407,28 @@ $(document).ready(function() {
 			</div>
 			    <!-- 음악추가폼 끝 -->
 			
+
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th class="song_name">곡</th>
+								<th>노래파일</th>
+								<th>가사</th>
+								<th>수정</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody id="trackList">
+						<!-- JSON으로 받을 음악 트랙목록 -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 			<!-- Modal -->
 	<div class="row" >
 		<div class="col-md-12">
@@ -414,26 +465,5 @@ $(document).ready(function() {
 	</div>
 	<!-- // Modal -->
 			
-			<div class="row">
-				<div class="col-md-12">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>번호</th>
-								<th class="song_name">곡</th>
-								<th>노래파일</th>
-								<th>가사</th>
-								<th>수정</th>
-								<th>삭제</th>
-							</tr>
-						</thead>
-						<tbody id="trackList">
-						<!-- JSON으로 받을 음악 트랙목록 -->
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>
