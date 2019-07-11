@@ -120,8 +120,6 @@ $(document).ready(function() {
 						</figure>
 					</li>
 					</c:if>
-					</c:forEach>
-					<c:forEach items="${teamArtList}" var="artVo">
 					<c:if test="${artVo.upload_check==1}">
 					<h5>정식앨범</h5>
 					<li class="art_info">
