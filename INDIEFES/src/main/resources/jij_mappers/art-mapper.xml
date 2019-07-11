@@ -329,8 +329,8 @@
 	            where art.team_number = (select team_number
 	                                     from indie_team i
 	                                     where i.art_team like '%' || #{keyword} || '%'
-	                                     and m.upload_check = 1
 	                                     group by i.team_number)
+                and art.upload_check = 1
 	   		</if>
 	   		<if test="searchType == 'artGenre'">
 	   			where art.art_genre like '%' || #{keyword} || '%'
