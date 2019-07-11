@@ -247,8 +247,7 @@ public class ArtController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return "redirect:/art/art_info_input";
+		return "redirect:/art/indie_team_info?team_number="+indieNum;
 	}
 
 	// 팀생성 및 가입 폼

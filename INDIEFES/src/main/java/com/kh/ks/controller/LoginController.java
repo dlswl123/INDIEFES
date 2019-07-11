@@ -62,13 +62,12 @@ public class LoginController {
 		try {
 			if(userInfoVo != null) {
 				session.setAttribute("userInfoVo", userInfoVo);
-				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id()); 
-				System.out.println("indieNum : " + indieNum);
-				session.setAttribute("indieNum", indieNum);
 				if(deleted.equals("O")) {
 					rttr.addFlashAttribute("message", "login_fail");
 					return "redirect:/user/login";
 				}
+				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
+				session.setAttribute("indieNum", indieNum);
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
