@@ -411,22 +411,27 @@ $(document).ready(function() {
 								<c:set var="flag" value="0" />
 								<c:if test="${userVo != null}">
 									<c:forEach items="${payList}" var="PayLogVo">
-										<c:if test="${(musicInfoVo.music_number == PayLogVo.music_number) && PayLogVo.pay_ok eq 1}">
-											<c:set var="flag" value="1" />
-										</c:if>
+										<c:choose>
+											<c:when test="${(musicInfoVo.music_number == PayLogVo.music_number) && PayLogVo.pay_ok eq 1}">
+												<c:set var="flag" value="1" />
+											</c:when>
+											<c:when test="${(musicInfoVo.music_number == PayLogVo.music_number) && PayLogVo.pay_ok ne 1}">
+												<c:set var="flag" value="2" />
+											</c:when>
+										</c:choose>
 									</c:forEach>
 								</c:if>
 								<c:choose>
 									<c:when test="${flag == 1}">
 										<td><a id="${count = count+1}" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
-										<td><span style="color:red;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
+										<td><span style="color:gray;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
 									</c:when>
-									<c:when test="${artVo.upload_check ne 1 && flag != 1}">
-										<td><span style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
-										<td><span style="color:red;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
+									<c:when test="${artVo.upload_check ne 1 || flag == 2}">
+										<td><span style="color:gray;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
+										<td><span style="color:gray;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
 									</c:when>
 									<c:otherwise>
-										<td><span style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
+										<td><span style="color:gray;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
 										<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="fas fa-cart-plus"></i></span></td>
 									</c:otherwise>
 								</c:choose>
