@@ -54,13 +54,17 @@ public class LoginController {
 //		String user_pw = userInfoVo.getUser_pw();
 		UserInfoVo userInfoVo = userInfoService.readWithPw(user_id, user_pw);
 		System.out.println("userInfoVo : " + userInfoVo);
-		String deleted = userInfoVo.getDeleted();
+		String deleted = "";
+		
+		
+		
 //		UserInfoVo userInfoVo1 = userInfoService.readWith(user_id);
 //		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
 //		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
 		// 팀가입 여부
 		try {
 			if(userInfoVo != null) {
+				deleted = userInfoVo.getDeleted();
 				session.setAttribute("userInfoVo", userInfoVo);
 				if(deleted.equals("O")) {
 					rttr.addFlashAttribute("message", "login_fail");
@@ -68,12 +72,14 @@ public class LoginController {
 				}
 				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
 				session.setAttribute("indieNum", indieNum);
+				return "redirect:/";
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// 팀가입 끝
-		return "redirect:/";
+		rttr.addFlashAttribute("message", "login_fail");
+		return "redirect:/user/login";
 	}
 	
 	//회원가입
