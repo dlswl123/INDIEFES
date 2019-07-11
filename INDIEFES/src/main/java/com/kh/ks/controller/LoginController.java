@@ -61,11 +61,9 @@ public class LoginController {
 		try {
 			if(userInfoVo != null) {
 				session.setAttribute("userInfoVo", userInfoVo);
-				int indieNum = -1;
-				indieNum = artService.getIndieNumber(userInfoVo.getUser_id()); 
-				if (indieNum > -1) {
-					session.setAttribute("indieNum", indieNum);
-				}
+				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id()); 
+				System.out.println("indieNum : " + indieNum);
+				session.setAttribute("indieNum", indieNum);
 				if(deleted.equals("O")) {
 					rttr.addFlashAttribute("message", "login_fail");
 					return "redirect:/user/login";
