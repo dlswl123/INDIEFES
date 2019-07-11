@@ -98,6 +98,8 @@ $(document).ready(function() {
 			<div class="row" >
 				<ul  class="albumList">
 					<c:forEach items="${teamArtList}" var="artVo">
+					<c:if test="${artVo.upload_check==0}">
+					<h5>대기앨범</h5>
 					<li class="art_info">
 						<figure class="albumInfo">
 							<div class="thumbnail">
@@ -117,6 +119,31 @@ $(document).ready(function() {
 							</figcaption>
 						</figure>
 					</li>
+					</c:if>
+					</c:forEach>
+					<c:forEach items="${teamArtList}" var="artVo">
+					<c:if test="${artVo.upload_check==1}">
+					<h5>정식앨범</h5>
+					<li class="art_info">
+						<figure class="albumInfo">
+							<div class="thumbnail">
+								<p class="badge"></p>
+								<a href="/indiefes/art/art_info/${artVo.art_number }/${artVo.team_number}" onclick="" target="_self">
+								<span class="mask"></span>
+								<img id="img_art_cover"class="art_images" src="/indiefes/art/getCover?artCover=${artVo.art_cover}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" alt="${artVo.art_title} 앨범 대표이미지">
+								</a>
+							</div>
+							<figcaption class="info">
+								<a href="/indiefes/art/art_info/${artVo.art_number }/${artVo.team_number}" class="albumTitle" title="artInfoVo.art_title" onclick="" target="_self">${artVo.art_title}</a>
+								<div class="subInfo">
+								<p class="artist">
+								<time datetime="">${artVo.reg_art}</time>
+								</p>
+								</div>
+							</figcaption>
+						</figure>
+					</li>
+					</c:if>
 					</c:forEach>
 				</ul>
 			</div>
