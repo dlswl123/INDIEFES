@@ -48,7 +48,7 @@
 }
 h1{
 	font-size: 3.5rem;
-	color : #00ff00;
+	color : #ff7000;
 }
 h3{
 color : #ffff00;
