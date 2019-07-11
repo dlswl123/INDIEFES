@@ -152,29 +152,31 @@ $(document).ready(function() {
 						<font>PAY INFO</font>
 					</a>
 					</section>
-					<c:choose>
-				    	<c:when test="${indieNum eq null}">
-				    	<hr>
-							<section id="teamInput">
-							<a href="/indiefes/art/indie_team_input">
-								<font>TEAM INPUT</font>
-							</a>
-							</section>
-						</c:when>
-						<c:otherwise>
-						<hr>
-							<section id="teamInfo">
-							<a href="/indiefes/art/indie_team_info?team_number=${indieNum}">
-								<font>MY TEAM INFO</font>
-							</a>
-							</section>
-							<section id="albumInput">
-							<a href="/indiefes/art/art_info_input">
-								<font>ALBUM INPUT</font>
-							</a>
-							</section>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${userInfoVo.user_level == 2}">
+						<c:choose>
+					    	<c:when test="${indieNum eq null}">
+					    	<hr>
+								<section id="teamInput">
+								<a href="/indiefes/art/indie_team_input">
+									<font>TEAM INPUT</font>
+								</a>
+								</section>
+							</c:when>
+							<c:otherwise>
+							<hr>
+								<section id="teamInfo">
+								<a href="/indiefes/art/indie_team_info?team_number=${indieNum}">
+									<font>MY TEAM INFO</font>
+								</a>
+								</section>
+								<section id="albumInput">
+								<a href="/indiefes/art/art_info_input">
+									<font>ALBUM INPUT</font>
+								</a>
+								</section>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
 					<hr>
 					<section id="player">
 				    <script type="text/javascript">
