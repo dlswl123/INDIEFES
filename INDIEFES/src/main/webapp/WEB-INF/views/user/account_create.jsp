@@ -180,9 +180,34 @@
 	});
 	
 	</script>
-	
-	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,0.7);">
-		<div class="col-md-12" style="width: 500;">
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+	color: #00ff00;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #00ff00;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+.col-md-12 {
+	font-family: dgm;
+	color: #00ff00;
+	padding: 20px;
+}
+</style>
+
+	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:#292929;">
+		<div class="col-md-12" style="width: 550px;">
+		<section id="logo" style="padding:20px;width:100%;">
+			<div class="row">
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				회원가입</span>
+			</div>
+		</section><hr style="background-color:#fafafa;border-color:#fafafa;color:#fafafa;">
 			<form role="form" action="/indiefes/user/account-create-run">
 				<div class="form-group">
 					 
@@ -278,6 +303,7 @@
 					</select>일
 					</div>
 					
+					<br>
 					성별<br>
 					  <input type="radio" name="user_gender" checked="checked" value="F" />여성
 					  <input type="radio" name="user_gender" value="M" />남성

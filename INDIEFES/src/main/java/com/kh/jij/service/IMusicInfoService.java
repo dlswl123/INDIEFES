@@ -36,5 +36,7 @@ public interface IMusicInfoService {
 //	public void musicUploadAppro(int art_number) throws Exception;
 //	// 업로드승인
 //	public void musicUploadReturn(int art_number) throws Exception;
-//	
+	
+	// 다운로드시 체크
+	public void payCount(int music_number) throws Exception;
 }

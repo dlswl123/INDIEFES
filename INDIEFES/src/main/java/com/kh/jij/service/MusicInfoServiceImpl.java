@@ -62,5 +62,10 @@ public class MusicInfoServiceImpl implements IMusicInfoService{
 		musicDao.updateLyrics(musicLyricsVo);
 	}
 
+	@Override
+	public void payCount(int music_number) throws Exception {
+		musicDao.payCount(music_number);
+	}
+
 	
 }

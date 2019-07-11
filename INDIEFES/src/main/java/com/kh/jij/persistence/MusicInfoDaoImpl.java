@@ -86,5 +86,9 @@ public class MusicInfoDaoImpl implements IMusicInfoDao {
 	public void musicUploadReturn(int art_number) throws Exception {
 		sqlSession.update(NAMESPACE + ".musicUploadReturn", art_number);
 	}
+	@Override
+	public void payCount(int music_number) throws Exception {
+		sqlSession.update(NAMESPACE, music_number);
+	}
 	
 }

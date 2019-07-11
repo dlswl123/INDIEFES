@@ -14,6 +14,30 @@
     width: 50%;
   }
   .btn {border-radius: 12px;}
+  #logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+	}
+	#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+	}
+	#updateAlbum {
+	background-color: #292929;
+	font-family: dgm;
+	color: #00ff00;
+	padding: 20px;
+	}
+	.table th {
+	font-family: dgm;
+	color: #00ff00;
+	}
+	.table td {
+	font-family: dgm;
+	color: #fafafa;
+	}
 </style>
 
 <script>
@@ -85,7 +109,7 @@ $(document).ready(function() {
 	});
 	$("#inputMusicFile").change(function(e) {
 		$("#spanMusicFile").text(this.files[0].name);
-		 formData.append("file", this.files[0]);
+		 formData.set("file", this.files[0]);
 	});
 	
 	// 앨범등록 버튼
@@ -114,14 +138,15 @@ $(document).ready(function() {
 	$("#btnMusicAdd").click(function() {
 		var tNum = $("#trackNumber").val();
 	 	var track_number = Number(tNum) + 1;
-	 	var music_title = $("#songName");
-	 	var fileName = $("#spanMusicFile");
+	 	var music_title = $("input[name=music_title]").val();
+	 	var fileName = $("#spanMusicFile").text();
 	 	$("#trackNumber").attr("value", track_number);
-	    
-	    formData.append("art_number", "${artVo.art_number}");
-	    formData.append("team_number", "${artVo.team_number}");
-	    formData.append("track_number", $("#trackNumber").val());
-	    formData.append("music_title", music_title.val());
+	 	console.log(music_title);
+	 	console.log(fileName);
+	    formData.set("art_number", "${artVo.art_number}");
+	    formData.set("team_number", "${artVo.team_number}");
+	    formData.set("track_number", $("#trackNumber").val());
+	    formData.set("music_title", music_title);
 	   
 	    var url = "/indiefes/music/insert";
 	    $.ajax({
@@ -132,10 +157,10 @@ $(document).ready(function() {
 	        "contentType" :false,
 	        "processData" :false,
 	    	"success" : function(receivedData){
-// 	    		console.log(receivedData);
 	    		if (receivedData == "success") {
-	    			music_title.val("");
-	    			fileName.text("");
+	    			console.log(receivedData);
+	    			$("input[name=music_title]").val("");
+	    			$("#spanMusicFile").text("");
 		    		getList();
 	    		} // if
 	    	} // "success"
@@ -281,11 +306,16 @@ $(document).ready(function() {
 });
 </script>
 	
-		<div class="col-md-10" style="background-color:rgba(255,255,255,0.7);">
+		<div class="col-md-10">
+		<section id="logo" style="padding:20px;width:100%;">
 			<div class="row">
-					<h1>앨범 수정</h1>
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				앨범수정</span>
 			</div>
+		</section><hr>
 <!-- 			앨범 수정폼 -->
+		<div id="updateAlbum">
 			<form role="form" method="post" id="art_info_input" enctype="multipart/form-data">
 			<input type="hidden" name="art_genre" value="">
 			<input type="hidden" name="art_cover" value="${artVo.art_cover }">
@@ -356,7 +386,7 @@ $(document).ready(function() {
 					<input type="hidden" name="track_number" value="${track_number}"  id="trackNumber" >
 						<div class="col-md-12 form-inline">
 							<div class="col-xs-10 " >
-								<label for="songName">노래제목</label>
+								<label>노래제목</label>
 								<input type="text" id="songName" name="music_title" class="form-control">
 							</div>
 							<div  class="col-xs-2 ">
@@ -378,6 +408,28 @@ $(document).ready(function() {
 			</div>
 			    <!-- 음악추가폼 끝 -->
 			
+
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th class="song_name">곡</th>
+								<th>노래파일</th>
+								<th>가사</th>
+								<th>수정</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody id="trackList">
+						<!-- JSON으로 받을 음악 트랙목록 -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 			<!-- Modal -->
 	<div class="row" >
 		<div class="col-md-12">
@@ -414,26 +466,5 @@ $(document).ready(function() {
 	</div>
 	<!-- // Modal -->
 			
-			<div class="row">
-				<div class="col-md-12">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>번호</th>
-								<th class="song_name">곡</th>
-								<th>노래파일</th>
-								<th>가사</th>
-								<th>수정</th>
-								<th>삭제</th>
-							</tr>
-						</thead>
-						<tbody id="trackList">
-						<!-- JSON으로 받을 음악 트랙목록 -->
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>
