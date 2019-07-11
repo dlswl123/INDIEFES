@@ -324,7 +324,6 @@ public class ArtController {
 		vo.setUser_id(user_id);
 		vo.setMusic_number(music_number);
 		vo.setMusic_title(music_title);
-//		System.out.println(vo);
 		artService.cartInput(vo);
 		
 		return "redirect:/art/art_info/"+art_number+"/"+team_number;
@@ -418,7 +417,6 @@ public class ArtController {
 		List<PayLogVo> payList = artService.payList(user_id);
 		model.addAttribute("userVo", userVo);
 		model.addAttribute("payList", payList);
-//		System.out.println("payList: "+payList);
 		return null;
 	}
 	// 결제 처리
