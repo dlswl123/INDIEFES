@@ -66,20 +66,18 @@ public class LoginController {
 			if(userInfoVo != null) {
 				deleted = userInfoVo.getDeleted();
 				session.setAttribute("userInfoVo", userInfoVo);
-				if(deleted.equals("O")) {
+				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
+					session.setAttribute("indieNum", indieNum);
+				else if(deleted.equals("O")) {
 					rttr.addFlashAttribute("message", "login_fail");
 					return "redirect:/user/login";
 				}
-				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
-				session.setAttribute("indieNum", indieNum);
-				return "redirect:/";
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// 팀가입 끝
-		rttr.addFlashAttribute("message", "login_fail");
-		return "redirect:/user/login";
+		return "redirect:/";
 	}
 	
 	//회원가입
