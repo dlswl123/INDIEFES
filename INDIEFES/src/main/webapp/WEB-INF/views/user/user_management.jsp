@@ -34,9 +34,6 @@
 	</script>
 	
 	
-
-
-
 	
 	<form id="pageForm" action="/indiefes/user/user-management">
 	<!-- 	<input type="hidden" name="perPage"  -->
@@ -49,10 +46,32 @@
 		value="${paginationDto.pagingDto.keyword}">
 	</form>
 	
-	<div class="row" style="margin-top:75px;margin-left:auto;margin-right:auto;background-color:rgba(255,255,255,0.7);">
+	<style>
+	#logo font {
+		font-family: blox;
+		font-size: 3.5rem;
+		margin-left: 30px;
+	}
+	#logo {
+		margin-bottom: 30px;
+		color: #292929;	
+	 	text-shadow: 1px 1px 0px lightgrey;
+	}
+	</style>
+	
+	
+	<div class="col-md-10" style="margin-left:auto;margin-right:auto;">
+		<section id="logo" style="padding:20px;width:100%;">
+			<div class="row">
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				공연정보</span>
+			</div>
+		</section><hr>
+		<div style="background-color:#292929;padding:20px;">
 		<div class="col-md-12">
 			<table class="table">
-				<thead>
+				<thead style="background-color:#292929;color:#00ff00;">
 					<tr>
 						<th>
 							아이디
@@ -70,11 +89,14 @@
 							성별
 						</th>
 						<th>
-							유저등급
+							회원등급
+						</th>
+						<th>
+							회원탈퇴여부
 						</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody style="background-color:#292929;color:#fafafa;">
 					<c:forEach items="${list}" var="userInfoVo">
 					<tr>
 						<td>${userInfoVo.user_id}</td>
@@ -89,8 +111,6 @@
 						<c:if test="${userInfoVo.user_gender eq 'F'}">
 						여
 						</c:if>
-						
-						
 						</td>
 						<td>
 						<c:if test="${userInfoVo.user_level == 0}">
@@ -108,7 +128,8 @@
 						<c:if test="${userInfoVo.user_level == 3}">
 						일반유저
 						</c:if>
-						
+						</td>
+						<td>${userInfoVo.deleted}</td>
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -119,6 +140,8 @@
 		
 		<div class="row" style="margin: auto;">
 		<div class="col-md-12">
+			<div class="row">
+				<div style="margin:auto;">
 			<nav>
 				<ul class="pagination">
 					<li class="page-item">
@@ -151,6 +174,8 @@
 					
 				</ul>
 			</nav>
+				</div>
+			</div>
 		</div>
 	</div>
 	
@@ -182,11 +207,10 @@
 <!-- 		</div> -->
 	</div>
 </div>
+</div>
 	
 	</div>
 
 
-
-
-
+<%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

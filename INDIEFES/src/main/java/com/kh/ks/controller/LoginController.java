@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.jij.service.IArtInfoService;
 import com.kh.ks.domain.UserInfoVo;
-import com.kh.ks.domain.UserManagementPagingDto;
+
 import com.kh.ks.service.IUserInfoService;
 import com.kh.ts.domain.PaginationDto;
 import com.kh.ts.domain.PagingDto;
@@ -45,35 +45,35 @@ public class LoginController {
 		System.out.println("loginForm() 실행됨");
 	}
 	
-	//로그인 성공
+	//로그인 동작
 	@RequestMapping(value="/login-run", method=RequestMethod.POST)
 	public String loginRun(String user_id, String user_pw, HttpSession session, RedirectAttributes rttr)throws Exception{
 		System.out.println("LoginController, loginRun, user_id/user_pw:" + user_id + "/" + user_pw); // 1.로그인폼에서 넘어온 데이터 -> service로 넘겨줌
 //		String user_id = userInfoVo.getUser_id();
 //		String user_pw = userInfoVo.getUser_pw();
 		UserInfoVo userInfoVo = userInfoService.readWithPw(user_id, user_pw);
+		System.out.println("userInfoVo : " + userInfoVo);
+		String deleted = userInfoVo.getDeleted();
 //		UserInfoVo userInfoVo1 = userInfoService.readWith(user_id);
 //		System.out.println("LoginController, loginRun, userInfoVo1:" + userInfoVo1); // 6.service에서 다시 넘어온 데이터
 //		System.out.println("LoginController, loginRun, userInfoVo:" + userInfoVo); // 6.service에서 다시 넘어온 데이터
-		String redirectUrl = "";
-		
 		// 팀가입 여부
 		try {
-			int indieNum = artService.getIndieNumber(userInfoVo.getUser_id());
-			session.setAttribute("indieNum", indieNum);
+			if(userInfoVo != null) {
+				session.setAttribute("userInfoVo", userInfoVo);
+				int indieNum = artService.getIndieNumber(userInfoVo.getUser_id()); 
+				System.out.println("indieNum : " + indieNum);
+				session.setAttribute("indieNum", indieNum);
+				if(deleted.equals("O")) {
+					rttr.addFlashAttribute("message", "login_fail");
+					return "redirect:/user/login";
+				}
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// 팀가입 끝
-		if(userInfoVo != null) {
-			session.setAttribute("userInfoVo", userInfoVo);
-			redirectUrl = "redirect:/";
-		} else {
-			rttr.addFlashAttribute("message", "login_fail");
-			redirectUrl = "redirect:/user/login";
-		}
-		return redirectUrl;
-		
+		return "redirect:/";
 	}
 	
 	//회원가입
@@ -207,18 +207,55 @@ public class LoginController {
 		System.out.println("회원정보재확인 Controller pw세션 : " + sessionUserpw);
 		System.out.println("회원정보재확인 Controller pw입력 : " + user_pw);
 		if(sessionUserpw.equals(user_pw)) {
+			
+			rttr.addFlashAttribute("message", "success");
 			URI = "redirect:/user/user-info";
-			rttr.addFlashAttribute("user-info-pwinput-run", "success");
 		}
 		else {
+			
+			rttr.addFlashAttribute("message", "fail");
 			URI = "redirect:/user/user-info-pwinput";
-			rttr.addFlashAttribute("user-info-pwinput-run", "fail");
 		}
 		
 		return URI;
 			
 	}
 	
+	// 인디팀 가입신청시 비밀번호 확인폼
+	@RequestMapping(value="/indie-team-subscription", method= {RequestMethod.POST, RequestMethod.GET})
+	public String indieTeamSubscription(HttpSession session) throws Exception{
+		UserInfoVo userInfoVo =(UserInfoVo)session.getAttribute("userInfoVo");
+		if (userInfoVo == null) {
+			return "redirect:/user/login";
+		}
+		
+		
+		return "/user/indie_team_subscription";
+	}
+	
+	// 인디팀 가입신청시 비밀번호확인 동작
+	@RequestMapping(value="/indie-team-subscription-run", method= {RequestMethod.POST, RequestMethod.GET})
+	public String indieTeamSubscriptionRun(HttpSession session, String user_pw, RedirectAttributes rttr)throws Exception{
+		String URI = "";
+		if (session == null) {
+			URI = "redirect:/user/login";
+		}
+		
+		UserInfoVo userInfoVo =(UserInfoVo)session.getAttribute("userInfoVo");
+		String sessionUserid = userInfoVo.getUser_id();
+		String sessionUserpw = userInfoVo.getUser_pw();
+		
+		if(sessionUserpw.equals(user_pw)) {
+			URI = "redirect:/art/indie_team_input";
+			rttr.addFlashAttribute("message", "success");
+		}
+		else {
+			URI = "redirect:/user/indie-team-subscription";
+			rttr.addFlashAttribute("message", "fail");
+		}
+		
+		return URI;
+	}
 	// 회원정보 수정
 	@RequestMapping(value="/user-info-adjust", method= {RequestMethod.POST, RequestMethod.GET})
 	public String userInfoAdjust(UserInfoVo userInfoVo, String birthYear, String birthMonth, String birthDay, 
@@ -280,11 +317,7 @@ public class LoginController {
 		return "/user/user_management";
 	}
 	
-	// 인디팀 가입신청시 비밀번호 확인
-	@RequestMapping(value="/indie-team-subscription", method= {RequestMethod.POST, RequestMethod.GET})
-	public String userManagement() throws Exception{
-		return "/user/indie_team_subscription";
-	}
+	
 	
 	
 	

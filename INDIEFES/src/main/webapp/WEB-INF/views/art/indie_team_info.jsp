@@ -32,7 +32,8 @@
 /*     한줄라인 글자수 제한 */
     .info{
       width:150px;
-      padding:0 2px;
+      padding-left: 10px;
+	  padding-top: 10px;
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
@@ -59,9 +60,7 @@ font-family: dgm;
 font-size: 1.5em;
 color : #00ff00;
 }
-</style>
-	<style>
-	#logo font {
+#logo font {
 		font-family: blox;
 		font-size: 3.5rem;
 		margin-left: 30px;
@@ -71,7 +70,7 @@ color : #00ff00;
 		color: #292929;	
 	 	text-shadow: 1px 1px 0px lightgrey;
 	}
-	</style>
+</style>
 <script>
 $(document).ready(function() {
 	$(this).css("font-family","prstart").css("font-size","1rem");

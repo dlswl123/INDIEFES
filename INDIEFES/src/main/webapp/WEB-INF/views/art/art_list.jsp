@@ -38,6 +38,10 @@
 }
 </style>
 <script>
+	var message = "${message}";
+	if (message == "login_check") {
+		alert("로그인한 유저만 사용가능합니다.");
+	}
 $(document).ready(function() {
 	// 검색버튼
 	$("#btnSearch").click(function(){
@@ -85,9 +89,8 @@ $(document).ready(function() {
 				page = 1;
 		}
 		$("input[name=page]").val(page);
-// 		$("input[name=perPage]").val(perPage);
-	}
-
+// 		$("input[name=perPage]").val(21);
+	} // setPage()
 	
 	// 검색
 	function setSearch() {
@@ -97,7 +100,7 @@ $(document).ready(function() {
 // 		console.log("keyword:" + keyword);
 		$("input[name=searchType]").val(searchType);
 		$("input[name=keyword]").val(keyword);
-	}
+	} // setSearch()
 	
 	// 페이지 번호클릭
 	$(".a_pagination").click(function(e){
@@ -109,15 +112,25 @@ $(document).ready(function() {
 // 			console.log(page);
 			$("input[name=page]").val(page); // 아래쪽 폼의 page에 설정
 			$("#pageForm").submit(); // 폼 설정
-
-			
 	}); // $(".a_pagination").click
-	
-	
-
-});
+}); // 
 
 </script>
+<style>
+#logo font {
+	font-family: blox;
+	font-size: 3.5rem;
+	margin-left: 30px;
+}
+#logo {
+	margin-bottom: 30px;
+	color: #292929;	
+ 	text-shadow: 1px 1px 0px lightgrey;
+}
+figcaption {
+	font-family: dgm;
+}
+</style>
 
 <form id="pageForm" action="/indiefes/art/art_list">
 <!-- 	<input type="hidden" name="perPage"  -->
@@ -129,11 +142,17 @@ $(document).ready(function() {
 	<input type="hidden" name="keyword" 
 		value="${paginationDto.pagingDto.keyword}">
 </form>
-
 <div class="col-md-10">
   <div class="row">
 <!--   상단 장르 선택부 -->
 		<div class="col-md-12">
+		<section id="logo" style="padding:20px;width:100%;">
+			<div class="row">
+				<font>InDiEFeS</font>
+				<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
+				앨범정보</span>
+			</div>
+		</section><hr>
 <!-- 			 <span class="badge badge-default">장르</span> -->
 			<nav>
 				<ol class="breadcrumb">
@@ -226,7 +245,7 @@ $(document).ready(function() {
 <!-- 	검색  -->
 <%-- likeCount : ${likeCount} --%>
 		<div class ="col-md-12">
-			<div class="in-line">
+			<div class="in-line" style="font-family: dgm;">
 				 <select class="selectBox" id="searchType">
 					<option value="albumName" <c:if test="${paginationDto.pagingDto.searchType == 'albumName'}">
 								selected
@@ -358,7 +377,10 @@ $(document).ready(function() {
 <!-- 				앨범리스트 끝 -->
 			</div>
 			<div class="row">
-				<div class="col-md-12" style="">
+				<div class="col-md-12">
+					<div class="row">
+						<div style="margin:auto;">
+						<div class="col-md-12" style="">
 					<nav>
 						<ul class="pagination" >
 						<!-- 이전 -->
@@ -386,12 +408,13 @@ $(document).ready(function() {
 						</c:if>		
 						</ul>
 					</nav>
+						</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
 <%@ include file="../include/sidebar.jsp" %>
 <%@ include file="../include/footer.jsp" %>

@@ -98,7 +98,7 @@
 	<select id="getIndieNumber" resultType="integer">
 		select team_number
 		from team_member
-		where user_id = #{user_id}
+		where user_id = #{user_id, jdbcType=VARCHAR}
 	</select>
 	
 <!-- 	그룹이름 가져오기 -->
@@ -320,6 +320,9 @@
 	   		<if test="searchType == 'delete'">
 	   			 where upload_check = #{keyword}
 	   		</if>
+       	</if>
+       	<if test="searchType == '' || searchType == null">
+       		 where upload_check = 1
        	</if>
 	</sql>
 	
