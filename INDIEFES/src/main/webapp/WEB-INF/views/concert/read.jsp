@@ -37,7 +37,7 @@ $(document).ready(function() {
 		<div class="row">
 			<font>InDiEFeS</font>
 			<span style="font-size:1.25rem;font-family:hss;margin-bottom: 15px;margin-top: auto;margin-left: 10px;margin-right: auto;">
-			공연정보</span>
+			공연 정보</span>
 		</div>
 	</section><hr>
 

@@ -170,6 +170,24 @@ $(document).ready(function() {
 	// 음악리스트- 다운버튼
 	$("#tblMusicList").on("click", ".spMusicDown",function() {
 		var music_number = $(this).attr("data-music_number");
+		var url = "/indiefes/music/payCount";
+		var data = {
+				"music_number" : music_number
+			};
+		$.ajax({
+			"type" : 'get',
+			"url" : url,
+			"headers" : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Overried" : "get"
+			},
+			"dataType" : "text",
+			"data" : data,
+			"success" : function(receivedData) {
+// 				console.log(receivedData); // success
+				
+			} // "success"
+		});
 // 		console.log(music_number);
 	});
 	
@@ -389,10 +407,11 @@ $(document).ready(function() {
 								<td><span class="spMusicLyrics icon" style="color:yellow;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="far fa-file-alt"></i></span></td>
 <%-- 								<td><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td> --%>
 <%-- 								<td><a id="${count = count+1}" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td> --%>
+<%-- 								<c:if test="${artVo.upload_check eq 1 }"> --%>
 								<c:set var="flag" value="0" />
 								<c:if test="${userVo != null}">
 									<c:forEach items="${payList}" var="PayLogVo">
-										<c:if test="${musicInfoVo.music_number == PayLogVo.music_number}">
+										<c:if test="${(musicInfoVo.music_number == PayLogVo.music_number) && PayLogVo.pay_ok eq 1}">
 											<c:set var="flag" value="1" />
 										</c:if>
 									</c:forEach>
@@ -402,11 +421,16 @@ $(document).ready(function() {
 										<td><a id="${count = count+1}" href="/indiefes/player/Song?file_path=${musicInfoVo.file_path}&team_number=${artVo.team_number}&art_number=${artVo.art_number}" download="${musicInfoVo.music_title}"><span class="spMusicDown icon" style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></a></td>
 										<td><span style="color:red;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
 									</c:when>
+									<c:when test="${artVo.upload_check ne 1 && flag != 1}">
+										<td><span style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
+										<td><span style="color:red;, size: 10px;"><i class="fas fa-cart-plus"></i></span></td>
+									</c:when>
 									<c:otherwise>
 										<td><span style="color:green;, size: 10px;" data-music_number="${musicInfoVo.music_number}"><i class="fas fa-download"></i></span></td>
 										<td><span class="spMusicCart icon" style="color:red;, size: 10px;" data-music_number="${musicInfoVo.music_number}" data-music_title="${musicInfoVo.music_title}"><i class="fas fa-cart-plus"></i></span></td>
 									</c:otherwise>
 								</c:choose>
+<%-- 								</c:if> --%>
 							<tr>
 						</c:if>
 						</c:forEach>
