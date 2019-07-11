@@ -61,6 +61,11 @@
 		where user_id = #{user_id}
 	</update>
 	
+	<!-- 인디 팀 업그레이드 -->
+	<update id="userIndieUpdate">
+		update user_info set user_level = 2 where user_id = #{user_id}
+	</update>
+	
 	<!-- 유저탈퇴 -->
 	<update id="userDelete">
 		update user_info set deleted = 'O'

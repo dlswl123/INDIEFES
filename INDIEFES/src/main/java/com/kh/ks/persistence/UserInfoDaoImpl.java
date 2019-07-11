@@ -26,13 +26,13 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 	// 회원로그인
 	@Override
 	public UserInfoVo readWithPw(String user_id, String user_pw) throws Exception {
-		System.out.println("UserInfoDaoImpl, readWithPw, user_id:" + user_id); 
-		System.out.println("UserInfoDaoImpl, readWithPw, user_pw:" + user_pw); // 3.service에서 넘어온 데이터
+//		System.out.println("UserInfoDaoImpl, readWithPw, user_id:" + user_id); 
+//		System.out.println("UserInfoDaoImpl, readWithPw, user_pw:" + user_pw); // 3.service에서 넘어온 데이터
 		HashMap<String, Object> paramMap = new HashMap<>();
 		paramMap.put("user_id", user_id);
 		paramMap.put("user_pw", user_pw);
 		UserInfoVo userInfoVo = sqlsession.selectOne(NAMESPACE + ".readWithPw", paramMap);
-		System.out.println("UserInfoDaoImpl, readWithPw, userInfoVo:" + userInfoVo); // 4.다시 service로 넘겨줌
+//		System.out.println("UserInfoDaoImpl, readWithPw, userInfoVo:" + userInfoVo); // 4.다시 service로 넘겨줌
 		return userInfoVo;
 	}
 
@@ -48,8 +48,8 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 	// 회원가입
 	@Override
 	public boolean createAccount(UserInfoVo userInfoVo) throws Exception {
-		System.out.println("Dao createAccount 호출됨");
-		System.out.println("Dao createAccount userInfoVo : " + userInfoVo);
+//		System.out.println("Dao createAccount 호출됨");
+//		System.out.println("Dao createAccount userInfoVo : " + userInfoVo);
 		sqlsession.insert(NAMESPACE + ".createAccount", userInfoVo); 
 		return true;
 	}
@@ -57,18 +57,18 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 	// 아이디 중복체크
 	@Override
 	public UserInfoVo idCheck(String user_id) throws Exception {
-		System.out.println("아이디 중복 체크 Daoimpl : " + user_id);
+//		System.out.println("아이디 중복 체크 Daoimpl : " + user_id);
 		UserInfoVo idChk = sqlsession.selectOne(NAMESPACE + ".idCheck", user_id);
-		System.out.println("아이디 중복 체크 Daoimpl(service로 넘겨주는 데이터) : " + idChk);
+//		System.out.println("아이디 중복 체크 Daoimpl(service로 넘겨주는 데이터) : " + idChk);
 		return idChk;
 	}
 
 	// 닉네임 중복체크
 	@Override
 	public UserInfoVo nickCheck(String user_nick) throws Exception {
-		System.out.println("닉네임 중복 체크 Daoimpl : " + user_nick);
+//		System.out.println("닉네임 중복 체크 Daoimpl : " + user_nick);
 		UserInfoVo nickChk = sqlsession.selectOne(NAMESPACE + ".nickCheck", user_nick);
-		System.out.println("닉네임 중복 체크 Daoimpl(service로 넘겨주는 데이터) : " + nickChk);
+//		System.out.println("닉네임 중복 체크 Daoimpl(service로 넘겨주는 데이터) : " + nickChk);
 		return nickChk;
 	}
 
@@ -82,14 +82,14 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 
 	@Override
 	public void userDelete(String user_id) throws Exception {
-		System.out.println(user_id);
+//		System.out.println(user_id);
 		sqlsession.update(NAMESPACE + ".userDelete", user_id);
 	}
 
 	// 회원목록
 	@Override
 	public List<UserInfoVo> userInfo(PagingDto pagingDto) throws Exception {
-		System.out.println("userinfoimpl 실행됨");
+//		System.out.println("userinfoimpl 실행됨");
 		List<UserInfoVo> list = sqlsession.selectList(NAMESPACE + ".userInfo", pagingDto);
 		return list;
 	}
@@ -98,8 +98,14 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 	@Override
 	public int userCount(PagingDto pagingDto) throws Exception {
 		int count = sqlsession.selectOne(NAMESPACE + ".userCount", pagingDto);
-		System.out.println("userDaoImpl userCount 실행됨 :" + count);
+//		System.out.println("userDaoImpl userCount 실행됨 :" + count);
 		return count;
+	}
+
+	// 인디 팀 신청
+	@Override
+	public void userIndieUpdate(String user_id) throws Exception {
+		sqlsession.update(NAMESPACE + ".userIndieUpdate", user_id);
 	}
 
 	

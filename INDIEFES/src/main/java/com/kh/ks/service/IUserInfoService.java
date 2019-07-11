@@ -18,6 +18,8 @@ public interface IUserInfoService {
 	
 	public void userInfoAdjust(UserInfoVo userInfoVo) throws Exception;
 	
+	public void userIndieUpdate(String user_id) throws Exception;
+	
 	public void userDelete(String user_id) throws Exception;
 	
 	public List<UserInfoVo> userInfo(PagingDto pagingDto) throws Exception;

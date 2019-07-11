@@ -241,11 +241,12 @@ public class LoginController {
 			URI = "redirect:/user/login";
 		}
 		
-		UserInfoVo userInfoVo =(UserInfoVo)session.getAttribute("userInfoVo");
+		UserInfoVo userInfoVo = (UserInfoVo)session.getAttribute("userInfoVo");
 		String sessionUserid = userInfoVo.getUser_id();
 		String sessionUserpw = userInfoVo.getUser_pw();
 		
 		if(sessionUserpw.equals(user_pw)) {
+			userInfoService.userIndieUpdate(sessionUserid);
 			URI = "redirect:/art/indie_team_input";
 			rttr.addFlashAttribute("message", "success");
 		}
