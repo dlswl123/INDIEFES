@@ -248,6 +248,7 @@ public class LoginController {
 		if(sessionUserpw.equals(user_pw)) {
 			userInfoService.userIndieUpdate(sessionUserid);
 			URI = "redirect:/art/indie_team_input";
+			session.setAttribute("userInfoVo", userInfoVo);
 			rttr.addFlashAttribute("message", "success");
 		}
 		else {
