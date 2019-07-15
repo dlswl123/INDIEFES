@@ -5,6 +5,10 @@
 <script>
 $(document).ready(function() {
 	
+	var contentText = $("textarea[id=content]").val();
+	contentText = contentText.split('<br/>').join("\r\n");
+	$("textarea[id=content]").val(contentText);
+	
 	var cDate = "${vo.concert_date}";
 	var concertDate = replaceAll(cDate.slice(0,10), "-", "/");
 	var formData = new FormData();

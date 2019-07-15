@@ -328,37 +328,6 @@ public class ArtController {
 		return "redirect:/art/art_info/"+art_number+"/"+team_number;
 	}	
 	
-	@RequestMapping(value = "/cartAll", method = RequestMethod.POST)
-	public ResponseEntity<String> CartAllInput(HttpSession session) throws Exception {
-		ResponseEntity<String> entity = null;
-		UserInfoVo userVo = (UserInfoVo)session.getAttribute("userInfoVo");
-		try {
-//			String user_id = userVo.getUser_id();
-//			int team_number = artVo.getTeam_number();
-//			int art_number = artVo.getArt_number();
-//			List<PayLogVo> payList = artService.payList(user_id);
-//			for (int i = 0; i < musicList.size(); i++) {
-				
-//			}
-			
-//			System.out.println(musicList);
-//			PayLogVo vo = new PayLogVo();
-//			vo.setUser_id(user_id);
-//			vo.setMusic_number(music_number);
-//			vo.setMusic_title(music_title);
-//			System.out.println(vo);
-//			artService.cartInput(vo);
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}	
-	
-	
-	
 	
 	// 승인요청 -> 인디팀 
 	@RequestMapping(value="/artUploadApproReq/{art_number}", method = RequestMethod.GET)

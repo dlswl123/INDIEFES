@@ -307,10 +307,6 @@ $(document).ready(function() {
 	});
 	// 운영자용 끝
 	
-	// 뮤직 플레이어
-	function musicPlayer() {
-		window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no");
-	}
 }); // $(document).ready
 </script>
 		<div class="col-md-10">
