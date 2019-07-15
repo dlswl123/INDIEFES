@@ -157,7 +157,7 @@ figcaption {
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-						<a href="/indiefes/" >Home</a>
+						<a href="/indiefes/art/art_list" >Home</a>
 					</li>
 					<li class="breadcrumb-item">
 						<a href="/indiefes/art/art_list" class="art_genre" data-genre="발라드" 
@@ -267,7 +267,7 @@ figcaption {
 					</c:otherwise>
 				</c:choose>>
 				<input type="button" class="btn btn-primary" id="btnSearch" value="검색">
-				<input type="button" class="btn btn-warning" id="btnAllSearch" value="전체조회">
+<!-- 				<input type="button" class="btn btn-warning" id="btnAllSearch" value="전체조회"> -->
 			</div>
 		</div>
 <!-- 		검색 끝 -->
