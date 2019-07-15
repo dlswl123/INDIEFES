@@ -275,7 +275,13 @@ $(document).ready(function() {
 	
 	// 앨범삭제 버튼
 	$("#btnArtDelete").click(function() {
-		location.href="/indiefes/art/art_delete/${artVo.art_number}";
+		var check = confirm("삭제후 다시 복구할수 없습니다.");
+		if (check == true) {
+			location.href="/indiefes/art/art_delete/${artVo.art_number}";
+		} else if (check == false) {
+// 			alert("취소하셨습니다.");
+		}
+		
 	});
 	
 	// 앨범 등록 요청 버튼
