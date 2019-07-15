@@ -183,9 +183,10 @@ $(document).ready(function() {
 				   		var new_popup;
 				   		
 						function musicPlayer() {
-							new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=960,scrollbars=NO,titlebar=no,resizable=no,menubar=no,toolbar=no,directories=no,location=no,status=no");
+							new_popup = window.open("/indiefes/player/player", "regularPaymentAutoDelay", "width=480,height=700,scrollbars=NO,titlebar=no,resizable=no,menubar=no,toolbar=no,directories=no,location=no,status=no");
 						}
 						function closePlayer() {
+								musicPlayer();
 								new_popup.close();
 						}
 					</script>
